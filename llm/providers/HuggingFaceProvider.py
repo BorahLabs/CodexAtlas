@@ -1,16 +1,23 @@
-import torch, os
+import torch
+import os
 from transformers import pipeline
 from typing import List
 from providers.AbstractProvider import AbstractProvider
 from models.Message import Message
 
+
 class HuggingFaceProvider(AbstractProvider):
     def __init__(self):
         super().__init__()
-        self.pipe = pipeline("text-generation", model=os.getenv('MODEL_NAME'), torch_dtype=torch.bfloat16, device_map="auto")
+        self.pipe = pipeline(
+            "text-generation",
+            model=os.getenv('MODEL_NAME'),
+            device_map="auto"
+        )
 
     def generate(self, messages: List[Message]) -> str:
-        prompt = self.pipe.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+        prompt = self.pipe.tokenizer.apply_chat_template(
+            messages, tokenize=False, add_generation_prompt=True)
         outputs = self.pipe(
             prompt,
             max_new_tokens=self.max_tokens(),
