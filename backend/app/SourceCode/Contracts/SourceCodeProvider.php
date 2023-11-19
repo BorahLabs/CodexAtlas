@@ -35,7 +35,7 @@ interface SourceCodeProvider {
      *
      * @return File|Folder[]
      */
-    public function files(RepositoryName $repository, Branch $branch, string $path): array;
+    public function files(RepositoryName $repository, Branch $branch, ?string $path = null): array;
 
     /**
      * Returns a single file and its contents

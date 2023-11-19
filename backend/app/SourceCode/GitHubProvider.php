@@ -9,6 +9,7 @@ use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
+use Illuminate\Support\Facades\Cache;
 
 class GitHubProvider implements SourceCodeProvider {
     public function repositories(): array
@@ -26,8 +27,13 @@ class GitHubProvider implements SourceCodeProvider {
         return Github\GetBranches::make()->handle($repository);
     }
 
-    public function files(RepositoryName $repository, Branch $branch, string $path): array
+    public function files(RepositoryName $repository, Branch $branch, ?string $path = null, bool $cached = true): array
     {
+        if ($cached) {
+            $key = 'repository:' . $repository->fullName . ':' . $branch->name . ':' . ($path ?? '/');
+            return Cache::remember($key, now()->addMinutes(10), fn () => Github\GetAllFiles::make()->handle($repository, $branch, $path));
+        }
+
         return Github\GetAllFiles::make()->handle($repository, $branch, $path);
     }
 

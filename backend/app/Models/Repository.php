@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Repository extends Model
@@ -21,9 +22,14 @@ class Repository extends Model
         return $this->belongsTo(SourceCodeAccount::class);
     }
 
-    public function projects(): BelongsToMany
+    public function project(): BelongsTo
     {
-        return $this->belongsToMany(Project::class)->using(ProjectRepository::class);
+        return $this->belongsTo(Project::class);
+    }
+
+    public function branches(): HasMany
+    {
+        return $this->hasMany(Branch::class);
     }
 
     public function fullName(): Attribute

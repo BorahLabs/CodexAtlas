@@ -21,9 +21,9 @@ class Project extends Model
         return $this->belongsTo(Team::class);
     }
 
-    public function repositories(): BelongsToMany
+    public function repositories(): HasMany
     {
-        return $this->belongsToMany(Repository::class)->using(ProjectRepository::class);
+        return $this->hasMany(Repository::class);
     }
 
     public function concepts(): HasMany

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('repositories', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('source_code_account_id')->constrained();
+            $table->foreignUuid('project_id')->constrained();
             $table->string('username');
             $table->string('name');
             $table->softDeletes();
