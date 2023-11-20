@@ -7,7 +7,6 @@ use App\Models\Project;
 use App\Models\Repository;
 use App\Models\SourceCodeAccount;
 use App\Models\Team;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class RepositorySeeder extends Seeder

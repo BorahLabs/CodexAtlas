@@ -5,7 +5,8 @@ namespace App\Atlas\Frameworks;
 use App\Atlas\Frameworks\Contracts\Framework;
 use App\SourceCode\DTO\Folder;
 
-class Spring extends Framework {
+class Spring extends Framework
+{
     public function name(): string
     {
         return 'Spring';

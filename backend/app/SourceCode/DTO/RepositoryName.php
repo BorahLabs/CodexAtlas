@@ -10,6 +10,6 @@ class RepositoryName
         public readonly string $username,
         public readonly string $name,
     ) {
-        $this->fullName = $username . '/' . $name;
+        $this->fullName = $username.'/'.$name;
     }
 }

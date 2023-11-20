@@ -13,7 +13,7 @@ class GetAllFiles
 {
     use AsAction;
 
-    public function handle(RepositoryName $repository, Branch $branch, ?string $path = null): array
+    public function handle(RepositoryName $repository, Branch $branch, string $path = null): array
     {
         // TODO: Set branch
         $rawFiles = GitHub::repo()->contents()->show($repository->username, $repository->name, $path);

@@ -5,7 +5,8 @@ namespace App\Atlas\Languages;
 use App\Atlas\Languages\Contracts\Language;
 use App\SourceCode\DTO\File;
 
-class Go implements Language {
+class Go implements Language
+{
     public function name(): string
     {
         return 'Go';
@@ -19,6 +20,7 @@ class Go implements Language {
     public function isOwnFile(File $file): bool
     {
         $path = mb_strtolower($file->path);
+
         return str_ends_with($path, '.go');
     }
 }

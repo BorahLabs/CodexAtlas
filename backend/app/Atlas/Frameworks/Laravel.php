@@ -5,7 +5,8 @@ namespace App\Atlas\Frameworks;
 use App\Atlas\Frameworks\Contracts\Framework;
 use App\SourceCode\DTO\Folder;
 
-class Laravel extends Framework {
+class Laravel extends Framework
+{
     public function name(): string
     {
         return 'Laravel';

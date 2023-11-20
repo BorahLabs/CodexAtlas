@@ -5,7 +5,8 @@ namespace App\Atlas\Frameworks;
 use App\Atlas\Frameworks\Contracts\Framework;
 use App\SourceCode\DTO\Folder;
 
-class Angular extends Framework {
+class Angular extends Framework
+{
     public function name(): string
     {
         return 'Angular';

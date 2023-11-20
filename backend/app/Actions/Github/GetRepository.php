@@ -14,6 +14,7 @@ class GetRepository
     public function handle(RepositoryName $repository): Repository
     {
         $repo = GitHub::repo()->show($repository->username, $repository->name);
+
         return new Repository(
             id: $repo['id'],
             name: $repo['name'],

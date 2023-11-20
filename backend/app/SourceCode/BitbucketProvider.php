@@ -2,6 +2,7 @@
 
 namespace App\SourceCode;
 
-class BitbucketProvider {
+class BitbucketProvider
+{
     // TODO:
 }

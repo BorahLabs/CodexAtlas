@@ -2,10 +2,8 @@
 
 namespace App\Actions\Codex;
 
-use App\Actions\AsAction;
 use App\Models\Project;
-
-// use Lorisleiva\Actions\Concerns\AsAction;
+use Lorisleiva\Actions\Concerns\AsAction;
 
 class GenerateProjectDocumentation
 {

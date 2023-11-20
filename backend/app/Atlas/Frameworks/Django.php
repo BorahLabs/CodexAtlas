@@ -5,7 +5,8 @@ namespace App\Atlas\Frameworks;
 use App\Atlas\Frameworks\Contracts\Framework;
 use App\SourceCode\DTO\Folder;
 
-class Django extends Framework {
+class Django extends Framework
+{
     public function name(): string
     {
         return 'Django';

@@ -70,7 +70,7 @@ class Folder
 
     public function hasFile(string $path, bool $recursive = false): bool
     {
-        if (!$recursive) {
+        if (! $recursive) {
             return in_array($path, array_map(fn ($f) => basename($f->path), $this->files));
         }
 

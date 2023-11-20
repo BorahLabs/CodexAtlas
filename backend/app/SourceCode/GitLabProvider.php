@@ -2,6 +2,7 @@
 
 namespace App\SourceCode;
 
-class GitLabProvider {
+class GitLabProvider
+{
     // TODO:
 }

@@ -6,18 +6,16 @@ use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\RepositoryName;
-use GrahamCampbell\GitHub\Facades\GitHub;
 use Illuminate\Support\Facades\File as FacadesFile;
-
-// use Lorisleiva\Actions\Concerns\AsAction;
+use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetAllFiles
 {
-    // use AsAction;
+    use AsAction;
 
-    public function handle(RepositoryName $repository, Branch $branch, ?string $path = null): array
+    public function handle(RepositoryName $repository, Branch $branch, string $path = null): array
     {
-        $path = $path ? $repository->fullName . '/' . $path : $repository->fullName;
+        $path = $path ? $repository->fullName.'/'.$path : $repository->fullName;
         $rawFiles = FacadesFile::files($path);
         $directories = FacadesFile::directories($path);
 
@@ -31,7 +29,7 @@ class GetAllFiles
 
             $files[] = File::from([
                 'name' => $file->getBasename(),
-                'path' => str($file->getPathname())->after($repository->fullName . '/')->toString(),
+                'path' => str($file->getPathname())->after($repository->fullName.'/')->toString(),
                 'absolute_path' => $file->getPathname(),
                 'sha' => sha1($file->getContents()),
                 'download_url' => $file->getPath(),
@@ -45,7 +43,7 @@ class GetAllFiles
 
             $folder = Folder::from([
                 'name' => basename($directory),
-                'path' => str(dirname($directory))->after($repository->fullName . '/')->toString(),
+                'path' => str(dirname($directory))->after($repository->fullName.'/')->toString(),
                 'absolute_path' => dirname($directory),
                 'sha' => sha1($directory),
             ]);

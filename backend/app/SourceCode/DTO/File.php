@@ -31,6 +31,7 @@ class File
         }
 
         $this->contents = file_get_contents($this->downloadUrl);
+
         return $this->contents;
     }
 }

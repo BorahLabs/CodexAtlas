@@ -2,7 +2,8 @@
 
 namespace App\Enums;
 
-enum SystemComponentStatus: string {
+enum SystemComponentStatus: string
+{
     case Pending = 'pending';
     case Generating = 'generating';
     case Generated = 'generated';

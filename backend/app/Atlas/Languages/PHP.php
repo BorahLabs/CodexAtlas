@@ -5,7 +5,8 @@ namespace App\Atlas\Languages;
 use App\Atlas\Languages\Contracts\Language;
 use App\SourceCode\DTO\File;
 
-class PHP implements Language {
+class PHP implements Language
+{
     public function name(): string
     {
         return 'PHP';

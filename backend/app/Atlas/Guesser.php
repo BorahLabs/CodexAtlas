@@ -3,11 +3,11 @@
 namespace App\Atlas;
 
 use App\Atlas\Frameworks\Contracts\Framework;
-use App\Atlas\Frameworks;
 use App\Exceptions\CouldNotDetectFramework;
 use App\SourceCode\DTO\Folder;
 
-class Guesser {
+class Guesser
+{
     public static function make(): static
     {
         return new static();

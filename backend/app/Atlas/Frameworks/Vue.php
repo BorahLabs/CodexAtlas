@@ -5,7 +5,8 @@ namespace App\Atlas\Frameworks;
 use App\Atlas\Frameworks\Contracts\Framework;
 use App\SourceCode\DTO\Folder;
 
-class Vue extends Framework {
+class Vue extends Framework
+{
     public function name(): string
     {
         return 'Vue';

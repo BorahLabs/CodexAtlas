@@ -5,12 +5,13 @@ namespace App\Atlas\Frameworks\Contracts;
 use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
 
-abstract class Framework {
-    public abstract function name(): string;
+abstract class Framework
+{
+    abstract public function name(): string;
 
-    public abstract function usesFramework(Folder $folder): bool;
+    abstract public function usesFramework(Folder $folder): bool;
 
-    public abstract function customContext(): ?string;
+    abstract public function customContext(): ?string;
 
     public function mightBeRelevant(string $path): bool
     {
@@ -39,12 +40,12 @@ abstract class Framework {
      *
      * @return string[]
      */
-    public abstract function ignorable(): array;
+    abstract public function ignorable(): array;
 
     /**
      * File patterns to be considered as useful
      *
      * @return string[]
      */
-    public abstract function relevant(): array;
+    abstract public function relevant(): array;
 }

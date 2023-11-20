@@ -5,7 +5,8 @@ namespace App\Atlas\Languages;
 use App\Atlas\Languages\Contracts\Language;
 use App\SourceCode\DTO\File;
 
-class Rust implements Language {
+class Rust implements Language
+{
     public function name(): string
     {
         return 'Rust';

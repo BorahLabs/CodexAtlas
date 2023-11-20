@@ -12,7 +12,8 @@ use App\SourceCode\DTO\RepositoryName;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File as FacadesFile;
 
-class LocalFolderProvider extends SourceCodeProvider {
+class LocalFolderProvider extends SourceCodeProvider
+{
     public function repositories(): array
     {
         return collect(FacadesFile::directories($this->credentials()->name))
@@ -29,7 +30,8 @@ class LocalFolderProvider extends SourceCodeProvider {
 
     public function repository(RepositoryName $repository): Repository
     {
-        $path = $this->credentials()->name . '/' . $repository->name;
+        $path = $this->credentials()->name.'/'.$repository->name;
+
         return new Repository(
             id: $path,
             name: basename($path),
@@ -45,10 +47,11 @@ class LocalFolderProvider extends SourceCodeProvider {
         ];
     }
 
-    public function files(RepositoryName $repository, Branch $branch, ?string $path = null, bool $cached = true): array
+    public function files(RepositoryName $repository, Branch $branch, string $path = null, bool $cached = true): array
     {
         if ($cached) {
-            $key = 'repository:' . $repository->fullName . ':' . $branch->name . ':' . ($path ?? '/');
+            $key = 'repository:'.$repository->fullName.':'.$branch->name.':'.($path ?? '/');
+
             return Cache::remember($key, now()->addMinutes(10), fn () => (new LocalFolder\GetAllFiles())->handle($repository, $branch, $path));
         }
 

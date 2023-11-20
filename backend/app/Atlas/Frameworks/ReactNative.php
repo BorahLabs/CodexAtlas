@@ -5,7 +5,8 @@ namespace App\Atlas\Frameworks;
 use App\Atlas\Frameworks\Contracts\Framework;
 use App\SourceCode\DTO\Folder;
 
-class ReactNative extends Framework {
+class ReactNative extends Framework
+{
     public function name(): string
     {
         return 'React Native';

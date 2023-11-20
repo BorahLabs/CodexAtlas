@@ -2,7 +2,6 @@
 
 namespace App\Actions\Codex\Architecture;
 
-use App\Actions\AsAction;
 use App\Actions\Codex\Architecture\SystemComponents\ProcessSystemComponent;
 use App\Atlas\Frameworks\Contracts\Framework;
 use App\Atlas\Guesser;
@@ -10,9 +9,7 @@ use App\Models\Branch;
 use App\SourceCode\Contracts\SourceCodeProvider;
 use App\SourceCode\DTO\Branch as DTOBranch;
 use App\SourceCode\DTO\Folder;
-use App\SourceCode\DTO\RepositoryName;
-
-// use Lorisleiva\Actions\Concerns\AsAction;
+use Lorisleiva\Actions\Concerns\AsAction;
 
 class SystemComponents
 {
@@ -70,7 +67,7 @@ class SystemComponents
                     ...$this->filterFiles($file->files, $framework),
                     ...$this->filterFiles($file->folders, $framework),
                 ];
-            } else if ($framework->mightBeRelevant($file->path)) {
+            } elseif ($framework->mightBeRelevant($file->path)) {
                 $filtered[] = $file;
             }
         }
