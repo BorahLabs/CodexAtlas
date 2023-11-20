@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\SourceCodeProvider;
+use App\SourceCode\Contracts\SourceCodeProvider as ContractsSourceCodeProvider;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,5 +29,10 @@ class SourceCodeAccount extends Model
     public function repositories(): HasMany
     {
         return $this->hasMany(Repository::class);
+    }
+
+    public function getProvider(): ContractsSourceCodeProvider
+    {
+        return $this->provider->provider()->withCredentials($this);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\SourceCode\DTO\RepositoryName;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -36,6 +37,14 @@ class Repository extends Model
     {
         return Attribute::make(
             get: fn () => $this->username . '/' . $this->name,
+        );
+    }
+
+    public function nameDto(): RepositoryName
+    {
+        return new RepositoryName(
+            username: $this->username,
+            name: $this->name,
         );
     }
 }

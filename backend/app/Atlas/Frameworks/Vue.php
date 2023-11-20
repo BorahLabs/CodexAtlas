@@ -5,7 +5,7 @@ namespace App\Atlas\Frameworks;
 use App\Atlas\Frameworks\Contracts\Framework;
 use App\SourceCode\DTO\Folder;
 
-class Vue implements Framework {
+class Vue extends Framework {
     public function name(): string
     {
         return 'Vue';
@@ -20,5 +20,17 @@ class Vue implements Framework {
     public function customContext(): ?string
     {
         return null;
+    }
+
+    public function relevant(): array
+    {
+        // TODO:
+        return [];
+    }
+
+    public function ignorable(): array
+    {
+        // TODO:
+        return [];
     }
 }

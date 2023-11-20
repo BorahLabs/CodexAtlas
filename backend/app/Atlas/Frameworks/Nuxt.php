@@ -5,7 +5,7 @@ namespace App\Atlas\Frameworks;
 use App\Atlas\Frameworks\Contracts\Framework;
 use App\SourceCode\DTO\Folder;
 
-class Nuxt implements Framework {
+class Nuxt extends Framework {
     public function name(): string
     {
         return 'NuxtJS';
@@ -19,5 +19,17 @@ class Nuxt implements Framework {
     public function customContext(): ?string
     {
         return null;
+    }
+
+    public function relevant(): array
+    {
+        // TODO:
+        return [];
+    }
+
+    public function ignorable(): array
+    {
+        // TODO:
+        return [];
     }
 }

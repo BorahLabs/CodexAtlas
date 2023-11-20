@@ -5,7 +5,7 @@ namespace App\Atlas\Frameworks;
 use App\Atlas\Frameworks\Contracts\Framework;
 use App\SourceCode\DTO\Folder;
 
-class Django implements Framework {
+class Django extends Framework {
     public function name(): string
     {
         return 'Django';
@@ -20,5 +20,17 @@ class Django implements Framework {
     public function customContext(): ?string
     {
         return null;
+    }
+
+    public function relevant(): array
+    {
+        // TODO:
+        return [];
+    }
+
+    public function ignorable(): array
+    {
+        // TODO:
+        return [];
     }
 }

@@ -5,7 +5,7 @@ namespace App\Atlas\Frameworks;
 use App\Atlas\Frameworks\Contracts\Framework;
 use App\SourceCode\DTO\Folder;
 
-class Next implements Framework {
+class Next extends Framework {
     public function name(): string
     {
         return 'Next';
@@ -19,5 +19,17 @@ class Next implements Framework {
     public function customContext(): ?string
     {
         return null;
+    }
+
+    public function relevant(): array
+    {
+        // TODO:
+        return [];
+    }
+
+    public function ignorable(): array
+    {
+        // TODO:
+        return [];
     }
 }

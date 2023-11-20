@@ -24,6 +24,20 @@ class Folder
         );
     }
 
+    public static function makeWithFiles(array $files, string $name, string $path, string $sha): static
+    {
+        $folder = new static($name, $path, $sha);
+        foreach ($files as $file) {
+            if ($file instanceof Folder) {
+                $folder->addFolder($file);
+            } else {
+                $folder->addFile($file);
+            }
+        }
+
+        return $folder;
+    }
+
     public function addFile(File $file)
     {
         $this->files[] = $file;
@@ -57,7 +71,7 @@ class Folder
     public function hasFile(string $path, bool $recursive = false): bool
     {
         if (!$recursive) {
-            return in_array($path, array_map(fn ($f) => $f->path, $this->files));
+            return in_array($path, array_map(fn ($f) => basename($f->path), $this->files));
         }
 
         foreach ($this->folders as $folder) {

@@ -11,7 +11,7 @@ use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
 use Illuminate\Support\Facades\Cache;
 
-class GitHubProvider implements SourceCodeProvider {
+class GitHubProvider extends SourceCodeProvider {
     public function repositories(): array
     {
         return Github\GetAllRepositories::make()->handle();

@@ -2,13 +2,16 @@
 
 namespace App\Actions\Codex\Architecture\SystemComponents;
 
+use App\Actions\AsAction;
 use App\Actions\Github\GetFile;
 use App\Actions\Openai\RunUntilFinished;
 use App\Enums\DocumentationSection;
-use App\GitHub\File;
-use App\Models\Project;
+use App\Enums\SystemComponentStatus;
+use App\LLM\Contracts\Llm;
+use App\Models\Branch;
 use App\Prompts\AutoDoc\SystemComponentsDescribeFile;
-use Lorisleiva\Actions\Concerns\AsAction;
+use App\SourceCode\DTO\Branch as DTOBranch;
+use App\SourceCode\DTO\File;
 use OpenAI;
 
 class ProcessSystemComponent
@@ -21,22 +24,28 @@ class ProcessSystemComponent
 
     public int $jobBackoff = 180;
 
-    public function handle(Project $project, string $owner, string $repo, File $file, int $order)
+    public function handle(Branch $branch, File $file, int $order)
     {
+        $repository = $branch->repository;
+        $sourceCodeAccount = $repository->sourceCodeAccount;
+        $project = $repository->project;
+        $provider = $sourceCodeAccount->getProvider();
+        $repoName = $repository->nameDto();
         try {
-            $file = GetFile::run($owner, $repo, $file->path);
-            $prompt = (new SystemComponentsDescribeFile($project, $file->path, $file->contents()))->prompt();
-            $client = OpenAI::client(config('services.openai.token'));
+            $file = $provider->file($repoName, $branch->dto(), $file->path);
+            $llm = app(Llm::class);
+            $explanation = $llm->describeFile($project, $file);
+            dd($explanation);
 
-            $explanation = RunUntilFinished::make()->handle($client, $prompt);
-            $extension = pathinfo($file->path, PATHINFO_EXTENSION);
-
-            $project->documentations()->create([
-                'section' => DocumentationSection::SystemComponents->value,
+            $branch->systemComponents()->updateOrCreate([
+                'path' => $file->path,
+            ], [
                 'order' => $order++,
-                'slug' => $file->sha,
-                'title' => $file->path,
-                'markdown_content' => $this->formatExplanation($explanation."\n\n```{$extension}\n".$file->contents()."\n```", $file->path),
+                'sha' => $file->sha,
+                'path' => $file->path,
+                'file_contents' => $file->contents(),
+                'markdown_docs' => $this->formatExplanation($explanation, $file->path),
+                'status' => SystemComponentStatus::Generated,
             ]);
         } catch (\Exception $e) {
             logger()->error($e->getMessage(), [

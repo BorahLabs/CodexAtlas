@@ -5,7 +5,7 @@ namespace App\Atlas\Frameworks;
 use App\Atlas\Frameworks\Contracts\Framework;
 use App\SourceCode\DTO\Folder;
 
-class React implements Framework {
+class React extends Framework {
     public function name(): string
     {
         return 'React';
@@ -20,5 +20,17 @@ class React implements Framework {
     public function customContext(): ?string
     {
         return null;
+    }
+
+    public function relevant(): array
+    {
+        // TODO:
+        return [];
+    }
+
+    public function ignorable(): array
+    {
+        // TODO:
+        return [];
     }
 }

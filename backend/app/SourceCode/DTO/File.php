@@ -30,6 +30,7 @@ class File
             return $this->contents;
         }
 
-        return file_get_contents($this->downloadUrl);
+        $this->contents = file_get_contents($this->downloadUrl);
+        return $this->contents;
     }
 }

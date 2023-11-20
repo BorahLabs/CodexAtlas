@@ -2,13 +2,17 @@
 
 namespace App\Actions\Codex\Architecture;
 
+use App\Actions\AsAction;
 use App\Actions\Codex\Architecture\SystemComponents\ProcessSystemComponent;
+use App\Atlas\Frameworks\Contracts\Framework;
+use App\Atlas\Guesser;
 use App\Models\Branch;
 use App\SourceCode\Contracts\SourceCodeProvider;
 use App\SourceCode\DTO\Branch as DTOBranch;
 use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\RepositoryName;
-use Lorisleiva\Actions\Concerns\AsAction;
+
+// use Lorisleiva\Actions\Concerns\AsAction;
 
 class SystemComponents
 {
@@ -17,20 +21,21 @@ class SystemComponents
     public function handle(Branch $branch)
     {
         $repository = $branch->repository;
-        $project = $repository->project;
         $sourceCodeAccount = $repository->sourceCodeAccount;
 
         /**
          * @var SourceCodeProvider
          */
-        $provider = $sourceCodeAccount->provider->provider();
+        $provider = $sourceCodeAccount->getProvider();
+        $repoName = $repository->nameDto();
         $filesAndFolders = $provider->files(
-            repository: new RepositoryName(username: $repository->username, name: $repository->name),
+            repository: $repoName,
             branch: new DTOBranch(name: $branch->name),
             path: null,
         );
 
-        $files = $this->filterFilesAccordingToPreset($filesAndFolders, $project->projectPreset);
+        $framework = $this->detectFramework(Folder::makeWithFiles($filesAndFolders, $repoName->name, $repoName->username, sha1($repoName->fullName)));
+        $files = $this->filterFiles($filesAndFolders, $framework);
         $order = 1;
         foreach ($files as $file) {
             ProcessSystemComponent::dispatch($branch, $file, $order);
@@ -38,30 +43,35 @@ class SystemComponents
         }
     }
 
-    private function filterFilesAccordingToPreset(array $files, ?ProjectPreset $preset): array
+    private function detectFramework(Folder $folder): Framework
     {
-        if (is_null($preset)) {
+        // First, we will try to see if there's one framework in the whole project
+        $framework = Guesser::make()->guessFramework($folder);
+
+        // TODO: Detect mulitple frameworks in subfolders. Monorepos? Inertia (maybe Inertia and Livewire should be their own framework?
+        return $framework;
+    }
+
+    private function filterFiles(array $files, ?Framework $framework): array
+    {
+        if (is_null($framework)) {
             return $files;
         }
 
         $filtered = [];
         foreach ($files as $file) {
-            if ($preset->fileIsIgnored($file->path)) {
+            if ($framework->shouldBeIgnored($file->path)) {
                 continue;
             }
 
             if ($file instanceof Folder) {
                 $filtered = [
                     ...$filtered,
-                    ...$this->filterFilesAccordingToPreset($file->files, $preset),
-                    ...$this->filterFilesAccordingToPreset($file->folders, $preset),
+                    ...$this->filterFiles($file->files, $framework),
+                    ...$this->filterFiles($file->folders, $framework),
                 ];
-            } else {
-                if ($preset->hasFile($file->path)) {
-                    $filtered[] = $file;
-
-                    continue;
-                }
+            } else if ($framework->mightBeRelevant($file->path)) {
+                $filtered[] = $file;
             }
         }
 
