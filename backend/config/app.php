@@ -59,6 +59,8 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
+    'main_domain' => env('APP_DOMAIN', 'codexatlas.app'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

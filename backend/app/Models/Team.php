@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Actions\Platform\GenerateTeamPlatformDomain;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -45,6 +46,17 @@ class Team extends JetstreamTeam
         'deleted' => TeamDeleted::class,
     ];
 
+    public static function booted()
+    {
+        parent::booted();
+
+        static::created(function (Team $team) {
+            $team->platforms()->create([
+                'domain' => GenerateTeamPlatformDomain::run($team),
+            ]);
+        });
+    }
+
     public function sourceCodeAccounts(): HasMany
     {
         return $this->hasMany(SourceCodeAccount::class);
@@ -53,5 +65,10 @@ class Team extends JetstreamTeam
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class);
+    }
+
+    public function platforms(): HasMany
+    {
+        return $this->hasMany(Platform::class);
     }
 }

@@ -26,7 +26,7 @@ use Laravel\Socialite\Facades\Socialite;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::middleware([
@@ -59,4 +59,7 @@ Route::middleware([
             ]);
         });
     });
+});
+
+Route::domain('{platform:domain}', function () {
 });
