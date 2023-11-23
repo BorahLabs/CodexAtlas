@@ -7,12 +7,7 @@ use App\Actions\Platform\Projects\StoreProject;
 use App\Actions\Platform\Repositories\StoreRepository;
 use App\Actions\Platform\ShowDocs;
 use App\Actions\Platform\ShowReadme;
-use App\Enums\SourceCodeProvider;
-use App\Models\SourceCodeAccount;
-use GrahamCampbell\GitHub\Facades\GitHub;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +49,7 @@ Route::middleware([
 
         Route::get('webhook', function () {
             logger(request()->all());
+
             return response()->json([
                 'message' => 'ok',
             ]);

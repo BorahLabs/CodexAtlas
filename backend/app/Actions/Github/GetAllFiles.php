@@ -8,7 +8,6 @@ use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\RepositoryName;
-use GrahamCampbell\GitHub\Facades\GitHub;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetAllFiles

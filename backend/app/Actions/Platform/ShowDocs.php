@@ -23,7 +23,7 @@ class ShowDocs
         ]);
     }
 
-    public function asController(Project $project, Repository $repository, Branch $branch, ?SystemComponent $systemComponent = null)
+    public function asController(Project $project, Repository $repository, Branch $branch, SystemComponent $systemComponent = null)
     {
         if (is_null($systemComponent)) {
             return redirect()->route('docs.show-component', [

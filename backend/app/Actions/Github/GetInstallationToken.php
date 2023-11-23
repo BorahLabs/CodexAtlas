@@ -14,9 +14,10 @@ class GetInstallationToken
     {
         return Cache::remember('github-installation-token', now()->addMinutes(50), function () use ($installationId) {
             $response = GitHub::apps()->createInstallationToken($installationId);
+
             return [
                 $response['token'],
-                $response['expires_at']
+                $response['expires_at'],
             ];
         });
     }

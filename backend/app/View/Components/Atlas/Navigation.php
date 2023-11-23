@@ -14,6 +14,7 @@ use Illuminate\View\Component;
 class Navigation extends Component
 {
     public Collection $sections;
+
     /**
      * Create a new component instance.
      */

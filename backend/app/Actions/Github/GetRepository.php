@@ -6,7 +6,6 @@ use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
-use GrahamCampbell\GitHub\Facades\GitHub;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetRepository

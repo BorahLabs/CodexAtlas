@@ -21,6 +21,7 @@ class GenerateProjectDocumentation
     public function asController(Project $project)
     {
         $this->handle($project);
+
         return redirect()->back();
     }
 }

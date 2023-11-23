@@ -2,7 +2,6 @@
 
 namespace App\Actions\Platform\Repositories;
 
-use App\Models\Branch;
 use App\Models\Project;
 use App\Models\Repository;
 use App\SourceCode\DTO\Branch as DTOBranch;
@@ -23,6 +22,7 @@ class StoreRepository
             $repository = $sourceCodeAccount->getProvider()->repository($repo);
         } catch (\Exception $e) {
             logger($e);
+
             return redirect()->back()->withErrors([
                 'name' => 'The repository '.$repo->fullName.' could not be found. Please, make sure it belongs to the selected account.',
             ]);
@@ -58,6 +58,7 @@ class StoreRepository
         ]);
 
         $repository = $this->handle($project, $validated['source_code_account_id'], $validated['name']);
+
         return redirect()->route('projects.show', ['project' => $project]);
     }
 }

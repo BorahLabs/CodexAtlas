@@ -5,7 +5,6 @@ namespace App\Actions\Github;
 use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Repository;
-use GrahamCampbell\GitHub\Facades\GitHub;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetAllRepositories
@@ -22,6 +21,7 @@ class GetAllRepositories
          * @var \Github\Api\CurrentUser $api
          */
         $api = $client->api('me');
+
         return collect($api->repositories())
             ->map(fn ($repo) => new Repository(
                 id: $repo['id'],

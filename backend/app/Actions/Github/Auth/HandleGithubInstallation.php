@@ -39,6 +39,7 @@ class HandleGithubInstallation
             'installation_id' => 'required|string',
         ]);
         $this->handle($request->input('installation_id'), $request->user()->currentTeam);
+
         return redirect()->route('dashboard');
     }
 }

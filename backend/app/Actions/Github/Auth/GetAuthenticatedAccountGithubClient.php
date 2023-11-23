@@ -26,6 +26,7 @@ class GetAuthenticatedAccountGithubClient
         $config = config('github.connections.jwt');
         $config['token'] = $token;
         $client = GitHub::getFactory()->make($config);
+
         return $client;
     }
 }

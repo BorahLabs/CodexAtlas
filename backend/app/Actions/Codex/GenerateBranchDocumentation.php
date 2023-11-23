@@ -12,7 +12,7 @@ class GenerateBranchDocumentation
 
     public function handle(Branch $branch)
     {
-        logger()->debug('[Codex] Dispatching System Components for branch ' . $branch->name . ' on repository ' . $branch->repository->name . ' on project ' . $branch->repository->project->name);
+        logger()->debug('[Codex] Dispatching System Components for branch '.$branch->name.' on repository '.$branch->repository->name.' on project '.$branch->repository->project->name);
         SystemComponents::dispatch($branch);
     }
 }

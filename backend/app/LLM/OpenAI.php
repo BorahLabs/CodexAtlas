@@ -46,9 +46,9 @@ Some rules:
 
     public function fileDescriptionUserPrompt(Project $project, File $file): string
     {
-        return 'You are writing documentation for a file in the ' . $project->name . ' project. The file is located at ' . $file->path . '. These are the file contents:
-```' . $file->extension() . '
-' . $file->contents() . '
+        return 'You are writing documentation for a file in the '.$project->name.' project. The file is located at '.$file->path.'. These are the file contents:
+```'.$file->extension().'
+'.$file->contents().'
 ```';
     }
 
@@ -66,7 +66,7 @@ Some rules:
                     'content' => $userPrompt,
                 ],
             ],
-            'stop' => ['-----', "\nEND"]
+            'stop' => ['-----', "\nEND"],
         ]);
 
         return $response->choices[0]->message->content;

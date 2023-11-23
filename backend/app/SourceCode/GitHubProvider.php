@@ -56,6 +56,6 @@ class GitHubProvider extends SourceCodeProvider
 
     public function url(RepositoryName $repository): string
     {
-        return 'https://github.com/' . $repository->fullName;
+        return 'https://github.com/'.$repository->fullName;
     }
 }

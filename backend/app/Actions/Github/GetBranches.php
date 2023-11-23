@@ -22,6 +22,7 @@ class GetBranches
          * @var \Github\Api\GitData $api
          */
         $api = $client->api('gitData');
+
         return collect($api->references()->branches($repository->username, $repository->name))
             ->map(fn ($branch) => $branch['name'] ?? $branch['ref'])
             ->map(fn ($branch) => str_replace('refs/heads/', '', $branch))

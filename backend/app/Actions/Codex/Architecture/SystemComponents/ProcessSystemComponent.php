@@ -20,7 +20,7 @@ class ProcessSystemComponent
 
     public function handle(Branch $branch, File $file, int $order)
     {
-        logger()->debug('[Codex] Processing file ' . $file->path . ' branch ' . $branch->id);
+        logger()->debug('[Codex] Processing file '.$file->path.' branch '.$branch->id);
         $repository = $branch->repository;
         $sourceCodeAccount = $repository->sourceCodeAccount;
         $project = $repository->project;

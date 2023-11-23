@@ -49,7 +49,7 @@ class SystemComponent extends Model
     public function language(): Attribute
     {
         return Attribute::make(
-            get: fn () => match(true) {
+            get: fn () => match (true) {
                 str_ends_with($this->path, '.blade.php') => 'blade',
                 default => pathinfo($this->path, PATHINFO_EXTENSION),
             }
@@ -60,7 +60,7 @@ class SystemComponent extends Model
     {
         return Attribute::make(
             get: function () {
-                return $this->markdown_docs . "\n\n```" . $this->language . "\n" . $this->file_contents . "\n```";
+                return $this->markdown_docs."\n\n```".$this->language."\n".$this->file_contents."\n```";
             },
         );
     }

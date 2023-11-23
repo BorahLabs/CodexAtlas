@@ -25,6 +25,7 @@ class StoreProject
         ]);
 
         $this->handle($request->user()->currentTeam, $request->input('name'));
+
         return redirect()->route('dashboard');
     }
 }
