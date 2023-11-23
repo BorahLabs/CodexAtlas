@@ -25,15 +25,19 @@ class SystemComponents
          */
         $provider = $sourceCodeAccount->getProvider();
         $repoName = $repository->nameDto();
+        logger()->debug('[Codex] Getting files for branch ' . $branch->id);
         $filesAndFolders = $provider->files(
             repository: $repoName,
             branch: new DTOBranch(name: $branch->name),
             path: null,
         );
 
+        logger()->debug('[Codex] Detecting framework for branch ' . $branch->id);
         $framework = $this->detectFramework(Folder::makeWithFiles($filesAndFolders, $repoName->name, $repoName->username, sha1($repoName->fullName)));
+        logger()->debug('[Codex] Framework detected: ' . $framework->name() . ' for branch ' . $branch->id);
         $files = $this->filterFiles($filesAndFolders, $framework);
         $order = 1;
+        logger()->debug('[Codex] Dispatching components processing for branch ' . $branch->id);
         foreach ($files as $file) {
             ProcessSystemComponent::dispatch($branch, $file, $order);
             $order += 1;

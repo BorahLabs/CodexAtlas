@@ -34,4 +34,9 @@ class File
 
         return $this->contents;
     }
+
+    public function extension(): string
+    {
+        return pathinfo($this->name, PATHINFO_EXTENSION);
+    }
 }

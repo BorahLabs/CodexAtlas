@@ -20,6 +20,7 @@ class ProcessSystemComponent
 
     public function handle(Branch $branch, File $file, int $order)
     {
+        logger()->debug('[Codex] Processing file ' . $file->path . ' branch ' . $branch->id);
         $repository = $branch->repository;
         $sourceCodeAccount = $repository->sourceCodeAccount;
         $project = $repository->project;
@@ -29,7 +30,6 @@ class ProcessSystemComponent
             $file = $provider->file($repoName, $branch->dto(), $file->path);
             $llm = app(Llm::class);
             $explanation = $llm->describeFile($project, $file);
-            dd($explanation);
 
             $branch->systemComponents()->updateOrCreate([
                 'path' => $file->path,
@@ -44,6 +44,7 @@ class ProcessSystemComponent
         } catch (\Exception $e) {
             logger()->error($e->getMessage(), [
                 'file' => $file->path,
+                'branch' => $branch->id,
             ]);
 
             throw $e;

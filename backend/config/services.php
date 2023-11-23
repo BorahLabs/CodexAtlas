@@ -31,4 +31,16 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'github' => [
+        'client_id' => env('GITHUB_CLIENT_ID'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET'),
+        'redirect' => env('GITHUB_CALLBACK_URL'),
+    ],
+
+    'openai' => [
+        'key' => env('OPENAI_API_KEY'),
+        'completion_model' => env('OPENAI_COMPLETION_MODEL', 'gpt-3.5-turbo-16k'),
+        'embeddings_model' => env('OPENAI_EMBEDDINGS_MODEL', 'text-embedding-ada-002'),
+    ],
+
 ];

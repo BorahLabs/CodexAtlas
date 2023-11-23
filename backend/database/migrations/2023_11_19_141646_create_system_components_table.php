@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignUuid('branch_id')->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('order')->index();
             $table->string('path', 1024);
-            $table->string('sha')->unique();
+            $table->string('sha');
             $table->mediumText('file_contents')->nullable();
             $table->mediumText('markdown_docs')->nullable();
             $table->string('status', 32);
@@ -24,6 +24,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->unique(['branch_id', 'path']);
+            $table->unique(['branch_id', 'sha']);
         });
     }
 

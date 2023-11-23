@@ -2,6 +2,8 @@
 
 namespace App\Actions\Github;
 
+use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
+use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
@@ -13,10 +15,14 @@ class GetAllFiles
 {
     use AsAction;
 
-    public function handle(RepositoryName $repository, Branch $branch, string $path = null): array
+    public function handle(SourceCodeAccount $account, RepositoryName $repository, Branch $branch, string $path = null): array
     {
-        // TODO: Set branch
-        $rawFiles = GitHub::repo()->contents()->show($repository->username, $repository->name, $path);
+        $client = GetAuthenticatedAccountGithubClient::make()->handle($account);
+        /**
+         * @var \Github\Api\Repo $api
+         */
+        $api = $client->api('repo');
+        $rawFiles = $api->contents()->show($repository->username, $repository->name, $path, $branch->name);
         if (! isset($rawFiles[0]) && ! empty($rawFiles)) {
             $rawFiles = [$rawFiles];
         }
@@ -25,7 +31,7 @@ class GetAllFiles
         foreach ($rawFiles as $file) {
             if ($file['type'] === 'dir') {
                 $folder = Folder::from($file);
-                $children = $this->handle($repository, $branch, $file['path']);
+                $children = $this->handle($account, $repository, $branch, $file['path']);
                 foreach ($children as $child) {
                     if ($child instanceof File) {
                         $folder->addFile($child);

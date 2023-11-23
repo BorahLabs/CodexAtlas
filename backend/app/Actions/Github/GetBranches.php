@@ -2,9 +2,10 @@
 
 namespace App\Actions\Github;
 
+use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
+use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\RepositoryName;
-use GrahamCampbell\GitHub\Facades\GitHub;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetBranches
@@ -14,10 +15,17 @@ class GetBranches
     /**
      * @return Branch[]
      */
-    public function handle(RepositoryName $repository)
+    public function handle(SourceCodeAccount $account, RepositoryName $repository)
     {
-        return collect(GitHub::gitData()->references()->branches($repository->username, $repository->name))
-            ->map(fn ($branch) => new Branch($branch['name']))
+        $client = GetAuthenticatedAccountGithubClient::make()->handle($account);
+        /**
+         * @var \Github\Api\GitData $api
+         */
+        $api = $client->api('gitData');
+        return collect($api->references()->branches($repository->username, $repository->name))
+            ->map(fn ($branch) => $branch['name'] ?? $branch['ref'])
+            ->map(fn ($branch) => str_replace('refs/heads/', '', $branch))
+            ->mapInto(Branch::class)
             ->toArray();
     }
 }

@@ -39,6 +39,11 @@ class Repository extends Model
         );
     }
 
+    public function url(): string
+    {
+        return $this->sourceCodeAccount->getProvider()->url($this->nameDto());
+    }
+
     public function nameDto(): RepositoryName
     {
         return new RepositoryName(

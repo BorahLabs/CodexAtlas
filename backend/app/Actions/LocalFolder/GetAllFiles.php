@@ -19,7 +19,12 @@ class GetAllFiles
         $rawFiles = FacadesFile::files($path);
         $directories = FacadesFile::directories($path);
 
-        $isBlacklisted = fn (string $p) => str($p)->contains(['node_modules', 'vendor']);
+        $isBlacklisted = fn (string $p) => str($p)->contains([
+            'node_modules',
+            'vendor',
+            '/build/',
+            '/dist/',
+        ]);
 
         $files = [];
         foreach ($rawFiles as $file) {

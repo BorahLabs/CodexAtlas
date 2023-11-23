@@ -2,6 +2,8 @@
 
 namespace App\Actions\Github;
 
+use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
+use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
@@ -13,10 +15,14 @@ class GetFile
 {
     use AsAction;
 
-    public function handle(RepositoryName $repository, Branch $branch, string $path): File|Folder
+    public function handle(SourceCodeAccount $account, RepositoryName $repository, Branch $branch, string $path): File|Folder
     {
-        // TODO:
-        $rawFile = GitHub::repo()->contents()->show($repository->username, $repository->name, $path);
+        $client = GetAuthenticatedAccountGithubClient::make()->handle($account);
+        /**
+         * @var \Github\Api\Repo $api
+         */
+        $api = $client->api('repo');
+        $rawFile = $api->contents()->show($repository->username, $repository->name, $path, $branch->name);
 
         if ($rawFile['type'] === 'dir') {
             return Folder::from($rawFile);

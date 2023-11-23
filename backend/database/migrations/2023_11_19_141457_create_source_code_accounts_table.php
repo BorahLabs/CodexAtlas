@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('external_id')->index();
             $table->string('access_token')->nullable();
             $table->string('refresh_token')->nullable();
+            $table->string('installation_id')->nullable();
+            $table->dateTime('expires_at')->nullable()->index();
             $table->timestamps();
             $table->softDeletes();
         });

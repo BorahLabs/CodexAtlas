@@ -2,6 +2,8 @@
 
 namespace App\Actions\Github;
 
+use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
+use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Repository;
 use GrahamCampbell\GitHub\Facades\GitHub;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -13,9 +15,14 @@ class GetAllRepositories
     /**
      * @return Repository[]
      */
-    public function handle(): array
+    public function handle(SourceCodeAccount $account): array
     {
-        return collect(GitHub::me()->repositories())
+        $client = GetAuthenticatedAccountGithubClient::make()->handle($account);
+        /**
+         * @var \Github\Api\CurrentUser $api
+         */
+        $api = $client->api('me');
+        return collect($api->repositories())
             ->map(fn ($repo) => new Repository(
                 id: $repo['id'],
                 name: $repo['name'],

@@ -60,4 +60,19 @@ abstract class SourceCodeProvider
      * Returns a single file and its contents
      */
     abstract public function file(RepositoryName $repository, Branch $branch, string $path): File|Folder;
+
+    /**
+     * Path to the view containing the icon of the provider
+     */
+    abstract public function icon(): string;
+
+    /**
+     * Name of the provider
+     */
+    abstract public function name(): string;
+
+    /**
+     * Returns a URL to the repository
+     */
+    abstract public function url(RepositoryName $repository): string;
 }

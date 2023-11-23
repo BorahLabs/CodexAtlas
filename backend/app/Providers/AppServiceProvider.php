@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\LLM\Contracts\Llm;
-use App\LLM\DumbLocalLlm;
+use App\LLM\OpenAI;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,7 +24,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::unguard();
 
+        // \URL::forceScheme('https');
+
         // TODO:
-        $this->app->bind(Llm::class, fn () => new DumbLocalLlm());
+        $this->app->bind(Llm::class, fn () => new OpenAI());
     }
 }

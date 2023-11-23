@@ -21,7 +21,8 @@ class Branch extends Model
 
     public function systemComponents(): HasMany
     {
-        return $this->hasMany(SystemComponent::class);
+        return $this->hasMany(SystemComponent::class)
+            ->orderBy('order', 'ASC');
     }
 
     public function dto(): DTOBranch
