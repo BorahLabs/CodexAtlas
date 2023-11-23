@@ -7,6 +7,7 @@ use App\Actions\Platform\Projects\StoreProject;
 use App\Actions\Platform\Repositories\StoreRepository;
 use App\Actions\Platform\ShowDocs;
 use App\Actions\Platform\ShowReadme;
+use App\Http\Middleware\ControlRequestsFromPlatform;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,10 +37,6 @@ Route::middleware([
     Route::post('/projects/{project}/repositories', StoreRepository::class)->name('repositories.store');
     Route::post('/projects/{project}/generate-docs', GenerateProjectDocumentation::class)->name('projects.generate-docs');
 
-    Route::get('/docs/{project}/{repository}/{branch}', ShowDocs::class)->name('docs.show');
-    Route::get('/docs/{project}/{repository}/{branch}/readme', ShowReadme::class)->name('docs.show-readme');
-    Route::get('/docs/{project}/{repository}/{branch}/{systemComponent}', ShowDocs::class)->name('docs.show-component');
-
     Route::prefix('github')->group(function () {
         Route::get('redirect', function () {
             return redirect()->to('https://github.com/apps/codexatlas');
@@ -57,5 +54,8 @@ Route::middleware([
     });
 });
 
-Route::domain('{platform:domain}', function () {
+Route::middleware(ControlRequestsFromPlatform::class)->group(function () {
+    Route::get('/docs/{project}/{repository}/{branch}', ShowDocs::class)->name('docs.show');
+    Route::get('/docs/{project}/{repository}/{branch}/readme', ShowReadme::class)->name('docs.show-readme');
+    Route::get('/docs/{project}/{repository}/{branch}/{systemComponent}', ShowDocs::class)->name('docs.show-component');
 });

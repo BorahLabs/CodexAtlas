@@ -61,6 +61,8 @@ return [
 
     'main_domain' => env('APP_DOMAIN', 'codexatlas.app'),
 
+    'fake_domain' => env('FAKED_APP_DOMAIN'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

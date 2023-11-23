@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('domain')->unique();
             $table->string('temporary_domain')->nullable();
             $table->boolean('dns_verified')->default(false);
+            $table->boolean('is_public')->default(false);
             $table->string('primary_color')->nullable();
             $table->timestamps();
         });
