@@ -5,7 +5,7 @@
             <div class="relative z-10 text-center">
                 <div class="relative">
                     <p
-                        class="inline bg-gradient-to-r from-indigo-200 to-indigo-400 bg-clip-text font-bold font-display text-5xl tracking-tight text-transparent">
+                        class="inline bg-gradient-to-r from-violet-200 to-violet-400 bg-clip-text font-bold font-display text-5xl tracking-tight text-transparent">
                         {{ $repository->name }}
                     </p>
                     <div class="mt-3 text-2xl tracking-tight text-slate-400">

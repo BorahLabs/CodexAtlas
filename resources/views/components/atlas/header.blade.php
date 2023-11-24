@@ -1,5 +1,5 @@
 <div class="flex items-center justify-between">
-    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+    <h2 class="font-semibold text-xl text-gray-200 leading-tight">
         {{ $project->name }} &gt; {{ $repository->name }} &gt; {{ $branch->name }}
     </h2>
     <div class="relative flex basis-0 items-center justify-end gap-6 sm:gap-8 md:flex-grow">

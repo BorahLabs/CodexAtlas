@@ -42,7 +42,7 @@ export default {
                     900: '#7c2d12',
                 },
 
-                gray: {
+                newGray: {
                     50: '#EFF0F3',
                     100: '#E5E6EB',
                     200: '#D7D9DF',
