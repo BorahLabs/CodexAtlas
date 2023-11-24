@@ -71,4 +71,9 @@ class Team extends JetstreamTeam
     {
         return $this->hasMany(Platform::class);
     }
+
+    public function currentPlatform(): Platform
+    {
+        return $this->platforms->first();
+    }
 }
