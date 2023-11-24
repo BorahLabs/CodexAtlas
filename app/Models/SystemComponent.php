@@ -18,6 +18,7 @@ class SystemComponent extends Model
 
     protected $casts = [
         'status' => SystemComponentStatus::class,
+        'file_contents' => 'encrypted',
     ];
 
     public function branch(): BelongsTo
