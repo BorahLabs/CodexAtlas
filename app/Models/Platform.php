@@ -18,11 +18,8 @@ class Platform extends Model
 
     public function route(string $path, $parameters = []): string
     {
-        /**
-         * @var UrlGenerator
-         */
-        $generator = app(UrlGenerator::class);
-        $generator->forceRootUrl(str($this->domain)->start('https://'));
-        return $generator->route($path, $parameters);
+        $url = route($path, $parameters);
+        $host = str($url)->after('://')->before('/')->toString();
+        return str($url)->replaceFirst($host, $this->domain)->toString();
     }
 }
