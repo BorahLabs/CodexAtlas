@@ -13,8 +13,13 @@
                 </div>
             </div>
             <div class="min-w-0 max-w-2xl flex-auto px-4 py-16 lg:max-w-none lg:pl-8 lg:pr-0 xl:px-16">
-                <p class="mt-12 text-slate-500 text-right">Last updated at: {{ $lastModifiedAt->format('d/m/Y H:i') }}
-                </p>
+                <div class="mb-12 flex justify-start">
+                    <p
+                        class="text-slate-600 text-sm text-right bg-slate-300 px-4 py-2 flex items-center justify-center space-x-2 rounded-md">
+                        <x-codex.icons.clock class="h-4 w-4" />
+                        <span>Last updated at: {{ $lastModifiedAt->format('d/m/Y H:i') }}</span>
+                    </p>
+                </div>
                 <article>
                     @isset($systemComponent)
                         <x-atlas.system-component :systemComponent="$systemComponent" />

@@ -34,6 +34,11 @@ class ControlRequestsFromPlatform
 
         abort_unless($platform->team->hasUser($request->user()), 403, 'Forbidden');
 
+        if ($request->route('project')) {
+            $projectId = is_string($request->route('project')) ? $request->route('project') : $request->route('project')->id;
+            abort_unless($platform->team->projects()->where('id', $projectId)->exists(), 404, 'Not found');
+        }
+
         return $next($request);
     }
 }
