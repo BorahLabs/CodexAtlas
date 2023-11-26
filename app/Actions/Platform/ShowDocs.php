@@ -26,11 +26,10 @@ class ShowDocs
     public function asController(Project $project, Repository $repository, Branch $branch, SystemComponent $systemComponent = null)
     {
         if (is_null($systemComponent)) {
-            return redirect()->route('docs.show-component', [
+            return redirect()->route('docs.show-readme', [
                 'project' => $project,
                 'repository' => $repository,
                 'branch' => $branch,
-                'systemComponent' => $branch->systemComponents()->firstOrFail(),
             ]);
         }
 

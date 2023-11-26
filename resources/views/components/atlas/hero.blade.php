@@ -13,7 +13,7 @@
                     </div>
                     <div class="mt-8 flex gap-4 justify-center">
                         <x-button
-                            href="{{ route('docs.show', ['project' => $project, 'repository' => $repository, 'branch' => $branch]) }}">Get
+                            href="{{ route('docs.show-readme', ['project' => $project, 'repository' => $repository, 'branch' => $branch]) }}">Get
                             started</x-button>
                         <x-button href="{{ $repository->url() }}" variant="secondary" target="_blank">
                             View on {{ $repository->sourceCodeAccount->getProvider()->name() }}

@@ -8,7 +8,7 @@
                     <div>
                         @foreach ($repository->branches as $branch)
                             <a
-                                href="{{ $project->team->currentPlatform()->route('docs.show', ['project' => $project, 'repository' => $repository, 'branch' => $branch]) }}"><span
+                                href="{{ $project->team->currentPlatform()->route('docs.show-readme', ['project' => $project, 'repository' => $repository, 'branch' => $branch]) }}"><span
                                     class="text-xs px-2 py-1 bg-violet-500 font-medium rounded">{{ $branch->name }}</span></a>
                         @endforeach
                     </div>
