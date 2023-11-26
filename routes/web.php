@@ -34,7 +34,6 @@ Route::middleware([
     Route::get('/projects/{project}', ShowProject::class)->name('projects.show');
 
     Route::post('/projects/{project}/repositories', StoreRepository::class)->name('repositories.store');
-    Route::post('/projects/{project}/generate-docs', GenerateProjectDocumentation::class)->name('projects.generate-docs');
 
     Route::prefix('github')->group(function () {
         Route::get('redirect', fn () => redirect()->to('https://github.com/apps/codexatlas/installations/select_target'))->name('github.redirect');
