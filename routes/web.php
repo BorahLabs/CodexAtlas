@@ -9,6 +9,7 @@ use App\Actions\Platform\ShowDocs;
 use App\Actions\Platform\ShowReadme;
 use App\Http\Middleware\ControlRequestsFromPlatform;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,11 +37,22 @@ Route::middleware([
     Route::post('/projects/{project}/generate-docs', GenerateProjectDocumentation::class)->name('projects.generate-docs');
 
     Route::prefix('github')->group(function () {
-        Route::get('redirect', function () {
-            return redirect()->to('https://github.com/apps/codexatlas');
-        })->name('github.redirect');
-
+        Route::get('redirect', fn () => redirect()->to('https://github.com/apps/codexatlas/installations/select_target'))->name('github.redirect');
         Route::get('installation', HandleGithubInstallation::class)->middleware('throttle:3,1');
+
+        Route::get('webhook', function () {
+            logger(request()->all());
+
+            return response()->json([
+                'message' => 'ok',
+            ]);
+        });
+    });
+
+    Route::prefix('gitlab')->group(function () {
+        Route::get('redirect', function () {
+            return Socialite::driver('gitlab')->redirect();
+        })->name('gitlab.redirect');
 
         Route::get('webhook', function () {
             logger(request()->all());

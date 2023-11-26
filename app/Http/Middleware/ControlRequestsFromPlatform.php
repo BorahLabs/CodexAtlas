@@ -23,6 +23,7 @@ class ControlRequestsFromPlatform
 
         abort_if($host === config('app.main_domain'), 404, 'Not Found');
         $platform = Platform::where('domain', $host)->firstOrFail();
+
         if ($platform->is_public) {
             return $next($request);
         }

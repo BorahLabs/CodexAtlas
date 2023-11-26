@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\Repository;
 use App\SourceCode\DTO\Branch as DTOBranch;
 use App\SourceCode\DTO\RepositoryName;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -13,13 +14,13 @@ class StoreRepository
 {
     use AsAction;
 
-    public function handle(Project $project, string $sourceAccountId, string $name): Repository
+    public function handle(Project $project, string $sourceAccountId, string $name): Repository|RedirectResponse
     {
         $sourceCodeAccount = $project->team->sourceCodeAccounts()->findOrFail($sourceAccountId);
         [$username, $name] = explode('/', $name);
         $repo = new RepositoryName($username, $name);
+        $repository = $sourceCodeAccount->getProvider()->repository($repo);
         try {
-            $repository = $sourceCodeAccount->getProvider()->repository($repo);
         } catch (\Exception $e) {
             logger($e);
 
@@ -38,7 +39,7 @@ class StoreRepository
 
         if ($repository->branches->isEmpty()) {
             $branches = $sourceCodeAccount->getProvider()->branches($repo);
-            $whitelist = ['main', 'master', 'production', 'release', 'dev', 'develop', 'staging'];
+            $whitelist = ['main', 'master', 'production', 'prod', 'release', 'dev', 'develop', 'staging'];
             collect($branches)
                 ->filter(fn ($branch) => in_array($branch->name, $whitelist))
                 ->values()

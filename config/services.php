@@ -37,6 +37,12 @@ return [
         'redirect' => env('GITHUB_CALLBACK_URL'),
     ],
 
+    'gitlab' => [
+        'client_id' => env('GITLAB_CLIENT_ID'),
+        'client_secret' => env('GITLAB_CLIENT_SECRET'),
+        'redirect' => env('GITLAB_REDIRECT_URI')
+    ],
+
     'openai' => [
         'key' => env('OPENAI_API_KEY'),
         'completion_model' => env('OPENAI_COMPLETION_MODEL', 'gpt-3.5-turbo-16k'),
