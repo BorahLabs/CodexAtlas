@@ -8,25 +8,29 @@ use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\RepositoryName;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class GetBranches
+class GetProjectIdForRepository
 {
     use AsAction;
 
     /**
      * @return Branch[]
      */
-    public function handle(SourceCodeAccount $account, RepositoryName $repository)
+    public function handle(SourceCodeAccount $account, RepositoryName $repository): string|int
     {
         /**
          * @var \GrahamCampbell\GitLab\GitLabManager $client
          */
         $client = GetAuthenticatedAccountGitlabClient::make()->handle($account);
-        $projectId = GetProjectIdForRepository::make()->handle($account, $repository);
-        $branches = $client->repositories()->branches($projectId);
+        $repo = $client->projects()->all([
+            'membership' => true,
+            'search' => $repository->fullName,
+            'search_namespaces' => true,
+        ]);
 
-        return collect($branches)
-            ->map(fn ($branch) => $branch['name'])
-            ->mapInto(Branch::class)
-            ->toArray();
+        if (empty($repo)) {
+            throw new \Exception('Repository '.$repository->fullName.' not found');
+        }
+
+        return $repo[0]['id'];
     }
 }
