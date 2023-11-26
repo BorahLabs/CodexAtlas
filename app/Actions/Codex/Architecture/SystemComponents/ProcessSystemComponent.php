@@ -4,7 +4,9 @@ namespace App\Actions\Codex\Architecture\SystemComponents;
 
 use App\Enums\SystemComponentStatus;
 use App\LLM\Contracts\Llm;
+use App\LLM\DTO\CompletionResponse;
 use App\Models\Branch;
+use App\Models\ProcessingLogEntry;
 use App\SourceCode\DTO\File;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -29,7 +31,10 @@ class ProcessSystemComponent
         try {
             $file = $provider->file($repoName, $branch->dto(), $file->path);
             $llm = app(Llm::class);
-            $explanation = $llm->describeFile($project, $file);
+            /**
+             * @var CompletionResponse
+             */
+            $completion = $llm->describeFile($project, $file);
 
             $branch->systemComponents()->updateOrCreate([
                 'path' => $file->path,
@@ -38,9 +43,11 @@ class ProcessSystemComponent
                 'sha' => $file->sha,
                 'path' => $file->path,
                 'file_contents' => $file->contents(),
-                'markdown_docs' => $this->formatExplanation($explanation, $file->path),
+                'markdown_docs' => $this->formatExplanation($completion->completion, $file->path),
                 'status' => SystemComponentStatus::Generated,
             ]);
+
+            ProcessingLogEntry::write($branch, $file->path, class_basename($llm), $llm->modelName(), $completion);
         } catch (\Exception $e) {
             logger()->error($e->getMessage(), [
                 'file' => $file->path,

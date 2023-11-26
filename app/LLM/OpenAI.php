@@ -3,6 +3,7 @@
 namespace App\LLM;
 
 use App\LLM\Contracts\Llm;
+use App\LLM\DTO\CompletionResponse;
 use App\Models\Project;
 use App\SourceCode\DTO\File;
 use OpenAI\Laravel\Facades\OpenAI as FacadesOpenAI;
@@ -52,10 +53,16 @@ Some rules:
 ```';
     }
 
-    public function completion(string $systemPrompt, string $userPrompt): string
+    public function modelName(): string
     {
+        return config('services.openai.completion_model');
+    }
+
+    public function completion(string $systemPrompt, string $userPrompt): CompletionResponse
+    {
+        $start = intval(microtime(true) / 1000);
         $response = FacadesOpenAI::chat()->create([
-            'model' => config('services.openai.completion_model'),
+            'model' => $this->modelName(),
             'messages' => [
                 [
                     'role' => 'system',
@@ -68,8 +75,15 @@ Some rules:
             ],
             'stop' => ['-----', "\nEND"],
         ]);
+        $end = intval(microtime(true) / 1000);
 
-        return $response->choices[0]->message->content;
+        return CompletionResponse::make(
+            completion: $response->choices[0]->message->content,
+            processingTimeMilliseconds: $end - $start,
+            inputTokens: $response->usage->promptTokens,
+            outputTokens: $response->usage->completionTokens,
+            totalTokens: $response->usage->totalTokens,
+        );
     }
 
     public function embed(string ...$texts): array

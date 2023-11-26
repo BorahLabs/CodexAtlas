@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Actions\Codex\GenerateBranchDocumentation;
 use App\SourceCode\DTO\Branch as DTOBranch;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,6 +14,15 @@ class Branch extends Model
 {
     use HasFactory;
     use HasUuids;
+
+    public static function booted()
+    {
+        parent::booted();
+
+        static::created(function (Branch $branch) {
+            GenerateBranchDocumentation::dispatch($branch);
+        });
+    }
 
     public function repository(): BelongsTo
     {
