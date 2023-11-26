@@ -22,12 +22,13 @@ class GetFile
         $client = GetAuthenticatedAccountGitlabClient::make()->handle($account);
         $projectId = GetProjectIdForRepository::make()->handle($account, $repository);
         $rawFile = $client->repositoryFiles()->getFile($projectId, $path, $branch->name);
-        // TODO:
-        dd($rawFile);
-        if ($rawFile['type'] === 'dir') {
-            return Folder::from($rawFile);
-        }
 
-        return File::from($rawFile);
+        return File::from([
+            'name' => $rawFile['file_name'],
+            'path' => $rawFile['file_path'],
+            'sha' => $rawFile['content_sha256'],
+            'download_url' => '',
+            'content' => $rawFile['content'],
+        ]);
     }
 }

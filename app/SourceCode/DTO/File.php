@@ -9,7 +9,7 @@ class File
         public readonly string $path,
         public readonly string $sha,
         public readonly string $downloadUrl,
-        private ?string $contents = null,
+        public ?string $contents = null,
     ) {
     }
 

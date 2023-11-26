@@ -1,7 +1,7 @@
 <?php
 
-use App\Actions\Codex\GenerateProjectDocumentation;
 use App\Actions\Github\Auth\HandleGithubInstallation;
+use App\Actions\Platform\DownloadDocsAsMarkdown;
 use App\Actions\Platform\Projects\ShowProject;
 use App\Actions\Platform\Projects\StoreProject;
 use App\Actions\Platform\Repositories\StoreRepository;
@@ -64,7 +64,16 @@ Route::middleware([
 });
 
 Route::middleware(ControlRequestsFromPlatform::class)->group(function () {
-    Route::get('/docs/{project}/{repository}/{branch}', ShowDocs::class)->name('docs.show');
-    Route::get('/docs/{project}/{repository}/{branch}/readme', ShowReadme::class)->name('docs.show-readme');
-    Route::get('/docs/{project}/{repository}/{branch}/{systemComponent}', ShowDocs::class)->name('docs.show-component');
+    Route::get('/docs/{project}/{repository}/{branch}', ShowDocs::class)
+        ->scopeBindings()
+        ->name('docs.show');
+    Route::get('/docs/{project}/{repository}/{branch}/download', DownloadDocsAsMarkdown::class)
+        ->scopeBindings()
+        ->name('docs.download');
+    Route::get('/docs/{project}/{repository}/{branch}/readme', ShowReadme::class)
+        ->scopeBindings()
+        ->name('docs.show-readme');
+    Route::get('/docs/{project}/{repository}/{branch}/{systemComponent}', ShowDocs::class)
+        ->scopeBindings()
+        ->name('docs.show-component');
 });

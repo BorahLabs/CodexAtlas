@@ -14,7 +14,7 @@ class IonicAngular extends Framework
 
     public function usesFramework(Folder $folder): bool
     {
-        return $folder->hasFile('ionic.config.json');
+        return $folder->hasFile('ionic.config.json') && $folder->hasFile('angular.json');
     }
 
     public function customContext(): ?string

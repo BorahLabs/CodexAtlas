@@ -23,11 +23,13 @@ class ProcessSystemComponent
     public function handle(Branch $branch, File $file, int $order)
     {
         logger()->debug('[Codex] Processing file '.$file->path.' branch '.$branch->id);
+
         $repository = $branch->repository;
         $sourceCodeAccount = $repository->sourceCodeAccount;
         $project = $repository->project;
         $provider = $sourceCodeAccount->getProvider();
         $repoName = $repository->nameDto();
+
         try {
             $file = $provider->file($repoName, $branch->dto(), $file->path);
             $llm = app(Llm::class);

@@ -3,7 +3,10 @@
 namespace App\Atlas;
 
 use App\Atlas\Frameworks\Contracts\Framework;
+use App\Atlas\Languages\Contracts\Language;
 use App\Exceptions\CouldNotDetectFramework;
+use App\Exceptions\CouldNotDetectLanguage;
+use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
 
 class Guesser
@@ -41,6 +44,40 @@ class Guesser
             new Frameworks\Angular(),
             new Frameworks\Vue(),
             new Frameworks\React(),
+        ];
+    }
+
+    public function guessLanguage(File $file): Language
+    {
+        $languages = $this->supportedLanguages();
+        foreach ($languages as $language) {
+            if ($language->isOwnFile($file)) {
+                return $language;
+            }
+        }
+
+        throw new CouldNotDetectLanguage();
+    }
+
+    /**
+     * @return Language[]
+     */
+    private function supportedLanguages(): array
+    {
+        return [
+            new Languages\Cobol(),
+            new Languages\Css(),
+            new Languages\DotNet(),
+            new Languages\Go(),
+            new Languages\Html(),
+            new Languages\Java(),
+            new Languages\Javascript(),
+            new Languages\Kotlin(),
+            new Languages\Node(),
+            new Languages\PHP(),
+            new Languages\Python(),
+            new Languages\Rust(),
+            new Languages\Swift(),
         ];
     }
 }

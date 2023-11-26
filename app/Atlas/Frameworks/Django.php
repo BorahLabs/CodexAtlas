@@ -14,8 +14,8 @@ class Django extends Framework
 
     public function usesFramework(Folder $folder): bool
     {
-        // TODO:
-        return $folder->hasFile('composer.json') && $folder->hasFile('artisan');
+        // Cannot know at first
+        return false;
     }
 
     public function customContext(): ?string

@@ -13,15 +13,7 @@ class ShowReadme
 
     public function handle(Project $project, Repository $repository, Branch $branch)
     {
-        try {
-            $file = $repository->sourceCodeAccount->getProvider()->file(
-                repository: $repository->nameDto(),
-                branch: $branch->dto(),
-                path: 'README.md',
-            );
-        } catch (\Exception $e) {
-            $file = null;
-        }
+        $file = GetReadme::make()->handle($repository, $branch);
 
         return view('docs-homepage', [
             'project' => $project,

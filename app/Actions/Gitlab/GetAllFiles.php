@@ -21,18 +21,19 @@ class GetAllFiles
         $projectId = GetProjectIdForRepository::make()->handle($account, $repository);
         $api = $client->repositories();
         $rawFiles = $api->tree($projectId, [
-            // TODO: add branch?
+            'ref' => $branch->name,
+            'path' => $path,
+            'per_page' => 100,
         ]);
-
-        // TODO: all
-        if (! isset($rawFiles[0]) && ! empty($rawFiles)) {
-            $rawFiles = [$rawFiles];
-        }
 
         $files = [];
         foreach ($rawFiles as $file) {
-            if ($file['type'] === 'dir') {
-                $folder = Folder::from($file);
+            if ($file['type'] === 'tree') {
+                $folder = Folder::from([
+                    'name' => $file['name'],
+                    'path' => $file['path'],
+                    'sha' => $file['id'],
+                ]);
                 $children = $this->handle($account, $repository, $branch, $file['path']);
                 foreach ($children as $child) {
                     if ($child instanceof File) {
@@ -44,7 +45,12 @@ class GetAllFiles
 
                 $files[] = $folder;
             } else {
-                $files[] = File::from($file);
+                $files[] = File::from([
+                    'name' => $file['name'],
+                    'path' => $file['path'],
+                    'sha' => $file['id'],
+                    'download_url' => '',
+                ]);
             }
         }
 
