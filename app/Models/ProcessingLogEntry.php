@@ -13,7 +13,7 @@ class ProcessingLogEntry extends Model
     public static function write(Branch $branch, string $filePath, string $llmProvider, string $llmModel, CompletionResponse $response)
     {
         static::query()->create([
-            'team_id' => $branch->repository->team->id,
+            'team_id' => $branch->repository->project->team->id,
             'branch_id' => $branch->id,
             'file_path' => $filePath,
             'llm_provider' => $llmProvider,

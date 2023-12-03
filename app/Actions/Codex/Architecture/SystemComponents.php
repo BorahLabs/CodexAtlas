@@ -15,6 +15,8 @@ class SystemComponents
 {
     use AsAction;
 
+    public int $jobTimeout = 300;
+
     public function handle(Branch $branch)
     {
         $repository = $branch->repository;

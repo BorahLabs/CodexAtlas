@@ -44,6 +44,7 @@ class Guesser
             new Frameworks\Angular(),
             new Frameworks\Vue(),
             new Frameworks\React(),
+            new Frameworks\GeneralFramework(),
         ];
     }
 

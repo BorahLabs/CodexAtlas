@@ -47,14 +47,8 @@ class LocalFolderProvider extends SourceCodeProvider
         ];
     }
 
-    public function files(RepositoryName $repository, Branch $branch, string $path = null, bool $cached = true): array
+    public function files(RepositoryName $repository, Branch $branch, string $path = null): array
     {
-        if ($cached) {
-            $key = 'repository:'.$repository->fullName.':'.$branch->name.':'.($path ?? '/');
-
-            return Cache::remember($key, now()->addMinutes(10), fn () => (new LocalFolder\GetAllFiles())->handle($repository, $branch, $path));
-        }
-
         return (new LocalFolder\GetAllFiles())->handle($repository, $branch, $path);
     }
 

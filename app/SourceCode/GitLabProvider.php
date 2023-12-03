@@ -28,14 +28,8 @@ class GitLabProvider extends SourceCodeProvider
         return Gitlab\GetBranches::make()->handle($this->credentials(), $repository);
     }
 
-    public function files(RepositoryName $repository, Branch $branch, string $path = null, bool $cached = true): array
+    public function files(RepositoryName $repository, Branch $branch, string $path = null): array
     {
-        if ($cached) {
-            $key = 'repository:'.$repository->fullName.':'.$branch->name.':'.($path ?? '/');
-
-            return Cache::remember($key, now()->addMinutes(10), fn () => Gitlab\GetAllFiles::make()->handle($this->credentials(), $repository, $branch, $path));
-        }
-
         return Gitlab\GetAllFiles::make()->handle($this->credentials(), $repository, $branch, $path);
     }
 

@@ -13,17 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = \App\Models\User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@codexatlas.app',
-        ]);
-
-        \App\Models\Team::create([
-            'name' => 'Codex Atlas',
-            'user_id' => $user->id,
-            'personal_team' => true,
-        ]);
-
         $this->call([
             RepositorySeeder::class,
         ]);
