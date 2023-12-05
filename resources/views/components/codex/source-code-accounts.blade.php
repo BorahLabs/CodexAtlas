@@ -34,6 +34,12 @@
             <x-codex.icons.gitlab class="h-12 w-12 text-slate-700" />
             <p class="text-slate-300 font-bold text-sm">{{ __('Add Gitlab account') }}</p>
         </a>
+        <a href="{{ route('bitbucket.redirect') }}" x-show="isAdding"
+            class="border border-slate-600 rounded-md p-4 flex flex-col justify-center items-center space-y-4 hover:border-violet-500"
+            x-on:click="isAdding = true">
+            <x-codex.icons.bitbucket class="h-12 w-12 text-slate-700" />
+            <p class="text-slate-300 font-bold text-sm">{{ __('Add Bitbucket account') }}</p>
+        </a>
         <button type="button" x-show="isAdding"
             class="border border-slate-600 rounded-md p-4 flex flex-col justify-center items-center space-y-4 hover:border-violet-500"
             x-on:click="isAdding = false">

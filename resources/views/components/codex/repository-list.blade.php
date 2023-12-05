@@ -16,7 +16,6 @@
             @endforeach
         </div>
     @endif
-
     <div class="border border-slate-700 p-4 rounded-md">
         <h2 class="font-bold text-slate-300">{{ __('Add repository') }}</h2>
         <form action="{{ route('repositories.store', ['project' => $project]) }}" method="POST" class="mt-4"

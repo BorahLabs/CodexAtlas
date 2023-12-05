@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\Bitbucket\Auth\HandleBitbucketCallback;
 use App\Actions\Github\Auth\HandleGithubInstallation;
 use App\Actions\Platform\DownloadDocsAsMarkdown;
 use App\Actions\Platform\Projects\ShowProject;
@@ -52,6 +53,21 @@ Route::middleware([
         Route::get('redirect', function () {
             return Socialite::driver('gitlab')->redirect();
         })->name('gitlab.redirect');
+
+        Route::get('webhook', function () {
+            logger(request()->all());
+
+            return response()->json([
+                'message' => 'ok',
+            ]);
+        });
+    });
+
+    Route::prefix('bitbucket')->group(function () {
+        Route::get('redirect', function () {
+            return Socialite::driver('bitbucket')->redirect();
+        })->name('bitbucket.redirect');
+        Route::get('callback', HandleBitbucketCallback::class)->middleware('throttle:3,1');
 
         Route::get('webhook', function () {
             logger(request()->all());
