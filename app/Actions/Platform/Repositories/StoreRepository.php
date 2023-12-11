@@ -2,6 +2,7 @@
 
 namespace App\Actions\Platform\Repositories;
 
+use App\Enums\SourceCodeProvider;
 use App\Models\Project;
 use App\Models\Repository;
 use App\SourceCode\DTO\Branch as DTOBranch;
@@ -14,11 +15,11 @@ class StoreRepository
 {
     use AsAction;
 
-    public function handle(Project $project, string $sourceAccountId, string $name): Repository|RedirectResponse
+    public function handle(Project $project, string $sourceAccountId, string $name, string $workspace = 'test-bitbucket-v1'): Repository|RedirectResponse
     {
         $sourceCodeAccount = $project->team->sourceCodeAccounts()->findOrFail($sourceAccountId);
         [$username, $name] = explode('/', $name);
-        $repo = new RepositoryName($username, $name);
+        $repo = new RepositoryName($username, $name, $sourceCodeAccount->provider == SourceCodeProvider::Bitbucket ? $workspace : null);
         $repository = $sourceCodeAccount->getProvider()->repository($repo);
         try {
         } catch (\Exception $e) {
@@ -35,6 +36,7 @@ class StoreRepository
             'project_id' => $project->id,
             'username' => $repo->username,
             'name' => $repo->name,
+            'workspace' => $repo->workspace ?? null,
         ]);
 
         if ($repository->branches->isEmpty()) {

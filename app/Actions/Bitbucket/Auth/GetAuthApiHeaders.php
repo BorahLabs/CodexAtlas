@@ -20,7 +20,7 @@ class GetAuthApiHeaders
     {
         return array(
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $account->token,
+            'Authorization' => 'Bearer ' . $account->access_token,
         );
     }
 }

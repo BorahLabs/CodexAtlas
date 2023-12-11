@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Actions\Gitlab;
+namespace App\Actions\Bitbucket;
 
+use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Actions\Gitlab\Auth\GetAuthenticatedAccountGitlabClient;
 use App\Actions\Gitlab\GetProjectIdForRepository;
 use App\Models\SourceCodeAccount;
@@ -17,7 +18,17 @@ class GetAllFiles
 
     public function handle(SourceCodeAccount $account, RepositoryName $repository, Branch $branch, string $path = null): array
     {
-        // TODO ACTUALIZAR
+        // TODO: Bucle para recorrer todos los ficheros. Descubrir como ver los ficheros de una rama concreta
+        $client = GetAuthenticatedAccountBitbucketClient::make()->handle($account);
+
+        $api = $client->repositories()->workspaces($repository->workspace)->src($repository->name)->list(['branch' => 'master']);
+
+        // PUEDE QUE SEA ASI HACE FALTA EL FILEPATH
+        $api2 = $client->repositories()->workspaces($repository->workspace)->src($repository->name)->show('README.md', 'README.md',['branch' => 'master']);
+
+        dd($api);
+
+        return [];
         $client = GetAuthenticatedAccountGitlabClient::make()->handle($account);
         $projectId = GetProjectIdForRepository::make()->handle($account, $repository);
         $api = $client->repositories();

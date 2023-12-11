@@ -3,7 +3,7 @@
 namespace App\Actions\Bitbucket;
 
 use App\Actions\Bitbucket\Auth\GetAuthApiHeaders;
-use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
+use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
@@ -16,16 +16,16 @@ class GetRepository
 
     public function handle(SourceCodeAccount $account, RepositoryName $repository): Repository
     {
-        $response = Http::withHeaders(GetAuthApiHeaders::run($account))->get('https://api.bitbucket.org/2.0/' . $repository->workspace . '/' . $repository->name);
+        $client = GetAuthenticatedAccountBitbucketClient::make()->handle($account);
 
-        $response = json_decode($response->body(), true);
+        $api = $client->repositories()->workspaces($repository->workspace)->show($repository->name);
 
         return new Repository(
-            id: $response['uuid'],
-            name: $response['name'],
-            owner: $response['owner']['type'],
-            workspace: $repository->workspace,
-            description: $response['description'] ?? null,
+            id: str_replace(['{', '}'], '', $api['uuid']),
+            name: $api['name'],
+            owner: $api['owner']['type'],
+            workspace: $api['workspace']['slug'],
+            description: $api['description'] ?? null,
         );
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Actions\Bitbucket;
 
 use App\Actions\Bitbucket\Auth\GetAuthApiHeaders;
+use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\RepositoryName;
@@ -18,11 +19,14 @@ class GetBranches
      */
     public function handle(SourceCodeAccount $account, RepositoryName $repository)
     {
-        $headers = GetAuthApiHeaders::run($account);
-        $response = Http::withHeaders($headers)->get('https://api.bitbucket.org/2.0/' . $repository->workspace . '/' . $repository->name. '/refs/branches');
+        $client = GetAuthenticatedAccountBitbucketClient::make()->handle($account);
 
-        $content = json_decode($response->body(), true);
+        $api = $client->repositories()->workspaces($repository->workspace)->refs($repository->name)->branches();
+
+        $content = $api->list();
         $branches = [];
+        $headers = GetAuthApiHeaders::run($account);
+
         $this->getAllBranches($content, $branches, $headers);
 
         return collect($branches)
@@ -34,14 +38,12 @@ class GetBranches
     {
         foreach($content['values'] as $value)
         {
-            $branches[] = [
-                'name' => $value['name'],
-            ];
+            $branches[] = $value['name'];
         }
 
         if(isset($content['next']) && $content['next'] != ''){
             $content = Http::withHeaders($headers)->get($content['next']);
-            $this->getAllBranches($content, $branches, $headers);
+            $this->getAllBranches(json_decode($content, true), $branches, $headers);
         }
     }
 }

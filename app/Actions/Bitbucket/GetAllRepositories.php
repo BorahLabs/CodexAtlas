@@ -4,6 +4,7 @@ namespace App\Actions\Bitbucket;
 
 use App\Actions\Bitbucket\Auth\GetAuthApiHeaders;
 use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
+use App\Actions\Gitlab\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Repository;
 use Illuminate\Support\Facades\Http;
@@ -18,27 +19,19 @@ class GetAllRepositories
      */
     public function handle(SourceCodeAccount $account): array
     {
-        $headers = GetAuthApiHeaders::run($account);
-        $response = Http::withHeaders($headers)->get('https://api.bitbucket.org/2.0/workspaces');
+        $client = GetAuthenticatedAccountBitbucketClient::make()->handle($account);
+        /**
+         * @var \Github\Api\CurrentUser $api
+         */
 
-        $response = json_decode($response->body(), true);
-        $workspaces = [];
-        $this->getAllWorkspaces($response, $workspaces, $headers);
-
-        $repos = [];
-        $data = collect($workspaces)->each(function($workspace) use (&$repos)  {
-            foreach($workspace['repos'] as $repo)
-            {
-                $repos[] = new Repository(
-                    id: $repo['id'],
-                    name: $repo['name'],
-                    owner: $repo['owner'],
-                    description: $repo['description'] ?? null,
-                );
-            }
-        });
-
-        return $repos;
+         return collect($client->repositories())
+            ->map(fn ($repo) => new Repository(
+                id: $repo['id'],
+                name: $repo['name'],
+                owner: $repo['owner']['login'],
+                description: $repo['description'] ?? null,
+            ))
+            ->toArray();
     }
 
     private function getAllWorkspaces($content, &$workspaces, $headers)
