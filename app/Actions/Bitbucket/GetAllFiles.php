@@ -10,6 +10,7 @@ use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\RepositoryName;
+use Bitbucket\ResultPager;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetAllFiles
@@ -21,12 +22,19 @@ class GetAllFiles
         // TODO: Bucle para recorrer todos los ficheros. Descubrir como ver los ficheros de una rama concreta
         $client = GetAuthenticatedAccountBitbucketClient::make()->handle($account);
 
-        $api = $client->repositories()->workspaces($repository->workspace)->src($repository->name)->list(['branch' => 'master']);
+        // $api = $client->repositories()->workspaces($repository->workspace)->src($repository->name)->list(['branch' => 'master']);
 
         // PUEDE QUE SEA ASI HACE FALTA EL FILEPATH
-        $api2 = $client->repositories()->workspaces($repository->workspace)->src($repository->name)->show('README.md', 'README.md',['branch' => 'master']);
+        // $api2 = $client->repositories()->workspaces($repository->workspace)->src($repository->name)->show('README.md', 'README.md',['branch' => 'master']);
 
-        dd($api);
+        $paginator = new ResultPager($client);
+
+        $api = $client->repositories()
+            ->workspaces($repository->workspace)
+            ->src($repository->name);
+
+        $branches = $paginator->fetchAll($api, 'list');
+
 
         return [];
         $client = GetAuthenticatedAccountGitlabClient::make()->handle($account);

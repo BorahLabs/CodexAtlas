@@ -3,12 +3,13 @@
 namespace App\Actions\Bitbucket;
 
 use App\Actions\Bitbucket\Auth\GetAuthApiHeaders;
-use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
-use App\Actions\Gitlab\Auth\GetAuthenticatedAccountBitbucketClient;
+use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Repository;
+use Bitbucket\ResultPager;
 use Illuminate\Support\Facades\Http;
 use Lorisleiva\Actions\Concerns\AsAction;
+use Illuminate\Http\Request;
 
 class GetAllRepositories
 {
@@ -20,18 +21,44 @@ class GetAllRepositories
     public function handle(SourceCodeAccount $account): array
     {
         $client = GetAuthenticatedAccountBitbucketClient::make()->handle($account);
-        /**
-         * @var \Github\Api\CurrentUser $api
-         */
 
-         return collect($client->repositories())
+        $paginator = new ResultPager($client);
+
+        $api = $client->currentUser();
+
+        $workspaces = collect($paginator->fetchAll($api, 'listWorkspaces'));
+
+        $repos = [];
+
+        $workspaces->each(function($item) use (&$repos, $client, $paginator){
+            // Quitar if. Está para no coger un repo real que tengo
+            if($item['slug'] != 'bamboo-workspace'){
+                $api = $client->repositories()->workspaces($item['slug']);
+                $actuals = collect($paginator->fetchAll($api, 'list'));
+
+                $actuals->each(function ($item) use (&$repos) {
+                    $repos[] = $item;
+                });
+            }
+
+        });
+        
+        return collect($repos)
             ->map(fn ($repo) => new Repository(
-                id: $repo['id'],
+                id: str_replace(['{', '}'], '', $repo['uuid']),
                 name: $repo['name'],
-                owner: $repo['owner']['login'],
+                owner: $repo['owner']['username'],
+                workspace: $repo['workspace']['slug'],
                 description: $repo['description'] ?? null,
             ))
             ->toArray();
+    }
+
+    public function asController(Request $request)
+    {
+        $this->handle(SourceCodeAccount::first());
+
+        return redirect()->route('dashboard');
     }
 
     private function getAllWorkspaces($content, &$workspaces, $headers)

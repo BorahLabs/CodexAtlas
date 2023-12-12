@@ -7,6 +7,7 @@ use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\RepositoryName;
+use Bitbucket\ResultPager;
 use Illuminate\Support\Facades\Http;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -21,29 +22,21 @@ class GetBranches
     {
         $client = GetAuthenticatedAccountBitbucketClient::make()->handle($account);
 
-        $api = $client->repositories()->workspaces($repository->workspace)->refs($repository->name)->branches();
+        $paginator = new ResultPager($client);
 
-        $content = $api->list();
-        $branches = [];
-        $headers = GetAuthApiHeaders::run($account);
+        $api = $client->repositories()
+            ->workspaces($repository->workspace)
+            ->refs($repository->name)
+            ->branches();
 
-        $this->getAllBranches($content, $branches, $headers);
+        $branches = $paginator->fetchAll($api, 'list');
 
         return collect($branches)
+            ->map(function ($item) {
+                return $item['name'];
+            })
             ->mapInto(Branch::class)
             ->toArray();
     }
 
-    private function getAllBranches($content, &$branches, $headers)
-    {
-        foreach($content['values'] as $value)
-        {
-            $branches[] = $value['name'];
-        }
-
-        if(isset($content['next']) && $content['next'] != ''){
-            $content = Http::withHeaders($headers)->get($content['next']);
-            $this->getAllBranches(json_decode($content, true), $branches, $headers);
-        }
-    }
 }

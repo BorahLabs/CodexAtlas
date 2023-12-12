@@ -69,7 +69,7 @@ class RefreshToken extends Command
             if ($response) {
                 $response = json_decode($response, true);
                 $account->access_token = $response['access_token'];
-                $account->expires_at = now()->addMinutes($response['expires_in']);
+                $account->expires_at = now()->addSeconds($response['expires_in']);
                 $account->save();
             }
 

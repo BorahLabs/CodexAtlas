@@ -3,6 +3,7 @@
 namespace App\Actions\Bitbucket;
 
 use App\Actions\Bitbucket\Auth\GetAuthApiHeaders;
+use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Branch;
@@ -19,6 +20,12 @@ class GetFile
     public function handle(SourceCodeAccount $account, RepositoryName $repository, Branch $branch, string $path): File|Folder
     {
         // TODO
+        // $client = GetAuthenticatedAccountBitbucketClient::make()->handle($account);
+
+        // $api = $client->repositories()->workspaces($repository->workspace)->src($repository->name)->branches();
+
+        // $content = $api->list();
+
         $response = Http::withHeaders(GetAuthApiHeaders::run($account))->get('https://api.bitbucket.org/2.0/repositories/' . $repository->workspace . '/' . $repository->name. '/src/' . $branch->name . '/' . $path);
 
         $content = json_decode($response->body(), true);
