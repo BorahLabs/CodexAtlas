@@ -7,6 +7,7 @@ use App\Actions\Github\GetInstallationToken;
 use App\Enums\SourceCodeProvider;
 use App\Models\SourceCodeAccount;
 use App\Models\Team;
+use App\Services\GetUuidFromJson;
 use GrahamCampbell\GitHub\Facades\GitHub;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
@@ -23,7 +24,7 @@ class HandleBitbucketCallback
         return SourceCodeAccount::updateOrCreate([
             'team_id' => $team->id,
             'provider' => SourceCodeProvider::Bitbucket,
-            'external_id' => str_replace(['{', '}'], '', $bitbucketUser->id),
+            'external_id' => GetUuidFromJson::getUuid($bitbucketUser->id),
         ], [
             'name' => $bitbucketUser->nickname,
             'access_token' => $token,

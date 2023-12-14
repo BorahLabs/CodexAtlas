@@ -5,6 +5,7 @@ namespace App\Actions\Bitbucket;
 use App\Actions\Bitbucket\Auth\GetAuthApiHeaders;
 use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Models\SourceCodeAccount;
+use App\Services\GetUuidFromJson;
 use App\SourceCode\DTO\Repository;
 use Bitbucket\ResultPager;
 use Illuminate\Support\Facades\Http;
@@ -42,10 +43,10 @@ class GetAllRepositories
             }
 
         });
-        
+
         return collect($repos)
             ->map(fn ($repo) => new Repository(
-                id: str_replace(['{', '}'], '', $repo['uuid']),
+                id: GetUuidFromJson::getUuid($repo['uuid']),
                 name: $repo['name'],
                 owner: $repo['owner']['username'],
                 workspace: $repo['workspace']['slug'],
@@ -74,7 +75,7 @@ class GetAllRepositories
             $members = json_decode($response->body(), true);
 
             $workspaces[] = [
-                'id' => str_replace(['{', '}'], '', $value['uuid']),
+                'id' => GetUuidFromJson::getUuid($value['uuid']),
                 'slug' => $value['slug'],
                 'name' => $value['name'],
                 'repos' => $this->getAllRepos($repo_content, $repositories, $headers, $members['values'][0]['user']['display_name']),
@@ -92,7 +93,7 @@ class GetAllRepositories
         foreach($content['values'] as $value)
         {
             $repositories[] = [
-                'id' => str_replace(['{', '}'], '', $value['uuid']),
+                'id' => GetUuidFromJson::getUuid($value['uuid']),
                 'owner' => $owner,
                 'name' => $value['name'],
                 'description' => $value['description'],

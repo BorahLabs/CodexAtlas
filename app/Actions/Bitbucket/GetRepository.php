@@ -5,6 +5,7 @@ namespace App\Actions\Bitbucket;
 use App\Actions\Bitbucket\Auth\GetAuthApiHeaders;
 use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Models\SourceCodeAccount;
+use App\Services\GetUuidFromJson;
 use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
 use Illuminate\Support\Facades\Http;
@@ -21,7 +22,7 @@ class GetRepository
         $api = $client->repositories()->workspaces($repository->workspace)->show($repository->name);
 
         return new Repository(
-            id: str_replace(['{', '}'], '', $api['uuid']),
+            id: GetUuidFromJson::getUuid($api['uuid']),
             name: $api['name'],
             owner: $api['owner']['type'],
             workspace: $api['workspace']['slug'],

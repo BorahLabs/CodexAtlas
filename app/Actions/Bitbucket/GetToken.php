@@ -3,6 +3,7 @@
 namespace App\Actions\Bitbucket;
 
 use App\Models\SourceCodeAccount;
+use App\Services\GetUuidFromJson;
 use GrahamCampbell\GitHub\Facades\GitHub;
 use Illuminate\Support\Facades\Cache;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -13,7 +14,7 @@ class GetToken
 
     public function handle($user): array
     {
-        $sourceAccount = SourceCodeAccount::where('external_id', str_replace(['{', '}'], '', $user->id))->first();
+        $sourceAccount = SourceCodeAccount::where('external_id', GetUuidFromJson::getUuid($user->id))->first();
 
         return [
             $sourceAccount ? $sourceAccount->access_token : $user->token,

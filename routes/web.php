@@ -1,6 +1,8 @@
 <?php
 
 use App\Actions\Bitbucket\Auth\HandleBitbucketCallback;
+use App\Actions\Bitbucket\HandleBitbucketWebhook;
+use App\Actions\Bitbucket\RegisterWebhook;
 use App\Actions\Github\Auth\HandleGithubInstallation;
 use App\Actions\Platform\DownloadDocsAsMarkdown;
 use App\Actions\Platform\Projects\ShowProject;
@@ -9,6 +11,7 @@ use App\Actions\Platform\Repositories\StoreRepository;
 use App\Actions\Platform\ShowDocs;
 use App\Actions\Platform\ShowReadme;
 use App\Http\Middleware\ControlRequestsFromPlatform;
+use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -68,7 +71,18 @@ Route::middleware([
             return Socialite::driver('bitbucket')->redirect();
         })->name('bitbucket.redirect');
         Route::get('callback', HandleBitbucketCallback::class)->middleware('throttle:3,1');
+        Route::get('test/webhook', RegisterWebhook::class);
 
+        // Route::post('webhook', HandleBitbucketWebhook::class)->withoutMiddleware(VerifyCsrfToken::class,);
+        // Route::post('webhook', function () {
+        //     logger('post al webhook');
+        //     logger(request()->all());
+
+        // });
+        // Route::post('bitbucket/webhook', function () {
+        //     logger('post al webhook');
+        //     logger(request()->all());
+        // })->withoutMiddleware(VerifyCsrfToken::class);
         Route::get('webhook', function () {
             logger(request()->all());
 
@@ -78,6 +92,8 @@ Route::middleware([
         });
     });
 });
+
+Route::post('bitbucket/webhook', HandleBitbucketWebhook::class)->withoutMiddleware(VerifyCsrfToken::class);
 
 Route::middleware(ControlRequestsFromPlatform::class)->group(function () {
     Route::get('/docs/{project}/{repository}/{branch}', ShowDocs::class)
