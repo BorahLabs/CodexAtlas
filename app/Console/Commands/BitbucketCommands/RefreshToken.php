@@ -66,8 +66,8 @@ class RefreshToken extends Command
             // Ejecutar la solicitud cURL y obtener la respuesta
             $response = curl_exec($ch);
 
-            if ($response) {
-                $response = json_decode($response, true);
+            $response = json_decode($response, true);
+            if ($response && isset($response['access_token'])) {
                 $account->access_token = $response['access_token'];
                 $account->expires_at = now()->addSeconds($response['expires_in']);
                 $account->save();

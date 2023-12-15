@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class HandleBitbucketWebhook
+class HandleWebhook
 {
     use AsAction;
 
