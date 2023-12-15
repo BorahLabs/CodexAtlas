@@ -2,11 +2,9 @@
 
 namespace App\Actions\Platform\Repositories;
 
-use App\Enums\SourceCodeProvider;
 use App\Models\Project;
 use App\Models\Repository;
 use App\SourceCode\DTO\Branch as DTOBranch;
-use App\SourceCode\DTO\RepositoryName;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -15,13 +13,21 @@ class StoreRepository
 {
     use AsAction;
 
-    public function handle(Project $project, string $sourceAccountId, string $name, string $workspace = 'test-bitbucket-v1'): Repository|RedirectResponse
+    public function handle(Project $project, string $sourceAccountId, string $name): Repository|RedirectResponse
     {
         $sourceCodeAccount = $project->team->sourceCodeAccounts()->findOrFail($sourceAccountId);
-        [$username, $name] = explode('/', $name);
-        $repo = new RepositoryName($username, $name, $sourceCodeAccount->provider == SourceCodeProvider::Bitbucket ? $workspace : null);
-        $repository = $sourceCodeAccount->getProvider()->repository($repo);
         try {
+            $repo = $sourceCodeAccount->provider->repositoryName($name);
+        } catch (\Exception $e) {
+            logger($e);
+
+            return redirect()->back()->withErrors([
+                'name' => 'The repository name '.$name.' is invalid. Please, make sure it follows the format <username>/<repository-name>. If it belongs to a workspace, use <workspace>/<repository-name>.',
+            ]);
+        }
+
+        try {
+            $repository = $sourceCodeAccount->getProvider()->repository($repo);
         } catch (\Exception $e) {
             logger($e);
 

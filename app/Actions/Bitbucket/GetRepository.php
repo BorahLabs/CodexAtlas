@@ -2,13 +2,11 @@
 
 namespace App\Actions\Bitbucket;
 
-use App\Actions\Bitbucket\Auth\GetAuthApiHeaders;
 use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Models\SourceCodeAccount;
 use App\Services\GetUuidFromJson;
 use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
-use Illuminate\Support\Facades\Http;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetRepository

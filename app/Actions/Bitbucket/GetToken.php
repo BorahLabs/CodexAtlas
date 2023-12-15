@@ -4,8 +4,6 @@ namespace App\Actions\Bitbucket;
 
 use App\Models\SourceCodeAccount;
 use App\Services\GetUuidFromJson;
-use GrahamCampbell\GitHub\Facades\GitHub;
-use Illuminate\Support\Facades\Cache;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetToken

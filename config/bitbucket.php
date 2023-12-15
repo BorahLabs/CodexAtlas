@@ -41,15 +41,15 @@ return [
     'connections' => [
 
         'main' => [
-            'method'  => 'oauth',
-            'token'   => 'your-token',
+            'method' => 'oauth',
+            'token' => 'your-token',
             // 'backoff' => false,
             // 'cache'   => false,
             // 'url'     => null,
         ],
 
         'alternative' => [
-            'method'   => 'password',
+            'method' => 'password',
             'username' => 'foo',
             'password' => 'bar',
             // 'backoff'  => false,
@@ -58,8 +58,8 @@ return [
         ],
 
         'jwt' => [
-            'method'       => 'jwt',
-            'token'        => 'your-jwt-token',
+            'method' => 'jwt',
+            'token' => 'your-jwt-token',
             // 'backoff'      => false,
             // 'cache'        => false,
             // 'version'      => 'v3',
@@ -67,9 +67,9 @@ return [
         ],
 
         'private' => [
-            'method'     => 'private',
-            'appId'      => 'your-bitbucket-app-id',
-            'keyPath'    => 'your-private-key-path',
+            'method' => 'private',
+            'appId' => 'your-bitbucket-app-id',
+            'keyPath' => 'your-private-key-path',
             // 'key'        => 'your-private-key-content',
             // 'passphrase' => 'your-private-key-passphrase'
             // 'backoff'    => false,
@@ -79,7 +79,7 @@ return [
         ],
 
         'none' => [
-            'method'     => 'none',
+            'method' => 'none',
             // 'backoff'    => false,
             // 'cache'      => false,
             // 'version'    => 'v3',
@@ -102,14 +102,14 @@ return [
     'cache' => [
 
         'main' => [
-            'driver'    => 'illuminate',
+            'driver' => 'illuminate',
             'connector' => null, // null means use default driver
             // 'min'       => 43200,
             // 'max'       => 172800
         ],
 
         'bar' => [
-            'driver'    => 'illuminate',
+            'driver' => 'illuminate',
             'connector' => 'redis', // config/cache.php
             // 'min'       => 43200,
             // 'max'       => 172800

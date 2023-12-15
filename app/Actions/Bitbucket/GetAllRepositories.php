@@ -2,15 +2,14 @@
 
 namespace App\Actions\Bitbucket;
 
-use App\Actions\Bitbucket\Auth\GetAuthApiHeaders;
 use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Models\SourceCodeAccount;
 use App\Services\GetUuidFromJson;
 use App\SourceCode\DTO\Repository;
 use Bitbucket\ResultPager;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Lorisleiva\Actions\Concerns\AsAction;
-use Illuminate\Http\Request;
 
 class GetAllRepositories
 {
@@ -31,17 +30,13 @@ class GetAllRepositories
 
         $repos = [];
 
-        $workspaces->each(function($item) use (&$repos, $client, $paginator){
-            // Quitar if. Está para no coger un repo real que tengo
-            if($item['slug'] != 'bamboo-workspace'){
-                $api = $client->repositories()->workspaces($item['slug']);
-                $actuals = collect($paginator->fetchAll($api, 'list'));
+        $workspaces->each(function ($item) use (&$repos, $client, $paginator) {
+            $api = $client->repositories()->workspaces($item['slug']);
+            $actuals = collect($paginator->fetchAll($api, 'list'));
 
-                $actuals->each(function ($item) use (&$repos) {
-                    $repos[] = $item;
-                });
-            }
-
+            $actuals->each(function ($item) use (&$repos) {
+                $repos[] = $item;
+            });
         });
 
         return collect($repos)
@@ -64,13 +59,12 @@ class GetAllRepositories
 
     private function getAllWorkspaces($content, &$workspaces, $headers)
     {
-        foreach($content['values'] as $value)
-        {
+        foreach ($content['values'] as $value) {
             $repositories = [];
-            $response = Http::withHeaders($headers)->get('https://api.bitbucket.org/2.0/repositories/' . $value['slug']);
+            $response = Http::withHeaders($headers)->get('https://api.bitbucket.org/2.0/repositories/'.$value['slug']);
             $repo_content = json_decode($response->body(), true);
 
-            $response = Http::withHeaders($headers)->get('https://api.bitbucket.org/2.0/workspaces/' . $value['slug']. '/members');
+            $response = Http::withHeaders($headers)->get('https://api.bitbucket.org/2.0/workspaces/'.$value['slug'].'/members');
             // TODO: can be multiple owners
             $members = json_decode($response->body(), true);
 
@@ -82,7 +76,7 @@ class GetAllRepositories
             ];
         }
 
-        if(isset($content['next']) && $content['next'] != ''){
+        if (isset($content['next']) && $content['next'] != '') {
             $content = Http::withHeaders($headers)->get($content['next']);
             $this->getAllWorkspaces($content, $workspaces, $headers);
         }
@@ -90,8 +84,7 @@ class GetAllRepositories
 
     private function getAllRepos($content, &$repositories, $headers, $owner)
     {
-        foreach($content['values'] as $value)
-        {
+        foreach ($content['values'] as $value) {
             $repositories[] = [
                 'id' => GetUuidFromJson::getUuid($value['uuid']),
                 'owner' => $owner,
@@ -100,7 +93,7 @@ class GetAllRepositories
             ];
         }
 
-        if(isset($content['next']) && $content['next'] != ''){
+        if (isset($content['next']) && $content['next'] != '') {
             $content = Http::withHeaders($headers)->get($content['next']);
             $this->getAllRepos($content, $repositories, $headers, $owner);
         }

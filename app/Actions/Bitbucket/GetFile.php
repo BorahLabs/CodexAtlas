@@ -4,7 +4,6 @@ namespace App\Actions\Bitbucket;
 
 use App\Actions\Bitbucket\Auth\GetAuthApiHeaders;
 use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
-use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\File;
@@ -26,13 +25,12 @@ class GetFile
 
         // $content = $api->list();
 
-        $response = Http::withHeaders(GetAuthApiHeaders::run($account))->get('https://api.bitbucket.org/2.0/repositories/' . $repository->workspace . '/' . $repository->name. '/src/' . $branch->name . '/' . $path);
+        $response = Http::withHeaders(GetAuthApiHeaders::run($account))->get('https://api.bitbucket.org/2.0/repositories/'.$repository->workspace.'/'.$repository->name.'/src/'.$branch->name.'/'.$path);
 
         $content = json_decode($response->body(), true);
         /**
          * @var \Github\Api\Repo $api
          */
-
         if ($content['type'] === 'dir') {
             return Folder::from($content);
         }

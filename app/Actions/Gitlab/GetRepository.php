@@ -6,7 +6,6 @@ use App\Actions\Gitlab\Auth\GetAuthenticatedAccountGitlabClient;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
-use GrahamCampbell\GitLab\Facades\GitLab;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetRepository

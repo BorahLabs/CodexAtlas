@@ -2,14 +2,11 @@
 
 namespace App\Actions\Bitbucket;
 
-use App\Actions\Bitbucket\Auth\GetAuthApiHeaders;
 use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Models\SourceCodeAccount;
 use App\Services\GetUuidFromJson;
-use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
 use Bitbucket\ResultPager;
-use Illuminate\Support\Facades\Http;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class RegisterWebhook
@@ -38,7 +35,7 @@ class RegisterWebhook
 
         // Creaa webhook en repo de test de bamboo
         dd('cuidaaaaao');
-        $api = $client->repositories()->workspaces('bamboo-workspace')->hooks('test')->create(['description' => 'Test webhook','url' => env('APP_URL') . '/bitbucket/webhook', 'events' => ['repo:push'], 'active' => true]);
+        $api = $client->repositories()->workspaces('bamboo-workspace')->hooks('test')->create(['description' => 'Test webhook', 'url' => env('APP_URL').'/bitbucket/webhook', 'events' => ['repo:push'], 'active' => true]);
 
         // List los webhooks de un repositorio concreto dentro de un workspace
         // $paginator = new ResultPager($client);
@@ -63,7 +60,6 @@ class RegisterWebhook
         // Guarda el id del webhook en la source code account que llega por parámetro
         // $account->webhook_uuid = GetUuidFromJson::getUuid($api['uuid']);
         // $account->save();
-
 
         return [];
     }

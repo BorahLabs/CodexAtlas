@@ -35,7 +35,6 @@ class GetAllFiles
 
         $branches = $paginator->fetchAll($api, 'list');
 
-
         return [];
         $client = GetAuthenticatedAccountGitlabClient::make()->handle($account);
         $projectId = GetProjectIdForRepository::make()->handle($account, $repository);

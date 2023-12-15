@@ -5,7 +5,6 @@ namespace App\Console\Commands\BitbucketCommands;
 use App\Enums\SourceCodeProvider;
 use App\Models\SourceCodeAccount;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Http;
 
 class RefreshToken extends Command
 {
@@ -34,7 +33,7 @@ class RefreshToken extends Command
 
         $accounts->each(function ($account, $key) {
             $refreshToken = $account->refresh_token;
-            $clientId =  env('BITBUCKET_CLIENT_ID');
+            $clientId = env('BITBUCKET_CLIENT_ID');
             $clientSecret = env('BITBUCKET_CLIENT_SECRET');
 
             $data = [
@@ -44,7 +43,7 @@ class RefreshToken extends Command
 
             $authHeader = base64_encode("$clientId:$clientSecret");
             $headers = [
-                'Authorization: Basic ' . $authHeader,
+                'Authorization: Basic '.$authHeader,
                 'Content-Type: application/x-www-form-urlencoded',
             ];
 

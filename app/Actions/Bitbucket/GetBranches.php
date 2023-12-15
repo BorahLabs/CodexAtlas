@@ -2,13 +2,11 @@
 
 namespace App\Actions\Bitbucket;
 
-use App\Actions\Bitbucket\Auth\GetAuthApiHeaders;
 use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\RepositoryName;
 use Bitbucket\ResultPager;
-use Illuminate\Support\Facades\Http;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetBranches
@@ -38,5 +36,4 @@ class GetBranches
             ->mapInto(Branch::class)
             ->toArray();
     }
-
 }

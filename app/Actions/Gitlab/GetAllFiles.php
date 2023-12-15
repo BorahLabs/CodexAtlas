@@ -3,7 +3,6 @@
 namespace App\Actions\Gitlab;
 
 use App\Actions\Gitlab\Auth\GetAuthenticatedAccountGitlabClient;
-use App\Actions\Gitlab\GetProjectIdForRepository;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\File;

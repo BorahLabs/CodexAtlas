@@ -9,15 +9,14 @@ use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\RepositoryName;
-use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetUuidFromJson
 {
-
     public static function getUuid($uuid): string
     {
         return str_replace(['{', '}'], '', $uuid);
     }
+
     public function handle(SourceCodeAccount $account, RepositoryName $repository, Branch $branch, string $path = null): array
     {
         // TODO ACTUALIZAR

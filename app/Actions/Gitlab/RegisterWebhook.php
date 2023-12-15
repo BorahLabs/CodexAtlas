@@ -2,15 +2,9 @@
 
 namespace App\Actions\Gitlab;
 
-use App\Actions\Bitbucket\Auth\GetAuthApiHeaders;
-use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Actions\Gitlab\Auth\GetAuthenticatedAccountGitlabClient;
 use App\Models\SourceCodeAccount;
-use App\Services\GetUuidFromJson;
-use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
-use Bitbucket\ResultPager;
-use Illuminate\Support\Facades\Http;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class RegisterWebhook
@@ -33,7 +27,6 @@ class RegisterWebhook
         // TIENE PINTA QUE VA POR AQUÍ
         // ENTRAR Al METODO systemHooks PARA VER LOS CREATES, UPDATES...
         $hooks = $client->systemHooks()->all();
-
 
         return [];
     }

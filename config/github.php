@@ -72,7 +72,7 @@ return [
             'method' => 'private',
             'appId' => env('GITHUB_APP_ID'),
             // 'keyPath' => storage_path('app/gh_pk.pem'),
-            'key'        => env('GITHUB_PRIVATE_KEY'),
+            'key' => env('GITHUB_PRIVATE_KEY'),
             // 'passphrase' => 'your-private-key-passphrase'
             // 'backoff'    => false,
             // 'cache'      => false,
