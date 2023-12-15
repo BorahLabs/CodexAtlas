@@ -14,6 +14,7 @@
 
 <body class="antialiased bg-body text-body font-body">
     <div class="">
+        <x-codex.mission-banner />
         <x-homepage.navbar />
         {{ $slot }}
         <x-homepage.footer />
