@@ -5,6 +5,7 @@ namespace App\Actions\Bitbucket;
 use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Actions\Gitlab\Auth\GetAuthenticatedAccountGitlabClient;
 use App\Actions\Gitlab\GetProjectIdForRepository;
+use App\Decorators\Bitbucket\DecoratedSrc;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\File;
@@ -19,39 +20,27 @@ class GetAllFiles
 
     public function handle(SourceCodeAccount $account, RepositoryName $repository, Branch $branch, string $path = null): array
     {
-        // TODO: Bucle para recorrer todos los ficheros. Descubrir como ver los ficheros de una rama concreta
         $client = GetAuthenticatedAccountBitbucketClient::make()->handle($account);
-
-        // $api = $client->repositories()->workspaces($repository->workspace)->src($repository->name)->list(['branch' => 'master']);
-
-        // PUEDE QUE SEA ASI HACE FALTA EL FILEPATH
-        // $api2 = $client->repositories()->workspaces($repository->workspace)->src($repository->name)->show('README.md', 'README.md',['branch' => 'master']);
 
         $paginator = new ResultPager($client);
 
-        $api = $client->repositories()
+        $branch = GetBranch::make()->handle($account, $repository, $branch);
+
+        $api = $client
+            ->repositories()
             ->workspaces($repository->workspace)
             ->src($repository->name);
+        $api = new DecoratedSrc($api, $repository->workspace, $repository->name);
 
-        $branches = $paginator->fetchAll($api, 'list');
-
-        return [];
-        $client = GetAuthenticatedAccountGitlabClient::make()->handle($account);
-        $projectId = GetProjectIdForRepository::make()->handle($account, $repository);
-        $api = $client->repositories();
-        $rawFiles = $api->tree($projectId, [
-            'ref' => $branch->name,
-            'path' => $path,
-            'per_page' => 100,
-        ]);
+        $rawFiles = $paginator->fetch($api, 'list', [$branch->sha, $path ?? '/']);
 
         $files = [];
-        foreach ($rawFiles as $file) {
-            if ($file['type'] === 'tree') {
+        foreach ($rawFiles['values'] as $file) {
+            if ($file['type'] === 'commit_directory') {
                 $folder = Folder::from([
-                    'name' => $file['name'],
+                    'name' => basename($file['path']),
                     'path' => $file['path'],
-                    'sha' => $file['id'],
+                    'sha' => '', // not sent by bitbucket
                 ]);
                 $children = $this->handle($account, $repository, $branch, $file['path']);
                 foreach ($children as $child) {
@@ -65,9 +54,9 @@ class GetAllFiles
                 $files[] = $folder;
             } else {
                 $files[] = File::from([
-                    'name' => $file['name'],
+                    'name' => basename($file['path']),
                     'path' => $file['path'],
-                    'sha' => $file['id'],
+                    'sha' => '', // not sent by bitbucket
                     'download_url' => '',
                 ]);
             }
