@@ -1,6 +1,5 @@
 <?php
 
-use App\Actions\Bitbucket\Auth\HandleBitbucketCallback;
 use App\Actions\Bitbucket\HandleWebhook;
 use App\Actions\Bitbucket\RegisterWebhook;
 use App\Actions\Github\Auth\HandleGithubInstallation;
@@ -68,7 +67,6 @@ Route::middleware([
         Route::get('redirect', function () {
             return Socialite::driver('bitbucket')->redirect();
         })->name('bitbucket.redirect');
-        Route::get('callback', HandleBitbucketCallback::class)->middleware('throttle:3,1');
         Route::get('test/webhook', RegisterWebhook::class);
 
         Route::get('webhook', function () {
