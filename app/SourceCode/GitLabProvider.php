@@ -4,16 +4,17 @@ namespace App\SourceCode;
 
 use App\Actions\Gitlab;
 use App\Exceptions\ExceededProviderRateLimit;
+use App\SourceCode\Contracts\AccountInfoProvider;
 use App\SourceCode\Contracts\SourceCodeProvider;
+use App\SourceCode\DTO\Account;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
 use Gitlab\Exception\ApiLimitExceededException;
-use Illuminate\Support\Facades\Cache;
 
-class GitLabProvider extends SourceCodeProvider
+class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider
 {
     public function repositories(): array
     {
@@ -73,5 +74,10 @@ class GitLabProvider extends SourceCodeProvider
     public function url(RepositoryName $repository): string
     {
         return 'https://gitlab.com/'.$repository->fullName;
+    }
+
+    public function account(): Account
+    {
+        return Gitlab\GetAccount::make()->handle($this->credentials());
     }
 }

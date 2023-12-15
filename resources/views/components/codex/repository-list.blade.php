@@ -16,13 +16,14 @@
             @endforeach
         </div>
     @endif
-    <div class="border border-slate-700 p-4 rounded-md">
+    <div class="border border-slate-700 p-4 rounded-md" x-data="{ sourceCodeAccount: '{{ auth()->user()->currentTeam->sourceCodeAccounts->first()?->id }}' }">
         <h2 class="font-bold text-slate-300">{{ __('Add repository') }}</h2>
-        <form action="{{ route('repositories.store', ['project' => $project]) }}" method="POST" class="mt-4"
-            x-data="{ sourceCodeAccount: '{{ auth()->user()->currentTeam->sourceCodeAccounts->first()?->id }}' }">
+        <div class="mt-4">
+            <x-codex.source-code-accounts :accounts="auth()->user()->currentTeam->sourceCodeAccounts" x-model="sourceCodeAccount" />
+        </div>
+        <form action="{{ route('repositories.store', ['project' => $project]) }}" method="POST" class="mt-4">
             @csrf
             <input type="hidden" name="source_code_account_id" x-model="sourceCodeAccount" />
-            <x-codex.source-code-accounts :accounts="auth()->user()->currentTeam->sourceCodeAccounts" x-model="sourceCodeAccount" />
             @if (auth()->user()->currentTeam->sourceCodeAccounts->isNotEmpty())
                 <div class="flex items-end mt-8">
                     <div class="w-full">

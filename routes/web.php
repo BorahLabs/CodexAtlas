@@ -10,6 +10,7 @@ use App\Actions\Platform\Projects\StoreProject;
 use App\Actions\Platform\Repositories\StoreRepository;
 use App\Actions\Platform\ShowDocs;
 use App\Actions\Platform\ShowReadme;
+use App\Actions\Platform\SourceCodeAccounts\StoreAccountPersonalAccessToken;
 use App\Http\Middleware\ControlRequestsFromPlatform;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,7 @@ Route::middleware([
 
     Route::post('/projects/{project}/repositories', StoreRepository::class)->name('repositories.store');
 
+    Route::post('/accounts/pat', StoreAccountPersonalAccessToken::class)->name('source-code-accounts.pat.store');
     Route::prefix('github')->group(function () {
         Route::get('redirect', fn () => redirect()->to('https://github.com/apps/codexatlas/installations/select_target'))->name('github.redirect');
         Route::get('installation', HandleGithubInstallation::class)->middleware('throttle:3,1');

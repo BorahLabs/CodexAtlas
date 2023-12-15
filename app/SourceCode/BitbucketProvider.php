@@ -2,15 +2,17 @@
 
 namespace App\SourceCode;
 
+use App\Actions\Bitbucket;
+use App\SourceCode\Contracts\AccountInfoProvider;
 use App\SourceCode\Contracts\SourceCodeProvider;
+use App\SourceCode\DTO\Account;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
-use App\Actions\Bitbucket;
 
-class BitbucketProvider extends SourceCodeProvider
+class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvider
 {
     public function repositories(): array
     {
@@ -50,5 +52,10 @@ class BitbucketProvider extends SourceCodeProvider
     public function url(RepositoryName $repository): string
     {
         return 'https://bitbucket.com/'.$repository->fullName;
+    }
+
+    public function account(): Account
+    {
+        return Bitbucket\GetAccount::make()->handle($this->credentials());
     }
 }

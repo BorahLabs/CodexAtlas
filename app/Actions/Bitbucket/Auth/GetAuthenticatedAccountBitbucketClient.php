@@ -13,8 +13,9 @@ class GetAuthenticatedAccountBitbucketClient
 
     public function handle(SourceCodeAccount $account): Client
     {
-        $config = config('bitbucket.connections.main');
-        $config['token'] = $account->access_token;
+        $config = config('bitbucket.connections.alternative');
+        $config['username'] = $account->name;
+        $config['password'] = $account->access_token;
         $client = Bitbucket::getFactory()->make($config);
 
         return $client;
