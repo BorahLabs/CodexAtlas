@@ -24,8 +24,8 @@ class StoreProject
             'name' => 'required|string|max:255',
         ]);
 
-        $this->handle($request->user()->currentTeam, $request->input('name'));
+        $project = $this->handle($request->user()->currentTeam, $request->input('name'));
 
-        return redirect()->route('dashboard');
+        return redirect()->route('projects.show', ['project' => $project]);
     }
 }
