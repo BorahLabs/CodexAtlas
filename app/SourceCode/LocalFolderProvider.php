@@ -56,4 +56,19 @@ class LocalFolderProvider extends SourceCodeProvider
     {
         return (new LocalFolder\GetFile())->handle($repository, $branch, $path);
     }
+
+    public function icon(): string
+    {
+        throw new \Exception('This should not be displayed in the UI');
+    }
+
+    public function name(): string
+    {
+        throw new \Exception('This should not be displayed in the UI');
+    }
+
+    public function url(RepositoryName $repository): string
+    {
+        throw new \Exception('This should not be displayed in the UI');
+    }
 }
