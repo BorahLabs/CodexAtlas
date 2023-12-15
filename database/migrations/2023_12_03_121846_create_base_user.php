@@ -9,9 +9,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        $user = \App\Models\User::factory()->create([
+        $user = \App\Models\User::create([
             'name' => 'Admin',
             'email' => 'admin@codexatlas.app',
+            'email_verified_at' => now(),
+            'password' => bcrypt('password'),
         ]);
 
         \App\Models\Team::create([

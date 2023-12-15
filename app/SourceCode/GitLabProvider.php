@@ -3,39 +3,61 @@
 namespace App\SourceCode;
 
 use App\Actions\Gitlab;
+use App\Exceptions\ExceededProviderRateLimit;
 use App\SourceCode\Contracts\SourceCodeProvider;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
+use Gitlab\Exception\ApiLimitExceededException;
 use Illuminate\Support\Facades\Cache;
 
 class GitLabProvider extends SourceCodeProvider
 {
     public function repositories(): array
     {
-        return Gitlab\GetAllRepositories::make()->handle($this->credentials());
+        try {
+            return Gitlab\GetAllRepositories::make()->handle($this->credentials());
+        } catch (ApiLimitExceededException $e) {
+            throw new ExceededProviderRateLimit(3600);
+        }
     }
 
     public function repository(RepositoryName $repository): Repository
     {
-        return Gitlab\GetRepository::make()->handle($this->credentials(), $repository);
+        try {
+            return Gitlab\GetRepository::make()->handle($this->credentials(), $repository);
+        } catch (ApiLimitExceededException $e) {
+            throw new ExceededProviderRateLimit(3600);
+        }
     }
 
     public function branches(RepositoryName $repository): array
     {
-        return Gitlab\GetBranches::make()->handle($this->credentials(), $repository);
+        try {
+            return Gitlab\GetBranches::make()->handle($this->credentials(), $repository);
+        } catch (ApiLimitExceededException $e) {
+            throw new ExceededProviderRateLimit(3600);
+        }
     }
 
     public function files(RepositoryName $repository, Branch $branch, string $path = null): array
     {
-        return Gitlab\GetAllFiles::make()->handle($this->credentials(), $repository, $branch, $path);
+        try {
+            return Gitlab\GetAllFiles::make()->handle($this->credentials(), $repository, $branch, $path);
+        } catch (ApiLimitExceededException $e) {
+            throw new ExceededProviderRateLimit(3600);
+        }
     }
 
     public function file(RepositoryName $repository, Branch $branch, string $path): File|Folder
     {
-        return Gitlab\GetFile::make()->handle($this->credentials(), $repository, $branch, $path);
+        try {
+            return Gitlab\GetFile::make()->handle($this->credentials(), $repository, $branch, $path);
+        } catch (ApiLimitExceededException $e) {
+            throw new ExceededProviderRateLimit(3600);
+        }
     }
 
     public function icon(): string

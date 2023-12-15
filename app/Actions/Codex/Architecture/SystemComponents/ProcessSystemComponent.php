@@ -50,6 +50,9 @@ class ProcessSystemComponent
             ]);
 
             ProcessingLogEntry::write($branch, $file->path, class_basename($llm), $llm->modelName(), $completion);
+        } catch (\App\Exceptions\ExceededProviderRateLimit $e) {
+            ProcessSystemComponent::dispatch($branch, $file, $order)
+                ->delay($e->retryInSeconds + 10);
         } catch (\Exception $e) {
             logger()->error($e->getMessage(), [
                 'file' => $file->path,

@@ -13,10 +13,13 @@ environments:
     warm: 10
     runtime: "php-8.2:al2"
     network: codex-atlas-production
+    domain: "*.codexatlas.app"
     build:
       - "COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev"
       - "php artisan event:cache"
       - "npm ci && npm run build && rm -rf node_modules"
+    deploy:
+      - "php artisan migrate --force"
     firewall:
       rate-limit: 1000
       bot-control:
