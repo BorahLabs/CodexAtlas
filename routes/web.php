@@ -53,10 +53,6 @@ Route::middleware([
     });
 
     Route::prefix('gitlab')->group(function () {
-        Route::get('redirect', function () {
-            return Socialite::driver('gitlab')->redirect();
-        })->name('gitlab.redirect');
-
         Route::get('webhook', function () {
             logger(request()->all());
 
@@ -73,16 +69,6 @@ Route::middleware([
         Route::get('callback', HandleBitbucketCallback::class)->middleware('throttle:3,1');
         Route::get('test/webhook', RegisterWebhook::class);
 
-        // Route::post('webhook', HandleBitbucketWebhook::class)->withoutMiddleware(VerifyCsrfToken::class,);
-        // Route::post('webhook', function () {
-        //     logger('post al webhook');
-        //     logger(request()->all());
-
-        // });
-        // Route::post('bitbucket/webhook', function () {
-        //     logger('post al webhook');
-        //     logger(request()->all());
-        // })->withoutMiddleware(VerifyCsrfToken::class);
         Route::get('webhook', function () {
             logger(request()->all());
 
