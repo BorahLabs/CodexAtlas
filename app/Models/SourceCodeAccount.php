@@ -20,6 +20,7 @@ class SourceCodeAccount extends Model
 
     protected $casts = [
         'provider' => SourceCodeProvider::class,
+        'access_token' => 'encrypted',
     ];
 
     public static function booted()
