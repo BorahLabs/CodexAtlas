@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->unique(['branch_id', 'path']);
-            $table->unique(['branch_id', 'sha']);
+            $table->index(['branch_id', 'sha']);
         });
     }
 
