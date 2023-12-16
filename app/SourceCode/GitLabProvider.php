@@ -24,7 +24,7 @@ class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider, 
         try {
             return Gitlab\GetAllRepositories::make()->handle($this->credentials());
         } catch (ApiLimitExceededException $e) {
-            throw new ExceededProviderRateLimit(3600);
+            throw new ExceededProviderRateLimit(900);
         }
     }
 
@@ -33,7 +33,7 @@ class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider, 
         try {
             return Gitlab\GetRepository::make()->handle($this->credentials(), $repository);
         } catch (ApiLimitExceededException $e) {
-            throw new ExceededProviderRateLimit(3600);
+            throw new ExceededProviderRateLimit(900);
         }
     }
 
@@ -42,7 +42,7 @@ class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider, 
         try {
             return Gitlab\GetBranches::make()->handle($this->credentials(), $repository);
         } catch (ApiLimitExceededException $e) {
-            throw new ExceededProviderRateLimit(3600);
+            throw new ExceededProviderRateLimit(900);
         }
     }
 
@@ -51,7 +51,7 @@ class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider, 
         try {
             return Gitlab\GetAllFiles::make()->handle($this->credentials(), $repository, $branch, $path);
         } catch (ApiLimitExceededException $e) {
-            throw new ExceededProviderRateLimit(3600);
+            throw new ExceededProviderRateLimit(900);
         }
     }
 
@@ -60,7 +60,7 @@ class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider, 
         try {
             return Gitlab\GetFile::make()->handle($this->credentials(), $repository, $branch, $path);
         } catch (ApiLimitExceededException $e) {
-            throw new ExceededProviderRateLimit(3600);
+            throw new ExceededProviderRateLimit(900);
         }
     }
 

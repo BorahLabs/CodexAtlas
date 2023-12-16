@@ -24,7 +24,7 @@ class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvide
         try {
             return Bitbucket\GetAllRepositories::make()->handle($this->credentials());
         } catch (ApiLimitExceededException $e) {
-            throw new ExceededProviderRateLimit(3600);
+            throw new ExceededProviderRateLimit(900);
         }
     }
 
@@ -33,7 +33,7 @@ class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvide
         try {
             return Bitbucket\GetRepository::make()->handle($this->credentials(), $repository);
         } catch (ApiLimitExceededException $e) {
-            throw new ExceededProviderRateLimit(3600);
+            throw new ExceededProviderRateLimit(900);
         }
     }
 
@@ -42,7 +42,7 @@ class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvide
         try {
             return Bitbucket\GetBranches::make()->handle($this->credentials(), $repository);
         } catch (ApiLimitExceededException $e) {
-            throw new ExceededProviderRateLimit(3600);
+            throw new ExceededProviderRateLimit(900);
         }
     }
 
@@ -51,7 +51,7 @@ class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvide
         try {
             return Bitbucket\GetAllFiles::make()->handle($this->credentials(), $repository, $branch, $path);
         } catch (ApiLimitExceededException $e) {
-            throw new ExceededProviderRateLimit(3600);
+            throw new ExceededProviderRateLimit(900);
         }
     }
 
@@ -60,7 +60,7 @@ class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvide
         try {
             return Bitbucket\GetFile::make()->handle($this->credentials(), $repository, $branch, $path);
         } catch (ApiLimitExceededException $e) {
-            throw new ExceededProviderRateLimit(3600);
+            throw new ExceededProviderRateLimit(900);
         }
     }
 

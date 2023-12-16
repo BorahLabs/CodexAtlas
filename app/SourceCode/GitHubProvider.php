@@ -22,7 +22,7 @@ class GitHubProvider extends SourceCodeProvider implements RegistersWebhook, Han
         try {
             return Github\GetAllRepositories::make()->handle($this->credentials());
         } catch (ApiLimitExceedException $e) {
-            throw new ExceededProviderRateLimit($e->getResetTime());
+            throw new ExceededProviderRateLimit(min(900, $e->getResetTime()));
         }
     }
 
@@ -31,7 +31,7 @@ class GitHubProvider extends SourceCodeProvider implements RegistersWebhook, Han
         try {
             return Github\GetRepository::make()->handle($this->credentials(), $repository);
         } catch (ApiLimitExceedException $e) {
-            throw new ExceededProviderRateLimit($e->getResetTime());
+            throw new ExceededProviderRateLimit(min(900, $e->getResetTime()));
         }
     }
 
@@ -40,7 +40,7 @@ class GitHubProvider extends SourceCodeProvider implements RegistersWebhook, Han
         try {
             return Github\GetBranches::make()->handle($this->credentials(), $repository);
         } catch (ApiLimitExceedException $e) {
-            throw new ExceededProviderRateLimit($e->getResetTime());
+            throw new ExceededProviderRateLimit(min(900, $e->getResetTime()));
         }
     }
 
@@ -49,7 +49,7 @@ class GitHubProvider extends SourceCodeProvider implements RegistersWebhook, Han
         try {
             return Github\GetAllFiles::make()->handle($this->credentials(), $repository, $branch, $path);
         } catch (ApiLimitExceedException $e) {
-            throw new ExceededProviderRateLimit($e->getResetTime());
+            throw new ExceededProviderRateLimit(min(900, $e->getResetTime()));
         }
     }
 
@@ -58,7 +58,7 @@ class GitHubProvider extends SourceCodeProvider implements RegistersWebhook, Han
         try {
             return Github\GetFile::make()->handle($this->credentials(), $repository, $branch, $path);
         } catch (ApiLimitExceedException $e) {
-            throw new ExceededProviderRateLimit($e->getResetTime());
+            throw new ExceededProviderRateLimit(min(900, $e->getResetTime()));
         }
     }
 
