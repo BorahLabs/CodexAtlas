@@ -5,29 +5,27 @@ namespace App\Actions\Gitlab;
 use App\Actions\Gitlab\Auth\GetAuthenticatedAccountGitlabClient;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\RepositoryName;
+use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class RegisterWebhook
 {
     use AsAction;
 
-    // public function handle(SourceCodeAccount $account, RepositoryName $repositoryName, string $description = null, string $url, array $events = ['repo:push'])
-    public function handle()
+    public function handle(SourceCodeAccount $account, RepositoryName $repositoryName)
     {
-        // Usar el sourceCodeAccount que llegue por parámetro
-        $account = SourceCodeAccount::where('name', 'raulcalima')->first();
+        $secret = Str::random(32);
         $client = GetAuthenticatedAccountGitlabClient::make()->handle($account);
+        $projectId = GetProjectIdForRepository::make()->handle($account, $repositoryName);
+        $webhook = $client
+            ->projects()
+            ->addHook($projectId, route('webhook', ['sourceCodeAccount' => $account]), [
+                'push_events' => true,
+                'token' => $secret,
+            ]);
 
-        // Cambiar por un repoName que llegue por parámetro
-        $repository = new RepositoryName(
-            username: 'hola',
-            name: 'test',
-        );
-        $projectId = GetProjectIdForRepository::make()->handle($account, $repository);
-        // TIENE PINTA QUE VA POR AQUÍ
-        // ENTRAR Al METODO systemHooks PARA VER LOS CREATES, UPDATES...
-        $hooks = $client->systemHooks()->all();
-
-        return [];
+        $account->webhook_id = $webhook['id'];
+        $account->webhook_secret = $secret;
+        $account->save();
     }
 }

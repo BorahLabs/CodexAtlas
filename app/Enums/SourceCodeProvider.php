@@ -31,15 +31,20 @@ enum SourceCodeProvider: string
         if (substr_count($fromName, '/') === 1) {
             [$username, $name] = explode('/', $fromName);
 
-            return new RepositoryName($username, $name, $username);
+            return new RepositoryName($username, $name, $this->canHaveWorkspace() ? $username : null);
         }
 
         if (substr_count($fromName, '/') === 2) {
             [$workspace, $username, $name] = explode('/', $fromName);
 
-            return new RepositoryName($username, $name, $workspace);
+            return new RepositoryName($username, $name, $this->canHaveWorkspace() ? $workspace : null);
         }
 
         throw new \Exception('Invalid repository name.');
+    }
+
+    public function canHaveWorkspace(): bool
+    {
+        return $this === static::Bitbucket;
     }
 }

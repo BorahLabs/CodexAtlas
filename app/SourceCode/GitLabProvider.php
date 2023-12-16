@@ -5,6 +5,8 @@ namespace App\SourceCode;
 use App\Actions\Gitlab;
 use App\Exceptions\ExceededProviderRateLimit;
 use App\SourceCode\Contracts\AccountInfoProvider;
+use App\SourceCode\Contracts\HandlesWebhook;
+use App\SourceCode\Contracts\RegistersWebhook;
 use App\SourceCode\Contracts\SourceCodeProvider;
 use App\SourceCode\DTO\Account;
 use App\SourceCode\DTO\Branch;
@@ -13,8 +15,9 @@ use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
 use Gitlab\Exception\ApiLimitExceededException;
+use Illuminate\Http\Request;
 
-class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider
+class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider, RegistersWebhook, HandlesWebhook
 {
     public function repositories(): array
     {
@@ -79,5 +82,20 @@ class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider
     public function account(): Account
     {
         return Gitlab\GetAccount::make()->handle($this->credentials());
+    }
+
+    public function registerWebhook(RepositoryName $repository)
+    {
+        return Gitlab\RegisterWebhook::make()->handle($this->credentials(), $repository);
+    }
+
+    public function verifyIncomingWebhook(Request $request)
+    {
+        return Gitlab\VerifyWebhook::make()->handle($this->credentials(), $request);
+    }
+
+    public function handleIncomingWebhook(array $payload)
+    {
+        return Gitlab\HandleWebhook::make()->handle($this->credentials(), $payload);
     }
 }
