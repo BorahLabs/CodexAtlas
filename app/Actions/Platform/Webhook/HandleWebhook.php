@@ -16,14 +16,17 @@ class HandleWebhook
         $provider = $sourceCodeAccount->getProvider();
         if ($provider instanceof HandlesWebhook) {
             $provider->verifyIncomingWebhook($request);
-            $provider->handleIncomingWebhook($request->all());
-        } else {
-            abort(422, 'The provider does not handle webhooks.');
+            return $provider->handleIncomingWebhook($request->all(), $request);
         }
+
+        abort(422, 'The provider does not handle webhooks.');
     }
 
     public function asController(SourceCodeAccount $sourceCodeAccount, Request $request)
     {
-        $this->handle($sourceCodeAccount, $request);
+        $response = $this->handle($sourceCodeAccount, $request);
+        return $response ?? response()->json([
+            'success' => true,
+        ]);
     }
 }

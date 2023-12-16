@@ -12,7 +12,7 @@ class GetInstallationToken
 
     public function handle(string $installationId): array
     {
-        return Cache::remember('github-installation-token', now()->addMinutes(50), function () use ($installationId) {
+        return Cache::remember('github-installation-token-' . $installationId, now()->addMinutes(50), function () use ($installationId) {
             $response = GitHub::apps()->createInstallationToken($installationId);
 
             return [

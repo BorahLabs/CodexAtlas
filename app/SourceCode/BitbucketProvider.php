@@ -94,8 +94,8 @@ class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvide
         return Bitbucket\VerifyWebhook::make()->handle($this->credentials(), $request);
     }
 
-    public function handleIncomingWebhook(array $payload)
+    public function handleIncomingWebhook(array $payload, Request $request)
     {
-        return Bitbucket\HandleWebhook::make()->handle($this->credentials(), $payload);
+        return Bitbucket\HandleWebhook::make()->handle($this->credentials(), $payload, $request);
     }
 }

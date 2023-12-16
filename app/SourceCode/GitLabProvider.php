@@ -94,8 +94,8 @@ class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider, 
         return Gitlab\VerifyWebhook::make()->handle($this->credentials(), $request);
     }
 
-    public function handleIncomingWebhook(array $payload)
+    public function handleIncomingWebhook(array $payload, Request $request)
     {
-        return Gitlab\HandleWebhook::make()->handle($this->credentials(), $payload);
+        return Gitlab\HandleWebhook::make()->handle($this->credentials(), $payload, $request);
     }
 }

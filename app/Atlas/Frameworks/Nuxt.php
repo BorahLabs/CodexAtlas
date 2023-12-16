@@ -24,13 +24,17 @@ class Nuxt extends Framework
 
     public function relevant(): array
     {
-        // TODO:
-        return [];
+        return [
+            '*.vue',
+            '*.ts',
+            '*.js',
+            '*.jsx',
+            '*.tsx',
+        ];
     }
 
     public function ignorable(): array
     {
-        // TODO:
         return [];
     }
 }

@@ -4,6 +4,8 @@ namespace App\SourceCode;
 
 use App\Actions\Github;
 use App\Exceptions\ExceededProviderRateLimit;
+use App\SourceCode\Contracts\HandlesWebhook;
+use App\SourceCode\Contracts\RegistersWebhook;
 use App\SourceCode\Contracts\SourceCodeProvider;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\File;
@@ -11,8 +13,9 @@ use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
 use Github\Exception\ApiLimitExceedException;
+use Illuminate\Http\Request;
 
-class GitHubProvider extends SourceCodeProvider
+class GitHubProvider extends SourceCodeProvider implements RegistersWebhook, HandlesWebhook
 {
     public function repositories(): array
     {
@@ -72,5 +75,20 @@ class GitHubProvider extends SourceCodeProvider
     public function url(RepositoryName $repository): string
     {
         return 'https://github.com/'.$repository->fullName;
+    }
+
+    public function registerWebhook(RepositoryName $repository)
+    {
+        return Github\RegisterWebhook::make()->handle($this->credentials(), $repository);
+    }
+
+    public function verifyIncomingWebhook(Request $request)
+    {
+        return Github\VerifyWebhook::make()->handle($this->credentials(), $request);
+    }
+
+    public function handleIncomingWebhook(array $payload, Request $request)
+    {
+        return Github\HandleWebhook::make()->handle($this->credentials(), $payload, $request);
     }
 }
