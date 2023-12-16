@@ -18,23 +18,21 @@ class GetFile
 
     public function handle(SourceCodeAccount $account, RepositoryName $repository, Branch $branch, string $path): File|Folder
     {
-        // TODO
-        // $client = GetAuthenticatedAccountBitbucketClient::make()->handle($account);
+        $client = GetAuthenticatedAccountBitbucketClient::make()->handle($account);
+        $branch = GetBranch::make()->handle($account, $repository, $branch);
+        $api = $client
+            ->repositories()
+            ->workspaces($repository->workspace)
+            ->src($repository->name);
 
-        // $api = $client->repositories()->workspaces($repository->workspace)->src($repository->name)->branches();
+        $contents = $api->download($branch->sha, $path)->getContents();
 
-        // $content = $api->list();
-
-        $response = Http::withHeaders(GetAuthApiHeaders::run($account))->get('https://api.bitbucket.org/2.0/repositories/'.$repository->workspace.'/'.$repository->name.'/src/'.$branch->name.'/'.$path);
-
-        $content = json_decode($response->body(), true);
-        /**
-         * @var \Github\Api\Repo $api
-         */
-        if ($content['type'] === 'dir') {
-            return Folder::from($content);
-        }
-
-        return File::from($content);
+        return File::from([
+            'name' => basename($path),
+            'path' => $path,
+            'sha' => sha1($contents),
+            'download_url' => '',
+            'content' => base64_encode($contents),
+        ]);
     }
 }

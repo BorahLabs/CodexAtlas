@@ -3,6 +3,7 @@
 namespace App\SourceCode;
 
 use App\Actions\Bitbucket;
+use App\Exceptions\ExceededProviderRateLimit;
 use App\SourceCode\Contracts\AccountInfoProvider;
 use App\SourceCode\Contracts\SourceCodeProvider;
 use App\SourceCode\DTO\Account;
@@ -11,32 +12,53 @@ use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
+use Bitbucket\Exception\ApiLimitExceededException;
 
 class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvider
 {
     public function repositories(): array
     {
-        return Bitbucket\GetAllRepositories::make()->handle($this->credentials());
+        try {
+            return Bitbucket\GetAllRepositories::make()->handle($this->credentials());
+        } catch (ApiLimitExceededException $e) {
+            throw new ExceededProviderRateLimit(3600);
+        }
     }
 
     public function repository(RepositoryName $repository): Repository
     {
-        return Bitbucket\GetRepository::make()->handle($this->credentials(), $repository);
+        try {
+            return Bitbucket\GetRepository::make()->handle($this->credentials(), $repository);
+        } catch (ApiLimitExceededException $e) {
+            throw new ExceededProviderRateLimit(3600);
+        }
     }
 
     public function branches(RepositoryName $repository): array
     {
-        return Bitbucket\GetBranches::make()->handle($this->credentials(), $repository);
+        try {
+            return Bitbucket\GetBranches::make()->handle($this->credentials(), $repository);
+        } catch (ApiLimitExceededException $e) {
+            throw new ExceededProviderRateLimit(3600);
+        }
     }
 
     public function files(RepositoryName $repository, Branch $branch, string $path = null): array
     {
-        return Bitbucket\GetAllFiles::make()->handle($this->credentials(), $repository, $branch, $path);
+        try {
+            return Bitbucket\GetAllFiles::make()->handle($this->credentials(), $repository, $branch, $path);
+        } catch (ApiLimitExceededException $e) {
+            throw new ExceededProviderRateLimit(3600);
+        }
     }
 
     public function file(RepositoryName $repository, Branch $branch, string $path): File|Folder
     {
-        return Bitbucket\GetFile::make()->handle($this->credentials(), $repository, $branch, $path);
+        try {
+            return Bitbucket\GetFile::make()->handle($this->credentials(), $repository, $branch, $path);
+        } catch (ApiLimitExceededException $e) {
+            throw new ExceededProviderRateLimit(3600);
+        }
     }
 
     public function icon(): string
