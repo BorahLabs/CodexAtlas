@@ -47,7 +47,13 @@ class StoreRepository
         ]);
 
         if ($sourceCodeAccount->getProvider() instanceof RegistersWebhook) {
-            $sourceCodeAccount->getProvider()->registerWebhook($repo);
+            try {
+                retry(3, fn () => $sourceCodeAccount->getProvider()->registerWebhook($repo), 1000);
+            } catch (\Exception $e) {
+                logger('Could not register webhook for '.$repo->fullName, [
+                    'message' => $e->getMessage(),
+                ]);
+            }
         }
 
         if ($repository->branches->isEmpty()) {
