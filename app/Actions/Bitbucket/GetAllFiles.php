@@ -3,8 +3,6 @@
 namespace App\Actions\Bitbucket;
 
 use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
-use App\Actions\Gitlab\Auth\GetAuthenticatedAccountGitlabClient;
-use App\Actions\Gitlab\GetProjectIdForRepository;
 use App\Decorators\Bitbucket\DecoratedSrc;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Branch;

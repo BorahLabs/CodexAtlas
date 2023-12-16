@@ -6,7 +6,6 @@ use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\RepositoryName;
-use Bitbucket\ResultPager;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetBranch
