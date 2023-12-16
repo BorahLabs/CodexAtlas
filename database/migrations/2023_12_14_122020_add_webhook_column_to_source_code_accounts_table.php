@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('source_code_accounts', function (Blueprint $table) {
-            $table->string('webhook_uuid')->nullable();
+            $table->string('webhook_id')->nullable();
+            $table->string('webhook_secret')->nullable();
         });
     }
 
@@ -22,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('source_code_accounts', function (Blueprint $table) {
-            $table->dropColumn('webhook_uuid');
+            $table->dropColumn('webhook_id');
+            $table->dropColumn('webhook_secret');
         });
     }
 };

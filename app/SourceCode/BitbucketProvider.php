@@ -5,6 +5,8 @@ namespace App\SourceCode;
 use App\Actions\Bitbucket;
 use App\Exceptions\ExceededProviderRateLimit;
 use App\SourceCode\Contracts\AccountInfoProvider;
+use App\SourceCode\Contracts\HandlesWebhook;
+use App\SourceCode\Contracts\RegistersWebhook;
 use App\SourceCode\Contracts\SourceCodeProvider;
 use App\SourceCode\DTO\Account;
 use App\SourceCode\DTO\Branch;
@@ -13,8 +15,9 @@ use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
 use Bitbucket\Exception\ApiLimitExceededException;
+use Illuminate\Http\Request;
 
-class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvider
+class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvider, RegistersWebhook, HandlesWebhook
 {
     public function repositories(): array
     {
@@ -79,5 +82,20 @@ class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvide
     public function account(): Account
     {
         return Bitbucket\GetAccount::make()->handle($this->credentials());
+    }
+
+    public function registerWebhook(RepositoryName $repository)
+    {
+        return Bitbucket\RegisterWebhook::make()->handle($this->credentials(), $repository);
+    }
+
+    public function verifyIncomingWebhook(Request $request)
+    {
+        return Bitbucket\VerifyWebhook::make()->handle($this->credentials(), $request);
+    }
+
+    public function handleIncomingWebhook(array $payload)
+    {
+        return Bitbucket\HandleWebhook::make()->handle($this->credentials(), $payload);
     }
 }

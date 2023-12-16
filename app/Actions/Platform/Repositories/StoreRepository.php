@@ -4,6 +4,7 @@ namespace App\Actions\Platform\Repositories;
 
 use App\Models\Project;
 use App\Models\Repository;
+use App\SourceCode\Contracts\RegistersWebhook;
 use App\SourceCode\DTO\Branch as DTOBranch;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -44,6 +45,10 @@ class StoreRepository
             'name' => $repo->name,
             'workspace' => $repo->workspace ?? null,
         ]);
+
+        if ($sourceCodeAccount->getProvider() instanceof RegistersWebhook) {
+            $sourceCodeAccount->getProvider()->registerWebhook($repo);
+        }
 
         if ($repository->branches->isEmpty()) {
             $branches = $sourceCodeAccount->getProvider()->branches($repo);

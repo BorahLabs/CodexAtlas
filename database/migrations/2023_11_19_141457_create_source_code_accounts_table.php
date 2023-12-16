@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('provider', 32);
             $table->string('name');
             $table->string('external_id')->index();
-            $table->string('access_token')->nullable();
+            $table->mediumText('access_token')->nullable();
             $table->string('refresh_token')->nullable();
             $table->string('installation_id')->nullable();
             $table->dateTime('expires_at')->nullable()->index();

@@ -41,7 +41,7 @@ class ProcessSystemComponent
             $branch->systemComponents()->updateOrCreate([
                 'path' => $file->path,
             ], [
-                'order' => $order++,
+                'order' => $order,
                 'sha' => $file->sha,
                 'path' => $file->path,
                 'file_contents' => $file->contents(),
@@ -51,6 +51,7 @@ class ProcessSystemComponent
 
             ProcessingLogEntry::write($branch, $file->path, class_basename($llm), $llm->modelName(), $completion);
         } catch (\App\Exceptions\ExceededProviderRateLimit $e) {
+            logger($e);
             ProcessSystemComponent::dispatch($branch, $file, $order)
                 ->delay($e->retryInSeconds + 10);
         } catch (\Exception $e) {

@@ -1,6 +1,5 @@
 <?php
 
-use App\Actions\Bitbucket\HandleWebhook;
 use App\Actions\Bitbucket\RegisterWebhook;
 use App\Actions\Github\Auth\HandleGithubInstallation;
 use App\Actions\Platform\DownloadDocsAsMarkdown;
@@ -10,6 +9,7 @@ use App\Actions\Platform\Repositories\StoreRepository;
 use App\Actions\Platform\ShowDocs;
 use App\Actions\Platform\ShowReadme;
 use App\Actions\Platform\SourceCodeAccounts\StoreAccountPersonalAccessToken;
+use App\Actions\Platform\Webhook\HandleWebhook;
 use App\Http\Middleware\ControlRequestsFromPlatform;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
@@ -79,10 +79,10 @@ Route::middleware([
     });
 });
 
-// Rutas de Webhooks de Providers
-// Están aquí porque no pueden tener el middleware de autenticación
-Route::post('bitbucket/webhook', HandleWebhook::class)->withoutMiddleware(VerifyCsrfToken::class);
-Route::post('gitlab/webhook/{uuid}', HandleWebhook::class)->withoutMiddleware(VerifyCsrfToken::class);
+// Webhook providers (no auth)
+Route::post('webhook/{sourceCodeAccount}', HandleWebhook::class)
+    ->withoutMiddleware(VerifyCsrfToken::class)
+    ->name('webhook');
 
 Route::middleware(ControlRequestsFromPlatform::class)->group(function () {
     Route::get('/docs/{project}/{repository}/{branch}', ShowDocs::class)
