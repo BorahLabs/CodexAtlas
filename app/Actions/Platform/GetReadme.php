@@ -11,7 +11,7 @@ class GetReadme
 {
     use AsAction;
 
-    public function handle(Repository $repository, Branch $branch): File|null
+    public function handle(Repository $repository, Branch $branch): ?File
     {
         try {
             $file = $repository->sourceCodeAccount->getProvider()->file(

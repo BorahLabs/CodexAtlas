@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\SourceCodeProvider;
 use App\SourceCode\Contracts\SourceCodeProvider as ContractsSourceCodeProvider;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +20,14 @@ class SourceCodeAccount extends Model
 
     protected $casts = [
         'provider' => SourceCodeProvider::class,
+        'access_token' => 'encrypted',
     ];
+
+    public static function booted()
+    {
+        parent::booted();
+        static::addGlobalScope('withoutLocal', fn (Builder $query) => $query->where('provider', '!=', SourceCodeProvider::LocalFolder));
+    }
 
     public function team(): BelongsTo
     {

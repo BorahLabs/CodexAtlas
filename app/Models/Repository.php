@@ -49,6 +49,7 @@ class Repository extends Model
         return new RepositoryName(
             username: $this->username,
             name: $this->name,
+            workspace: $this->workspace,
         );
     }
 }

@@ -1,18 +1,21 @@
 <?php
 
-namespace App\Actions\Gitlab;
+namespace App\Services;
 
 use App\Actions\Gitlab\Auth\GetAuthenticatedAccountGitlabClient;
+use App\Actions\Gitlab\GetProjectIdForRepository;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\RepositoryName;
-use Lorisleiva\Actions\Concerns\AsAction;
 
-class GetAllFiles
+class GetUuidFromJson
 {
-    use AsAction;
+    public static function getUuid($uuid): string
+    {
+        return str_replace(['{', '}'], '', $uuid);
+    }
 
     public function handle(SourceCodeAccount $account, RepositoryName $repository, Branch $branch, string $path = null): array
     {

@@ -5,7 +5,6 @@ namespace App\Actions\Platform\Repositories;
 use App\Models\Project;
 use App\Models\Repository;
 use App\SourceCode\DTO\Branch as DTOBranch;
-use App\SourceCode\DTO\RepositoryName;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -17,10 +16,18 @@ class StoreRepository
     public function handle(Project $project, string $sourceAccountId, string $name): Repository|RedirectResponse
     {
         $sourceCodeAccount = $project->team->sourceCodeAccounts()->findOrFail($sourceAccountId);
-        [$username, $name] = explode('/', $name);
-        $repo = new RepositoryName($username, $name);
-        $repository = $sourceCodeAccount->getProvider()->repository($repo);
         try {
+            $repo = $sourceCodeAccount->provider->repositoryName($name);
+        } catch (\Exception $e) {
+            logger($e);
+
+            return redirect()->back()->withErrors([
+                'name' => 'The repository name '.$name.' is invalid. Please, make sure it follows the format <username>/<repository-name>. If it belongs to a workspace, use <workspace>/<repository-name>.',
+            ]);
+        }
+
+        try {
+            $repository = $sourceCodeAccount->getProvider()->repository($repo);
         } catch (\Exception $e) {
             logger($e);
 
@@ -35,6 +42,7 @@ class StoreRepository
             'project_id' => $project->id,
             'username' => $repo->username,
             'name' => $repo->name,
+            'workspace' => $repo->workspace ?? null,
         ]);
 
         if ($repository->branches->isEmpty()) {

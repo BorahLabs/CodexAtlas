@@ -9,7 +9,6 @@ use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File as FacadesFile;
 
 class LocalFolderProvider extends SourceCodeProvider
@@ -55,5 +54,20 @@ class LocalFolderProvider extends SourceCodeProvider
     public function file(RepositoryName $repository, Branch $branch, string $path): File|Folder
     {
         return (new LocalFolder\GetFile())->handle($repository, $branch, $path);
+    }
+
+    public function icon(): string
+    {
+        throw new \Exception('This should not be displayed in the UI');
+    }
+
+    public function name(): string
+    {
+        throw new \Exception('This should not be displayed in the UI');
+    }
+
+    public function url(RepositoryName $repository): string
+    {
+        throw new \Exception('This should not be displayed in the UI');
     }
 }

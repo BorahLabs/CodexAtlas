@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Actions\Gitlab;
+namespace App\Actions\Bitbucket;
 
-use App\Actions\Gitlab\Auth\GetAuthenticatedAccountGitlabClient;
+use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
+use App\Decorators\Bitbucket\DecoratedSrc;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\RepositoryName;
+use Bitbucket\ResultPager;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetAllFiles
@@ -16,23 +18,27 @@ class GetAllFiles
 
     public function handle(SourceCodeAccount $account, RepositoryName $repository, Branch $branch, string $path = null): array
     {
-        // TODO ACTUALIZAR
-        $client = GetAuthenticatedAccountGitlabClient::make()->handle($account);
-        $projectId = GetProjectIdForRepository::make()->handle($account, $repository);
-        $api = $client->repositories();
-        $rawFiles = $api->tree($projectId, [
-            'ref' => $branch->name,
-            'path' => $path,
-            'per_page' => 100,
-        ]);
+        $client = GetAuthenticatedAccountBitbucketClient::make()->handle($account);
+
+        $paginator = new ResultPager($client);
+
+        $branch = GetBranch::make()->handle($account, $repository, $branch);
+
+        $api = $client
+            ->repositories()
+            ->workspaces($repository->workspace)
+            ->src($repository->name);
+        $api = new DecoratedSrc($api, $repository->workspace, $repository->name);
+
+        $rawFiles = $paginator->fetch($api, 'list', [$branch->sha, $path ?? '/']);
 
         $files = [];
-        foreach ($rawFiles as $file) {
-            if ($file['type'] === 'tree') {
+        foreach ($rawFiles['values'] as $file) {
+            if ($file['type'] === 'commit_directory') {
                 $folder = Folder::from([
-                    'name' => $file['name'],
+                    'name' => basename($file['path']),
                     'path' => $file['path'],
-                    'sha' => $file['id'],
+                    'sha' => '', // not sent by bitbucket
                 ]);
                 $children = $this->handle($account, $repository, $branch, $file['path']);
                 foreach ($children as $child) {
@@ -46,9 +52,9 @@ class GetAllFiles
                 $files[] = $folder;
             } else {
                 $files[] = File::from([
-                    'name' => $file['name'],
+                    'name' => basename($file['path']),
                     'path' => $file['path'],
-                    'sha' => $file['id'],
+                    'sha' => '', // not sent by bitbucket
                     'download_url' => '',
                 ]);
             }

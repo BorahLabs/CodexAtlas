@@ -16,8 +16,8 @@ class DownloadDocsAsMarkdown
     public function handle(Project $project, Repository $repository, Branch $branch): string
     {
         $zip = new ZipArchive();
-        $path = tempnam(sys_get_temp_dir(), 'docs') . '.zip';
-        if (!$zip->open($path, ZipArchive::CREATE)) {
+        $path = tempnam(sys_get_temp_dir(), 'docs').'.zip';
+        if (! $zip->open($path, ZipArchive::CREATE)) {
             throw new \Exception('Could not create zip file');
         }
 
@@ -38,6 +38,7 @@ class DownloadDocsAsMarkdown
     public function asController(Project $project, Repository $repository, Branch $branch)
     {
         $zipPath = $this->handle($project, $repository, $branch);
-        return response()->download($zipPath, $repository->name . '-' . $branch->name . '.zip');
+
+        return response()->download($zipPath, $repository->name.'-'.$branch->name.'.zip');
     }
 }

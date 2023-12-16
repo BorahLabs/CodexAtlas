@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Laravel GitLab.
+ * This file is part of Laravel Bitbucket.
  *
  * (c) Graham Campbell <hello@gjcampbell.co.uk>
  *
@@ -28,34 +28,62 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | GitLab Connections
+    | Bitbucket Connections
     |--------------------------------------------------------------------------
     |
     | Here are each of the connections setup for your application. Example
     | configuration has been included, but you may add as many connections as
-    | you would like. Note that the 4 supported authentication methods are:
-    | "none", "oauth", "job_token", and "token".
+    | you would like. Note that the 5 supported authentication methods are:
+    | "jwt", "none", "oauth", "private", and "token".
     |
     */
 
     'connections' => [
 
         'main' => [
+            'method' => 'oauth',
             'token' => 'your-token',
-            'method' => 'token',
             // 'backoff' => false,
             // 'cache'   => false,
-            // 'sudo'    => null,
             // 'url'     => null,
         ],
 
         'alternative' => [
-            'token' => 'your-token',
-            'method' => 'oauth',
-            // 'backoff' => false,
-            // 'cache'   => false,
-            // 'sudo'    => null,
-            // 'url'     => null,
+            'method' => 'password',
+            'username' => 'foo',
+            'password' => 'bar',
+            // 'backoff'  => false,
+            // 'cache'    => false,
+            // 'url'      => null,
+        ],
+
+        'jwt' => [
+            'method' => 'jwt',
+            'token' => 'your-jwt-token',
+            // 'backoff'      => false,
+            // 'cache'        => false,
+            // 'version'      => 'v3',
+            // 'enterprise'   => false,
+        ],
+
+        'private' => [
+            'method' => 'private',
+            'appId' => 'your-bitbucket-app-id',
+            'keyPath' => 'your-private-key-path',
+            // 'key'        => 'your-private-key-content',
+            // 'passphrase' => 'your-private-key-passphrase'
+            // 'backoff'    => false,
+            // 'cache'      => false,
+            // 'version'    => 'v3',
+            // 'enterprise' => false,
+        ],
+
+        'none' => [
+            'method' => 'none',
+            // 'backoff'    => false,
+            // 'cache'      => false,
+            // 'version'    => 'v3',
+            // 'enterprise' => false,
         ],
 
     ],

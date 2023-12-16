@@ -11,7 +11,6 @@ use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
 use Github\Exception\ApiLimitExceedException;
-use Illuminate\Support\Facades\Cache;
 
 class GitHubProvider extends SourceCodeProvider
 {
