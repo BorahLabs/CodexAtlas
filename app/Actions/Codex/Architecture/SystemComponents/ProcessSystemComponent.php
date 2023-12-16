@@ -7,6 +7,7 @@ use App\LLM\Contracts\Llm;
 use App\LLM\DTO\CompletionResponse;
 use App\Models\Branch;
 use App\Models\ProcessingLogEntry;
+use App\Models\SystemComponent;
 use App\SourceCode\DTO\File;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -27,16 +28,32 @@ class ProcessSystemComponent
         $repository = $branch->repository;
         $sourceCodeAccount = $repository->sourceCodeAccount;
         $project = $repository->project;
+        $branches = $repository->branches;
         $provider = $sourceCodeAccount->getProvider();
         $repoName = $repository->nameDto();
 
         try {
             $file = $provider->file($repoName, $branch->dto(), $file->path);
-            $llm = app(Llm::class);
+            $existingFile = SystemComponent::where('path', $file->path)
+                ->whereIn('branch_id', $branches->pluck('id'))
+                ->where('status', SystemComponentStatus::Generated)
+                ->where('sha', $file->sha)
+                ->first();
             /**
-             * @var CompletionResponse
+             * @var Llm
              */
-            $completion = $llm->describeFile($project, $file);
+            $llm = app(Llm::class);
+            if ($existingFile) {
+                $completion = new CompletionResponse(
+                    completion: $existingFile->markdown_docs,
+                    processingTimeMilliseconds: 0,
+                    inputTokens: 0,
+                    outputTokens: 0,
+                    totalTokens: 0,
+                );
+            } else {
+                $completion = $llm->describeFile($project, $file);
+            }
 
             $branch->systemComponents()->updateOrCreate([
                 'path' => $file->path,
