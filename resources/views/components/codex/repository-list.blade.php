@@ -4,7 +4,7 @@
         <div class="mb-8 grid grid-cols-1 gap-4 mt-4">
             @foreach ($project->repositories as $repository)
                 <div class="border border-slate-700 px-4 py-2 font-medium text-slate-300 rounded-md hover:bg-slate-700">
-                    {{ $repository->name }}
+                    {{ $repository->full_name }}
                     <div>
                         @foreach ($repository->branches as $branch)
                             <a

@@ -13,7 +13,7 @@
                     </div>
                     <p
                         class="inline bg-gradient-to-r from-violet-200 to-violet-400 bg-clip-text font-bold font-display text-5xl tracking-tight text-transparent">
-                        {{ $repository->name }}
+                        {{ $repository->full_name }}
                     </p>
                     <div class="mt-3 text-2xl tracking-tight text-slate-400">
                         {{ $repository->description ?? $project->description }}
