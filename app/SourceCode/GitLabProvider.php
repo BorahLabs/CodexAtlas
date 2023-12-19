@@ -2,23 +2,28 @@
 
 namespace App\SourceCode;
 
+use App\Actions\Gitlab\Auth\GetAuthenticatedAccountGitlabClient;
+use App\Actions\Gitlab\GetProjectIdForRepository;
 use App\Actions\Gitlab;
 use App\Exceptions\ExceededProviderRateLimit;
 use App\SourceCode\Contracts\AccountInfoProvider;
+use App\SourceCode\Contracts\DownloadsZipFile;
 use App\SourceCode\Contracts\HandlesWebhook;
 use App\SourceCode\Contracts\RegistersWebhook;
 use App\SourceCode\Contracts\SourceCodeProvider;
 use App\SourceCode\DTO\Account;
 use App\SourceCode\DTO\Branch;
-use App\SourceCode\DTO\File;
-use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
+use App\SourceCode\Traits\LoadFilesFromS3;
 use Gitlab\Exception\ApiLimitExceededException;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 
-class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider, RegistersWebhook, HandlesWebhook
+class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider, RegistersWebhook, HandlesWebhook, DownloadsZipFile
 {
+    use LoadFilesFromS3;
+
     public function repositories(): array
     {
         try {
@@ -46,22 +51,16 @@ class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider, 
         }
     }
 
-    public function files(RepositoryName $repository, Branch $branch, string $path = null): array
+    public function archive(RepositoryName $repository, Branch $branch, Filesystem $disk, string $zipPath): string
     {
-        try {
-            return Gitlab\GetAllFiles::make()->handle($this->credentials(), $repository, $branch, $path);
-        } catch (ApiLimitExceededException $e) {
-            throw new ExceededProviderRateLimit(900);
-        }
-    }
+        $client = GetAuthenticatedAccountGitlabClient::make()->handle($this->credentials());
+        $projectId = GetProjectIdForRepository::make()->handle($this->credentials(), $repository);
+        $response = $client->repositories()->archive($projectId, [
+            'ref' => $branch->name,
+        ], 'zip');
 
-    public function file(RepositoryName $repository, Branch $branch, string $path): File|Folder
-    {
-        try {
-            return Gitlab\GetFile::make()->handle($this->credentials(), $repository, $branch, $path);
-        } catch (ApiLimitExceededException $e) {
-            throw new ExceededProviderRateLimit(900);
-        }
+        $disk->put($zipPath, $response);
+        return $zipPath;
     }
 
     public function icon(): string

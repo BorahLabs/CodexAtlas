@@ -11,6 +11,11 @@ class RepositoryName
         public readonly string $name,
         public readonly ?string $workspace = null,
     ) {
+        if (empty($username)) {
+            $this->fullName = $name;
+            return;
+        }
+
         $this->fullName = $username.'/'.$name;
     }
 }
