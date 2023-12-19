@@ -2,21 +2,25 @@
 
 namespace App\SourceCode;
 
+use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
 use App\Actions\Github;
 use App\Exceptions\ExceededProviderRateLimit;
+use App\SourceCode\Contracts\DownloadsZipFile;
 use App\SourceCode\Contracts\HandlesWebhook;
 use App\SourceCode\Contracts\RegistersWebhook;
 use App\SourceCode\Contracts\SourceCodeProvider;
 use App\SourceCode\DTO\Branch;
-use App\SourceCode\DTO\File;
-use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
+use App\SourceCode\Traits\LoadFilesFromS3;
 use Github\Exception\ApiLimitExceedException;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 
-class GitHubProvider extends SourceCodeProvider implements RegistersWebhook, HandlesWebhook
+class GitHubProvider extends SourceCodeProvider implements RegistersWebhook, HandlesWebhook, DownloadsZipFile
 {
+    use LoadFilesFromS3;
+
     public function repositories(): array
     {
         try {
@@ -44,22 +48,17 @@ class GitHubProvider extends SourceCodeProvider implements RegistersWebhook, Han
         }
     }
 
-    public function files(RepositoryName $repository, Branch $branch, string $path = null): array
+    public function archive(RepositoryName $repository, Branch $branch, Filesystem $disk, string $zipPath): string
     {
-        try {
-            return Github\GetAllFiles::make()->handle($this->credentials(), $repository, $branch, $path);
-        } catch (ApiLimitExceedException $e) {
-            throw new ExceededProviderRateLimit(min(900, $e->getResetTime()));
-        }
-    }
+        $client = GetAuthenticatedAccountGithubClient::make()->handle($this->credentials());
+        /**
+         * @var \Github\Api\Repo
+         */
+        $api = $client->api('repo');
+        $response = $api->contents()->archive($repository->username, $repository->name, 'zipball', $branch->name);
 
-    public function file(RepositoryName $repository, Branch $branch, string $path): File|Folder
-    {
-        try {
-            return Github\GetFile::make()->handle($this->credentials(), $repository, $branch, $path);
-        } catch (ApiLimitExceedException $e) {
-            throw new ExceededProviderRateLimit(min(900, $e->getResetTime()));
-        }
+        $disk->put($zipPath, $response);
+        return $zipPath;
     }
 
     public function icon(): string

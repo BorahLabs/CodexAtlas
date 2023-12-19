@@ -20,7 +20,7 @@ class GetFile
 
         return File::from([
             'name' => basename($path),
-            'path' => $path,
+            'path' => str($path)->after($repository->fullName.'/')->toString(),
             'sha' => sha1($file),
             'download_url' => $path,
             'content' => base64_encode($file),
