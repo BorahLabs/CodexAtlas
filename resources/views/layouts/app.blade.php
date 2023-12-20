@@ -17,6 +17,10 @@
 
     <!-- Styles -->
     @livewireStyles
+
+    @production
+        <script src="https://cdn.usefathom.com/script.js" data-site="FEPWQLXW" defer></script>
+    @endproduction
 </head>
 
 <body class="font-sans antialiased">

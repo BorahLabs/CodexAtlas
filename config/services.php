@@ -55,4 +55,11 @@ return [
         'embeddings_model' => env('OPENAI_EMBEDDINGS_MODEL', 'text-embedding-ada-002'),
     ],
 
+    'twist' => [
+        'email' => env('TWIST_EMAIL'),
+        'password' => env('TWIST_PASSWORD'),
+        'nice_thread' => env('TWIST_NICE_THREAD'),
+        'bad_thread' => env('TWIST_BAD_THREAD'),
+    ],
+
 ];

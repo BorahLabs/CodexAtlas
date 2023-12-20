@@ -43,39 +43,6 @@ Route::middleware([
     Route::prefix('github')->group(function () {
         Route::get('redirect', fn () => redirect()->to('https://github.com/apps/codexatlas/installations/select_target'))->name('github.redirect');
         Route::get('installation', HandleGithubInstallation::class)->middleware('throttle:3,1');
-
-        Route::get('webhook', function () {
-            logger(request()->all());
-
-            return response()->json([
-                'message' => 'ok',
-            ]);
-        });
-    });
-
-    Route::prefix('gitlab')->group(function () {
-        Route::get('webhook', function () {
-            logger(request()->all());
-
-            return response()->json([
-                'message' => 'ok',
-            ]);
-        });
-    });
-
-    Route::prefix('bitbucket')->group(function () {
-        Route::get('redirect', function () {
-            return Socialite::driver('bitbucket')->redirect();
-        })->name('bitbucket.redirect');
-        Route::get('test/webhook', RegisterWebhook::class);
-
-        Route::get('webhook', function () {
-            logger(request()->all());
-
-            return response()->json([
-                'message' => 'ok',
-            ]);
-        });
     });
 });
 
