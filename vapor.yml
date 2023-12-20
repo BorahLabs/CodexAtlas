@@ -37,6 +37,7 @@ environments:
     queue-timeout: 300
     storage: codex-atlas-staging
     database: codex-atlas-staging
+    database-proxy: true
     runtime: "php-8.2:al2"
     network: codex-atlas-staging
     domain: "*.codexatlas-staging.dev"
