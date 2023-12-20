@@ -29,7 +29,7 @@ class LocalFolderProvider extends SourceCodeProvider
 
     public function repository(RepositoryName $repository): Repository
     {
-        $path = $this->credentials()->name.'/'.$repository->name;
+        $path = $this->credentials()->name.DIRECTORY_SEPARATOR.$repository->name;
 
         return new Repository(
             id: $path,

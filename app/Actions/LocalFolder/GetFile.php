@@ -15,12 +15,12 @@ class GetFile
 
     public function handle(RepositoryName $repository, Branch $branch, string $path): File|Folder
     {
-        $path = $repository->fullName.'/'.$path;
+        $path = $repository->fullName.DIRECTORY_SEPARATOR.$path;
         $file = FacadesFile::get($path);
 
         return File::from([
             'name' => basename($path),
-            'path' => str($path)->after($repository->fullName.'/')->toString(),
+            'path' => str($path)->after($repository->fullName.DIRECTORY_SEPARATOR)->toString(),
             'sha' => sha1($file),
             'download_url' => $path,
             'content' => base64_encode($file),
