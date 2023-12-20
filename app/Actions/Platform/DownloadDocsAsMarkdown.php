@@ -28,7 +28,7 @@ class DownloadDocsAsMarkdown
 
         $branch
             ->systemComponents()
-            ->each(fn (SystemComponent $systemComponent) => $zip->addFromString($systemComponent->path, $systemComponent->content));
+            ->each(fn (SystemComponent $systemComponent) => $zip->addFromString($systemComponent->path . '.md', $systemComponent->content));
 
         $zip->close();
 
