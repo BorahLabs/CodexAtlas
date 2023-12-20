@@ -60,8 +60,9 @@ Some rules:
 
     public function completion(string $systemPrompt, string $userPrompt): CompletionResponse
     {
-        $start = intval(microtime(true) / 1000);
-        $response = FacadesOpenAI::chat()->create([
+        $start = intval(microtime(true) * 1000);
+        // wrapping on a retry function to avoid the limit per minute error
+        $response = retry(3, fn () => FacadesOpenAI::chat()->create([
             'model' => $this->modelName(),
             'messages' => [
                 [
@@ -74,8 +75,8 @@ Some rules:
                 ],
             ],
             'stop' => ['-----', "\nEND"],
-        ]);
-        $end = intval(microtime(true) / 1000);
+        ]), 61500);
+        $end = intval(microtime(true) * 1000);
 
         return CompletionResponse::make(
             completion: $response->choices[0]->message->content,

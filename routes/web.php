@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\Atlassian\Auth\HandleAuthCallback;
 use App\Actions\Bitbucket\RegisterWebhook;
 use App\Actions\Github\Auth\HandleGithubInstallation;
 use App\Actions\Platform\DownloadDocsAsMarkdown;
@@ -10,6 +11,7 @@ use App\Actions\Platform\ShowDocs;
 use App\Actions\Platform\ShowReadme;
 use App\Actions\Platform\SourceCodeAccounts\StoreAccountPersonalAccessToken;
 use App\Actions\Platform\Webhook\HandleWebhook;
+use App\Http\Controllers\AtlassianController;
 use App\Http\Middleware\ControlRequestsFromPlatform;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
@@ -67,6 +69,23 @@ Route::middleware([
         Route::get('redirect', function () {
             return Socialite::driver('bitbucket')->redirect();
         })->name('bitbucket.redirect');
+        Route::get('test/webhook', RegisterWebhook::class);
+
+        Route::get('webhook', function () {
+            logger(request()->all());
+
+            return response()->json([
+                'message' => 'ok',
+            ]);
+        });
+    });
+
+    Route::prefix('atlassian')->group(function () {
+        Route::get('redirect', function () {
+            return Socialite::driver('atlassian')->redirect();
+        })->name('atlassian.redirect');
+
+        Route::get('callback', HandleAuthCallback::class)->name('atlassian.callback');
         Route::get('test/webhook', RegisterWebhook::class);
 
         Route::get('webhook', function () {

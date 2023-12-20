@@ -2,7 +2,9 @@
 
 namespace App\SourceCode;
 
+use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Actions\Bitbucket;
+use App\Decorators\Bitbucket\DecoratedRepository;
 use App\Exceptions\ExceededProviderRateLimit;
 use App\SourceCode\Contracts\AccountInfoProvider;
 use App\SourceCode\Contracts\HandlesWebhook;
@@ -10,15 +12,17 @@ use App\SourceCode\Contracts\RegistersWebhook;
 use App\SourceCode\Contracts\SourceCodeProvider;
 use App\SourceCode\DTO\Account;
 use App\SourceCode\DTO\Branch;
-use App\SourceCode\DTO\File;
-use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\Repository;
 use App\SourceCode\DTO\RepositoryName;
+use App\SourceCode\Traits\LoadFilesFromS3;
 use Bitbucket\Exception\ApiLimitExceededException;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 
 class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvider, RegistersWebhook, HandlesWebhook
 {
+    use LoadFilesFromS3;
+
     public function repositories(): array
     {
         try {
@@ -46,22 +50,20 @@ class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvide
         }
     }
 
-    public function files(RepositoryName $repository, Branch $branch, string $path = null): array
+    public function archive(RepositoryName $repository, Branch $branch, Filesystem $disk, string $zipPath): string
     {
-        try {
-            return Bitbucket\GetAllFiles::make()->handle($this->credentials(), $repository, $branch, $path);
-        } catch (ApiLimitExceededException $e) {
-            throw new ExceededProviderRateLimit(900);
-        }
-    }
+        $client = GetAuthenticatedAccountBitbucketClient::make()->handle($this->credentials());
+        $api = new DecoratedRepository(
+            api: $client->repositories()->workspaces($repository->workspace),
+            workspace: $repository->workspace,
+            repo: $repository->name
+        );
 
-    public function file(RepositoryName $repository, Branch $branch, string $path): File|Folder
-    {
-        try {
-            return Bitbucket\GetFile::make()->handle($this->credentials(), $repository, $branch, $path);
-        } catch (ApiLimitExceededException $e) {
-            throw new ExceededProviderRateLimit(900);
-        }
+        $response = $api
+            ->archive($this->credentials()->name, $this->credentials()->access_token, $branch->name);
+
+        $disk->put($zipPath, $response);
+        return $zipPath;
     }
 
     public function icon(): string
