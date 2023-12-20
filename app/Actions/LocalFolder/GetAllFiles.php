@@ -15,7 +15,7 @@ class GetAllFiles
 
     public function handle(RepositoryName $repository, Branch $branch, string $path = null): array
     {
-        $path = $path ? $repository->fullName.'/'.$path : $repository->fullName;
+        $path = $path ? $repository->fullName.DIRECTORY_SEPARATOR.$path : $repository->fullName;
         $rawFiles = FacadesFile::files($path);
         $directories = FacadesFile::directories($path);
 
@@ -34,7 +34,7 @@ class GetAllFiles
 
             $files[] = File::from([
                 'name' => $file->getBasename(),
-                'path' => str($file->getPathname())->after($repository->fullName.'/')->toString(),
+                'path' => str($file->getPathname())->after($repository->fullName.DIRECTORY_SEPARATOR)->toString(),
                 'absolute_path' => $file->getPathname(),
                 'sha' => sha1($file->getContents()),
                 'download_url' => $file->getPath(),
@@ -48,11 +48,11 @@ class GetAllFiles
 
             $folder = Folder::from([
                 'name' => basename($directory),
-                'path' => str(dirname($directory))->after($repository->fullName.'/')->toString(),
+                'path' => str(dirname($directory))->after($repository->fullName.DIRECTORY_SEPARATOR)->toString(),
                 'absolute_path' => dirname($directory),
                 'sha' => sha1($directory),
             ]);
-            $children = $this->handle($repository, $branch, str($directory)->after($repository->fullName)->trim('/')->toString());
+            $children = $this->handle($repository, $branch, str($directory)->after($repository->fullName)->trim(DIRECTORY_SEPARATOR)->toString());
             foreach ($children as $child) {
                 if ($child instanceof File) {
                     $folder->addFile($child);
