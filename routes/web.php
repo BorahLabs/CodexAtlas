@@ -11,6 +11,7 @@ use App\Actions\Platform\ShowDocs;
 use App\Actions\Platform\ShowReadme;
 use App\Actions\Platform\SourceCodeAccounts\StoreAccountPersonalAccessToken;
 use App\Actions\Platform\Webhook\HandleWebhook;
+use App\ContentPlatform\ConfluenceContentPlatform;
 use App\Http\Controllers\AtlassianController;
 use App\Http\Middleware\ControlRequestsFromPlatform;
 use App\Http\Middleware\VerifyCsrfToken;
@@ -117,3 +118,6 @@ Route::middleware(ControlRequestsFromPlatform::class)->group(function () {
         ->scopeBindings()
         ->name('docs.show-component');
 });
+
+
+Route::get('testing/confluence', [ConfluenceContentPlatform::class, 'testingAll'])->name('testing.confluence');
