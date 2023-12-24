@@ -138,7 +138,7 @@ return [
 
             'plans' => [
                 [
-                    'name' => 'Company',
+                    'name' => 'Company Plan',
                     'short_description' => 'Best for companies looking for external integrations and advanced features.',
                     'monthly_id' => env('STRIPE_COMPANY_PLAN_MONTHLY_ID'),
                     'yearly_id' => env('STRIPE_COMPANY_PLAN_YEARLY_ID'),
