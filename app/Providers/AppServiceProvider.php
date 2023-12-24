@@ -7,6 +7,7 @@ use App\LLM\OpenAI;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 use Lorisleiva\Actions\Facades\Actions;
+use Spark\Spark;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,9 +28,6 @@ class AppServiceProvider extends ServiceProvider
 
         Actions::registerCommands();
 
-        // \URL::forceScheme('https');
-
-        // TODO:
         $this->app->bind(Llm::class, fn () => new OpenAI());
     }
 }

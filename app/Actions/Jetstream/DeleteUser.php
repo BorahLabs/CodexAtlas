@@ -46,6 +46,10 @@ class DeleteUser implements DeletesUsers
         $user->teams()->detach();
 
         $user->ownedTeams->each(function (Team $team) {
+            if (optional($team->subscription())->recurring()) {
+                $team->subscription()->cancelNow();
+            }
+
             $this->deletesTeams->delete($team);
         });
     }

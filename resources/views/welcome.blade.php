@@ -319,7 +319,6 @@
         </div>
     </section>
 
-    {{--
     <section class="relative py-12 md:py-24 lg:py-32 bg-body overflow-hidden">
         <div class="relative container mx-auto px-4">
             <div
@@ -413,7 +412,7 @@
                 </div>
             </div>
         </div>
-    </section> --}}
+    </section>
 
     <section class="relative py-12 md:py-20 bg-body overflow-hidden">
         <div class="container mx-auto px-4">

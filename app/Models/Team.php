@@ -10,11 +10,13 @@ use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Team as JetstreamTeam;
+use Spark\Billable;
 
 class Team extends JetstreamTeam
 {
     use HasFactory;
     use HasUuids;
+    use Billable;
 
     /**
      * The attributes that should be cast.
@@ -23,6 +25,7 @@ class Team extends JetstreamTeam
      */
     protected $casts = [
         'personal_team' => 'boolean',
+        'trial_ends_at' => 'datetime',
     ];
 
     /**
@@ -75,5 +78,10 @@ class Team extends JetstreamTeam
     public function currentPlatform(): Platform
     {
         return $this->platforms->first();
+    }
+
+    public function stripeEmail(): string|null
+    {
+        return $this->owner->email;
     }
 }
