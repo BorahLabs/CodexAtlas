@@ -18,7 +18,7 @@ class SynchronizeSystemComponent
              * @var \App\ContentPlatform\Contracts\ContentPlatform
              */
             $provider = $contentPlatformAccount->platform->provider();
-            $provider->createPage($systemComponent);
+            $provider->handleSynchronizeAction($systemComponent);
         }
     }
 }
