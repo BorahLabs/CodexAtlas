@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignUuid('user_id')->index();
             $table->string('name');
             $table->boolean('personal_team');
+            $table->boolean('stores_code')->default(false);
             $table->timestamps();
         });
     }

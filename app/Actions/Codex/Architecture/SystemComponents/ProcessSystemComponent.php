@@ -30,6 +30,7 @@ class ProcessSystemComponent
         $sourceCodeAccount = $repository->sourceCodeAccount;
         $project = $repository->project;
         $branches = $repository->branches;
+        $team = $project->team;
         $provider = $sourceCodeAccount->getProvider();
         $repoName = $repository->nameDto();
 
@@ -62,7 +63,7 @@ class ProcessSystemComponent
                 'order' => $order,
                 'sha' => $file->sha,
                 'path' => $file->path,
-                'file_contents' => $file->contents(),
+                'file_contents' => $team->stores_code ? $file->contents() : null,
                 'markdown_docs' => $this->formatExplanation($completion->completion, $file->path),
                 'status' => SystemComponentStatus::Generated,
             ]);

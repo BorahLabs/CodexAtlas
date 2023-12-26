@@ -61,6 +61,10 @@ class SystemComponent extends Model
     {
         return Attribute::make(
             get: function () {
+                if (is_null($this->file_contents)) {
+                    return null;
+                }
+
                 return $this->markdown_docs."\n\n```".$this->language."\n".$this->file_contents."\n```";
             },
         );
