@@ -63,6 +63,8 @@ return [
 
     'fake_domain' => env('FAKED_APP_DOMAIN'),
 
+    'indexable' => env('APP_INDEXABLE', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
