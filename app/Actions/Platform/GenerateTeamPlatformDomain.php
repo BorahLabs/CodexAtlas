@@ -13,12 +13,17 @@ class GenerateTeamPlatformDomain
 
     public function handle(Team $team): string
     {
-        $domain = str($team->name)->slug()->toString().'.'.config('app.main_domain');
         $suffix = '';
         while (true) {
-            $platform = Platform::where('domain', $domain.$suffix)->exists();
+            $domain = str($team->name)
+                ->slug()
+                ->append($suffix)
+                ->append('.'.config('app.main_domain'))
+                ->lower()
+                ->toString();
+            $platform = Platform::where('domain', $domain)->exists();
             if (! $platform) {
-                return $domain.$suffix;
+                return $domain;
             }
 
             $suffix = '-'.Str::random(4);

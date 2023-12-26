@@ -46,7 +46,7 @@ class PlatformManager extends Component
                 'string',
                 'min:4',
                 'max:75',
-                'regex:/^([\w]+)$/',
+                'regex:/^([\w\-]+)$/',
                 new UniqueSubdomain($this->team),
             ],
         ];

@@ -21,8 +21,8 @@ class ForceTeamDomain
 
         $host = $request->host();
         $platform = $request->user()->currentTeam->currentPlatform();
-        if ($host !== $platform->domain) {
-            return redirect()->to('https://' . $platform->domain . $request->getRequestUri());
+        if (mb_strtolower($host) !== mb_strtolower($platform->domain)) {
+            return redirect()->to('https://' . mb_strtolower($platform->domain) . $request->getRequestUri());
         }
 
         return $next($request);
