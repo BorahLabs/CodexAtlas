@@ -94,6 +94,10 @@ class Team extends JetstreamTeam
 
     public function subscriptionType(): SubscriptionType
     {
+        if (str_ends_with($this->owner->email, '@codexatlas.app')) {
+            return SubscriptionType::Unlimited;
+        }
+
         if ($plan = $this->sparkPlan()) {
             dd($plan);
         }

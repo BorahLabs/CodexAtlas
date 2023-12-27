@@ -7,6 +7,7 @@ enum SubscriptionType
     case FreeTrial;
     case PayAsYouGo;
     case CompanyPlan;
+    case Unlimited;
 
     public function canCreateTeams(): bool
     {
@@ -14,6 +15,7 @@ enum SubscriptionType
             self::FreeTrial => false,
             self::PayAsYouGo => true,
             self::CompanyPlan => true,
+            self::Unlimited => true,
         };
     }
 
@@ -23,6 +25,7 @@ enum SubscriptionType
             self::FreeTrial => 1,
             self::PayAsYouGo => null,
             self::CompanyPlan => null,
+            self::Unlimited => null,
         };
     }
 
@@ -32,6 +35,7 @@ enum SubscriptionType
             self::FreeTrial => 1,
             self::PayAsYouGo => null,
             self::CompanyPlan => 50,
+            self::Unlimited => null,
         };
     }
 
@@ -41,6 +45,7 @@ enum SubscriptionType
             self::FreeTrial => 1,
             self::PayAsYouGo => null,
             self::CompanyPlan => null, // TODO: tbd
+            self::Unlimited => null,
         };
     }
 
@@ -50,6 +55,7 @@ enum SubscriptionType
             self::FreeTrial => 300,
             self::PayAsYouGo => null,
             self::CompanyPlan => null,
+            self::Unlimited => null,
         };
     }
 }
