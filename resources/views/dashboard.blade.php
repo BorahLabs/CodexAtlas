@@ -10,6 +10,7 @@
             <div class="bg-gray-800 overflow-hidden shadow-xl p-8 sm:rounded-lg">
                 <x-codex.project-list :projects="auth()->user()->currentTeam->projects" />
             </div>
+            <x-codex.free-plan-banner class="mt-12" />
         </div>
     </div>
 </x-app-layout>

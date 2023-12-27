@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Actions\Platform\GenerateTeamPlatformDomain;
+use App\Enums\SubscriptionType;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -83,5 +84,18 @@ class Team extends JetstreamTeam
     public function stripeEmail(): string|null
     {
         return $this->owner->email;
+    }
+
+    public function subscriptionType(): SubscriptionType
+    {
+        if ($plan = $this->sparkPlan()) {
+            dd($plan);
+        }
+
+        if ($this->openai_key) {
+            return SubscriptionType::PayAsYouGo;
+        }
+
+        return SubscriptionType::FreeTrial;
     }
 }
