@@ -10,20 +10,19 @@ class BasicAuth
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        if (!config('app.basic_auth.enabled')) {
+        if (! config('app.basic_auth.enabled')) {
             return $next($request);
         }
 
-        $hasCredentials = !(empty($_SERVER['PHP_AUTH_USER']) && empty($_SERVER['PHP_AUTH_PW']));
+        $hasCredentials = ! (empty($_SERVER['PHP_AUTH_USER']) && empty($_SERVER['PHP_AUTH_PW']));
         $isNotAuthenticated = (
-            !$hasCredentials ||
+            ! $hasCredentials ||
             $_SERVER['PHP_AUTH_USER'] != config('app.basic_auth.username') ||
-            $_SERVER['PHP_AUTH_PW']   != config('app.basic_auth.password')
+            $_SERVER['PHP_AUTH_PW'] != config('app.basic_auth.password')
         );
 
         if ($isNotAuthenticated) {

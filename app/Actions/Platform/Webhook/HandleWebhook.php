@@ -16,6 +16,7 @@ class HandleWebhook
         $provider = $sourceCodeAccount->getProvider();
         if ($provider instanceof HandlesWebhook) {
             $provider->verifyIncomingWebhook($request);
+
             return $provider->handleIncomingWebhook($request->all(), $request);
         }
 
@@ -25,6 +26,7 @@ class HandleWebhook
     public function asController(SourceCodeAccount $sourceCodeAccount, Request $request)
     {
         $response = $this->handle($sourceCodeAccount, $request);
+
         return $response ?? response()->json([
             'success' => true,
         ]);

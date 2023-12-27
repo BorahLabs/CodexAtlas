@@ -16,7 +16,7 @@ class GetAllFiles
 {
     use AsAction;
 
-    public function handle(SourceCodeAccount $account, RepositoryName $repository, Branch $branch, string $path = null): array
+    public function handle(SourceCodeAccount $account, RepositoryName $repository, Branch $branch, ?string $path = null): array
     {
         $client = GetAuthenticatedAccountBitbucketClient::make()->handle($account);
 

@@ -2,8 +2,8 @@
 
 namespace App\SourceCode;
 
-use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
 use App\Actions\Github;
+use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
 use App\Exceptions\ExceededProviderRateLimit;
 use App\SourceCode\Contracts\DownloadsZipFile;
 use App\SourceCode\Contracts\HandlesWebhook;
@@ -17,7 +17,7 @@ use Github\Exception\ApiLimitExceedException;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 
-class GitHubProvider extends SourceCodeProvider implements RegistersWebhook, HandlesWebhook, DownloadsZipFile
+class GitHubProvider extends SourceCodeProvider implements DownloadsZipFile, HandlesWebhook, RegistersWebhook
 {
     use LoadFilesFromS3;
 
@@ -58,6 +58,7 @@ class GitHubProvider extends SourceCodeProvider implements RegistersWebhook, Han
         $response = $api->contents()->archive($repository->username, $repository->name, 'zipball', $branch->name);
 
         $disk->put($zipPath, $response);
+
         return $zipPath;
     }
 

@@ -26,7 +26,7 @@ class HandleWebhook
             ->where('name', $repositoryName->name)
             ->where('username', $repositoryName->username)
             ->when($repositoryName->workspace, fn ($query) => $query->where('workspace', $repositoryName->workspace))
-            ->when(!$repositoryName->workspace, fn ($query) => $query->whereNull('workspace'))
+            ->when(! $repositoryName->workspace, fn ($query) => $query->whereNull('workspace'))
             ->firstOrFail();
 
         $branches = [];
@@ -37,7 +37,7 @@ class HandleWebhook
                 continue;
             }
 
-            if (!isset($branches[$branch->id])) {
+            if (! isset($branches[$branch->id])) {
                 $branches[$branch->id] = [
                     'branch' => $branch,
                     'commits' => [],

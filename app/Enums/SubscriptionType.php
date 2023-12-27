@@ -35,6 +35,15 @@ enum SubscriptionType
         };
     }
 
+    public function maxBranchesPerRepository(): ?int
+    {
+        return match ($this) {
+            self::FreeTrial => 1,
+            self::PayAsYouGo => null,
+            self::CompanyPlan => null, // TODO: tbd
+        };
+    }
+
     public function maxFilesPerRepository(): ?int
     {
         return match ($this) {

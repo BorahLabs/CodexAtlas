@@ -25,7 +25,7 @@ class Handler extends ExceptionHandler
     public function register(): void
     {
         $this->reportable(function (Throwable $e) {
-            SendMessageToTwistThread::dispatch(config('services.twist.bad_thread'), '💥 [UNCAUGHT ERROR] ' . $e->getMessage() . ' on line ' . $e->getLine() . ' in file ' . $e->getFile());
+            SendMessageToTwistThread::dispatch(config('services.twist.bad_thread'), '💥 [UNCAUGHT ERROR] '.$e->getMessage().' on line '.$e->getLine().' in file '.$e->getFile());
         });
     }
 }

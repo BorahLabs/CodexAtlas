@@ -7,7 +7,6 @@ use App\LLM\OpenAI;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 use Lorisleiva\Actions\Facades\Actions;
-use Spark\Spark;
 
 class AppServiceProvider extends ServiceProvider
 {

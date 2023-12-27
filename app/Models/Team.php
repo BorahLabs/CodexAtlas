@@ -7,6 +7,7 @@ use App\Enums\SubscriptionType;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
@@ -15,9 +16,9 @@ use Spark\Billable;
 
 class Team extends JetstreamTeam
 {
+    use Billable;
     use HasFactory;
     use HasUuids;
-    use Billable;
 
     /**
      * The attributes that should be cast.
@@ -71,6 +72,11 @@ class Team extends JetstreamTeam
         return $this->hasMany(Project::class);
     }
 
+    public function repositories(): HasManyThrough
+    {
+        return $this->hasManyThrough(Repository::class, Project::class);
+    }
+
     public function platforms(): HasMany
     {
         return $this->hasMany(Platform::class);
@@ -81,7 +87,7 @@ class Team extends JetstreamTeam
         return $this->platforms->first();
     }
 
-    public function stripeEmail(): string|null
+    public function stripeEmail(): ?string
     {
         return $this->owner->email;
     }

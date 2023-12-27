@@ -2,8 +2,8 @@
 
 namespace App\SourceCode;
 
-use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Actions\Bitbucket;
+use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Decorators\Bitbucket\DecoratedRepository;
 use App\Exceptions\ExceededProviderRateLimit;
 use App\SourceCode\Contracts\AccountInfoProvider;
@@ -19,7 +19,7 @@ use Bitbucket\Exception\ApiLimitExceededException;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 
-class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvider, RegistersWebhook, HandlesWebhook
+class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvider, HandlesWebhook, RegistersWebhook
 {
     use LoadFilesFromS3;
 
@@ -63,6 +63,7 @@ class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvide
             ->archive($this->credentials()->name, $this->credentials()->access_token, $branch->name);
 
         $disk->put($zipPath, $response);
+
         return $zipPath;
     }
 

@@ -19,9 +19,10 @@ class DecoratedRepository extends AbstractWorkspacesApi
     public function archive(string $username, string $password, string $branch)
     {
         $response = Http::withBasicAuth($username, $password)
-            ->get('https://bitbucket.org/' . $this->workspace . '/' . $this->repo . '/get/' . $branch . '.zip')
+            ->get('https://bitbucket.org/'.$this->workspace.'/'.$this->repo.'/get/'.$branch.'.zip')
             ->throw()
             ->body();
+
         return $response;
     }
 

@@ -14,16 +14,16 @@ class SendMessageToTwistThread
 
     public function handle(string|int|null $threadId, string $message)
     {
-        if (!config('services.twist.email') || !config('services.twist.password') || !$threadId) {
+        if (! config('services.twist.email') || ! config('services.twist.password') || ! $threadId) {
             return;
         }
 
-        $token = Cache::remember('twist-token-'.config('services.twist.email'), now()->addDay(), fn () =>  Http::post('https://api.twist.com/api/v3/users/login', [
+        $token = Cache::remember('twist-token-'.config('services.twist.email'), now()->addDay(), fn () => Http::post('https://api.twist.com/api/v3/users/login', [
             'email' => 'raul@borah.agency',
             'password' => 'Rl-Lz-Gz+1997',
         ])->json('token'));
 
-        abort_if(!$token, 500, 'Could not get token');
+        abort_if(! $token, 500, 'Could not get token');
         Http::withToken($token)->post('https://api.twist.com/api/v3/comments/add', [
             'thread_id' => $threadId,
             'content' => $message,

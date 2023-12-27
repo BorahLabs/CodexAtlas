@@ -15,6 +15,7 @@ class Diff implements Arrayable
     public function add(DiffItem $item): static
     {
         $this->changes[$item->path] = $item;
+
         return $this;
     }
 

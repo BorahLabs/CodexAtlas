@@ -43,7 +43,7 @@ return [
     |
     */
 
-    'brand' =>  [
+    'brand' => [
         'logo' => realpath(__DIR__.'/../public/images/logo.svg'),
         'color' => '#080C28',
     ],

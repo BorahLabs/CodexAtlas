@@ -1,6 +1,5 @@
 <?php
 
-use App\Actions\Bitbucket\RegisterWebhook;
 use App\Actions\Github\Auth\HandleGithubInstallation;
 use App\Actions\Platform\DownloadDocsAsMarkdown;
 use App\Actions\Platform\Projects\ShowProject;
@@ -13,7 +12,6 @@ use App\Actions\Platform\Webhook\HandleWebhook;
 use App\Http\Middleware\ControlRequestsFromPlatform;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
-use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------

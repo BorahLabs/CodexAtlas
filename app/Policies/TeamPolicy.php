@@ -73,4 +73,26 @@ class TeamPolicy
     {
         return $user->ownsTeam($team);
     }
+
+    public function createProject(User $user): bool
+    {
+        /**
+         * @var Team $team
+         */
+        $team = $user->currentTeam;
+        $subscriptionType = $team->subscriptionType();
+
+        return $subscriptionType->maxProjects() === null || $subscriptionType->maxProjects() > $team->projects()->count();
+    }
+
+    public function createRepository(User $user): bool
+    {
+        /**
+         * @var Team $team
+         */
+        $team = $user->currentTeam;
+        $subscriptionType = $team->subscriptionType();
+
+        return $subscriptionType->maxRepositories() === null || $subscriptionType->maxRepositories() > $team->repositories()->count();
+    }
 }

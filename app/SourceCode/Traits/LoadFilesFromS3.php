@@ -11,9 +11,10 @@ use Illuminate\Support\Facades\Storage;
 
 trait LoadFilesFromS3
 {
-    public function files(RepositoryName $repository, Branch $branch, string $path = null): array
+    public function files(RepositoryName $repository, Branch $branch, ?string $path = null): array
     {
         $zipPath = $this->loadZipFile($repository, $branch);
+
         return (new S3ZipProvider())
             ->withCredentials($this->credentials())
             ->usingZipFile($zipPath)
@@ -23,6 +24,7 @@ trait LoadFilesFromS3
     public function file(RepositoryName $repository, Branch $branch, string $path): File|Folder
     {
         $zipPath = $this->loadZipFile($repository, $branch);
+
         return (new S3ZipProvider())
             ->withCredentials($this->credentials())
             ->usingZipFile($zipPath)
@@ -31,7 +33,7 @@ trait LoadFilesFromS3
 
     public function loadZipFile(RepositoryName $repository, Branch $branch): string
     {
-        $zip = sha1($this->credentials()->id . '-' . $repository->fullName . '-' . $branch->name) . '.zip';
+        $zip = sha1($this->credentials()->id.'-'.$repository->fullName.'-'.$branch->name).'.zip';
         $disk = Storage::disk('s3');
         if ($disk->exists($zip)) {
             $timeAgo = \Carbon\Carbon::createFromTimestamp($disk->lastModified($zip))->diffInRealSeconds(now());
