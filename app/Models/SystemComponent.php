@@ -9,9 +9,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class SystemComponent extends Model
 {
+    use Searchable;
     use HasFactory;
     use HasUuids;
     use SoftDeletes;
@@ -68,5 +70,41 @@ class SystemComponent extends Model
                 return $this->markdown_docs."\n\n```".$this->language."\n".$this->file_contents."\n```";
             },
         );
+    }
+
+    /**
+     * Get the name of the index associated with the model.
+     */
+    public function searchableAs(): string
+    {
+        return 'system_component_index';
+        // return 'system_component_index_' . $this->branch_id;
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+    public function toSearchableArray(): array
+    {
+
+        return [
+            'url' =>  $this->branch->repository->project->team->currentPlatform()
+                                ->route('docs.show-component',
+                                    [
+                                    'project' => $this->branch->repository->project,
+                                    'repository' => $this->branch->repository,
+                                    'branch' => $this->branch,
+                                    'systemComponent' => $this,
+                                    ]),
+            'title' => basename($this->path),
+            'type' => 'lvl1',
+            'content' => $this->markdown_docs,
+            'hierarchy' => [
+                'lvl0' => str($this->path)->beforeLast("/"),
+                'lvl1' => basename($this->path),
+            ]
+        ];
     }
 }
