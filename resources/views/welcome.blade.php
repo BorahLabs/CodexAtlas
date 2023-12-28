@@ -353,7 +353,7 @@
                             'AI Chatbot',
                             'Premium support',
                         ]" cta="Start for free" :ctaUrl="route('register')" />
-                    <x-homepage.pricing-card :imageUrl="asset('casper-assets/pricing/pricing-top-2.png')" price="Free" title="Your own OpenAI Key"
+                    <x-homepage.pricing-card :imageUrl="asset('casper-assets/pricing/pricing-top-2.png')" price="Pay as you go" title="Your own OpenAI Key"
                         description="Use CodexAtlas with your own OpenAI API Key. For free." :included="[
                             'Real-time documentation updates',
                             'Unlimited repositories',
@@ -369,7 +369,7 @@
                     @php
                         $monthlyPlan = \App\Cashier\StripePlanProvider::plans()->firstWhere('id', config('spark.billables.user.plans.0.monthly_id'));
                     @endphp
-                    <x-homepage.pricing-card :imageUrl="asset('casper-assets/pricing/pricing-top-3.png')" price="\Spark\Spark" :title="$monthlyPlan->price . ' / month'"
+                    <x-homepage.pricing-card :imageUrl="asset('casper-assets/pricing/pricing-top-3.png')" price="Company" :title="$monthlyPlan->price . ' / month'"
                         description="Best for middle sized companies that want to integrate CodexAtlas with their workflow."
                         :included="[
                             'Real-time documentation updates',
