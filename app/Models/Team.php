@@ -109,4 +109,11 @@ class Team extends JetstreamTeam
 
         return SubscriptionType::FreeTrial;
     }
+
+    public function purge()
+    {
+        // TODO: Delete all projects, repositories, and source code accounts
+        // here
+        parent::purge();
+    }
 }

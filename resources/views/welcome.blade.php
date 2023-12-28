@@ -354,7 +354,7 @@
                             'Premium support',
                         ]" cta="Start for free" :ctaUrl="route('register')" />
                     <x-homepage.pricing-card :imageUrl="asset('casper-assets/pricing/pricing-top-2.png')" price="Pay as you go" title="Your own OpenAI Key"
-                        description="Use CodexAtlas with your own OpenAI API Key. For free." :included="[
+                        description="Use CodexAtlas with your own OpenAI API Key." :included="[
                             'Real-time documentation updates',
                             'Unlimited repositories',
                             'Unlimited branches',
