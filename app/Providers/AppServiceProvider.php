@@ -27,9 +27,6 @@ class AppServiceProvider extends ServiceProvider
 
         Actions::registerCommands();
 
-        // \URL::forceScheme('https');
-
-        // TODO:
         $this->app->bind(Llm::class, fn () => new OpenAI());
     }
 }

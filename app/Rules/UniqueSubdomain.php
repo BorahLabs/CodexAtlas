@@ -27,7 +27,7 @@ class UniqueSubdomain implements ValidationRule
             ->where('domain', $domain)
             ->exists();
         if ($exists) {
-            $fail(__('Domain already exists'));
+            $fail(__('This domain is already assigned to another team. Please, select a new one.'));
         }
     }
 }

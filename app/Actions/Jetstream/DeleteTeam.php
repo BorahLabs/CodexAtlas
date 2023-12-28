@@ -12,6 +12,9 @@ class DeleteTeam implements DeletesTeams
      */
     public function delete(Team $team): void
     {
+        if (optional($team->subscription())->recurring()) {
+            $team->subscription()->cancelNow();
+        }
         $team->purge();
     }
 }

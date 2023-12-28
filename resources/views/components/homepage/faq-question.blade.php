@@ -1,6 +1,7 @@
 @props(['question', 'answer'])
 <div class="group block w-full text-left border-b-2 border-white border-opacity-10" x-data="{ open: false }">
-    <button class="px-4 flex items-start justify-between w-full hover:bg-white/10 py-6" x-on:click="open = !open">
+    <button class="px-4 flex items-start justify-between w-full text-left hover:bg-white/10 py-6"
+        x-on:click="open = !open">
         <div class="text-xl text-white tracking-tight font-medium"
             x-bind:class="{
                 'text-violet-500': open

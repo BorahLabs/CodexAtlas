@@ -58,7 +58,7 @@ return [
 
         'tmp' => [
             'driver' => 'local',
-            'root' => env('USE_LAMBDA_STORAGE', true) ? "/tmp" : storage_path('app'.DIRECTORY_SEPARATOR.'temp'),
+            'root' => env('USE_LAMBDA_STORAGE', true) ? '/tmp' : storage_path('app'.DIRECTORY_SEPARATOR.'temp'),
         ],
 
     ],

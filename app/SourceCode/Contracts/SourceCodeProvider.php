@@ -54,7 +54,7 @@ abstract class SourceCodeProvider
      *
      * @return File|Folder[]
      */
-    abstract public function files(RepositoryName $repository, Branch $branch, string $path = null): array;
+    abstract public function files(RepositoryName $repository, Branch $branch, ?string $path = null): array;
 
     /**
      * Returns a single file and its contents

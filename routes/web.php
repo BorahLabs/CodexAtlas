@@ -1,6 +1,5 @@
 <?php
 
-use App\Actions\Bitbucket\RegisterWebhook;
 use App\Actions\Github\Auth\HandleGithubInstallation;
 use App\Actions\Platform\DownloadDocsAsMarkdown;
 use App\Actions\Platform\Projects\ShowProject;
@@ -13,7 +12,6 @@ use App\Actions\Platform\Webhook\HandleWebhook;
 use App\Http\Middleware\ControlRequestsFromPlatform;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
-use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,18 +24,22 @@ use Laravel\Socialite\Facades\Socialite;
 |
 */
 
-Route::view('/', 'welcome')->name('homepage');
+Route::view('/', 'welcome')
+    ->middleware('central-domain')
+    ->name('homepage');
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::view('/dashboard', 'dashboard')->name('dashboard');
-    Route::post('/projects', StoreProject::class)->name('projects.store');
-    Route::get('/projects/{project}', ShowProject::class)->name('projects.show');
+    Route::middleware('team-domain')->group(function () {
+        Route::view('/dashboard', 'dashboard')->name('dashboard');
+        Route::post('/projects', StoreProject::class)->name('projects.store');
+        Route::get('/projects/{project}', ShowProject::class)->name('projects.show');
 
-    Route::post('/projects/{project}/repositories', StoreRepository::class)->name('repositories.store');
+        Route::post('/projects/{project}/repositories', StoreRepository::class)->name('repositories.store');
+    });
 
     Route::post('/accounts/pat', StoreAccountPersonalAccessToken::class)->name('source-code-accounts.pat.store');
     Route::prefix('github')->group(function () {

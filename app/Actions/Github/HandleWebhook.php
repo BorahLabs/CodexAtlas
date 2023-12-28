@@ -23,7 +23,7 @@ class HandleWebhook
                 ]);
             case 'push':
                 return $this->handlePush($account, $payload);
-        };
+        }
     }
 
     private function handlePush(SourceCodeAccount $account, array $payload)
@@ -34,7 +34,7 @@ class HandleWebhook
             ->where('name', $repositoryName->name)
             ->where('username', $repositoryName->username)
             ->when($repositoryName->workspace, fn ($query) => $query->where('workspace', $repositoryName->workspace))
-            ->when(!$repositoryName->workspace, fn ($query) => $query->whereNull('workspace'))
+            ->when(! $repositoryName->workspace, fn ($query) => $query->whereNull('workspace'))
             ->firstOrFail();
 
         $branchName = str_replace('refs/heads/', '', data_get($payload, 'ref'));

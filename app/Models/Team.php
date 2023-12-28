@@ -3,16 +3,20 @@
 namespace App\Models;
 
 use App\Actions\Platform\GenerateTeamPlatformDomain;
+use App\Enums\SubscriptionType;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Team as JetstreamTeam;
+use Spark\Billable;
 
 class Team extends JetstreamTeam
 {
+    use Billable;
     use HasFactory;
     use HasUuids;
 
@@ -23,6 +27,8 @@ class Team extends JetstreamTeam
      */
     protected $casts = [
         'personal_team' => 'boolean',
+        'trial_ends_at' => 'datetime',
+        'openai_key' => 'encrypted',
     ];
 
     /**
@@ -67,6 +73,11 @@ class Team extends JetstreamTeam
         return $this->hasMany(Project::class);
     }
 
+    public function repositories(): HasManyThrough
+    {
+        return $this->hasManyThrough(Repository::class, Project::class);
+    }
+
     public function platforms(): HasMany
     {
         return $this->hasMany(Platform::class);
@@ -75,5 +86,27 @@ class Team extends JetstreamTeam
     public function currentPlatform(): Platform
     {
         return $this->platforms->first();
+    }
+
+    public function stripeEmail(): ?string
+    {
+        return $this->owner->email;
+    }
+
+    public function subscriptionType(): SubscriptionType
+    {
+        if (str_ends_with($this->owner->email, '@codexatlas.app')) {
+            return SubscriptionType::Unlimited;
+        }
+
+        if ($plan = $this->sparkPlan()) {
+            return $this->openai_key ? SubscriptionType::UnlimitedCompanyPlan : SubscriptionType::LimitedCompanyPlan;
+        }
+
+        if ($this->openai_key) {
+            return SubscriptionType::PayAsYouGo;
+        }
+
+        return SubscriptionType::FreeTrial;
     }
 }

@@ -9,6 +9,7 @@ use App\SourceCode\Contracts\RegistersWebhook;
 use App\SourceCode\DTO\Branch as DTOBranch;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class StoreRepository
@@ -60,15 +61,21 @@ class StoreRepository
         if ($repository->branches->isEmpty()) {
             $branches = $sourceCodeAccount->getProvider()->branches($repo);
             $whitelist = ['main', 'master', 'production', 'prod', 'release', 'dev', 'develop', 'staging'];
+            /**
+             * @var \App\Enums\SubscriptionType $subscriptionType
+             */
+            $subscriptionType = $project->team->subscriptionType();
             collect($branches)
                 ->filter(fn ($branch) => in_array($branch->name, $whitelist))
                 ->values()
+                ->when(! is_null($subscriptionType->maxBranchesPerRepository()), fn ($branches) => $branches->take($subscriptionType->maxBranchesPerRepository()))
                 ->each(fn (DTOBranch $branch) => $repository->branches()->create([
                     'name' => $branch->name,
                 ]));
+
         }
 
-        SendMessageToTwistThread::dispatch(config('services.twist.nice_thread'), '🌱 New repository added! ' . $repo->fullName . ' in project ' . $project->name);
+        SendMessageToTwistThread::dispatch(config('services.twist.nice_thread'), '🌱 New repository added! '.$repo->fullName.' in project '.$project->name);
 
         return $repository;
     }
@@ -79,6 +86,8 @@ class StoreRepository
             'source_code_account_id' => 'required|exists:source_code_accounts,id',
             'name' => "required|string|max:255|regex:/([\w\-_]+)\/([\w\-_]+)/",
         ]);
+
+        Gate::authorize('create-repository');
 
         $repository = $this->handle($project, $validated['source_code_account_id'], $validated['name']);
 

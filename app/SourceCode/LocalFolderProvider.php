@@ -46,7 +46,7 @@ class LocalFolderProvider extends SourceCodeProvider
         ];
     }
 
-    public function files(RepositoryName $repository, Branch $branch, string $path = null): array
+    public function files(RepositoryName $repository, Branch $branch, ?string $path = null): array
     {
         return (new LocalFolder\GetAllFiles())->handle($repository, $branch, $path);
     }

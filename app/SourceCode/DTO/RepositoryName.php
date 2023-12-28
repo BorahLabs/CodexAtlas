@@ -13,6 +13,7 @@ class RepositoryName
     ) {
         if (empty($username)) {
             $this->fullName = $name;
+
             return;
         }
 

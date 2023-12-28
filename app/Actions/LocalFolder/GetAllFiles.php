@@ -13,7 +13,7 @@ class GetAllFiles
 {
     use AsAction;
 
-    public function handle(RepositoryName $repository, Branch $branch, string $path = null): array
+    public function handle(RepositoryName $repository, Branch $branch, ?string $path = null): array
     {
         $path = $path ? $repository->fullName.DIRECTORY_SEPARATOR.$path : $repository->fullName;
         $rawFiles = FacadesFile::files($path);

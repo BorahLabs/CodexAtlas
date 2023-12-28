@@ -2,9 +2,9 @@
 
 namespace App\SourceCode;
 
+use App\Actions\Gitlab;
 use App\Actions\Gitlab\Auth\GetAuthenticatedAccountGitlabClient;
 use App\Actions\Gitlab\GetProjectIdForRepository;
-use App\Actions\Gitlab;
 use App\Exceptions\ExceededProviderRateLimit;
 use App\SourceCode\Contracts\AccountInfoProvider;
 use App\SourceCode\Contracts\DownloadsZipFile;
@@ -20,7 +20,7 @@ use Gitlab\Exception\ApiLimitExceededException;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 
-class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider, RegistersWebhook, HandlesWebhook, DownloadsZipFile
+class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider, DownloadsZipFile, HandlesWebhook, RegistersWebhook
 {
     use LoadFilesFromS3;
 
@@ -60,6 +60,7 @@ class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider, 
         ], 'zip');
 
         $disk->put($zipPath, $response);
+
         return $zipPath;
     }
 

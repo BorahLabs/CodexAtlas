@@ -45,6 +45,6 @@ enum SourceCodeProvider: string
 
     public function canHaveWorkspace(): bool
     {
-        return $this === static::Bitbucket;
+        return $this === self::Bitbucket;
     }
 }

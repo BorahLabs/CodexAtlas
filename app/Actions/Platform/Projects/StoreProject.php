@@ -6,6 +6,7 @@ use App\Actions\Twist\SendMessageToTwistThread;
 use App\Models\Project;
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class StoreProject
@@ -18,7 +19,7 @@ class StoreProject
             'name' => $name,
         ]);
 
-        SendMessageToTwistThread::dispatch(config('services.twist.nice_thread'), '🤩 New project created! ' . $project->name . ' by ' . $team->name);
+        SendMessageToTwistThread::dispatch(config('services.twist.nice_thread'), '🤩 New project created! '.$project->name.' by '.$team->name);
 
         return $project;
     }
@@ -28,6 +29,8 @@ class StoreProject
         $request->validate([
             'name' => 'required|string|max:255',
         ]);
+
+        Gate::authorize('create-project');
 
         $project = $this->handle($request->user()->currentTeam, $request->input('name'));
 

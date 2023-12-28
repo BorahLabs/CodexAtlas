@@ -6,7 +6,6 @@ use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Models\SourceCodeAccount;
 use App\Services\GetUuidFromJson;
 use App\SourceCode\DTO\RepositoryName;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -23,7 +22,7 @@ class RegisterWebhook
             ->workspaces($repositoryName->workspace)
             ->hooks($repositoryName->name)
             ->create([
-                'description' => config('app.name') . ' Webhook',
+                'description' => config('app.name').' Webhook',
                 'url' => route('webhook', ['sourceCodeAccount' => $account]),
                 'events' => $events,
                 'active' => true,

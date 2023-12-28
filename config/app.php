@@ -63,6 +63,8 @@ return [
 
     'fake_domain' => env('FAKED_APP_DOMAIN'),
 
+    'indexable' => env('APP_INDEXABLE', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -171,6 +173,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        App\Providers\SparkServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\VaporUiServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
@@ -191,5 +194,11 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
+
+    'basic_auth' => [
+        'enabled' => env('BASIC_AUTH_ENABLED', false),
+        'username' => env('BASIC_AUTH_USERNAME', 'admin'),
+        'password' => env('BASIC_AUTH_PASSWORD', 'admin'),
+    ],
 
 ];

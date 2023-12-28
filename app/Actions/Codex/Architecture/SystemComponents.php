@@ -21,6 +21,11 @@ class SystemComponents
     {
         $repository = $branch->repository;
         $sourceCodeAccount = $repository->sourceCodeAccount;
+        $team = $repository->project->team;
+        /**
+         * @var \App\Enums\SubscriptionType
+         */
+        $subscriptionType = $team->subscriptionType();
 
         /**
          * @var SourceCodeProvider
@@ -38,6 +43,11 @@ class SystemComponents
         $framework = $this->detectFramework(Folder::makeWithFiles($filesAndFolders, $repoName->name, $repoName->username, sha1($repoName->fullName)));
         logger()->debug('[Codex] Framework detected: '.$framework->name().' for branch '.$branch->id);
         $files = $this->filterFiles($filesAndFolders, $framework);
+
+        if (! is_null($subscriptionType->maxFilesPerRepository())) {
+            $files = array_slice($files, 0, $subscriptionType->maxFilesPerRepository());
+        }
+
         $order = 1;
         logger()->debug('[Codex] Dispatching components processing for branch '.$branch->id);
         foreach ($files as $file) {
