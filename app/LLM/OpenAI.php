@@ -2,14 +2,17 @@
 
 namespace App\LLM;
 
+use App\LLM\Contracts\HasApiKey;
 use App\LLM\Contracts\Llm;
 use App\LLM\DTO\CompletionResponse;
 use App\Models\Project;
 use App\SourceCode\DTO\File;
-use OpenAI\Laravel\Facades\OpenAI as FacadesOpenAI;
+use OpenAI\Client;
 
-class OpenAI extends Llm
+class OpenAI extends Llm implements HasApiKey
 {
+    private ?string $key = null;
+
     public function fileDescriptionSystemPrompt(Project $project, File $file): string
     {
         return 'You are an expert in writing software documentation. Write a short description of the provided file with the following structure:
@@ -62,7 +65,7 @@ Some rules:
     {
         $start = intval(microtime(true) * 1000);
         // wrapping on a retry function to avoid the limit per minute error
-        $response = retry(3, fn () => FacadesOpenAI::chat()->create([
+        $response = retry(3, fn () => $this->client()->chat()->create([
             'model' => $this->modelName(),
             'messages' => [
                 [
@@ -89,7 +92,7 @@ Some rules:
 
     public function embed(string ...$texts): array
     {
-        $response = FacadesOpenAI::embeddings()->create([
+        $response = $this->client()->embeddings()->create([
             'model' => config('services.openai.embeddings_model'),
             'input' => $texts,
         ]);
@@ -97,5 +100,30 @@ Some rules:
         return collect($response->embeddings)
             ->map(fn ($item) => $item->embeddings)
             ->toArray();
+    }
+
+    public function checkApiKey(string $key): bool
+    {
+        try {
+            $this->client($key)->models()->list();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function usingApiKey(string $key): static
+    {
+        $this->key = $key;
+
+        return $this;
+    }
+
+    private function client(?string $key = null): Client
+    {
+        return (new \OpenAI\Factory())
+            ->withApiKey($key ?? $this->key ?? config('openai.api_key'))
+            ->make();
     }
 }

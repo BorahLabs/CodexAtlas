@@ -12,14 +12,15 @@
                                 create
                                 1 project with 1 repository, and document a maximum of 300 files. <a href="/billing"
                                     class="underline">Upgrade to a premium plan</a> or <a
-                                    href="{{ route('profile.show') }}" class="underline">introduce your
+                                    href="{{ route('teams.show', ['team' => auth()->user()->currentTeam]) }}#openai"
+                                    class="underline">introduce your
                                     OpenAI Key</a> to document more.</p>
                         </div>
                     </div>
                     <div class="w-full lg:w-1/3 px-4">
                         <div class="flex flex-col items-center justify-center lg:items-center">
                             <a class="group inline-flex w-full sm:w-auto h-14 px-7 items-center justify-center text-base font-medium text-black hover:text-violet-800 bg-violet-500 hover:bg-white transition duration-200 rounded-full"
-                                href="{{ route('profile.show') }}">
+                                href="{{ route('teams.show', ['team' => auth()->user()->currentTeam]) }}#openai">
                                 <span class="mr-2">Introduce OpenAI Key</span>
                                 <svg width="24" height="24" viewbox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">

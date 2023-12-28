@@ -28,6 +28,7 @@ class Team extends JetstreamTeam
     protected $casts = [
         'personal_team' => 'boolean',
         'trial_ends_at' => 'datetime',
+        'openai_key' => 'encrypted',
     ];
 
     /**
@@ -99,7 +100,7 @@ class Team extends JetstreamTeam
         }
 
         if ($plan = $this->sparkPlan()) {
-            dd($plan);
+            return $this->openai_key ? SubscriptionType::UnlimitedCompanyPlan : SubscriptionType::LimitedCompanyPlan;
         }
 
         if ($this->openai_key) {

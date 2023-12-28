@@ -6,6 +6,7 @@ use App\Actions\Twist\SendMessageToTwistThread;
 use App\Enums\SystemComponentStatus;
 use App\LLM\Contracts\Llm;
 use App\LLM\DTO\CompletionResponse;
+use App\LLM\OpenAI;
 use App\Models\Branch;
 use App\Models\ProcessingLogEntry;
 use App\Models\SystemComponent;
@@ -45,6 +46,10 @@ class ProcessSystemComponent
              * @var Llm
              */
             $llm = app(Llm::class);
+            if ($llm instanceof OpenAI) {
+                $llm->usingApiKey($team->openai_key);
+            }
+
             if ($existingFile) {
                 $completion = new CompletionResponse(
                     completion: $existingFile->markdown_docs,
