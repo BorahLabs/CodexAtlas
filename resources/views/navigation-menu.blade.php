@@ -54,6 +54,11 @@
                                             {{ __('Team Settings') }}
                                         </x-dropdown-link>
 
+                                        <!-- Billing -->
+                                        <x-dropdown-link href="{{ route('spark.portal') }}">
+                                            {{ __('Team Billing') }}
+                                        </x-dropdown-link>
+
                                         @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                                             <x-dropdown-link href="{{ route('teams.create') }}">
                                                 {{ __('Create New Team') }}
@@ -209,6 +214,11 @@
                         <x-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}"
                             :active="request()->routeIs('teams.show')">
                             {{ __('Team Settings') }}
+                        </x-responsive-nav-link>
+
+                        <!-- Billing -->
+                        <x-responsive-nav-link href="{{ route('spark.portal') }}">
+                            {{ __('Team Billing') }}
                         </x-responsive-nav-link>
 
                         @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
