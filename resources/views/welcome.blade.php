@@ -337,8 +337,7 @@
             </div>
             <div class="relative z-10 max-w-md lg:max-w-8xl mx-auto">
                 <div class="flex flex-wrap -mx-4">
-                    <x-homepage.pricing-card imageUrl="casper-assets/pricing/pricing-top-1.png" price="Free"
-                        title="Free Trial"
+                    <x-homepage.pricing-card :imageUrl="asset('casper-assets/pricing/pricing-top-1.png')" price="Free" title="Free Trial"
                         description="Try out CodexAtlas without any
                     compromise and without your credit card. For free."
                         :included="[
@@ -354,8 +353,7 @@
                             'AI Chatbot',
                             'Premium support',
                         ]" cta="Start for free" :ctaUrl="route('register')" />
-                    <x-homepage.pricing-card imageUrl="casper-assets/pricing/pricing-top-2.png" price="Free"
-                        title="Your own OpenAI Key"
+                    <x-homepage.pricing-card :imageUrl="asset('casper-assets/pricing/pricing-top-2.png')" price="Free" title="Your own OpenAI Key"
                         description="Use CodexAtlas with your own OpenAI API Key. For free." :included="[
                             'Real-time documentation updates',
                             'Unlimited repositories',
@@ -371,8 +369,7 @@
                     @php
                         $monthlyPlan = \App\Cashier\StripePlanProvider::plans()->firstWhere('id', config('spark.billables.user.plans.0.monthly_id'));
                     @endphp
-                    <x-homepage.pricing-card imageUrl="casper-assets/pricing/pricing-top-3.png" price="\Spark\Spark"
-                        :title="$monthlyPlan->price . ' / month'"
+                    <x-homepage.pricing-card :imageUrl="asset('casper-assets/pricing/pricing-top-3.png')" price="\Spark\Spark" :title="$monthlyPlan->price . ' / month'"
                         description="Best for middle sized companies that want to integrate CodexAtlas with their workflow."
                         :included="[
                             'Real-time documentation updates',
@@ -392,7 +389,7 @@
                     <div class="relative flex flex-wrap md:flex-nowrap -mx-4 items-center">
                         <div class="w-full md:w-auto px-4 mb-8 md:mb-0">
                             <div class="sm:flex items-center">
-                                <img src="casper-assets/pricing/robot.png" alt="">
+                                <img src="{{ asset('casper-assets/pricing/robot.png') }}" alt="">
                                 <div class=" mt-3 sm:mt-0 sm:ml-8">
                                     <h3 class="text-3xl font-medium text-white">Enterprise</h3>
                                     <p class="text-sm text-gray-300 max-w-lg mt-2">Not sure if we can work together? We
