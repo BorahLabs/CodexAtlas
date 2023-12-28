@@ -113,7 +113,7 @@ Some rules:
         return true;
     }
 
-    public function usingApiKey(string $key): static
+    public function usingApiKey(?string $key): static
     {
         $this->key = $key;
 
