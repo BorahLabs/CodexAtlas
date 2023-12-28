@@ -19,7 +19,11 @@ class AddNoIndexHeader
             return $next($request);
         }
 
-        return $next($request)
-            ->header('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet, noodp, notranslate, noimageindex');
+        $response = $next($request);
+        if (method_exists($response, 'header')) {
+            $response->header('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet, noodp, notranslate, noimageindex');
+        }
+
+        return $response;
     }
 }
