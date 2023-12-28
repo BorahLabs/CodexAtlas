@@ -27,10 +27,10 @@ class SparkServiceProvider extends ServiceProvider
 
         Spark::billable(Team::class)->authorize(function (Team $billable, Request $request) {
             return $request->user() &&
-                   $request->user()->id == $billable->user_id;
+                   $request->user()->ownsTeam($billable);
         });
 
-        Spark::billable(Team::class)->checkPlanEligibility(function (User $billable, Plan $plan) {
+        Spark::billable(Team::class)->checkPlanEligibility(function (Team $billable, Plan $plan) {
             // if ($billable->projects > 5 && $plan->name == 'Basic') {
             //     throw ValidationException::withMessages([
             //         'plan' => 'You have too many projects for the selected plan.'
