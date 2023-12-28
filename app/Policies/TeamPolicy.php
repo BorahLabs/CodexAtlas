@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\SubscriptionType;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -31,6 +32,13 @@ class TeamPolicy
      */
     public function create(User $user): bool
     {
+        // A user can have a maximum of one team with a free plan
+        foreach ($user->ownedTeams as $team) {
+            if ($team->subscriptionType() === SubscriptionType::FreeTrial) {
+                return false;
+            }
+        }
+
         return true;
     }
 
