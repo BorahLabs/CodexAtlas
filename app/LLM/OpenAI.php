@@ -98,7 +98,7 @@ Some rules:
         ]);
 
         return collect($response->embeddings)
-            ->map(fn ($item) => $item->embeddings)
+            ->map(fn (mixed $item) => $item->embeddings)
             ->toArray();
     }
 

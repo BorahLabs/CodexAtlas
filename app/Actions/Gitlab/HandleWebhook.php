@@ -13,14 +13,14 @@ class HandleWebhook
 {
     use AsAction;
 
-    public function handle(SourceCodeAccount $account, array $payload)
+    public function handle(SourceCodeAccount $account, array $payload): void
     {
         if (data_get($payload, 'object_kind') === 'push') {
             $this->handlePush($account, $payload);
         }
     }
 
-    private function handlePush(SourceCodeAccount $account, array $payload)
+    private function handlePush(SourceCodeAccount $account, array $payload): void
     {
         $repositoryName = $account->provider->repositoryName(data_get($payload, 'project.path_with_namespace'));
         $repository = $account

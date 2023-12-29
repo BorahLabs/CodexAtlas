@@ -33,7 +33,7 @@ class HandleGithubInstallation
         ]);
     }
 
-    public function asController(Request $request)
+    public function asController(Request $request): \Illuminate\Http\RedirectResponse
     {
         $request->validate([
             'installation_id' => 'required|string',

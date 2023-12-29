@@ -11,12 +11,12 @@ class OpenaiManager extends Component
 
     public bool $isEditing = false;
 
-    public function mount()
+    public function mount(): void
     {
         $this->isEditing = is_null(auth()->user()->currentTeam->openai_key);
     }
 
-    public function saveKey()
+    public function saveKey(): void
     {
         if (! $this->isEditing) {
             return;
@@ -38,7 +38,7 @@ class OpenaiManager extends Component
         $this->dispatch('saved');
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('teams.openai-manager');
     }

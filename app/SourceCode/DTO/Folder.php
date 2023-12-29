@@ -38,24 +38,24 @@ class Folder
         return $folder;
     }
 
-    public function addFile(File $file)
+    public function addFile(File $file): void
     {
         $this->files[] = $file;
     }
 
-    public function removeFile(File $file)
+    public function removeFile(File $file): void
     {
-        $this->files = array_filter($this->files, fn ($f) => $f->path !== $file->path);
+        $this->files = array_filter($this->files, fn (File $f) => $f->path !== $file->path);
     }
 
-    public function addFolder(Folder $folder)
+    public function addFolder(Folder $folder): void
     {
         $this->folders[] = $folder;
     }
 
-    public function removeFolder(Folder $folder)
+    public function removeFolder(Folder $folder): void
     {
-        $this->folders = array_filter($this->folders, fn ($f) => $f->path !== $folder->path);
+        $this->folders = array_filter($this->folders, fn (Folder $f) => $f->path !== $folder->path);
     }
 
     public function getFolders(): array
@@ -71,7 +71,7 @@ class Folder
     public function hasFile(string $path, bool $recursive = false): bool
     {
         if (! $recursive) {
-            return in_array($path, array_map(fn ($f) => basename($f->path), $this->files));
+            return in_array($path, array_map(fn (File $f) => basename($f->path), $this->files));
         }
 
         foreach ($this->folders as $folder) {
@@ -80,6 +80,6 @@ class Folder
             }
         }
 
-        return in_array($path, array_map(fn ($f) => $f->path, $this->files));
+        return in_array($path, array_map(fn (File $f) => $f->path, $this->files));
     }
 }

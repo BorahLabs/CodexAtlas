@@ -13,7 +13,7 @@ class RegisterWebhook
 {
     use AsAction;
 
-    public function handle(SourceCodeAccount $account, RepositoryName $repositoryName, array $events = ['repo:push'])
+    public function handle(SourceCodeAccount $account, RepositoryName $repositoryName, array $events = ['repo:push']): void
     {
         $secret = Str::random(32);
         $client = GetAuthenticatedAccountBitbucketClient::make()->handle($account);

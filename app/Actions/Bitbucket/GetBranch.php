@@ -12,7 +12,7 @@ class GetBranch
 {
     use AsAction;
 
-    public function handle(SourceCodeAccount $account, RepositoryName $repository, Branch $branch)
+    public function handle(SourceCodeAccount $account, RepositoryName $repository, Branch $branch): Branch
     {
         $client = GetAuthenticatedAccountBitbucketClient::make()->handle($account);
 

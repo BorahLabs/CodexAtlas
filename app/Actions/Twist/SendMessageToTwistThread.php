@@ -12,7 +12,7 @@ class SendMessageToTwistThread
 
     public string $commandSignature = 'twist:send';
 
-    public function handle(string|int|null $threadId, string $message)
+    public function handle(string|int|null $threadId, string $message): void
     {
         if (! config('services.twist.email') || ! config('services.twist.password') || ! $threadId) {
             return;

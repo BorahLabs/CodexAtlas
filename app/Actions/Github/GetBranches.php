@@ -15,7 +15,7 @@ class GetBranches
     /**
      * @return Branch[]
      */
-    public function handle(SourceCodeAccount $account, RepositoryName $repository)
+    public function handle(SourceCodeAccount $account, RepositoryName $repository): array
     {
         $client = GetAuthenticatedAccountGithubClient::make()->handle($account);
         /**
@@ -24,8 +24,8 @@ class GetBranches
         $api = $client->api('gitData');
 
         return collect($api->references()->branches($repository->username, $repository->name))
-            ->map(fn ($branch) => $branch['name'] ?? $branch['ref'])
-            ->map(fn ($branch) => str_replace('refs/heads/', '', $branch))
+            ->map(fn (array $branch) => $branch['name'] ?? $branch['ref'])
+            ->map(fn (string $branch) => str_replace('refs/heads/', '', $branch))
             ->mapInto(Branch::class)
             ->toArray();
     }

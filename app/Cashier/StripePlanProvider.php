@@ -11,14 +11,14 @@ use Spark\Spark;
 
 class StripePlanProvider
 {
-    public static function plans($type = 'user'): Collection
+    public static function plans(string $type = 'user'): Collection
     {
         return Cache::remember('spark-plans-'.$type, now()->addHour(), function () use ($type) {
             $plans = Spark::plans($type);
 
             $prices = collect(Cashier::stripe()->prices->all(['limit' => 100])->autoPagingIterator());
 
-            return $plans->map(function ($plan) use ($prices) {
+            return $plans->map(function (\Spark\Plan $plan) use ($prices) {
                 if (! $stripePrice = $prices->firstWhere('id', $plan->id)) {
                     throw new RuntimeException('Price ['.$plan->id.'] does not exist in your Stripe account.');
                 }

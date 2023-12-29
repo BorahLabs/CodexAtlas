@@ -16,7 +16,7 @@ class DecoratedRepository extends AbstractWorkspacesApi
         parent::__construct($api->getClient(), $workspace, $repo);
     }
 
-    public function archive(string $username, string $password, string $branch)
+    public function archive(string $username, string $password, string $branch): mixed
     {
         $response = Http::withBasicAuth($username, $password)
             ->get('https://bitbucket.org/'.$this->workspace.'/'.$this->repo.'/get/'.$branch.'.zip')
@@ -26,12 +26,12 @@ class DecoratedRepository extends AbstractWorkspacesApi
         return $response;
     }
 
-    protected function buildSrcUri(string ...$parts)
+    protected function buildSrcUri(string ...$parts): string
     {
         return UriBuilder::build('repositories', $this->workspace, $this->repo, 'archive', 'zip');
     }
 
-    public function __call($name, $arguments)
+    public function __call(string $name, mixed $arguments)
     {
         return $this->api->{$name}(...$arguments);
     }

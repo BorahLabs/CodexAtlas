@@ -11,7 +11,7 @@ class NavigationSection
         //
     }
 
-    public function addItem(NavigationItem $item)
+    public function addItem(NavigationItem $item): void
     {
         $this->children[] = $item;
     }

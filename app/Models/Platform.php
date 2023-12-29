@@ -15,7 +15,7 @@ class Platform extends Model
         return $this->belongsTo(Team::class);
     }
 
-    public function route(string $path, $parameters = []): string
+    public function route(string $path, mixed $parameters = []): string
     {
         $url = route($path, $parameters);
         $host = str($url)->after('://')->before('/')->toString();

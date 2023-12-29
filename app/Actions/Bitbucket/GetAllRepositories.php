@@ -30,17 +30,17 @@ class GetAllRepositories
 
         $repos = [];
 
-        $workspaces->each(function ($item) use (&$repos, $client, $paginator) {
+        $workspaces->each(function (array $item) use (&$repos, $client, $paginator) {
             $api = $client->repositories()->workspaces($item['slug']);
             $actuals = collect($paginator->fetchAll($api, 'list'));
 
-            $actuals->each(function ($item) use (&$repos) {
+            $actuals->each(function (array $item) use (&$repos) {
                 $repos[] = $item;
             });
         });
 
         return collect($repos)
-            ->map(fn ($repo) => new Repository(
+            ->map(fn (array $repo) => new Repository(
                 id: GetUuidFromJson::getUuid($repo['uuid']),
                 name: $repo['name'],
                 owner: $repo['owner']['username'],
@@ -50,52 +50,10 @@ class GetAllRepositories
             ->toArray();
     }
 
-    public function asController(Request $request)
+    public function asController(Request $request): \Illuminate\Http\RedirectResponse
     {
         $this->handle(SourceCodeAccount::first());
 
         return redirect()->route('dashboard');
-    }
-
-    private function getAllWorkspaces($content, &$workspaces, $headers)
-    {
-        foreach ($content['values'] as $value) {
-            $repositories = [];
-            $response = Http::withHeaders($headers)->get('https://api.bitbucket.org/2.0/repositories/'.$value['slug']);
-            $repo_content = json_decode($response->body(), true);
-
-            $response = Http::withHeaders($headers)->get('https://api.bitbucket.org/2.0/workspaces/'.$value['slug'].'/members');
-            // TODO: can be multiple owners
-            $members = json_decode($response->body(), true);
-
-            $workspaces[] = [
-                'id' => GetUuidFromJson::getUuid($value['uuid']),
-                'slug' => $value['slug'],
-                'name' => $value['name'],
-                'repos' => $this->getAllRepos($repo_content, $repositories, $headers, $members['values'][0]['user']['display_name']),
-            ];
-        }
-
-        if (isset($content['next']) && $content['next'] != '') {
-            $content = Http::withHeaders($headers)->get($content['next']);
-            $this->getAllWorkspaces($content, $workspaces, $headers);
-        }
-    }
-
-    private function getAllRepos($content, &$repositories, $headers, $owner)
-    {
-        foreach ($content['values'] as $value) {
-            $repositories[] = [
-                'id' => GetUuidFromJson::getUuid($value['uuid']),
-                'owner' => $owner,
-                'name' => $value['name'],
-                'description' => $value['description'],
-            ];
-        }
-
-        if (isset($content['next']) && $content['next'] != '') {
-            $content = Http::withHeaders($headers)->get($content['next']);
-            $this->getAllRepos($content, $repositories, $headers, $owner);
-        }
     }
 }

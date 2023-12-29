@@ -52,7 +52,7 @@ class Team extends JetstreamTeam
         'deleted' => TeamDeleted::class,
     ];
 
-    public static function booted()
+    public static function booted(): void
     {
         parent::booted();
 
@@ -110,7 +110,7 @@ class Team extends JetstreamTeam
         return SubscriptionType::FreeTrial;
     }
 
-    public function purge()
+    public function purge(): void
     {
         // TODO: Delete all projects, repositories, and source code accounts
         // here

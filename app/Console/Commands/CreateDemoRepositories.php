@@ -27,7 +27,7 @@ class CreateDemoRepositories extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $sourceAccount = SourceCodeAccount::query()->findOrFail($this->argument('sourceAccountId'));
         $project = Project::query()->findOrFail($this->argument('projectId'));

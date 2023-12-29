@@ -10,7 +10,7 @@ class VerifyWebhook
 {
     use AsAction;
 
-    public function handle(SourceCodeAccount $account, Request $request)
+    public function handle(SourceCodeAccount $account, Request $request): void
     {
         abort_unless($request->hasHeader('x-hub-signature'), 422, 'The request does not have a signature header.');
         $signature = $request->header('x-hub-signature');

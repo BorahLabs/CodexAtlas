@@ -2,8 +2,8 @@
 
 namespace App\SourceCode;
 
-use App\Actions\Github;
 use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
+use App\Actions\Github;
 use App\Exceptions\ExceededProviderRateLimit;
 use App\SourceCode\Contracts\DownloadsZipFile;
 use App\SourceCode\Contracts\HandlesWebhook;
@@ -77,17 +77,17 @@ class GitHubProvider extends SourceCodeProvider implements DownloadsZipFile, Han
         return 'https://github.com/'.$repository->fullName;
     }
 
-    public function registerWebhook(RepositoryName $repository)
+    public function registerWebhook(RepositoryName $repository): mixed
     {
         return Github\RegisterWebhook::make()->handle($this->credentials(), $repository);
     }
 
-    public function verifyIncomingWebhook(Request $request)
+    public function verifyIncomingWebhook(Request $request): mixed
     {
         return Github\VerifyWebhook::make()->handle($this->credentials(), $request);
     }
 
-    public function handleIncomingWebhook(array $payload, Request $request)
+    public function handleIncomingWebhook(array $payload, Request $request): mixed
     {
         return Github\HandleWebhook::make()->handle($this->credentials(), $payload, $request);
     }

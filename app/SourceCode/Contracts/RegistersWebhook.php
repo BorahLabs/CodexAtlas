@@ -6,5 +6,5 @@ use App\SourceCode\DTO\RepositoryName;
 
 interface RegistersWebhook
 {
-    public function registerWebhook(RepositoryName $repository);
+    public function registerWebhook(RepositoryName $repository): mixed;
 }
