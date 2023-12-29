@@ -15,7 +15,7 @@ class StoreAccountPersonalAccessToken
 {
     use AsAction;
 
-    public function handle(Team $team, SourceCodeProvider $sourceCodeProvider, string $username, string $token)
+    public function handle(Team $team, SourceCodeProvider $sourceCodeProvider, string $username, string $token): void
     {
         /**
          * @var AccountInfoProvider|ContractsSourceCodeProvider $provider
@@ -46,7 +46,7 @@ class StoreAccountPersonalAccessToken
         $credentials->save();
     }
 
-    public function asController(Request $request)
+    public function asController(Request $request): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validate([
             'username' => 'required|string|max:255',

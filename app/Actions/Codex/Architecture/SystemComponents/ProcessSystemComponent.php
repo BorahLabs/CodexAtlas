@@ -23,7 +23,7 @@ class ProcessSystemComponent
 
     public int $jobBackoff = 180;
 
-    public function handle(Branch $branch, File $file, int $order)
+    public function handle(Branch $branch, File $file, int $order): void
     {
         logger()->debug('[Codex] Processing file '.$file->path.' branch '.$branch->id);
 
@@ -90,7 +90,7 @@ class ProcessSystemComponent
         }
     }
 
-    private function formatExplanation(string $explanation, string $path)
+    private function formatExplanation(string $explanation, string $path): string
     {
         $lines = explode("\n", $explanation);
         $formatted = [];

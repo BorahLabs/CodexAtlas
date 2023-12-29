@@ -14,7 +14,7 @@ class UpdateDocumentationFromDiff
 {
     use AsAction;
 
-    public function handle(Branch $branch, Diff $diff)
+    public function handle(Branch $branch, Diff $diff): void
     {
         $order = ($branch->systemComponents()->max('order') ?? 0) + 1;
         $itemsToDelete = collect($diff->changes)

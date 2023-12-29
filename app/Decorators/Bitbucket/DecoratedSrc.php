@@ -15,7 +15,7 @@ class DecoratedSrc extends AbstractWorkspacesApi
         parent::__construct($src->getClient(), $workspace, $repo);
     }
 
-    public function list(string $commit, string $folder = '/', array $params = [])
+    public function list(string $commit, string $folder = '/', array $params = []): array
     {
         if ($folder === '/') {
             $uri = str($this->buildSrcUri($commit))->finish('/');
@@ -26,12 +26,12 @@ class DecoratedSrc extends AbstractWorkspacesApi
         return $this->get($uri, $params);
     }
 
-    protected function buildSrcUri(string ...$parts)
+    protected function buildSrcUri(string ...$parts): string
     {
         return UriBuilder::build('repositories', $this->workspace, $this->repo, 'src', ...$parts);
     }
 
-    public function __call($name, $arguments)
+    public function __call(string $name, mixed $arguments)
     {
         return $this->src->{$name}(...$arguments);
     }

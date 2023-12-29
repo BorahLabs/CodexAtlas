@@ -2,9 +2,9 @@
 
 namespace App\SourceCode;
 
-use App\Actions\Gitlab;
 use App\Actions\Gitlab\Auth\GetAuthenticatedAccountGitlabClient;
 use App\Actions\Gitlab\GetProjectIdForRepository;
+use App\Actions\Gitlab;
 use App\Exceptions\ExceededProviderRateLimit;
 use App\SourceCode\Contracts\AccountInfoProvider;
 use App\SourceCode\Contracts\DownloadsZipFile;
@@ -84,17 +84,17 @@ class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider, 
         return Gitlab\GetAccount::make()->handle($this->credentials());
     }
 
-    public function registerWebhook(RepositoryName $repository)
+    public function registerWebhook(RepositoryName $repository): mixed
     {
         return Gitlab\RegisterWebhook::make()->handle($this->credentials(), $repository);
     }
 
-    public function verifyIncomingWebhook(Request $request)
+    public function verifyIncomingWebhook(Request $request): mixed
     {
         return Gitlab\VerifyWebhook::make()->handle($this->credentials(), $request);
     }
 
-    public function handleIncomingWebhook(array $payload, Request $request)
+    public function handleIncomingWebhook(array $payload, Request $request): mixed
     {
         return Gitlab\HandleWebhook::make()->handle($this->credentials(), $payload, $request);
     }

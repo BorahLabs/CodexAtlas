@@ -15,7 +15,7 @@ class Branch extends Model
     use HasFactory;
     use HasUuids;
 
-    public static function booted()
+    public static function booted(): void
     {
         parent::booted();
 

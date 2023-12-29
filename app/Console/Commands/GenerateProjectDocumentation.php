@@ -25,7 +25,7 @@ class GenerateProjectDocumentation extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $project = Project::query()->findOrFail($this->argument('projectId'));
         (new CodexGenerateProjectDocumentation())->handle($project);

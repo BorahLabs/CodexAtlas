@@ -15,18 +15,18 @@ class PlatformManager extends Component
     #[Validate()]
     public string $subdomain;
 
-    public function mount(Team $team)
+    public function mount(Team $team): void
     {
         $this->team = $team;
         $this->subdomain = str($team->platforms->first()?->domain ?? '')->before('.'.config('app.main_domain'));
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('teams.platform-manager');
     }
 
-    public function savePlatform()
+    public function savePlatform(): void
     {
         $this->validate();
         $domain = str($this->subdomain)->finish('.'.config('app.main_domain'));
@@ -38,7 +38,7 @@ class PlatformManager extends Component
         $this->dispatch('saved');
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'subdomain' => [

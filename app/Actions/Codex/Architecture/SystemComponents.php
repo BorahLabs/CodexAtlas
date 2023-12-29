@@ -18,7 +18,7 @@ class SystemComponents
 
     public int $jobTimeout = 300;
 
-    public function handle(Branch $branch)
+    public function handle(Branch $branch): void
     {
         $repository = $branch->repository;
         $sourceCodeAccount = $repository->sourceCodeAccount;

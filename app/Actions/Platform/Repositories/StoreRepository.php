@@ -3,12 +3,14 @@
 namespace App\Actions\Platform\Repositories;
 
 use App\Actions\Twist\SendMessageToTwistThread;
+use App\Models\Branch;
 use App\Models\Project;
 use App\Models\Repository;
 use App\SourceCode\Contracts\RegistersWebhook;
 use App\SourceCode\DTO\Branch as DTOBranch;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -66,9 +68,9 @@ class StoreRepository
              */
             $subscriptionType = $project->team->subscriptionType();
             collect($branches)
-                ->filter(fn ($branch) => in_array($branch->name, $whitelist))
+                ->filter(fn (Branch $branch) => in_array($branch->name, $whitelist))
                 ->values()
-                ->when(! is_null($subscriptionType->maxBranchesPerRepository()), fn ($branches) => $branches->take($subscriptionType->maxBranchesPerRepository()))
+                ->when(! is_null($subscriptionType->maxBranchesPerRepository()), fn (Collection $branches) => $branches->take($subscriptionType->maxBranchesPerRepository()))
                 ->each(fn (DTOBranch $branch) => $repository->branches()->create([
                     'name' => $branch->name,
                 ]));
@@ -80,7 +82,7 @@ class StoreRepository
         return $repository;
     }
 
-    public function asController(Project $project, Request $request)
+    public function asController(Project $project, Request $request): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validate([
             'source_code_account_id' => 'required|exists:source_code_accounts,id',

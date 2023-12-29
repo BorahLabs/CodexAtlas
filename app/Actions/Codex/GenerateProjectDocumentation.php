@@ -9,7 +9,7 @@ class GenerateProjectDocumentation
 {
     use AsAction;
 
-    public function handle(Project $project)
+    public function handle(Project $project): void
     {
         foreach ($project->repositories as $repository) {
             foreach ($repository->branches as $branch) {
@@ -18,7 +18,7 @@ class GenerateProjectDocumentation
         }
     }
 
-    public function asController(Project $project)
+    public function asController(Project $project): \Illuminate\Http\RedirectResponse
     {
         $this->handle($project);
 

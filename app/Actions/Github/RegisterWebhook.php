@@ -12,7 +12,7 @@ class RegisterWebhook
 {
     use AsAction;
 
-    public function handle(SourceCodeAccount $account, RepositoryName $repositoryName)
+    public function handle(SourceCodeAccount $account, RepositoryName $repositoryName): void
     {
         $secret = Str::random(32);
         $client = GetAuthenticatedAccountGithubClient::make()->handle($account);

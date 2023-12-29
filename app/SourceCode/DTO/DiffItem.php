@@ -14,7 +14,7 @@ class DiffItem implements Arrayable
         //
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'path' => $this->path,

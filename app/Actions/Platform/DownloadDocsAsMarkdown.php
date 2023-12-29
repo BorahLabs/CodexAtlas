@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Repository;
 use App\Models\SystemComponent;
 use Lorisleiva\Actions\Concerns\AsAction;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use ZipArchive;
 
 class DownloadDocsAsMarkdown
@@ -35,7 +36,7 @@ class DownloadDocsAsMarkdown
         return $path;
     }
 
-    public function asController(Project $project, Repository $repository, Branch $branch)
+    public function asController(Project $project, Repository $repository, Branch $branch): BinaryFileResponse
     {
         $zipPath = $this->handle($project, $repository, $branch);
 

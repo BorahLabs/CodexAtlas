@@ -24,7 +24,7 @@ class StoreProject
         return $project;
     }
 
-    public function asController(Request $request)
+    public function asController(Request $request): \Illuminate\Http\RedirectResponse
     {
         $request->validate([
             'name' => 'required|string|max:255',

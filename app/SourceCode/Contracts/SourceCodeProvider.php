@@ -13,7 +13,7 @@ abstract class SourceCodeProvider
 {
     private ?SourceCodeAccount $account;
 
-    public function withCredentials(SourceCodeAccount $account)
+    public function withCredentials(SourceCodeAccount $account): static
     {
         $this->setCredentials($account);
 
@@ -25,7 +25,7 @@ abstract class SourceCodeProvider
         return $this->account;
     }
 
-    public function setCredentials(SourceCodeAccount $account)
+    public function setCredentials(SourceCodeAccount $account): void
     {
         $this->account = $account;
     }

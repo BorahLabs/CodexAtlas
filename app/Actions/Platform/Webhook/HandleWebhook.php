@@ -11,7 +11,7 @@ class HandleWebhook
 {
     use AsAction;
 
-    public function handle(SourceCodeAccount $sourceCodeAccount, Request $request)
+    public function handle(SourceCodeAccount $sourceCodeAccount, Request $request): mixed
     {
         $provider = $sourceCodeAccount->getProvider();
         if ($provider instanceof HandlesWebhook) {
@@ -23,7 +23,7 @@ class HandleWebhook
         abort(422, 'The provider does not handle webhooks.');
     }
 
-    public function asController(SourceCodeAccount $sourceCodeAccount, Request $request)
+    public function asController(SourceCodeAccount $sourceCodeAccount, Request $request): mixed
     {
         $response = $this->handle($sourceCodeAccount, $request);
 
