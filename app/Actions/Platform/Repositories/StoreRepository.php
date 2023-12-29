@@ -68,7 +68,7 @@ class StoreRepository
              */
             $subscriptionType = $project->team->subscriptionType();
             collect($branches)
-                ->filter(fn (Branch $branch) => in_array($branch->name, $whitelist))
+                ->filter(fn (DTOBranch $branch) => in_array($branch->name, $whitelist))
                 ->values()
                 ->when(! is_null($subscriptionType->maxBranchesPerRepository()), fn (Collection $branches) => $branches->take($subscriptionType->maxBranchesPerRepository()))
                 ->each(fn (DTOBranch $branch) => $repository->branches()->create([
