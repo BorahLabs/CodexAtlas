@@ -17,11 +17,4 @@ class GenerateProjectDocumentation
             }
         }
     }
-
-    public function asController(Project $project): \Illuminate\Http\RedirectResponse
-    {
-        $this->handle($project);
-
-        return redirect()->back();
-    }
 }

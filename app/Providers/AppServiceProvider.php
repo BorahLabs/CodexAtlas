@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\LLM\Contracts\Llm;
+use App\LLM\DumbLocalLlm;
 use App\LLM\OpenAI;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
@@ -27,6 +28,10 @@ class AppServiceProvider extends ServiceProvider
 
         Actions::registerCommands();
 
-        $this->app->bind(Llm::class, fn () => new OpenAI());
+        if (app()->environment('testing')) {
+            $this->app->bind(Llm::class, fn () => new DumbLocalLlm());
+        } else {
+            $this->app->bind(Llm::class, fn () => new OpenAI());
+        }
     }
 }

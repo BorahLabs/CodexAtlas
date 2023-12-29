@@ -44,7 +44,7 @@ Route::middleware([
     Route::post('/accounts/pat', StoreAccountPersonalAccessToken::class)->name('source-code-accounts.pat.store');
     Route::prefix('github')->group(function () {
         Route::get('redirect', fn () => redirect()->to('https://github.com/apps/codexatlas/installations/select_target'))->name('github.redirect');
-        Route::get('installation', HandleGithubInstallation::class)->middleware('throttle:3,1');
+        Route::get('installation', HandleGithubInstallation::class)->name('github.installation')->middleware('throttle:3,1');
     });
 });
 

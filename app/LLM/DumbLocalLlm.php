@@ -12,7 +12,7 @@ class DumbLocalLlm extends Llm
     public function completion(string $systemPrompt, string $userPrompt): CompletionResponse
     {
         return new CompletionResponse(
-            completion: '',
+            completion: "## TLDR\nThis is a test generation without using AI.\n\nIf you're seeing this, it means it worked!",
             processingTimeMilliseconds: 0,
             inputTokens: 0,
             outputTokens: 0,
@@ -27,12 +27,12 @@ class DumbLocalLlm extends Llm
 
     public function fileDescriptionSystemPrompt(Project $project, File $file): string
     {
-        return '';
+        return 'Lorem ipsum dolor sit amet';
     }
 
     public function fileDescriptionUserPrompt(Project $project, File $file): string
     {
-        return '';
+        return 'Lorem ipsum dolor sit amet';
     }
 
     public function modelName(): string
