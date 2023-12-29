@@ -112,8 +112,23 @@ class Team extends JetstreamTeam
 
     public function purge()
     {
-        // TODO: Delete all projects, repositories, and source code accounts
-        // here
+        $this->sourceCodeAccounts()->each(function($item){
+            $item->delete();
+        });
+        $this->repositories()->each(function($repo){
+            $repo->branches()->each(function($branch){
+                $branch->systemComponents()->each(function($systemComponent){
+                    $systemComponent->delete();
+                });
+                $branch->delete();
+            });
+            $repo->delete();
+        });
+
+        $this->project()->each(function($project){
+            $project->delete();
+        });
+
         parent::purge();
     }
 }
