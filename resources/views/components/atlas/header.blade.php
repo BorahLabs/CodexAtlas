@@ -1,3 +1,12 @@
+@push('scripts')
+    <script>
+        var docSearchData = [];
+        docSearchData['container'] = '#docsearch';
+        docSearchData['appId'] = "{{ config('services.algolia.app_id') }}";
+        docSearchData['indexName'] = 'system_component_index_' + "{{ $branch->id }}";
+        docSearchData['apiKey'] =  "{{ config('services.algolia.secret') }}";
+    </script>
+@endpush
 <div class="flex items-center justify-between" x-data>
     <h2 class="font-semibold text-xl text-gray-200 leading-tight">
         <a
@@ -22,3 +31,4 @@
         </a>
     </div>
 </div>
+

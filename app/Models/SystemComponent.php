@@ -77,8 +77,7 @@ class SystemComponent extends Model
      */
     public function searchableAs(): string
     {
-        return 'system_component_index';
-        // return 'system_component_index_' . $this->branch_id;
+        return 'system_component_index_' . $this->branch_id;
     }
 
     /**

@@ -62,4 +62,9 @@ return [
         'bad_thread' => env('TWIST_BAD_THREAD'),
     ],
 
+    'algolia' => [
+        'app_id' => env('ALGOLIA_APP_ID', 'QS32BJJNGP'),
+        'secret' => env('ALGOLIA_SECRET', 'e401e3643ee7cab5d09202cb101aa3e8'),
+    ]
+
 ];
