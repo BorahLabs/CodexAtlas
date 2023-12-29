@@ -3,6 +3,7 @@
 namespace App\Actions\Codex\Architecture;
 
 use App\Actions\Codex\Architecture\SystemComponents\ProcessSystemComponent;
+use App\Atlas\FileWhitelist;
 use App\Atlas\Frameworks\Contracts\Framework;
 use App\Atlas\Guesser;
 use App\Models\Branch;
@@ -83,7 +84,7 @@ class SystemComponents
                     ...$this->filterFiles($file->files, $framework),
                     ...$this->filterFiles($file->folders, $framework),
                 ];
-            } elseif ($framework->mightBeRelevant($file->path)) {
+            } elseif ($framework->mightBeRelevant($file->path) && FileWhitelist::whitelisted($file->path)) {
                 $filtered[] = $file;
             }
         }
