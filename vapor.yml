@@ -6,7 +6,7 @@ environments:
     cli-memory: 512
     queue-memory: 512
     concurrency: 50
-    queue-concurrency: 50
+    queue-concurrency: 20
     queue-timeout: 300
     storage: codex-atlas
     database: codex-atlas-production
