@@ -1,4 +1,4 @@
-<div x-modelable="selected" x-data="{ selected: '{{ $accounts->first()?->id }}', isAdding: {{ session()->has('provider') ? 'true' : 'false' }}, provider: {{ session()->has('provider') ? "'" . session('provider') . "'" : 'null' }} }" {{ $attributes }} x-cloak>
+<div x-modelable="selected" x-data="{ selected: '{{ $accounts->first()?->id }}', isAdding: {{ session()->has('provider') || $accounts->isEmpty() ? 'true' : 'false' }}, provider: {{ session()->has('provider') ? "'" . session('provider') . "'" : 'null' }} }" {{ $attributes }} x-cloak>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         <!-- When listing accounts -->
         @foreach ($accounts as $account)
@@ -65,10 +65,22 @@
                 <x-label for="pat-user">{{ __('Username') }}</x-label>
                 <x-input id="pat-user" type="text" class="mt-1 block w-full" name="username" required />
                 <x-input-error for="username" />
-                <x-label for="pat">{{ __('App token') }}</x-label>
+                <x-label for="pat" class="mt-4">{{ __('App token') }}</x-label>
                 <x-input id="pat" type="text" class="mt-1 block w-full" name="pat" required />
                 <x-input-error for="pat" />
-                <x-button type="submit">{{ __('Add account') }}</x-button>
+                <p x-show="provider === 'gitlab'" class="text-sm text-slate-300 mt-2">
+                    You can generate a Personal Access Token for Gitlab <a
+                        href="https://gitlab.com/-/user_settings/personal_access_tokens" target="_blank"
+                        class="underline">here</a>. Make sure to select the <strong>api</strong> scope.
+                </p>
+                <p x-show="provider === 'bitbucket'" class="text-sm text-slate-300 mt-2">
+                    You can generate an App Password for Bitbucket <a
+                        href="https://bitbucket.org/account/settings/app-passwords/" target="_blank"
+                        class="underline">here</a>. Make sure to select the <strong>Read</strong> permissions in
+                    <strong>Account and Repositories</strong>, and <strong>Read and write</strong> in
+                    <strong>Webhooks</strong>.
+                </p>
+                <x-button type="submit" class="mt-4">{{ __('Add account') }}</x-button>
             </form>
         </div>
     </div>

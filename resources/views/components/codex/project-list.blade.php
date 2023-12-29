@@ -5,6 +5,8 @@
                 <a href="{{ route('projects.show', ['project' => $project]) }}"
                     class="border border-slate-700 px-4 py-2 font-medium text-slate-300 rounded-md hover:bg-slate-700">
                     {{ $project->name }}
+                    <span class="block text-xs font-normal text-slate-400">{{ $project->repositories->count() }}
+                        {{ Str::plural('repository', $project->repositories->count()) }}</span>
                 </a>
             @endforeach
         </div>
