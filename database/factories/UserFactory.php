@@ -65,4 +65,24 @@ class UserFactory extends Factory
             'ownedTeams'
         );
     }
+
+    public function inPayAsYouGoMode(): static
+    {
+        return $this->withPersonalTeam(fn (TeamFactory $factory) => $factory->inPayAsYouGoMode());
+    }
+
+    public function inFreeTrialMode(): static
+    {
+        return $this->withPersonalTeam(fn (TeamFactory $factory) => $factory->inFreeTrialMode());
+    }
+
+    public function inLimitedCompanyPlanMode(): static
+    {
+        return $this->withPersonalTeam(fn (TeamFactory $factory) => $factory->inLimitedCompanyPlanMode());
+    }
+
+    public function inUnlimitedCompanyPlanMode(): static
+    {
+        return $this->withPersonalTeam(fn (TeamFactory $factory) => $factory->inUnlimitedCompanyPlanMode());
+    }
 }
