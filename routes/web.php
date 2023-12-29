@@ -67,3 +67,8 @@ Route::middleware(ControlRequestsFromPlatform::class)->group(function () {
         ->scopeBindings()
         ->name('docs.show-component');
 });
+
+Route::any('/secret-auth', function () {
+    abort_unless(config('app.password_protected.enabled'), 404);
+    return view('password-protection');
+})->name('password-protected')->middleware('throttle:5,1');

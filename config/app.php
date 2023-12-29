@@ -195,10 +195,9 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
-    'basic_auth' => [
-        'enabled' => env('BASIC_AUTH_ENABLED', false),
-        'username' => env('BASIC_AUTH_USERNAME', 'admin'),
-        'password' => env('BASIC_AUTH_PASSWORD', 'admin'),
+    'password_protected' => [
+        'enabled' => env('PASSWORD_PROTECTION_ENABLED', false),
+        'password' => env('PASSWORD_PROTECTION_SECRET', 'password'),
     ],
 
 ];
