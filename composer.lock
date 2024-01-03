@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "30818cbf6b2ab2459cdd2cd5d7287a97",
+    "content-hash": "9f60c711da745c56dd92464050ea710e",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -294,16 +294,16 @@
         },
         {
             "name": "borah/knowledge-base-laravel",
-            "version": "v0.3",
+            "version": "v0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RuliLG/Knowledge-Base-Laravel.git",
-                "reference": "33a41ba06ed32c0639807ff70ad0e8567f8c9e58"
+                "reference": "c78371ea118396a276f7c6104402f6f2a92cf421"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RuliLG/Knowledge-Base-Laravel/zipball/33a41ba06ed32c0639807ff70ad0e8567f8c9e58",
-                "reference": "33a41ba06ed32c0639807ff70ad0e8567f8c9e58",
+                "url": "https://api.github.com/repos/RuliLG/Knowledge-Base-Laravel/zipball/c78371ea118396a276f7c6104402f6f2a92cf421",
+                "reference": "c78371ea118396a276f7c6104402f6f2a92cf421",
                 "shasum": ""
             },
             "require": {
@@ -360,7 +360,7 @@
             ],
             "support": {
                 "issues": "https://github.com/RuliLG/Knowledge-Base-Laravel/issues",
-                "source": "https://github.com/RuliLG/Knowledge-Base-Laravel/tree/v0.3"
+                "source": "https://github.com/RuliLG/Knowledge-Base-Laravel/tree/v0.4"
             },
             "funding": [
                 {
@@ -368,7 +368,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-01-03T12:28:09+00:00"
+            "time": "2024-01-03T14:11:14+00:00"
         },
         {
             "name": "brick/math",
