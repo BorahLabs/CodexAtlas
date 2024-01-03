@@ -3,7 +3,6 @@
 namespace App\Actions\Platform\Repositories;
 
 use App\Actions\Twist\SendMessageToTwistThread;
-use App\Models\Branch;
 use App\Models\Project;
 use App\Models\Repository;
 use App\SourceCode\Contracts\RegistersWebhook;
@@ -82,7 +81,7 @@ class StoreRepository
         return $repository;
     }
 
-    public function asController(Project $project, Request $request): \Illuminate\Http\RedirectResponse
+    public function asController(Project $project, Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'source_code_account_id' => 'required|exists:source_code_accounts,id',

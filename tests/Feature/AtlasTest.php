@@ -4,7 +4,6 @@ use App\Actions\Platform\Repositories\StoreRepository;
 use App\Models\Project;
 use App\Models\SourceCodeAccount;
 use App\Models\User;
-use App\SourceCode\DTO\RepositoryName;
 
 it('runs the whole process of documenting with GitHub', function () {
     $user = User::factory()->inFreeTrialMode()->create();

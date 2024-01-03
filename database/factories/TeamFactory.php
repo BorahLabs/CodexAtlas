@@ -59,7 +59,7 @@ class TeamFactory extends Factory
      *
      * @return $this
      */
-    public function withSubscription(string|int $planId = null): static
+    public function withSubscription(string|int|null $planId = null): static
     {
         return $this->afterCreating(function (Team $team) use ($planId) {
             $subscription = $team->subscriptions()->create([

@@ -2,8 +2,8 @@
 
 namespace App\SourceCode;
 
-use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Actions\Bitbucket;
+use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Decorators\Bitbucket\DecoratedRepository;
 use App\Exceptions\ExceededProviderRateLimit;
 use App\SourceCode\Contracts\AccountInfoProvider;
