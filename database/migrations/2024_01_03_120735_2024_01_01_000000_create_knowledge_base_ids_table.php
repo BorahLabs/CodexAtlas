@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('knowledge_base_ids', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->morphs('model');
+            $table->uuidMorphs('model');
         });
     }
 
