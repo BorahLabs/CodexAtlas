@@ -20,11 +20,6 @@ class DumbLocalLlm extends Llm
         );
     }
 
-    public function embed(string ...$texts): array
-    {
-        return [];
-    }
-
     public function fileDescriptionSystemPrompt(Project $project, File $file): string
     {
         return 'Lorem ipsum dolor sit amet';

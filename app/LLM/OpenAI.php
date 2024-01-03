@@ -90,18 +90,6 @@ Some rules:
         );
     }
 
-    public function embed(string ...$texts): array
-    {
-        $response = $this->client()->embeddings()->create([
-            'model' => config('services.openai.embeddings_model'),
-            'input' => $texts,
-        ]);
-
-        return collect($response->embeddings)
-            ->map(fn (mixed $item) => $item->embeddings)
-            ->toArray();
-    }
-
     public function checkApiKey(string $key): bool
     {
         try {
