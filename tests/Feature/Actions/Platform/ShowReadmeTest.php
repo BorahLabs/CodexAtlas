@@ -1,10 +1,8 @@
 <?php
 
-use App\Actions\Codex\Architecture\SystemComponents\ProcessSystemComponent;
 use App\Models\Project;
 use App\Models\SourceCodeAccount;
 use App\Models\User;
-use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\RepositoryName;
 
 it('shows the documentation of a readme', function () {

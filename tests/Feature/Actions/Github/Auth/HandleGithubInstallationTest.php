@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Project;
 use App\Models\User;
 
 it('does not creates the source code account when using an invalid installation id', function () {

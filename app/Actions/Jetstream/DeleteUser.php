@@ -12,8 +12,6 @@ class DeleteUser implements DeletesUsers
 {
     /**
      * The team deleter implementation.
-     *
-     * @var \Laravel\Jetstream\Contracts\DeletesTeams
      */
     protected \Laravel\Jetstream\Contracts\DeletesTeams $deletesTeams;
 

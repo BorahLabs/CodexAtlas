@@ -30,6 +30,7 @@ class StoreProject
         Gate::authorize('create-project');
 
         $project = $this->handle($request->user()->currentTeam, $request->input('name'));
+
         return redirect()->route('projects.show', ['project' => $project]);
     }
 }

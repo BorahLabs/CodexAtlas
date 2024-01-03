@@ -23,7 +23,7 @@ class ShowDocs
         ]);
     }
 
-    public function asController(Project $project, Repository $repository, Branch $branch, ?SystemComponent $systemComponent = null):\Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse
+    public function asController(Project $project, Repository $repository, Branch $branch, ?SystemComponent $systemComponent = null): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse
     {
         if (is_null($systemComponent)) {
             return redirect()->route('docs.show-readme', [
