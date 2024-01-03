@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use App\Enums\SystemComponentStatus;
+use Borah\KnowledgeBase\Contracts\Embeddable;
+use Borah\KnowledgeBase\DTO\KnowledgeEmbeddingText;
+use Borah\KnowledgeBase\Traits\BelongsToKnowledgeBase;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,15 +13,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SystemComponent extends Model
+class SystemComponent extends Model implements Embeddable
 {
     use HasFactory;
     use HasUuids;
     use SoftDeletes;
+    use BelongsToKnowledgeBase;
 
     protected $casts = [
         'status' => SystemComponentStatus::class,
-        // 'file_contents' => 'encrypted',
+        'file_contents' => 'encrypted',
     ];
 
     public function branch(): BelongsTo
@@ -68,5 +72,24 @@ class SystemComponent extends Model
                 return $this->markdown_docs."\n\n```".$this->language."\n".$this->file_contents."\n```";
             },
         );
+    }
+
+    public function getEmbeddingsTexts(): KnowledgeEmbeddingText|array
+    {
+        $embeddings = [
+            new KnowledgeEmbeddingText(
+                text: $this->markdown_docs,
+                entity: class_basename($this),
+            ),
+        ];
+
+        if (! is_null($this->file_contents)) {
+            $embeddings[] = new KnowledgeEmbeddingText(
+                text: $this->file_contents,
+                entity: class_basename($this),
+            );
+        }
+
+        return $embeddings;
     }
 }
