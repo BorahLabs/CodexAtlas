@@ -13,6 +13,9 @@ return [
             )
             ->toArray(),
     ],
+    'forbidden_subdomains' => [
+        'knowledge-base',
+    ],
     'atlas' => [
         'allowed_extensions' => array_flip([
             'php',
