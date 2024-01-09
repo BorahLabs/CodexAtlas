@@ -2,7 +2,6 @@
 
 use App\Actions\Codex\Architecture\SystemComponents;
 use App\Actions\Codex\GenerateBranchDocumentation;
-use App\Actions\Codex\GenerateProjectDocumentation;
 use App\Models\Project;
 use App\Models\SourceCodeAccount;
 use App\Models\User;

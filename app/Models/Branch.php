@@ -35,6 +35,11 @@ class Branch extends Model
             ->orderBy('order', 'ASC');
     }
 
+    public function branchContentPlatformFolders(): HasMany
+    {
+        return $this->hasMany(BranchContentPlatformFolder::class);
+    }
+
     public function dto(): DTOBranch
     {
         return new DTOBranch(

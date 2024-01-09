@@ -20,6 +20,7 @@ return new class extends Migration
             $table->dateTime('expires_at')->nullable();
             $table->string('external_id')->nullable();
             $table->string('domain')->nullable();
+            $table->string('email');
             $table->timestamps();
 
             $table->unique(['team_id', 'platform', 'external_id']);

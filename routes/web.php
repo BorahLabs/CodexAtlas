@@ -12,9 +12,13 @@ use App\Actions\Platform\ShowReadme;
 use App\Actions\Platform\SourceCodeAccounts\StoreAccountPersonalAccessToken;
 use App\Actions\Platform\Webhook\HandleWebhook;
 use App\ContentPlatform\ConfluenceContentPlatform;
-use App\Http\Controllers\AtlassianController;
+use App\Enums\ContentPlatform;
 use App\Http\Middleware\ControlRequestsFromPlatform;
 use App\Http\Middleware\VerifyCsrfToken;
+use App\Models\ContentPlatformAccount;
+use App\Models\ContentPlatformAccountProject;
+use App\Models\Project;
+use App\Models\Team;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -89,9 +93,26 @@ Route::middleware(ControlRequestsFromPlatform::class)->group(function () {
         ->name('docs.show-component');
 });
 
+Route::get('testing/confluence', function(){
+    $team = Team::first();
 
-Route::get('testing/confluence', [ConfluenceContentPlatform::class, 'testingAll'])->name('testing.confluence');
+    $contentPlatform = ContentPlatformAccount::create([
+        'team_id' => $team->id,
+        'platform' => ContentPlatform::Confluence,
+        'access_token' => env('CONFLUENCE_RAUL_XIQUITO_API_TOKEN'),
+        'domain' => 'borah.atlassian.net',
+        'email' => 'raul.sanchez@borah.agency'
+    ]);
+
+    $accountProject = ContentPlatformAccountProject::create([
+        'content_platform_account_id' => $contentPlatform->id,
+        'project_id' => Project::first()->id,
+        'space_id' => '524290',
+        'parent_id' => '1376294',
+    ]);
+});
 Route::any('/secret-auth', function () {
     abort_unless(config('app.password_protected.enabled'), 404);
+
     return view('password-protection');
 })->name('password-protected')->middleware('throttle:5,1');

@@ -2,6 +2,7 @@
 
 namespace App\Actions\Codex\Architecture\SystemComponents;
 
+use App\Actions\Platform\ContentPlatforms\SynchronizeSystemComponent;
 use App\Actions\Twist\SendMessageToTwistThread;
 use App\Enums\SystemComponentStatus;
 use App\LLM\Contracts\Llm;
@@ -62,7 +63,7 @@ class ProcessSystemComponent
                 $completion = $llm->describeFile($project, $file);
             }
 
-            $branch->systemComponents()->updateOrCreate([
+            $systemComponent = $branch->systemComponents()->updateOrCreate([
                 'path' => $file->path,
             ], [
                 'order' => $order,
@@ -72,6 +73,9 @@ class ProcessSystemComponent
                 'markdown_docs' => $this->formatExplanation($completion->completion, $file->path),
                 'status' => SystemComponentStatus::Generated,
             ]);
+
+            // TODO: Controlar update y create para los platform
+            SynchronizeSystemComponent::make()->handle($systemComponent);
 
             ProcessingLogEntry::write($branch, $file->path, class_basename($llm), $llm->modelName(), $completion);
         } catch (\App\Exceptions\ExceededProviderRateLimit $e) {

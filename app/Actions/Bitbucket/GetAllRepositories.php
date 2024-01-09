@@ -8,7 +8,6 @@ use App\Services\GetUuidFromJson;
 use App\SourceCode\DTO\Repository;
 use Bitbucket\ResultPager;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetAllRepositories

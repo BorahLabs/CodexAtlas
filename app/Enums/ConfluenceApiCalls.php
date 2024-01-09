@@ -10,16 +10,20 @@ enum ConfluenceApiCalls: string
     case CreatePage = 'create-page';
     case UpdatePage = 'update-page';
     case DeletePage = 'delete-page';
+    case GetFolder = 'get-folder';
+    case GetPage = 'get-page';
 
-    public function apiCall(string $domain, string $id = null): string
+    public function endpoint(string $domain, ?string $id = null): string
     {
-        return match($this) {
-            static::GetAllSpaces => 'https://' . $domain  . '/wiki/api/v2/spaces',
-            static::GetAllPagesFromSpace => 'https://' . $domain  . '/wiki/api/v2/spaces/' . $id . '/pages',
-            static::CreateFolder => 'https://' . $domain  . '/wiki/api/v2/pages',
-            static::CreatePage => 'https://' . $domain  . '/wiki/api/v2/pages',
-            static::UpdatePage => 'https://' . $domain  . '/wiki/api/v2/pages/' . $id,
-            static::DeletePage => 'https://' . $domain  . '/wiki/api/v2/pages/' . $id,
+        return match ($this) {
+            self::GetAllSpaces => 'https://'.$domain.'/wiki/api/v2/spaces',
+            self::GetAllPagesFromSpace => 'https://'.$domain.'/wiki/api/v2/spaces/'.$id.'/pages',
+            self::CreateFolder => 'https://'.$domain.'/wiki/api/v2/pages',
+            self::CreatePage => 'https://'.$domain.'/wiki/api/v2/pages',
+            self::UpdatePage => 'https://'.$domain.'/wiki/api/v2/pages/'.$id,
+            self::DeletePage => 'https://'.$domain.'/wiki/api/v2/pages/'.$id,
+            self::GetFolder => 'https://'.$domain.'/wiki/api/v2/pages/'.$id,
+            self::GetPage => 'https://'.$domain.'/wiki/api/v2/pages/'.$id,
         };
     }
 }

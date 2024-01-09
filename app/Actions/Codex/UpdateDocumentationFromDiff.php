@@ -3,8 +3,11 @@
 namespace App\Actions\Codex;
 
 use App\Actions\Codex\Architecture\SystemComponents\ProcessSystemComponent;
+use App\Actions\Platform\ContentPlatforms\SynchronizeSystemComponent;
+use App\Enums\ContentPlatformAction;
 use App\Enums\FileChange;
 use App\Models\Branch;
+use App\Models\SystemComponent;
 use App\SourceCode\DTO\Diff;
 use App\SourceCode\DTO\DiffItem;
 use App\SourceCode\DTO\File;
@@ -23,6 +26,7 @@ class UpdateDocumentationFromDiff
             ->pluck('path');
 
         if ($itemsToDelete->isNotEmpty()) {
+            $branch->systemComponents()->each(fn (SystemComponent $systemComponent) => SynchronizeSystemComponent::make()->handle($systemComponent->id, ContentPlatformAction::Delete));
             $branch->systemComponents()
                 ->whereIn('path', $itemsToDelete)
                 ->delete();

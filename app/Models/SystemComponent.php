@@ -69,4 +69,12 @@ class SystemComponent extends Model
             },
         );
     }
+
+    public function externalContentPageId(ContentPlatformAccountProject $account): ?ContentPlatformAccountSystemComponent
+    {
+        return ContentPlatformAccountSystemComponent::where([
+            'content_platform_account_id' => $account->content_platform_account_id,
+            'system_component_id' => $this->id,
+        ])->first();
+    }
 }

@@ -11,8 +11,8 @@ enum ContentPlatform: string
 
     public function provider(): ContractsContentPlatform
     {
-        return match($this) {
-            static::Confluence => new ConfluenceContentPlatform(),
+        return match ($this) {
+            self::Confluence => new ConfluenceContentPlatform(),
         };
     }
 }

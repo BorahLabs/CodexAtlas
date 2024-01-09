@@ -2,186 +2,134 @@
 
 namespace App\ContentPlatform;
 
-use App\Actions\Codex\Architecture\SystemComponents;
 use App\Actions\Confluence\Auth\GetAuthHeaders;
 use App\ContentPlatform\Contracts\ContentPlatform;
+use App\ContentPlatform\Contracts\AuthenticatesUser;
 use App\Enums\ConfluenceApiCalls;
-use App\Models\ContentPlatformAccount;
 use App\Models\SystemComponent;
-use CloudPlayDev\ConfluenceClient\ConfluenceClient;
-use Illuminate\Support\Env;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Http;
 use Unirest\Request;
 
-class ConfluenceContentPlatform extends ContentPlatform
+class ConfluenceContentPlatform extends ContentPlatform implements AuthenticatesUser
 {
 
-    public function authenticateUser($email = null, $accessToken = null)
+    protected function getAuthHeaders(): array
     {
-        Request::auth('raul.sanchez@borah.agency', env('CONFLUENCE_RAUL_XIQUITO_API_TOKEN'));
+        return [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+        ];
     }
 
-    public function handleSynchronizeAction(SystemComponent $systemComponent)
+    public function authenticate()
     {
-        // Detect if you have to create project folder, page, update a page or delete
-        throw new \Exception('Not implemented');
+        Request::auth($this->account->contentPlatformAccount->email, $this->account->contentPlatformAccount->access_token);
     }
 
-    public function getFolder(SystemComponent $systemComponent)
+    public function createFolder(SystemComponent $systemComponent): string
     {
-        throw new \Exception('Not implemented');
-    }
+        $headers = $this->getAuthHeaders();
+        $apiCall = ConfluenceApiCalls::CreateFolder->endpoint($this->account->contentPlatformAccount->domain);
 
-    public function createFolder(SystemComponent $systemComponent, $domain, $name)
-    {
-        $headers = GetAuthHeaders::run();
-        $apiCall = ConfluenceApiCalls::CreateFolder->apiCall($domain, $name);
-        $this->authenticateUser();
-         // CREAR UN FOLDER PAGE
+        $spaceId = $this->account->space_id;
+        $parentId = $this->account->parent_id;
+        $name = $systemComponent->branch->name;
 
-        // GET SPACE ID FROM ContentPlatformAccountProject model
-        $spaceId = 524290;
-
-        $body = json_encode(
-        [
-          "spaceId"=> "$spaceId",
-          "status"=> "current",
-          "title"=> "$name",
-          "private"=> true,
-          "body"=> [
-              "representation"=> "storage",
-              "value"=> ""
-          ],
-          'metadata' => [
-            'properties' => [
-                'content-template' => ['value' => ['key' => 'com.atlassian.confluence.plugins.confluence-content-template:folder']]
-            ]
-            ]
-          ]);
-
-        $response = Request::post($apiCall, $headers, $body);
-
-        return $response;
-    }
-
-    public function createPage(SystemComponent $systemComponent, $domain)
-    {
-        $headers = GetAuthHeaders::run();
-        $apiCall = ConfluenceApiCalls::CreatePage->apiCall($domain);
-        $this->authenticateUser();
-
-        // PROBLEMA: el content incluye código pero luego no se ve encapsulado en tipo código en la page generada
-        $content = Str::markdown($systemComponent->content);
-
-        // GET SPACE ID FROM ContentPlatformAccountProject model
-        $spaceId = 524290;
-
-        // GET PARENT ID FROM ContentPlatformAccountProject model
-        $parentId = 1376294;
-
-        $pageTitle = $systemComponent->basename;
-
-
-        $body = json_encode(
-        [
-          "spaceId"=> "$spaceId",
-          "status"=> "current",
-          "title"=> "$pageTitle",
-          "parentId"=> "$parentId",
-          "private"=> true,
-          "body"=> [
-              "representation"=> "storage",
-              "value"=> "$content"
-              ]
-          ]);
-
-        $response = Request::post($apiCall, $headers, $body);
-
-        return $response;
-    }
-
-    // Puede que el pageId lo saquemos de buscar en todas las pages del space concreto con el GetPage o GetAllPages de la Enum\ConfluenceApiCalls
-    public function updatePage(SystemComponent $systemComponent, $domain, $pageId)
-    {
-        $headers = GetAuthHeaders::run();
-        $apiCall = ConfluenceApiCalls::UpdatePage->apiCall($domain, $pageId);
-        $this->authenticateUser();
-
-        // Conseguir de alguna manera el title de la page ya que es required en la llamada a la api
-        $pageTitle = 'Test';
-
-        // Texto que se añade a la versión. Podría ser el nombre del commit o algo arbitrario
-        $message = 'Update';
-
-        // PROBLEMA: el content incluye código pero luego no se ve encapsulado en tipo código en la page generada
-        $content = Str::markdown($systemComponent->content);
-
-        // IMPORTANTE: version hay que incrementarlo en uno por lo que hay que recoger previamente la versión que tiene la page para sumarle uno a la versión xd
-        $body = json_encode(
-        [
-            "id"=> "$pageId",
-            "status"=> "current",
-            "title"=> "Testeo desde vs code 1 para folder",
-            "private"=> true,
-            "body"=> [
-                "representation"=> "storage",
-                "value"=> "$content"
+        $body = json_encode([
+            'spaceId' => "$spaceId",
+            'status' => 'current',
+            'parentId' => "$parentId",
+            'title' => "$name",
+            'private' => true,
+            'body' => [
+                'representation' => 'storage',
+                'value' => '',
             ],
-            "version"=> [
-                "number"=> 2,
-                "message"=> "message"
-                ]
-            ]);
+            'metadata' => [
+                'properties' => [
+                    'content-template' => ['value' => ['key' => 'com.atlassian.confluence.plugins.confluence-content-template:folder']],
+                ],
+            ],
+        ]);
 
+        $response = Request::post($apiCall, $headers, $body);
+
+        return $response->body->id;
+    }
+
+    public function createPage(string $folderId, SystemComponent $systemComponent)
+    {
+        $headers = $this->getAuthHeaders();
+        $apiCall = ConfluenceApiCalls::CreatePage->endpoint($this->account->contentPlatformAccount->domain);
+
+        $content = Str::markdown($systemComponent->content);
+
+        $spaceId = $this->account->space_id;
+
+        $pageTitle = $systemComponent->path;
+
+        $body = json_encode([
+            'spaceId' => "$spaceId",
+            'status' => 'current',
+            'title' => "$pageTitle",
+            'parentId' => "$folderId",
+            'private' => true,
+            'body' => [
+                'representation' => 'storage',
+                'value' => "$content",
+            ],
+        ]);
+
+        $response = Request::post($apiCall, $headers, $body);
+
+        return $response->body->id;
+    }
+
+    public function updatePage(string $folderId, SystemComponent $systemComponent)
+    {
+        $headers = $this->getAuthHeaders();
+
+        $pageId = $systemComponent->externalContentPageId($this->account)->external_id;
+
+        $apiCall = ConfluenceApiCalls::GetPage->endpoint($this->account->contentPlatformAccount->domain, $pageId);
+
+        $page = Request::get($apiCall, $headers);
+        $version = $page->body->version->number;
+
+        $apiCall = ConfluenceApiCalls::UpdatePage->endpoint($this->account->contentPlatformAccount->domain, $pageId);
+
+        $message = 'Updated by '.config('app.name');
+        $content = Str::markdown($systemComponent->content);
+        $newVersion = $version++;
+        $pageTitle = $systemComponent->path;
+
+        $body = json_encode([
+            'id' => "$pageId",
+            'status' => 'current',
+            'parentId' => $folderId,
+            'title' => "$pageTitle",
+            'private' => true,
+            'body' => [
+                'representation' => 'storage',
+                'value' => "$content",
+            ],
+            'version' => [
+                'number' => $newVersion,
+                'message' => "$message",
+            ],
+        ]);
 
         $response = Request::put($apiCall, $headers, $body);
 
-        return $response;
+        return $response->body->id;
     }
 
-    public function renamePage(SystemComponent $systemComponent)
+    public function deletePage(SystemComponent $systemComponent)
     {
-        throw new \Exception('Not implemented');
-    }
-
-    // Puede que el pageId lo saquemos de buscar en todas las pages del space concreto con el GetPage o GetAllPages de la Enum\ConfluenceApiCalls
-    public function deletePage(SystemComponent $systemComponent, $domain, $pageId)
-    {
-        $apiCall = ConfluenceApiCalls::DeletePage->apiCall($domain, $pageId);
-        $this->authenticateUser();
-
+        $pageId = $systemComponent->externalContentPageId($this->account)->external_id;
+        $apiCall = ConfluenceApiCalls::DeletePage->endpoint($this->account->contentPlatformAccount->domain, $pageId);
         $response = Request::delete($apiCall);
 
-        throw new \Exception('Not implemented');
-    }
-
-    public function testingAll()
-    {
-
-        $contentAccount = ContentPlatformAccount::first();
-
-        Request::auth('raul.sanchez@borah.agency', env('CONFLUENCE_RAUL_XIQUITO_API_TOKEN'));
-
-        $headers = array(
-          'Accept' => 'application/json'
-        );
-
-        // Busca todos los spaces del autenticado
-        // $response = Request::get(
-        //     'https://borah.atlassian.net/wiki/api/v2/spaces',
-        //                 $headers
-        // );
-
-        // BUSCAR TODAS LAS PAGES DE UN SPACE
-        // $response = Request::get(
-        //     'https://borah.atlassian.net/wiki/api/v2/spaces/524290/pages',
-        //     $headers
-        // );
-        // FIN DE BUSCAR TODAS LAS PAGES
-
-        dd($response);
-
-        return [];
+        return $response;
     }
 }

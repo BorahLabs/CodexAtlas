@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('content_platform_account_project', function (Blueprint $table) {
-            $table->id();
+        Schema::create('branch_content_platform_folders', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->foreignUuid('branch_id')->constrained()->cascadeOnDelete();
             $table->foreignUuid('content_platform_account_id')->constrained()->cascadeOnDelete();
-            $table->foreignUuid('project_id')->constrained()->cascadeOnDelete();
-            $table->string('space_id')->nullable();
-            $table->string('parent_id')->nullable(); // parent folder ID
+            $table->string('external_id');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('content_platform_account_project');
+        Schema::dropIfExists('branch_content_platform_folders');
     }
 };

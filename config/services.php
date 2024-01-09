@@ -52,8 +52,8 @@ return [
     'atlassian' => [
         'client_id' => env('ATLASSIAN_CLIENT_ID'),
         'client_secret' => env('ATLASSIAN_CLIENT_SECRET'),
-        'redirect' => env('ATLASSIAN_REDIRECT_URI')
-      ],
+        'redirect' => env('ATLASSIAN_REDIRECT_URI'),
+    ],
 
     'openai' => [
         'key' => env('OPENAI_API_KEY'),
