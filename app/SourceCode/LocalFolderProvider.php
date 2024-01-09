@@ -16,7 +16,7 @@ class LocalFolderProvider extends SourceCodeProvider
     public function repositories(): array
     {
         return collect(FacadesFile::directories($this->credentials()->name))
-            ->filter(fn ($path) => in_array(basename($path), config('codex.dev.repositories')))
+            ->filter(fn (string $path) => in_array(basename($path), config('codex.dev.repositories')))
             ->map(fn (string $path) => new Repository(
                 id: $path,
                 name: basename($path),
@@ -46,7 +46,7 @@ class LocalFolderProvider extends SourceCodeProvider
         ];
     }
 
-    public function files(RepositoryName $repository, Branch $branch, string $path = null): array
+    public function files(RepositoryName $repository, Branch $branch, ?string $path = null): array
     {
         return (new LocalFolder\GetAllFiles())->handle($repository, $branch, $path);
     }

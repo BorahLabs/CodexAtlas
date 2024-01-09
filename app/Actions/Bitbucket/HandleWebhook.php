@@ -4,20 +4,21 @@ namespace App\Actions\Bitbucket;
 
 use App\Actions\Codex\UpdateDocumentationFromDiff;
 use App\Models\SourceCodeAccount;
+use Illuminate\Database\Eloquent\Builder;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class HandleWebhook
 {
     use AsAction;
 
-    public function handle(SourceCodeAccount $account, array $payload)
+    public function handle(SourceCodeAccount $account, array $payload): void
     {
         if (isset($payload['push']['changes'])) {
             $this->handlePush($account, $payload);
         }
     }
 
-    private function handlePush(SourceCodeAccount $account, array $payload)
+    private function handlePush(SourceCodeAccount $account, array $payload): void
     {
         $changes = data_get($payload, 'push.changes', []);
         $repositoryName = $account->provider->repositoryName(data_get($payload, 'repository.full_name'));
@@ -25,8 +26,8 @@ class HandleWebhook
             ->repositories()
             ->where('name', $repositoryName->name)
             ->where('username', $repositoryName->username)
-            ->when($repositoryName->workspace, fn ($query) => $query->where('workspace', $repositoryName->workspace))
-            ->when(!$repositoryName->workspace, fn ($query) => $query->whereNull('workspace'))
+            ->when($repositoryName->workspace, fn (Builder $query) => $query->where('workspace', $repositoryName->workspace))
+            ->when(! $repositoryName->workspace, fn (Builder $query) => $query->whereNull('workspace'))
             ->firstOrFail();
 
         $branches = [];
@@ -37,7 +38,7 @@ class HandleWebhook
                 continue;
             }
 
-            if (!isset($branches[$branch->id])) {
+            if (! isset($branches[$branch->id])) {
                 $branches[$branch->id] = [
                     'branch' => $branch,
                     'commits' => [],

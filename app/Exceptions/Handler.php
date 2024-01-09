@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Actions\Twist\SendMessageToTwistThread;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -24,7 +25,7 @@ class Handler extends ExceptionHandler
     public function register(): void
     {
         $this->reportable(function (Throwable $e) {
-            //
+            SendMessageToTwistThread::dispatch(config('services.twist.bad_thread'), '💥 [UNCAUGHT ERROR] '.$e->getMessage().' on line '.$e->getLine().' in file '.$e->getFile());
         });
     }
 }

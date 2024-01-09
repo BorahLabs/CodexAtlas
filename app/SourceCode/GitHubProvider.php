@@ -17,7 +17,7 @@ use Github\Exception\ApiLimitExceedException;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 
-class GitHubProvider extends SourceCodeProvider implements RegistersWebhook, HandlesWebhook, DownloadsZipFile
+class GitHubProvider extends SourceCodeProvider implements DownloadsZipFile, HandlesWebhook, RegistersWebhook
 {
     use LoadFilesFromS3;
 
@@ -58,6 +58,7 @@ class GitHubProvider extends SourceCodeProvider implements RegistersWebhook, Han
         $response = $api->contents()->archive($repository->username, $repository->name, 'zipball', $branch->name);
 
         $disk->put($zipPath, $response);
+
         return $zipPath;
     }
 
@@ -76,17 +77,17 @@ class GitHubProvider extends SourceCodeProvider implements RegistersWebhook, Han
         return 'https://github.com/'.$repository->fullName;
     }
 
-    public function registerWebhook(RepositoryName $repository)
+    public function registerWebhook(RepositoryName $repository): mixed
     {
         return Github\RegisterWebhook::make()->handle($this->credentials(), $repository);
     }
 
-    public function verifyIncomingWebhook(Request $request)
+    public function verifyIncomingWebhook(Request $request): mixed
     {
         return Github\VerifyWebhook::make()->handle($this->credentials(), $request);
     }
 
-    public function handleIncomingWebhook(array $payload, Request $request)
+    public function handleIncomingWebhook(array $payload, Request $request): mixed
     {
         return Github\HandleWebhook::make()->handle($this->credentials(), $payload, $request);
     }

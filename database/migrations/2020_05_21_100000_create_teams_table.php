@@ -15,7 +15,9 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->index();
             $table->string('name');
+            $table->mediumText('openai_key')->nullable();
             $table->boolean('personal_team');
+            $table->boolean('stores_code')->default(false);
             $table->timestamps();
         });
     }

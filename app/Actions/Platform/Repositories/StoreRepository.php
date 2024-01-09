@@ -2,12 +2,16 @@
 
 namespace App\Actions\Platform\Repositories;
 
+use App\Actions\Twist\SendMessageToTwistThread;
+use App\Models\Branch;
 use App\Models\Project;
 use App\Models\Repository;
 use App\SourceCode\Contracts\RegistersWebhook;
 use App\SourceCode\DTO\Branch as DTOBranch;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Gate;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class StoreRepository
@@ -59,23 +63,33 @@ class StoreRepository
         if ($repository->branches->isEmpty()) {
             $branches = $sourceCodeAccount->getProvider()->branches($repo);
             $whitelist = ['main', 'master', 'production', 'prod', 'release', 'dev', 'develop', 'staging'];
+            /**
+             * @var \App\Enums\SubscriptionType $subscriptionType
+             */
+            $subscriptionType = $project->team->subscriptionType();
             collect($branches)
-                ->filter(fn ($branch) => in_array($branch->name, $whitelist))
+                ->filter(fn (DTOBranch $branch) => in_array($branch->name, $whitelist))
                 ->values()
+                ->when(! is_null($subscriptionType->maxBranchesPerRepository()), fn (Collection $branches) => $branches->take($subscriptionType->maxBranchesPerRepository()))
                 ->each(fn (DTOBranch $branch) => $repository->branches()->create([
                     'name' => $branch->name,
                 ]));
+
         }
+
+        SendMessageToTwistThread::dispatch(config('services.twist.nice_thread'), '🌱 New repository added! '.$repo->fullName.' in project '.$project->name);
 
         return $repository;
     }
 
-    public function asController(Project $project, Request $request)
+    public function asController(Project $project, Request $request): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validate([
             'source_code_account_id' => 'required|exists:source_code_accounts,id',
             'name' => "required|string|max:255|regex:/([\w\-_]+)\/([\w\-_]+)/",
         ]);
+
+        Gate::authorize('create-repository');
 
         $repository = $this->handle($project, $validated['source_code_account_id'], $validated['name']);
 

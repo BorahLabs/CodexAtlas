@@ -17,6 +17,10 @@
 
     <!-- Styles -->
     @livewireStyles
+
+    @production
+        <script src="https://cdn.usefathom.com/script.js" data-site="FEPWQLXW" defer></script>
+    @endproduction
 </head>
 
 <body class="font-sans antialiased">
@@ -35,7 +39,7 @@
         @endif
 
         @if (isset($stickyHeader))
-            <header class="bg-gray-800 shadow z-50 sticky top-0">
+            <header class="bg-gray-800 shadow z-40 sticky top-0">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     {{ $stickyHeader }}
                 </div>

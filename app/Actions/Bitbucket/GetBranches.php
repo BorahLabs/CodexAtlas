@@ -16,7 +16,7 @@ class GetBranches
     /**
      * @return Branch[]
      */
-    public function handle(SourceCodeAccount $account, RepositoryName $repository)
+    public function handle(SourceCodeAccount $account, RepositoryName $repository): array
     {
         $client = GetAuthenticatedAccountBitbucketClient::make()->handle($account);
 
@@ -30,9 +30,7 @@ class GetBranches
         $branches = $paginator->fetchAll($api, 'list');
 
         return collect($branches)
-            ->map(function ($item) {
-                return $item['name'];
-            })
+            ->map(fn (array $item) => $item['name'])
             ->mapInto(Branch::class)
             ->toArray();
     }

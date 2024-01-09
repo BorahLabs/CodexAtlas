@@ -13,7 +13,7 @@ abstract class SourceCodeProvider
 {
     private ?SourceCodeAccount $account;
 
-    public function withCredentials(SourceCodeAccount $account)
+    public function withCredentials(SourceCodeAccount $account): static
     {
         $this->setCredentials($account);
 
@@ -25,7 +25,7 @@ abstract class SourceCodeProvider
         return $this->account;
     }
 
-    public function setCredentials(SourceCodeAccount $account)
+    public function setCredentials(SourceCodeAccount $account): void
     {
         $this->account = $account;
     }
@@ -54,7 +54,7 @@ abstract class SourceCodeProvider
      *
      * @return File|Folder[]
      */
-    abstract public function files(RepositoryName $repository, Branch $branch, string $path = null): array;
+    abstract public function files(RepositoryName $repository, Branch $branch, ?string $path = null): array;
 
     /**
      * Returns a single file and its contents

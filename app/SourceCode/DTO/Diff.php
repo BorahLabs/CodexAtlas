@@ -15,13 +15,14 @@ class Diff implements Arrayable
     public function add(DiffItem $item): static
     {
         $this->changes[$item->path] = $item;
+
         return $this;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return collect($this->changes)
-            ->map(fn ($item) => $item->toArray())
+            ->map(fn (DiffItem $item) => $item->toArray())
             ->toArray();
     }
 }

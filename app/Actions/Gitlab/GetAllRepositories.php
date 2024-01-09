@@ -25,7 +25,7 @@ class GetAllRepositories
         ]);
 
         return collect($repos)
-            ->map(fn ($repo) => new Repository(
+            ->map(fn (array $repo) => new Repository(
                 id: $repo['id'],
                 name: $repo['name'],
                 owner: explode('/', $repo['path_with_namespace'])[0],

@@ -3,6 +3,7 @@
 namespace App\Actions\Codex\Architecture;
 
 use App\Actions\Codex\Architecture\SystemComponents\ProcessSystemComponent;
+use App\Atlas\FileWhitelist;
 use App\Atlas\Frameworks\Contracts\Framework;
 use App\Atlas\Guesser;
 use App\Models\Branch;
@@ -17,10 +18,15 @@ class SystemComponents
 
     public int $jobTimeout = 300;
 
-    public function handle(Branch $branch)
+    public function handle(Branch $branch): void
     {
         $repository = $branch->repository;
         $sourceCodeAccount = $repository->sourceCodeAccount;
+        $team = $repository->project->team;
+        /**
+         * @var \App\Enums\SubscriptionType
+         */
+        $subscriptionType = $team->subscriptionType();
 
         /**
          * @var SourceCodeProvider
@@ -38,6 +44,11 @@ class SystemComponents
         $framework = $this->detectFramework(Folder::makeWithFiles($filesAndFolders, $repoName->name, $repoName->username, sha1($repoName->fullName)));
         logger()->debug('[Codex] Framework detected: '.$framework->name().' for branch '.$branch->id);
         $files = $this->filterFiles($filesAndFolders, $framework);
+
+        if (! is_null($subscriptionType->maxFilesPerRepository())) {
+            $files = array_slice($files, 0, $subscriptionType->maxFilesPerRepository());
+        }
+
         $order = 1;
         logger()->debug('[Codex] Dispatching components processing for branch '.$branch->id);
         foreach ($files as $file) {
@@ -73,7 +84,7 @@ class SystemComponents
                     ...$this->filterFiles($file->files, $framework),
                     ...$this->filterFiles($file->folders, $framework),
                 ];
-            } elseif ($framework->mightBeRelevant($file->path)) {
+            } elseif ($framework->mightBeRelevant($file->path) && FileWhitelist::whitelisted($file->path)) {
                 $filtered[] = $file;
             }
         }

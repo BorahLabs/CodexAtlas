@@ -38,7 +38,7 @@ class S3ZipProvider extends SourceCodeProvider implements ReceivesZipFile
         ];
     }
 
-    public function files(RepositoryName $repository, Branch $branch, string $path = null): array
+    public function files(RepositoryName $repository, Branch $branch, ?string $path = null): array
     {
         abort_if($this->localPath === null, 500, 'No zip file has been loaded yet.');
         $localRepository = (new LocalFolderProvider())->withCredentials($this->credentials());
@@ -76,6 +76,7 @@ class S3ZipProvider extends SourceCodeProvider implements ReceivesZipFile
         $path = str(basename($zipFile))->beforeLast('.zip')->toString();
         if (Storage::disk('tmp')->exists($path)) {
             $this->localPath = $path;
+
             return $this;
         }
 
@@ -106,12 +107,12 @@ class S3ZipProvider extends SourceCodeProvider implements ReceivesZipFile
             $subfolderFiles = Storage::disk('tmp')->files($folders[0]);
             $subfolderFolders = Storage::disk('tmp')->directories($folders[0]);
             foreach ($subfolderFiles as $file) {
-                $newPath = str($file)->after($folders[0] . '/')->toString();
+                $newPath = str($file)->after($folders[0].'/')->toString();
                 Storage::disk('tmp')->move($file, $path.'/'.$newPath);
             }
 
             foreach ($subfolderFolders as $folder) {
-                $newPath = str($folder)->after($folders[0] . '/')->toString();
+                $newPath = str($folder)->after($folders[0].'/')->toString();
                 Storage::disk('tmp')->move($folder, $path.'/'.$newPath);
             }
 
@@ -119,6 +120,7 @@ class S3ZipProvider extends SourceCodeProvider implements ReceivesZipFile
         } while (count($folders) === 1 && count($files) === 0);
 
         $this->localPath = $path;
+
         return $this;
     }
 

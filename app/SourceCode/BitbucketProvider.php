@@ -19,7 +19,7 @@ use Bitbucket\Exception\ApiLimitExceededException;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 
-class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvider, RegistersWebhook, HandlesWebhook
+class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvider, HandlesWebhook, RegistersWebhook
 {
     use LoadFilesFromS3;
 
@@ -63,6 +63,7 @@ class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvide
             ->archive($this->credentials()->name, $this->credentials()->access_token, $branch->name);
 
         $disk->put($zipPath, $response);
+
         return $zipPath;
     }
 
@@ -86,17 +87,17 @@ class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvide
         return Bitbucket\GetAccount::make()->handle($this->credentials());
     }
 
-    public function registerWebhook(RepositoryName $repository)
+    public function registerWebhook(RepositoryName $repository): mixed
     {
         return Bitbucket\RegisterWebhook::make()->handle($this->credentials(), $repository);
     }
 
-    public function verifyIncomingWebhook(Request $request)
+    public function verifyIncomingWebhook(Request $request): mixed
     {
         return Bitbucket\VerifyWebhook::make()->handle($this->credentials(), $request);
     }
 
-    public function handleIncomingWebhook(array $payload, Request $request)
+    public function handleIncomingWebhook(array $payload, Request $request): mixed
     {
         return Bitbucket\HandleWebhook::make()->handle($this->credentials(), $payload, $request);
     }

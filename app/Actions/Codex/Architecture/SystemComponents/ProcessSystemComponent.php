@@ -2,9 +2,11 @@
 
 namespace App\Actions\Codex\Architecture\SystemComponents;
 
+use App\Actions\Twist\SendMessageToTwistThread;
 use App\Enums\SystemComponentStatus;
 use App\LLM\Contracts\Llm;
 use App\LLM\DTO\CompletionResponse;
+use App\LLM\OpenAI;
 use App\Models\Branch;
 use App\Models\ProcessingLogEntry;
 use App\Models\SystemComponent;
@@ -21,7 +23,7 @@ class ProcessSystemComponent
 
     public int $jobBackoff = 180;
 
-    public function handle(Branch $branch, File $file, int $order)
+    public function handle(Branch $branch, File $file, int $order): void
     {
         logger()->debug('[Codex] Processing file '.$file->path.' branch '.$branch->id);
 
@@ -29,6 +31,7 @@ class ProcessSystemComponent
         $sourceCodeAccount = $repository->sourceCodeAccount;
         $project = $repository->project;
         $branches = $repository->branches;
+        $team = $project->team;
         $provider = $sourceCodeAccount->getProvider();
         $repoName = $repository->nameDto();
 
@@ -43,6 +46,10 @@ class ProcessSystemComponent
              * @var Llm
              */
             $llm = app(Llm::class);
+            if ($llm instanceof OpenAI) {
+                $llm->usingApiKey($team->openai_key);
+            }
+
             if ($existingFile) {
                 $completion = new CompletionResponse(
                     completion: $existingFile->markdown_docs,
@@ -61,7 +68,7 @@ class ProcessSystemComponent
                 'order' => $order,
                 'sha' => $file->sha,
                 'path' => $file->path,
-                'file_contents' => $file->contents(),
+                'file_contents' => $team->stores_code ? $file->contents() : null,
                 'markdown_docs' => $this->formatExplanation($completion->completion, $file->path),
                 'status' => SystemComponentStatus::Generated,
             ]);
@@ -69,9 +76,11 @@ class ProcessSystemComponent
             ProcessingLogEntry::write($branch, $file->path, class_basename($llm), $llm->modelName(), $completion);
         } catch (\App\Exceptions\ExceededProviderRateLimit $e) {
             logger($e);
+            SendMessageToTwistThread::dispatch(config('services.twist.bad_thread'), '🤬 Exceeded rate limit for '.$provider->name().' on file '.$file->path.' on branch '.$branch->id);
             ProcessSystemComponent::dispatch($branch, $file, $order)
                 ->delay($e->retryInSeconds + 10);
         } catch (\Exception $e) {
+            SendMessageToTwistThread::dispatch(config('services.twist.bad_thread'), '🚨 [ERROR] '.$e->getMessage()."\nMetadata: ".json_encode(['file' => $file->path, 'branch' => $branch->id]));
             logger()->error($e->getMessage(), [
                 'file' => $file->path,
                 'branch' => $branch->id,
@@ -81,7 +90,7 @@ class ProcessSystemComponent
         }
     }
 
-    private function formatExplanation(string $explanation, string $path)
+    private function formatExplanation(string $explanation, string $path): string
     {
         $lines = explode("\n", $explanation);
         $formatted = [];

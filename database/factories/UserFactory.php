@@ -48,7 +48,7 @@ class UserFactory extends Factory
     /**
      * Indicate that the user should have a personal team.
      */
-    public function withPersonalTeam(callable $callback = null): static
+    public function withPersonalTeam(?callable $callback = null): static
     {
         if (! Features::hasTeamFeatures()) {
             return $this->state([]);
@@ -64,5 +64,25 @@ class UserFactory extends Factory
                 ->when(is_callable($callback), $callback),
             'ownedTeams'
         );
+    }
+
+    public function inPayAsYouGoMode(): static
+    {
+        return $this->withPersonalTeam(fn (TeamFactory $factory) => $factory->inPayAsYouGoMode());
+    }
+
+    public function inFreeTrialMode(): static
+    {
+        return $this->withPersonalTeam(fn (TeamFactory $factory) => $factory->inFreeTrialMode());
+    }
+
+    public function inLimitedCompanyPlanMode(): static
+    {
+        return $this->withPersonalTeam(fn (TeamFactory $factory) => $factory->inLimitedCompanyPlanMode());
+    }
+
+    public function inUnlimitedCompanyPlanMode(): static
+    {
+        return $this->withPersonalTeam(fn (TeamFactory $factory) => $factory->inUnlimitedCompanyPlanMode());
     }
 }

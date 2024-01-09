@@ -25,6 +25,7 @@ class GetProjectIdForRepository
             'membership' => true,
             'search' => $repository->fullName,
             'search_namespaces' => true,
+            'simple' => true,
         ]);
 
         if (empty($repo)) {

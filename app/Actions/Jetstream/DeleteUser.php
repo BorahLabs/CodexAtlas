@@ -15,7 +15,7 @@ class DeleteUser implements DeletesUsers
      *
      * @var \Laravel\Jetstream\Contracts\DeletesTeams
      */
-    protected $deletesTeams;
+    protected \Laravel\Jetstream\Contracts\DeletesTeams $deletesTeams;
 
     /**
      * Create a new action instance.

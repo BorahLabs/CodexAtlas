@@ -10,9 +10,9 @@ class ProcessingLogEntry extends Model
 {
     use HasFactory;
 
-    public static function write(Branch $branch, string $filePath, string $llmProvider, string $llmModel, CompletionResponse $response)
+    public static function write(Branch $branch, string $filePath, string $llmProvider, string $llmModel, CompletionResponse $response): ProcessingLogEntry
     {
-        static::query()->create([
+        return static::query()->create([
             'team_id' => $branch->repository->project->team->id,
             'branch_id' => $branch->id,
             'file_path' => $filePath,

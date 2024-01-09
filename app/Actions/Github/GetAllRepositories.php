@@ -23,7 +23,7 @@ class GetAllRepositories
         $api = $client->api('me');
 
         return collect($api->repositories())
-            ->map(fn ($repo) => new Repository(
+            ->map(fn (array $repo) => new Repository(
                 id: $repo['id'],
                 name: $repo['name'],
                 owner: $repo['owner']['login'],

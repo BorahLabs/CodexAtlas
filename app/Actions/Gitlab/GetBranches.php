@@ -15,7 +15,7 @@ class GetBranches
     /**
      * @return Branch[]
      */
-    public function handle(SourceCodeAccount $account, RepositoryName $repository)
+    public function handle(SourceCodeAccount $account, RepositoryName $repository): array
     {
         /**
          * @var \GrahamCampbell\GitLab\GitLabManager $client
@@ -25,7 +25,7 @@ class GetBranches
         $branches = $client->repositories()->branches($projectId);
 
         return collect($branches)
-            ->map(fn ($branch) => $branch['name'])
+            ->map(fn (array $branch) => $branch['name'])
             ->mapInto(Branch::class)
             ->toArray();
     }

@@ -9,5 +9,6 @@ use Illuminate\Contracts\Filesystem\Filesystem;
 interface DownloadsZipFile
 {
     public function archive(RepositoryName $repository, Branch $branch, Filesystem $filesystem, string $zipPath): string;
+
     public function loadZipFile(RepositoryName $repository, Branch $branch): string;
 }

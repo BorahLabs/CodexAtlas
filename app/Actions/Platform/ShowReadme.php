@@ -11,7 +11,7 @@ class ShowReadme
 {
     use AsAction;
 
-    public function handle(Project $project, Repository $repository, Branch $branch)
+    public function handle(Project $project, Repository $repository, Branch $branch): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $file = GetReadme::make()->handle($repository, $branch);
 
@@ -24,7 +24,7 @@ class ShowReadme
         ]);
     }
 
-    public function asController(Project $project, Repository $repository, Branch $branch)
+    public function asController(Project $project, Repository $repository, Branch $branch): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return $this->handle($project, $repository, $branch);
     }

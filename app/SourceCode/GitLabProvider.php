@@ -20,7 +20,7 @@ use Gitlab\Exception\ApiLimitExceededException;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 
-class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider, RegistersWebhook, HandlesWebhook, DownloadsZipFile
+class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider, DownloadsZipFile, HandlesWebhook, RegistersWebhook
 {
     use LoadFilesFromS3;
 
@@ -60,6 +60,7 @@ class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider, 
         ], 'zip');
 
         $disk->put($zipPath, $response);
+
         return $zipPath;
     }
 
@@ -83,17 +84,17 @@ class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider, 
         return Gitlab\GetAccount::make()->handle($this->credentials());
     }
 
-    public function registerWebhook(RepositoryName $repository)
+    public function registerWebhook(RepositoryName $repository): mixed
     {
         return Gitlab\RegisterWebhook::make()->handle($this->credentials(), $repository);
     }
 
-    public function verifyIncomingWebhook(Request $request)
+    public function verifyIncomingWebhook(Request $request): mixed
     {
         return Gitlab\VerifyWebhook::make()->handle($this->credentials(), $request);
     }
 
-    public function handleIncomingWebhook(array $payload, Request $request)
+    public function handleIncomingWebhook(array $payload, Request $request): mixed
     {
         return Gitlab\HandleWebhook::make()->handle($this->credentials(), $payload, $request);
     }

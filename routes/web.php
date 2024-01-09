@@ -16,7 +16,6 @@ use App\Http\Controllers\AtlassianController;
 use App\Http\Middleware\ControlRequestsFromPlatform;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
-use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,56 +28,27 @@ use Laravel\Socialite\Facades\Socialite;
 |
 */
 
-Route::view('/', 'welcome')->name('homepage');
+Route::view('/', 'welcome')
+    ->middleware('central-domain')
+    ->name('homepage');
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::view('/dashboard', 'dashboard')->name('dashboard');
-    Route::post('/projects', StoreProject::class)->name('projects.store');
-    Route::get('/projects/{project}', ShowProject::class)->name('projects.show');
+    Route::middleware('team-domain')->group(function () {
+        Route::view('/dashboard', 'dashboard')->name('dashboard');
+        Route::post('/projects', StoreProject::class)->name('projects.store');
+        Route::get('/projects/{project}', ShowProject::class)->name('projects.show');
 
-    Route::post('/projects/{project}/repositories', StoreRepository::class)->name('repositories.store');
+        Route::post('/projects/{project}/repositories', StoreRepository::class)->name('repositories.store');
+    });
 
     Route::post('/accounts/pat', StoreAccountPersonalAccessToken::class)->name('source-code-accounts.pat.store');
     Route::prefix('github')->group(function () {
         Route::get('redirect', fn () => redirect()->to('https://github.com/apps/codexatlas/installations/select_target'))->name('github.redirect');
-        Route::get('installation', HandleGithubInstallation::class)->middleware('throttle:3,1');
-
-        Route::get('webhook', function () {
-            logger(request()->all());
-
-            return response()->json([
-                'message' => 'ok',
-            ]);
-        });
-    });
-
-    Route::prefix('gitlab')->group(function () {
-        Route::get('webhook', function () {
-            logger(request()->all());
-
-            return response()->json([
-                'message' => 'ok',
-            ]);
-        });
-    });
-
-    Route::prefix('bitbucket')->group(function () {
-        Route::get('redirect', function () {
-            return Socialite::driver('bitbucket')->redirect();
-        })->name('bitbucket.redirect');
-        Route::get('test/webhook', RegisterWebhook::class);
-
-        Route::get('webhook', function () {
-            logger(request()->all());
-
-            return response()->json([
-                'message' => 'ok',
-            ]);
-        });
+        Route::get('installation', HandleGithubInstallation::class)->name('github.installation')->middleware('throttle:3,1');
     });
 
     Route::prefix('atlassian')->group(function () {
@@ -121,3 +91,7 @@ Route::middleware(ControlRequestsFromPlatform::class)->group(function () {
 
 
 Route::get('testing/confluence', [ConfluenceContentPlatform::class, 'testingAll'])->name('testing.confluence');
+Route::any('/secret-auth', function () {
+    abort_unless(config('app.password_protected.enabled'), 404);
+    return view('password-protection');
+})->name('password-protected')->middleware('throttle:5,1');

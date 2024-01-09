@@ -23,7 +23,7 @@ class SourceCodeAccount extends Model
         'access_token' => 'encrypted',
     ];
 
-    public static function booted()
+    public static function booted(): void
     {
         parent::booted();
         static::addGlobalScope('withoutLocal', fn (Builder $query) => $query->where('provider', '!=', SourceCodeProvider::LocalFolder));
