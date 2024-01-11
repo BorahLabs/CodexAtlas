@@ -8,7 +8,7 @@ use App\SourceCode\DTO\File;
 
 abstract class Llm
 {
-    abstract public function completion(string $systemPrompt, string $userPrompt): CompletionResponse;
+    abstract public function completion(string $systemPrompt, string $userPrompt, string $projectName, File $file): CompletionResponse;
 
     abstract public function embed(string ...$texts): array;
 
@@ -23,6 +23,6 @@ abstract class Llm
         $system = $this->fileDescriptionSystemPrompt($project, $file);
         $user = $this->fileDescriptionUserPrompt($project, $file);
 
-        return $this->completion($system, $user);
+        return $this->completion($system, $user, $project->name, $file);
     }
 }

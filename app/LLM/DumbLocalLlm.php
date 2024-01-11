@@ -9,7 +9,7 @@ use App\SourceCode\DTO\File;
 
 class DumbLocalLlm extends Llm
 {
-    public function completion(string $systemPrompt, string $userPrompt): CompletionResponse
+    public function completion(string $systemPrompt, string $userPrompt, string $projectName, File $file): CompletionResponse
     {
         return new CompletionResponse(
             completion: "## TLDR\nThis is a test generation without using AI.\n\nIf you're seeing this, it means it worked!",

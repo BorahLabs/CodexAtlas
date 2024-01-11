@@ -61,32 +61,53 @@ Some rules:
         return config('services.openai.completion_model');
     }
 
-    public function completion(string $systemPrompt, string $userPrompt): CompletionResponse
+    public function completion(string $systemPrompt, string $userPrompt, string $projectName, File $file): CompletionResponse
     {
         $start = intval(microtime(true) * 1000);
         // wrapping on a retry function to avoid the limit per minute error
-        $response = retry(3, fn () => $this->client()->chat()->create([
-            'model' => $this->modelName(),
-            'messages' => [
-                [
-                    'role' => 'system',
-                    'content' => $systemPrompt,
-                ],
-                [
-                    'role' => 'user',
-                    'content' => $userPrompt,
-                ],
-            ],
-            'stop' => ['-----', "\nEND"],
-        ]), 61500);
+        // TODO: manejar cuando excede de tokens y dividir recursivamente
+        // El create se tiene que hacer en otro método. Ese método si da error se dividirá la info que se envía por la mitad
+        // y se volverá a llamar asi recursivamente hasta obtener todo el response. De alguna manera tendremos un array o
+        // collection con todos esos textos y los concatenamos
+        $responses = $this->generateResponse($systemPrompt, $projectName, $file->path, $file->extension(), $file->contents());
+
+        $result = [];
+        if(is_array($responses)){
+            collect($responses)->each(function($item) use (&$result){
+                $result['message'] += $item->choices[0]->message->content . "\n";
+                $result['inputTokens'] += $item->usage->promptTokens;
+                $result['outputTokens'] += $item->usage->completionTokens;
+                $result['totalTokens'] += $item->usage->totalTokens;
+            });
+        } else{
+            $result['message'] = $responses->choices[0]->message->content;
+            $result['inputTokens'] = $responses->usage->promptTokens;
+            $result['outputTokens'] = $responses->usage->completionTokens;
+            $result['totalTokens'] = $responses->usage->totalTokens;
+        }
+
+        // $response = retry(3, fn () => $this->client()->chat()->create([
+        //     'model' => $this->modelName(),
+        //     'messages' => [
+        //         [
+        //             'role' => 'system',
+        //             'content' => $systemPrompt,
+        //         ],
+        //         [
+        //             'role' => 'user',
+        //             'content' => $userPrompt,
+        //         ],
+        //     ],
+        //     'stop' => ['-----', "\nEND"],
+        // ]), 61500);
         $end = intval(microtime(true) * 1000);
 
         return CompletionResponse::make(
-            completion: $response->choices[0]->message->content,
+            completion: $result['message'],
             processingTimeMilliseconds: $end - $start,
-            inputTokens: $response->usage->promptTokens,
-            outputTokens: $response->usage->completionTokens,
-            totalTokens: $response->usage->totalTokens,
+            inputTokens: $result['promptTokens'],
+            outputTokens: $result['outputTokens'],
+            totalTokens: $result['totalTokens'],
         );
     }
 
@@ -98,6 +119,7 @@ Some rules:
         ]);
 
         return collect($response->embeddings)
+
             ->map(fn (mixed $item) => $item->embeddings)
             ->toArray();
     }
@@ -125,5 +147,62 @@ Some rules:
         return (new \OpenAI\Factory())
             ->withApiKey($key ?? $this->key ?? config('openai.api_key'))
             ->make();
+    }
+
+    public function generateResponse(string $systemPrompt, string $project, string $filePath, string $fileExtension, string $fileContents)
+    {
+        try {
+            $userPrompt = $this->getDescriptionUserPromt($project, $filePath, $fileExtension, $fileContents);
+
+            $response = retry(3, fn () => $this->client()->chat()->create([
+                'model' => $this->modelName(),
+                'messages' => [
+                    [
+                        'role' => 'system',
+                        'content' => $systemPrompt,
+                    ],
+                    [
+                        'role' => 'user',
+                        'content' => $userPrompt,
+                    ],
+                ],
+                'stop' => ['-----', "\nEND"],
+            ]), 61500);
+
+            return $response;
+        } catch (\Exception $e) {
+            // Si hay un error, verifica si es un error de límite de tokens
+            if (str_contains($e->getMessage(), 'usage')) {
+                // Divide el texto y llama recursivamente al método
+                $fileContentParts = $this->fileSeparatedDescriptionUserPrompt($fileContents);
+
+                $results = [];
+                foreach ($fileContentParts as $part) {
+                    $result = $this->generateResponse($systemPrompt, $project, $filePath, $fileExtension, $part);
+                    $results[] = $result;
+                }
+
+                return $results;
+            }
+
+            return ['error' => 'No se pudo procesar el texto.'];
+        }
+    }
+
+    public function fileSeparatedDescriptionUserPrompt(string $fileContents): array
+    {
+        $half = strlen($fileContents) / 2;
+        $part1 = substr($fileContents, 0, $half);
+        $part2 = substr($fileContents, $half);
+
+        return [$part1, $part2];
+    }
+
+    public function getDescriptionUserPromt(string $projectName, string $filePath, string $fileExtension, string $fileContents): string
+    {
+        return 'You are writing documentation for a file in the '.$projectName.' project. The file is located at '.$filePath.'. These are the file contents:
+            ```'.$fileExtension.'
+            '.$fileContents.'
+            ```';
     }
 }
