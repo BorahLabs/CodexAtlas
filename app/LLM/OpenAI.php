@@ -15,36 +15,26 @@ class OpenAI extends Llm implements HasApiKey
 
     public function fileDescriptionSystemPrompt(Project $project, File $file): string
     {
-        return 'You are an expert in writing software documentation. Write a short description of the provided file with the following structure:
+        return 'You are an expert in writing software documentation. Generate a json with a short description of the provided file with the following structure:
 
-## TLDR
-[General overview of what the file does]
-
-## Methods (if applicable)
-### `method1Name`
-[Description of what the method 1 does in the code]
-
-### `method2Name`
-[Description of what the method 2 does in the code]
-
-### `methodNName`
-[Description of what the method n does in the code]
-
-## Classes (if applicable)
-### Class 1 name
-[Description of what the class 1 does in the code]
-
-### Class 2 name
-[Description of what the class 2 does in the code]
-
-### Class n name
-[Description of what the class n does in the code]
+        {
+            "tldr": "General overview of what the file does",
+            "methods": {
+                "method1Name": "Description of what the method 1 does in the code",
+                "method2Name": "Description of what the method 2 does in the code",
+                "methodNName": "Description of what the method n does in the code"
+            },
+            "classes": {
+                "class1Name": "Description of what the class 1 does in the code",
+                "class2Name": "Description of what the class 2 does in the code",
+                "classNName": "Description of what the class n does in the code"
+            }
+        }
 
 Some rules:
 
-- Format the output using Markdown. Feel free to add bold, italic or even tables if you need them
+- Format the output and give me a json not an string
 - Do not output the original file
-- Finish the documentation by writing "END" in a new line
 - If there are no methods or no classes, please do not include the section in the output';
     }
 
@@ -75,14 +65,19 @@ Some rules:
         if(is_array($responses)){
             collect($responses)->each(function($item, $key) use (&$result){
                 logger('ITEM EN BUCLE DE IS ARRAY: ' . $key);
-                $result['message'] = isset($result['message']) ? $result['message'] . $item->choices[0]->message->content . "\n" : $item->choices[0]->message->content . "\n";
+
+                // TODO: Ahora es un json y vendrán muchos por lo que hay que unirlos en uno solo
+                // Los tldrs se unen las strings
+                // Los methods y classes hay que añadir en solo uno las keys y su texto
+                $result = $this->linkJsonMessageContent($result, $item);
+
                 $result['inputTokens'] = isset($result['inputTokens']) ? $result['inputTokens'] + $item->usage->promptTokens : $item->usage->promptTokens;
                 $result['outputTokens'] = isset($result['outputTokens']) ? $result['outputTokens'] + $item->usage->completionTokens : $item->usage->completionTokens;
                 $result['totalTokens'] = isset($result['totalTokens']) ? $result['totalTokens'] + $item->usage->totalTokens : $item->usage->totalTokens;
             });
         } else{
             logger('ITEM FUERA DE BUCLE: ');
-            $result['message'] = $responses->choices[0]->message->content;
+            $result = $this->linkJsonMessageContent($result, $responses);
             $result['inputTokens'] = $responses->usage->promptTokens;
             $result['outputTokens'] = $responses->usage->completionTokens;
             $result['totalTokens'] = $responses->usage->totalTokens;
@@ -168,7 +163,7 @@ Some rules:
                         'content' => $userPrompt,
                     ],
                 ],
-                'stop' => ['-----', "\nEND"],
+                'stop' => [],
             ]), 61500);
 
             return $response;
@@ -207,5 +202,22 @@ Some rules:
             ```'.$fileExtension.'
             '.$fileContents.'
             ```';
+    }
+
+    private function linkJsonMessageContent($result, $data)
+    {
+        $content = json_decode($data->choices[0]->message->content, true);
+
+        $result['message'] = $result['message'] ?? [];
+
+        $result['message']['tldr'] = isset($result['message']['tldr']) ? $result['message']['tldr'] . ' ' . $content['tldr'] : $content['tldr'];
+
+        $result['message']['methods'] = $result['message']['methods'] ?? [];
+        $result['message']['classes'] = $result['message']['classes'] ?? [];
+
+        array_merge($result['message']['methods'], $content['methods']);
+        array_merge($result['message']['classes'], $content['classes']);
+
+        return $result;
     }
 }

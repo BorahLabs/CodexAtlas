@@ -18,6 +18,7 @@ class SystemComponent extends Model
 
     protected $casts = [
         'status' => SystemComponentStatus::class,
+        'json_docs' => 'array',
         // 'file_contents' => 'encrypted',
     ];
 

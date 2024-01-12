@@ -53,7 +53,7 @@ class ProcessSystemComponent
 
             if ($existingFile) {
                 $completion = new CompletionResponse(
-                    completion: $existingFile->markdown_docs,
+                    completion: $existingFile->markdown_docs ?? $existingFile->json_docs,
                     processingTimeMilliseconds: 0,
                     inputTokens: 0,
                     outputTokens: 0,
@@ -70,12 +70,13 @@ class ProcessSystemComponent
                 'sha' => $file->sha,
                 'path' => $file->path,
                 'file_contents' => $team->stores_code ? $file->contents() : null,
-                'markdown_docs' => $this->formatExplanation($completion->completion, $file->path),
+                // 'markdown_docs' => $this->formatExplanation($completion->completion, $file->path),
+                'json_docs' => $completion->completion,
                 'status' => SystemComponentStatus::Generated,
             ]);
 
             // TODO: Controlar update y create para los platform
-            SynchronizeSystemComponent::make()->handle($systemComponent);
+            // SynchronizeSystemComponent::make()->handle($systemComponent);
 
             ProcessingLogEntry::write($branch, $file->path, class_basename($llm), $llm->modelName(), $completion);
         } catch (\App\Exceptions\ExceededProviderRateLimit $e) {
