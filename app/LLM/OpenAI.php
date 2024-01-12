@@ -73,13 +73,15 @@ Some rules:
 
         $result = [];
         if(is_array($responses)){
-            collect($responses)->each(function($item) use (&$result){
-                $result['message'] += $item->choices[0]->message->content . "\n";
-                $result['inputTokens'] += $item->usage->promptTokens;
-                $result['outputTokens'] += $item->usage->completionTokens;
-                $result['totalTokens'] += $item->usage->totalTokens;
+            collect($responses)->each(function($item, $key) use (&$result){
+                logger('ITEM EN BUCLE DE IS ARRAY: ' . $key);
+                $result['message'] = isset($result['message']) ? $result['message'] . $item->choices[0]->message->content . "\n" : $item->choices[0]->message->content . "\n";
+                $result['inputTokens'] = isset($result['inputTokens']) ? $result['inputTokens'] + $item->usage->promptTokens : $item->usage->promptTokens;
+                $result['outputTokens'] = isset($result['outputTokens']) ? $result['outputTokens'] + $item->usage->completionTokens : $item->usage->completionTokens;
+                $result['totalTokens'] = isset($result['totalTokens']) ? $result['totalTokens'] + $item->usage->totalTokens : $item->usage->totalTokens;
             });
         } else{
+            logger('ITEM FUERA DE BUCLE: ');
             $result['message'] = $responses->choices[0]->message->content;
             $result['inputTokens'] = $responses->usage->promptTokens;
             $result['outputTokens'] = $responses->usage->completionTokens;
@@ -105,7 +107,7 @@ Some rules:
         return CompletionResponse::make(
             completion: $result['message'],
             processingTimeMilliseconds: $end - $start,
-            inputTokens: $result['promptTokens'],
+            inputTokens: $result['inputTokens'],
             outputTokens: $result['outputTokens'],
             totalTokens: $result['totalTokens'],
         );
@@ -172,18 +174,19 @@ Some rules:
             return $response;
         } catch (\Exception $e) {
             // Si hay un error, verifica si es un error de límite de tokens
-            if (str_contains($e->getMessage(), 'usage')) {
+            if (str_contains($e->getMessage(), "This model's maximum context length")) {
                 // Divide el texto y llama recursivamente al método
-                $fileContentParts = $this->fileSeparatedDescriptionUserPrompt($fileContents);
-
-                $results = [];
-                foreach ($fileContentParts as $part) {
-                    $result = $this->generateResponse($systemPrompt, $project, $filePath, $fileExtension, $part);
-                    $results[] = $result;
-                }
-
-                return $results;
+                logger('ENTRE EN EL IF DEL STR_CONTAINS');
             }
+            $fileContentParts = $this->fileSeparatedDescriptionUserPrompt($fileContents);
+
+            $results = [];
+            foreach ($fileContentParts as $part) {
+                $result = $this->generateResponse($systemPrompt, $project, $filePath, $fileExtension, $part);
+                $results[] = $result;
+            }
+
+            return $results;
 
             return ['error' => 'No se pudo procesar el texto.'];
         }
