@@ -1,15 +1,5 @@
 <?php
 
-// $request->validate([
-//     'name' => 'required|string|max:255',
-// ]);
-
-// Gate::authorize('create-project');
-
-// $project = $this->handle($request->user()->currentTeam, $request->input('name'));
-// return redirect()->route('projects.show', ['project' => $project]);
-
-use App\Actions\Twist\SendMessageToTwistThread;
 use App\Models\User;
 use Illuminate\Support\Facades\Queue;
 
@@ -41,7 +31,6 @@ it('can create a project', function (User $user) {
 
     expect($user->currentTeam->projects()->count())->toBe(1);
     expect($user->currentTeam->projects()->first()->name)->toBe('Test project');
-    SendMessageToTwistThread::assertPushed();
 })->with([
     fn () => User::factory()->inFreeTrialMode()->create(),
     fn () => User::factory()->inPayAsYouGoMode()->create(),

@@ -2,7 +2,6 @@
 
 namespace App\Actions\Platform\Projects;
 
-use App\Actions\Twist\SendMessageToTwistThread;
 use App\Models\Project;
 use App\Models\Team;
 use Illuminate\Http\Request;
@@ -18,8 +17,6 @@ class StoreProject
         $project = $team->projects()->create([
             'name' => $name,
         ]);
-
-        SendMessageToTwistThread::dispatch(config('services.twist.nice_thread'), '🤩 New project created! '.$project->name.' by '.$team->name);
 
         return $project;
     }
