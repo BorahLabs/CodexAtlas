@@ -9,6 +9,7 @@ use App\Actions\Platform\ShowDocs;
 use App\Actions\Platform\ShowReadme;
 use App\Actions\Platform\SourceCodeAccounts\StoreAccountPersonalAccessToken;
 use App\Actions\Platform\Webhook\HandleWebhook;
+use App\Http\Controllers\Website\GuideController;
 use App\Http\Middleware\ControlRequestsFromPlatform;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
@@ -24,9 +25,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'welcome')
-    ->middleware('central-domain')
-    ->name('homepage');
+Route::middleware('central-domain')->group(function () {
+    Route::view('/', 'welcome')->name('homepage');
+    Route::get('/guide', [GuideController::class, 'index'])->name('guide.index');
+    Route::get('/guide/{folder}/{file}', [GuideController::class, 'show'])->name('guide.show');
+});
 
 Route::middleware([
     'auth:sanctum',
