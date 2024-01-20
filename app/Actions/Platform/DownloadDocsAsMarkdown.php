@@ -3,6 +3,7 @@
 namespace App\Actions\Platform;
 
 use App\Models\Branch;
+use App\Models\CustomGuide;
 use App\Models\Project;
 use App\Models\Repository;
 use App\Models\SystemComponent;
@@ -30,6 +31,9 @@ class DownloadDocsAsMarkdown
         $branch
             ->systemComponents()
             ->each(fn (SystemComponent $systemComponent) => $zip->addFromString($systemComponent->path.'.md', $systemComponent->content));
+
+        $branch->customGuides()
+            ->each(fn (CustomGuide $customGuide) => $zip->addFromString(str(basename($customGuide->title))->slug()->append('.md')->prepend('custom-guides/')->toString(), $customGuide->content));
 
         $zip->close();
 

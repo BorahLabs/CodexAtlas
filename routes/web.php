@@ -2,6 +2,8 @@
 
 use App\Actions\Github\Auth\HandleGithubInstallation;
 use App\Actions\Platform\DownloadDocsAsMarkdown;
+use App\Actions\Platform\Guides\ShowGuide;
+use App\Actions\Platform\Guides\ShowNewGuide;
 use App\Actions\Platform\Projects\ShowProject;
 use App\Actions\Platform\Projects\StoreProject;
 use App\Actions\Platform\Repositories\StoreRepository;
@@ -60,6 +62,12 @@ Route::middleware(ControlRequestsFromPlatform::class)->group(function () {
     Route::get('/docs/{project}/{repository}/{branch}/download', DownloadDocsAsMarkdown::class)
         ->scopeBindings()
         ->name('docs.download');
+    Route::get('/docs/{project}/{repository}/{branch}/guides/new', ShowNewGuide::class)
+        ->scopeBindings()
+        ->name('docs.guides.new');
+    Route::get('/docs/{project}/{repository}/{branch}/guides/{customGuide}', ShowGuide::class)
+        ->scopeBindings()
+        ->name('docs.guides.show');
     Route::get('/docs/{project}/{repository}/{branch}/readme', ShowReadme::class)
         ->scopeBindings()
         ->name('docs.show-readme');
