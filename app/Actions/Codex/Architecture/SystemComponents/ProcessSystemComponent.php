@@ -2,7 +2,6 @@
 
 namespace App\Actions\Codex\Architecture\SystemComponents;
 
-use App\Actions\Twist\SendMessageToTwistThread;
 use App\Enums\SystemComponentStatus;
 use App\LLM\Contracts\Llm;
 use App\LLM\DTO\CompletionResponse;
@@ -76,11 +75,9 @@ class ProcessSystemComponent
             ProcessingLogEntry::write($branch, $file->path, class_basename($llm), $llm->modelName(), $completion);
         } catch (\App\Exceptions\ExceededProviderRateLimit $e) {
             logger($e);
-            SendMessageToTwistThread::dispatch(config('services.twist.bad_thread'), '🤬 Exceeded rate limit for '.$provider->name().' on file '.$file->path.' on branch '.$branch->id);
             ProcessSystemComponent::dispatch($branch, $file, $order)
                 ->delay($e->retryInSeconds + 10);
         } catch (\Exception $e) {
-            SendMessageToTwistThread::dispatch(config('services.twist.bad_thread'), '🚨 [ERROR] '.$e->getMessage()."\nMetadata: ".json_encode(['file' => $file->path, 'branch' => $branch->id]));
             logger()->error($e->getMessage(), [
                 'file' => $file->path,
                 'branch' => $branch->id,
