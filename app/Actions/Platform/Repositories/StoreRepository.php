@@ -2,6 +2,7 @@
 
 namespace App\Actions\Platform\Repositories;
 
+use App\Actions\Twist\SendMessageToTwistThread;
 use App\Models\Project;
 use App\Models\Repository;
 use App\SourceCode\Contracts\RegistersWebhook;
@@ -74,6 +75,8 @@ class StoreRepository
                 ]));
 
         }
+
+        SendMessageToTwistThread::dispatch(config('services.twist.nice_thread'), '🌱 New repository added! '.$repo->fullName.' in project '.$project->name);
 
         return $repository;
     }
