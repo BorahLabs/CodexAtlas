@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e3388aaa6d8065b7e109ff9645e6fe29",
+    "content-hash": "9f60c711da745c56dd92464050ea710e",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -291,6 +291,84 @@
                 }
             ],
             "time": "2023-12-03T22:53:35+00:00"
+        },
+        {
+            "name": "borah/knowledge-base-laravel",
+            "version": "v0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BorahLabs/Knowledge-Base-Laravel.git",
+                "reference": "c78371ea118396a276f7c6104402f6f2a92cf421"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BorahLabs/Knowledge-Base-Laravel/zipball/c78371ea118396a276f7c6104402f6f2a92cf421",
+                "reference": "c78371ea118396a276f7c6104402f6f2a92cf421",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^10.0",
+                "php": "^8.1",
+                "spatie/laravel-package-tools": "^1.14.0"
+            },
+            "require-dev": {
+                "larastan/larastan": "^2.0.1",
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^7.8",
+                "orchestra/testbench": "^8.8",
+                "pestphp/pest": "^2.20",
+                "pestphp/pest-plugin-arch": "^2.0",
+                "pestphp/pest-plugin-laravel": "^2.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Borah\\KnowledgeBase\\KnowledgeBaseServiceProvider"
+                    ],
+                    "aliases": {
+                        "KnowledgeBase": "Borah\\KnowledgeBase\\Facades\\KnowledgeBase"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Borah\\KnowledgeBase\\": "src/",
+                    "Borah\\KnowledgeBase\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raúl López",
+                    "email": "hi@raullg.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel wrapper for the Knowledge-Base API",
+            "homepage": "https://github.com/rulilg/knowledge-base-laravel",
+            "keywords": [
+                "Borah",
+                "knowledge-base-laravel",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/BorahLabs/Knowledge-Base-Laravel/issues",
+                "source": "https://github.com/BorahLabs/Knowledge-Base-Laravel/tree/v0.4"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/BorahLabs",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-01-03T14:11:14+00:00"
         },
         {
             "name": "brick/math",
@@ -6770,6 +6848,66 @@
                 "source": "https://github.com/sabberworm/PHP-CSS-Parser/tree/8.4.0"
             },
             "time": "2021-12-11T13:40:54+00:00"
+        },
+        {
+            "name": "spatie/laravel-package-tools",
+            "version": "1.16.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-package-tools.git",
+                "reference": "e62eeb1fe8a8a0b2e83227a6c279c8c59f7d3a15"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/e62eeb1fe8a8a0b2e83227a6c279c8c59f7d3a15",
+                "reference": "e62eeb1fe8a8a0b2e83227a6c279c8c59f7d3a15",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^9.28|^10.0|^11.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.5",
+                "orchestra/testbench": "^7.7|^8.0",
+                "pestphp/pest": "^1.22",
+                "phpunit/phpunit": "^9.5.24",
+                "spatie/pest-plugin-test-time": "^1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\LaravelPackageTools\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Tools for creating Laravel packages",
+            "homepage": "https://github.com/spatie/laravel-package-tools",
+            "keywords": [
+                "laravel-package-tools",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-package-tools/issues",
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.16.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-01-11T08:43:00+00:00"
         },
         {
             "name": "stripe/stripe-php",
