@@ -7,15 +7,18 @@
                 'repository' => $repository,
                 'branch' => $branch,
                 'customGuide' => $customGuide,
-            ])">Edit guide</x-button>
+            ])">
+                Edit guide
+            </x-button>
         @endcan
         @can('delete', $customGuide)
             <form method="POST"
                 action="{{ route('docs.guides.destroy', ['project' => $project, 'repository' => $repository, 'branch' => $branch, 'customGuide' => $customGuide]) }}"
                 x-data x-on:submit="confirm('Are you sure? This action cannot be undone') || $event.preventDefault()">
                 @csrf
-                <x-danger-button type="submit">Delete
-                    guide</x-danger-button>
+                <x-danger-button type="submit">
+                    Delete guide
+                </x-danger-button>
             </form>
         @endcan
     </div>
