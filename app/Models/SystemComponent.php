@@ -15,10 +15,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SystemComponent extends Model implements Embeddable
 {
+    use BelongsToKnowledgeBase;
     use HasFactory;
     use HasUuids;
     use SoftDeletes;
-    use BelongsToKnowledgeBase;
 
     protected $casts = [
         'status' => SystemComponentStatus::class,

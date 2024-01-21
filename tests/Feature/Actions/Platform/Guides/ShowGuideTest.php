@@ -2,7 +2,6 @@
 
 use App\Models\CustomGuide;
 use App\Models\User;
-use Illuminate\Support\Str;
 
 it('cannot see the guide page if not logged in', function () {
     $user = User::factory()->inFreeTrialMode()->create();

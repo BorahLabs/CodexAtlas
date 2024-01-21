@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Team;
 use App\Models\User;
 use Laravel\Jetstream\Http\Livewire\CreateTeamForm;
 use Livewire\Livewire;

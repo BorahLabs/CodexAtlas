@@ -11,9 +11,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BranchDocument extends Model
 {
+    use BelongsToKnowledgeBase;
     use HasFactory;
     use HasUuids;
-    use BelongsToKnowledgeBase;
 
     public function branch(): BelongsTo
     {

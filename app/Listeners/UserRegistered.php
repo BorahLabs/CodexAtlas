@@ -2,7 +2,6 @@
 
 namespace App\Listeners;
 
-
 class UserRegistered
 {
     /**

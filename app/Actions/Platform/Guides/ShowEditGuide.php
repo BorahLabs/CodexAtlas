@@ -17,6 +17,7 @@ class ShowEditGuide
     public function handle(User $user, Project $project, Repository $repository, Branch $branch, CustomGuide $customGuide): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         abort_unless($user->can('update', $customGuide), 403);
+
         return view('guides.edit-guide', [
             'project' => $project,
             'repository' => $repository,

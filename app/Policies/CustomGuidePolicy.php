@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Models\CustomGuide;
 use App\Models\Platform;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class CustomGuidePolicy
 {
@@ -24,6 +23,7 @@ class CustomGuidePolicy
     {
         $team = $customGuide->branch->repository->project->team;
         $platform = $team->currentPlatform();
+
         return $platform->is_public || $user?->belongsToTeam($team) ?? false;
     }
 

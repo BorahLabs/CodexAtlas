@@ -28,13 +28,13 @@ class GenerateAnswer
          */
         $llm = app(Llm::class);
         $response = $llm->completion(
-            systemPrompt: "You are an expert in generating readable, useful code documentation. You will receive a question from a user, and you will return a Markdown-formatted document with the answer to the question. To help you, we will provide you some context about the project and the potentially relevant files.
+            systemPrompt: 'You are an expert in generating readable, useful code documentation. You will receive a question from a user, and you will return a Markdown-formatted document with the answer to the question. To help you, we will provide you some context about the project and the potentially relevant files.
 
 Some rules:
 - Reply with just the markdown document, nothing else
 - If you do not know the answer, reply with the word `UNKNOWN` and NOTHING ELSE
 - You can only use information from the files provided in the context
-- Start the document with a nice title regarding the question. For example, if the question is `How do I create a new user?`, the title could be `# Creating a new user`",
+- Start the document with a nice title regarding the question. For example, if the question is `How do I create a new user?`, the title could be `# Creating a new user`',
             userPrompt: '- Question: '.$question."\n- Context: ".$components->map(fn ($component) => 'File: '.$component->path."\n".$component->content)->join("\n\n#####\n\n")."\n\n- Answer:",
         );
 

@@ -1,7 +1,6 @@
 <?php
 
 use App\Atlas\Frameworks\GeneralFramework;
-use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
 
 it('has the right name', function () {

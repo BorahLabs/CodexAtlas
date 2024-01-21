@@ -16,10 +16,10 @@ class DocsLayout extends Component
         public readonly Repository $repository,
         public readonly Branch $branch,
         public readonly ?Carbon $lastModifiedAt = null,
-    )
-    {
+    ) {
         //
     }
+
     /**
      * Get the view / contents that represents the component.
      */

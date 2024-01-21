@@ -46,7 +46,8 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function createLaravelProject(Team $team) {
+function createLaravelProject(Team $team)
+{
     $project = Project::factory()->create([
         'team_id' => $team->id,
     ]);

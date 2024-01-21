@@ -1,9 +1,7 @@
 <?php
 
-use App\Livewire\Alexandria\PageSetup;
 use App\Models\CustomGuide;
 use App\Models\User;
-use Livewire\Livewire;
 
 it('cannot delete a guide page if not logged in', function () {
     $user = User::factory()->inFreeTrialMode()->create();

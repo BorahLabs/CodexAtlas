@@ -18,6 +18,7 @@ class DeleteGuide
     {
         abort_unless($user->can('delete', $customGuide), 403);
         $customGuide->delete();
+
         return redirect()->route('docs.show', [
             'project' => $project,
             'repository' => $repository,
