@@ -14,6 +14,11 @@ it('cannot delete a guide page if not logged in', function () {
         ->post($platform->route('docs.guides.destroy', ['project' => $project, 'repository' => $repository, 'branch' => $branch, 'customGuide' => $customGuide]))
         ->assertStatus(302) // is 302 because of the applied middleware before the action
         ->assertRedirect($platform->route('login'));
+
+    $platform->update(['is_public' => true]);
+    $this
+        ->post($platform->route('docs.guides.destroy', ['project' => $project, 'repository' => $repository, 'branch' => $branch, 'customGuide' => $customGuide]))
+        ->assertNotFound();
 });
 
 it('cannot delete a guide if user belongs to a different team', function () {
