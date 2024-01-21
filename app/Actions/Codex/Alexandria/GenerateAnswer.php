@@ -35,7 +35,7 @@ Some rules:
 - If you do not know the answer, reply with the word `UNKNOWN` and NOTHING ELSE
 - You can only use information from the files provided in the context
 - Start the document with a nice title regarding the question. For example, if the question is `How do I create a new user?`, the title could be `# Creating a new user`',
-            userPrompt: '- Question: '.$question."\n- Context: ".$components->map(fn ($component) => 'File: '.$component->path."\n".$component->content)->join("\n\n#####\n\n")."\n\n- Answer:",
+            userPrompt: '- Question: '.$question."\n- Context: ".$components->map(fn (SystemComponent|BranchDocument $component) => 'File: '.$component->path."\n".$component->content)->join("\n\n#####\n\n")."\n\n- Answer:",
         );
 
         if ($response->completion === 'UNKNOWN') {
