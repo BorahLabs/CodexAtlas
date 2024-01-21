@@ -18,7 +18,7 @@ class PageSetup extends Component
     public ?CustomGuide $customGuide = null;
 
     public bool $questionDriven = true;
-    public string $question = '';
+    public ?string $question = '';
     public string $title = '';
     public string $content = '';
 
