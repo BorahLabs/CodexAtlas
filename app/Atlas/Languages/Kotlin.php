@@ -19,7 +19,6 @@ class Kotlin implements Language
 
     public function isOwnFile(File $file): bool
     {
-        // TODO:
         $path = mb_strtolower($file->path);
 
         return str_ends_with($path, '.ktl');

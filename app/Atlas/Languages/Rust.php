@@ -19,7 +19,6 @@ class Rust implements Language
 
     public function isOwnFile(File $file): bool
     {
-        // TODO:
         return str_ends_with(mb_strtolower($file->path), '.rust');
     }
 }

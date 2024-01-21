@@ -21,6 +21,6 @@ class Node implements Language
     {
         $path = mb_strtolower($file->path);
 
-        return str_ends_with($path, '.js');
+        return str_ends_with($path, '.js') || str_ends_with($path, '.ts');
     }
 }

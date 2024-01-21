@@ -19,7 +19,11 @@ test('teams cannot be created in free mode', function () {
 test('user can own maximum 1 team in free mode', function (User $user) {
     $this->actingAs($user);
     $this->get(route('teams.create'))->assertStatus(200);
-    Team::factory()->create(['user_id' => $user->id]);
+
+    Livewire::test(CreateTeamForm::class)
+        ->set(['state' => ['name' => 'Test Team']])
+        ->call('createTeam');
+
     expect($user->fresh()->ownedTeams)->toHaveCount(2);
     $this->actingAs($user->fresh())->get(route('teams.create'))->assertStatus(403);
 })->with([
