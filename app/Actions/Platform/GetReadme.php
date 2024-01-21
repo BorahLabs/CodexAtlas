@@ -24,7 +24,10 @@ class GetReadme
                     branch: $branch->dto(),
                     path: 'README.md',
                 );
-
+                $branch->branchDocuments()->updateOrCreate(
+                    ['path' => 'README.md'],
+                    ['name' => 'README.md', 'content' => $file->contents()]
+                );
                 Cache::put($key, $file, now()->addMinutes(30));
             } catch (\Exception $e) {
                 $file = null;

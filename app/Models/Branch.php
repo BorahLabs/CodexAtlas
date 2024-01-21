@@ -41,6 +41,11 @@ class Branch extends Model
             ->orderBy('title', 'ASC');
     }
 
+    public function branchDocuments(): HasMany
+    {
+        return $this->hasMany(BranchDocument::class);
+    }
+
     public function dto(): DTOBranch
     {
         return new DTOBranch(
