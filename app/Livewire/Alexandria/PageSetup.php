@@ -49,7 +49,7 @@ class PageSetup extends Component
         }
     }
 
-    public function submit(): \Illuminate\Http\RedirectResponse
+    public function submit(): \Livewire\Features\SupportRedirects\Redirector
     {
         $this->validate([
             'title' => 'required|string|max:512',
