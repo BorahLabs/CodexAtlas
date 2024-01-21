@@ -30,6 +30,8 @@ class Nuxt extends Framework
             '*.js',
             '*.jsx',
             '*.tsx',
+            '*.css',
+            '*.scss',
         ];
     }
 
