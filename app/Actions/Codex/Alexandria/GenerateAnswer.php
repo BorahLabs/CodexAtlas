@@ -15,8 +15,6 @@ class GenerateAnswer
 {
     use AsAction;
 
-    public string $commandSignature = 'alexandria:answer {question} {branch}';
-
     public function handle(string $question, Branch $branch): ?GuidePage
     {
         $components = SystemComponent::searchInKnowledgeBase($question, k: 3, where: ['branch_id' => $branch->id])
@@ -48,12 +46,5 @@ Some rules:
             title: $title,
             content: $content,
         );
-    }
-
-    public function asCommand(Command $command): void
-    {
-        $branch = Branch::findOrFail($command->argument('branch'));
-        $response = $this->handle($command->argument('question'), $branch);
-        $command->info($response);
     }
 }
