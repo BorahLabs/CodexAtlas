@@ -20,11 +20,11 @@ class CustomGuidePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, CustomGuide $customGuide): bool
+    public function view(?User $user, CustomGuide $customGuide): bool
     {
         $team = $customGuide->branch->repository->project->team;
         $platform = $team->currentPlatform();
-        return $platform->is_public || $user->belongsToTeam($team);
+        return $platform->is_public || $user?->belongsToTeam($team) ?? false;
     }
 
     /**
@@ -43,7 +43,7 @@ class CustomGuidePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, CustomGuide $customGuide): bool
+    public function update(?User $user, CustomGuide $customGuide): bool
     {
         $platform = Platform::current();
         if (is_null($platform)) {

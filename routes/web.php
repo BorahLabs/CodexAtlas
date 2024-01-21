@@ -2,6 +2,7 @@
 
 use App\Actions\Github\Auth\HandleGithubInstallation;
 use App\Actions\Platform\DownloadDocsAsMarkdown;
+use App\Actions\Platform\Guides\ShowEditGuide;
 use App\Actions\Platform\Guides\ShowGuide;
 use App\Actions\Platform\Guides\ShowNewGuide;
 use App\Actions\Platform\Projects\ShowProject;
@@ -64,10 +65,14 @@ Route::middleware(ControlRequestsFromPlatform::class)->group(function () {
         ->name('docs.download');
     Route::get('/docs/{project}/{repository}/{branch}/guides/new', ShowNewGuide::class)
         ->scopeBindings()
-        ->middleware('can:create,App\Models\CustomGuide')
+        ->can('create', \App\Models\CustomGuide::class)
         ->name('docs.guides.new');
+    Route::get('/docs/{project}/{repository}/{branch}/guides/{customGuide}/edit', ShowEditGuide::class)
+        ->scopeBindings()
+        ->name('docs.guides.edit');
     Route::get('/docs/{project}/{repository}/{branch}/guides/{customGuide}', ShowGuide::class)
         ->scopeBindings()
+        ->can('view', 'customGuide')
         ->name('docs.guides.show');
     Route::get('/docs/{project}/{repository}/{branch}/readme', ShowReadme::class)
         ->scopeBindings()

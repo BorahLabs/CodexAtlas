@@ -1,6 +1,10 @@
 <div>
     <div class="prose">
-        <h1>Create a new guide</h1>
+        @if ($this->isEditing)
+            <h1>Edit guide</h1>
+        @else
+            <h1>Create a new guide</h1>
+        @endif
         <p>Guides are a great way to share knowledge with others. Even though AI is great, great documentation still
             needs a human touch.</p>
         <p>You can write a title and the guide on your own, or you can ask a question and let the AI write the guide for
