@@ -22,7 +22,7 @@ class PageSetup extends Component
     public string $title = '';
     public string $content = '';
 
-    public function mount()
+    public function mount(): void
     {
         if ($this->customGuide) {
             $this->question = $this->customGuide->question;
@@ -31,12 +31,12 @@ class PageSetup extends Component
         }
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('livewire.alexandria.page-setup');
     }
 
-    public function submitQuestion()
+    public function submitQuestion(): void
     {
         $this->validate([
             'question' => 'required|string|max:512',
@@ -49,7 +49,7 @@ class PageSetup extends Component
         }
     }
 
-    public function submit()
+    public function submit(): \Illuminate\Http\RedirectResponse
     {
         $this->validate([
             'title' => 'required|string|max:512',
@@ -80,7 +80,7 @@ class PageSetup extends Component
     }
 
     #[Computed]
-    public function isEditing()
+    public function isEditing(): bool
     {
         return ! is_null($this->customGuide);
     }

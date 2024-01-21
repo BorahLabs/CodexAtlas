@@ -32,7 +32,7 @@ class Navigation extends Component
         return view('components.atlas.navigation');
     }
 
-    protected function loadSystemComponents()
+    protected function loadSystemComponents(): void
     {
         $this->branch->load('systemComponents:id,branch_id,order,path,status', 'repository.project');
         $sections = $this->branch->systemComponents

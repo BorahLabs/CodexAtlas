@@ -50,7 +50,7 @@ Some rules:
         );
     }
 
-    public function asCommand(Command $command)
+    public function asCommand(Command $command): void
     {
         $branch = Branch::findOrFail($command->argument('branch'));
         $response = $this->handle($command->argument('question'), $branch);
