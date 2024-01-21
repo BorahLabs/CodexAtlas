@@ -64,6 +64,7 @@ Route::middleware(ControlRequestsFromPlatform::class)->group(function () {
         ->name('docs.download');
     Route::get('/docs/{project}/{repository}/{branch}/guides/new', ShowNewGuide::class)
         ->scopeBindings()
+        ->middleware('can:create,App\Models\CustomGuide')
         ->name('docs.guides.new');
     Route::get('/docs/{project}/{repository}/{branch}/guides/{customGuide}', ShowGuide::class)
         ->scopeBindings()

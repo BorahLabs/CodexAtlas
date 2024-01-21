@@ -22,4 +22,11 @@ class Platform extends Model
 
         return str($url)->replaceFirst($host, $this->domain)->toString();
     }
+
+    public static function current(): ?Platform
+    {
+        return static::query()
+            ->where('domain', request()->getHost())
+            ->first();
+    }
 }
