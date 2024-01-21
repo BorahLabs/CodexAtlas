@@ -24,13 +24,21 @@ class IonicAngular extends Framework
 
     public function relevant(): array
     {
-        // TODO:
-        return [];
+        return [
+            'src/*.ts',
+            'src/*.html',
+            'src/*.scss',
+        ];
     }
 
     public function ignorable(): array
     {
-        // TODO:
-        return [];
+        return [
+            '*/environments/*',
+            '*/polyfills.ts',
+            '*/test.ts',
+            '*/zone-flags.ts',
+            '*.spec.ts',
+        ];
     }
 }

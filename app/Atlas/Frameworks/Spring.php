@@ -14,8 +14,7 @@ class Spring extends Framework
 
     public function usesFramework(Folder $folder): bool
     {
-        // TODO:
-        return $folder->hasFile('composer.json') && $folder->hasFile('artisan');
+        return $folder->hasFile('pom.xml');
     }
 
     public function customContext(): ?string
@@ -25,13 +24,13 @@ class Spring extends Framework
 
     public function relevant(): array
     {
-        // TODO:
-        return [];
+        return [
+            '*.java',
+        ];
     }
 
     public function ignorable(): array
     {
-        // TODO:
         return [];
     }
 }
