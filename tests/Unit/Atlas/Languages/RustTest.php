@@ -15,9 +15,9 @@ test('detects language files', function (string $path) {
     $file = new File(name: $path, path: $path, sha: '', downloadUrl: '');
     expect((new Rust())->isOwnFile($file))->toBeTrue();
 })->with([
-    'test.rust',
-    'test2.RUST',
-    'FILE.rUsT',
+    'test.rs',
+    'test2.RS',
+    'FILE.Rs',
 ]);
 
 test('detects wrong files', function (string $path) {

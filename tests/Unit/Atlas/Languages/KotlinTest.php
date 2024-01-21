@@ -15,9 +15,12 @@ test('detects language files', function (string $path) {
     $file = new File(name: $path, path: $path, sha: '', downloadUrl: '');
     expect((new Kotlin())->isOwnFile($file))->toBeTrue();
 })->with([
-    'test.ktl',
-    'test2.KTL',
-    'FILE.Ktl',
+    'test.kt',
+    'test2.KT',
+    'FILE.Kt',
+    'test.kts',
+    'test2.KTS',
+    'FILE.KtS',
 ]);
 
 test('detects wrong files', function (string $path) {
