@@ -2,6 +2,7 @@
 
 use App\Actions\Github\Auth\HandleGithubInstallation;
 use App\Actions\Platform\DownloadDocsAsMarkdown;
+use App\Actions\Platform\Guides\DeleteGuide;
 use App\Actions\Platform\Guides\ShowEditGuide;
 use App\Actions\Platform\Guides\ShowGuide;
 use App\Actions\Platform\Guides\ShowNewGuide;
@@ -70,6 +71,9 @@ Route::middleware(ControlRequestsFromPlatform::class)->group(function () {
     Route::get('/docs/{project}/{repository}/{branch}/guides/{customGuide}/edit', ShowEditGuide::class)
         ->scopeBindings()
         ->name('docs.guides.edit');
+    Route::post('/docs/{project}/{repository}/{branch}/guides/{customGuide}/destroy', DeleteGuide::class)
+        ->scopeBindings()
+        ->name('docs.guides.destroy');
     Route::get('/docs/{project}/{repository}/{branch}/guides/{customGuide}', ShowGuide::class)
         ->scopeBindings()
         ->can('view', 'customGuide')

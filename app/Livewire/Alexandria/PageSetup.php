@@ -56,11 +56,20 @@ class PageSetup extends Component
             'content' => 'required|string',
         ]);
 
-        $guide = $this->customGuide ?? $this->branch->customGuides()->new();
-        $guide->question = $this->questionDriven ? $this->question : null;
-        $guide->title = $this->title;
-        $guide->content = $this->content;
-        $guide->save();
+        if ($this->customGuide) {
+            $guide = $this->customGuide;
+            $guide->update([
+                'question' => $this->questionDriven ? $this->question : null,
+                'title' => $this->title,
+                'content' => $this->content,
+            ]);
+        } else {
+            $guide = $this->branch->customGuides()->create([
+                'question' => $this->questionDriven ? $this->question : null,
+                'title' => $this->title,
+                'content' => $this->content,
+            ]);
+        }
 
         return redirect()->route('docs.guides.show', [
             'project' => $this->branch->repository->project,

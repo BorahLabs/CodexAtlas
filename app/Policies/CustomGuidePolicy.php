@@ -43,7 +43,7 @@ class CustomGuidePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(?User $user, CustomGuide $customGuide): bool
+    public function update(User $user, CustomGuide $customGuide): bool
     {
         $platform = Platform::current();
         if (is_null($platform)) {
