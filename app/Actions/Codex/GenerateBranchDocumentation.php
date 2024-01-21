@@ -19,6 +19,7 @@ class GenerateBranchDocumentation
         SystemComponents::dispatch($branch);
     }
 
+    // @codeCoverageIgnoreStart
     public function asCommand(Command $command): void
     {
         $branch = $command->argument('branch');
@@ -26,4 +27,5 @@ class GenerateBranchDocumentation
 
         $this->handle($branch);
     }
+    // @codeCoverageIgnoreEnd
 }

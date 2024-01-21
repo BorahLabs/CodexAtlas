@@ -4,7 +4,6 @@ namespace App\Atlas;
 
 use App\Atlas\Frameworks\Contracts\Framework;
 use App\Atlas\Languages\Contracts\Language;
-use App\Exceptions\CouldNotDetectFramework;
 use App\Exceptions\CouldNotDetectLanguage;
 use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
@@ -24,8 +23,6 @@ class Guesser
                 return $framework;
             }
         }
-
-        throw new CouldNotDetectFramework();
     }
 
     /**

@@ -10,17 +10,6 @@ enum SubscriptionType
     case UnlimitedCompanyPlan;
     case Unlimited;
 
-    public function canCreateTeams(): bool
-    {
-        return match ($this) {
-            self::FreeTrial => false,
-            self::PayAsYouGo => true,
-            self::LimitedCompanyPlan => true,
-            self::UnlimitedCompanyPlan => true,
-            self::Unlimited => true,
-        };
-    }
-
     public function maxProjects(): ?int
     {
         return match ($this) {

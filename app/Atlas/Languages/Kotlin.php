@@ -21,6 +21,6 @@ class Kotlin implements Language
     {
         $path = mb_strtolower($file->path);
 
-        return str_ends_with($path, '.ktl');
+        return str_ends_with($path, '.kt') || str_ends_with($path, '.kts');
     }
 }

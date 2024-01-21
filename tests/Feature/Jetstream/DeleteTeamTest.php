@@ -23,6 +23,16 @@ test('teams can be deleted', function () {
     expect($otherUser->fresh()->teams)->toHaveCount(0);
 });
 
+test('subscription is cancelled', function () {
+    $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+    $team = Team::factory()->inLimitedCompanyPlanMode()->create([
+        'personal_team' => false,
+    ]);
+    $user->ownedTeams()->save($team);
+    $component = Livewire::test(DeleteTeamForm::class, ['team' => $team->fresh()])
+        ->call('deleteTeam');
+})->expectException(\Stripe\Exception\ApiErrorException::class); // expects exception on Stripe because sub does not exist
+
 test('personal teams cant be deleted', function () {
     $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 

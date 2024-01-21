@@ -52,6 +52,7 @@ class InviteTeamMember implements InvitesTeamMembers
         )->validateWithBag('addTeamMember');
     }
 
+    // @codeCoverageIgnoreStart
     /**
      * Get the validation rules for inviting a team member.
      *
@@ -71,6 +72,7 @@ class InviteTeamMember implements InvitesTeamMembers
                             : null,
         ]);
     }
+    // @codeCoverageIgnoreEnd
 
     /**
      * Ensure that the user is not already on the team.

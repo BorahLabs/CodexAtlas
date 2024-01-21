@@ -2,8 +2,8 @@
 
 namespace App\SourceCode;
 
-use App\Actions\Bitbucket;
 use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
+use App\Actions\Bitbucket;
 use App\Decorators\Bitbucket\DecoratedRepository;
 use App\Exceptions\ExceededProviderRateLimit;
 use App\SourceCode\Contracts\AccountInfoProvider;
@@ -79,7 +79,7 @@ class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvide
 
     public function url(RepositoryName $repository): string
     {
-        return 'https://bitbucket.com/'.$repository->fullName;
+        return 'https://bitbucket.com/'.$repository->workspace.'/'.$repository->name;
     }
 
     public function account(): Account

@@ -37,7 +37,17 @@ class SourceCodeAccountFactory extends Factory
             'provider' => \App\Enums\SourceCodeProvider::GitLab,
             'name' => 'codexatlastest',
             'external_id' => '19516758',
-            'access_token' => 'glpat-6KGSMRg9j-QRe9q34L9d',
+            'access_token' => 'glpat-115te_tfs58BBftkD_99',
+        ]);
+    }
+
+    public function bitbucket(): static
+    {
+        return $this->state([
+            'provider' => \App\Enums\SourceCodeProvider::Bitbucket,
+            'name' => 'codexatlastest',
+            'external_id' => '712020:66b6b9e3-6d1d-48dd-ba48-ce260bee0e01',
+            'access_token' => 'ATBBLMUSzuV8mmRCcyMdBrsVrjAND1DF6F7C',
         ]);
     }
 }
