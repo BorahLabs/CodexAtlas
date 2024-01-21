@@ -14,8 +14,7 @@ class Django extends Framework
 
     public function usesFramework(Folder $folder): bool
     {
-        // Cannot know at first
-        return false;
+        return $folder->hasFile('manage.py');
     }
 
     public function customContext(): ?string
@@ -25,13 +24,17 @@ class Django extends Framework
 
     public function relevant(): array
     {
-        // TODO:
-        return [];
+        return [
+            '*.py',
+            '*.html',
+            '*.scss',
+            '*.css',
+            '*.js',
+        ];
     }
 
     public function ignorable(): array
     {
-        // TODO:
         return [];
     }
 }
