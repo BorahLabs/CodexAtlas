@@ -11,18 +11,13 @@ class DumbLocalLlm extends Llm
 {
     public function completion(string $systemPrompt, string $userPrompt): CompletionResponse
     {
-        return new CompletionResponse(
+        return CompletionResponse::make(
             completion: "## TLDR\nThis is a test generation without using AI.\n\nIf you're seeing this, it means it worked!",
             processingTimeMilliseconds: 0,
             inputTokens: 0,
             outputTokens: 0,
             totalTokens: 0,
         );
-    }
-
-    public function embed(string ...$texts): array
-    {
-        return [];
     }
 
     public function fileDescriptionSystemPrompt(Project $project, File $file): string

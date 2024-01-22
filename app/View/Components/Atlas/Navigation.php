@@ -21,33 +21,7 @@ class Navigation extends Component
     public function __construct(
         public readonly Branch $branch,
     ) {
-        $branch->load('systemComponents:id,branch_id,order,path,status', 'repository.project');
-        $sections = $branch->systemComponents
-            ->sortBy('order')
-            ->mapWithKeys(fn (SystemComponent $component) => [$component->folder => new NavigationSection($component->folder)])
-            ->toArray();
-
-        $branch->systemComponents
-            ->each(fn (SystemComponent $component) => $sections[$component->folder]->addItem(new NavigationItem(
-                name: $component->name,
-                url: route('docs.show-component', [
-                    'project' => $branch->repository->project,
-                    'repository' => $branch->repository,
-                    'branch' => $branch,
-                    'systemComponent' => $component,
-                ]),
-            )));
-
-        $this->sections = collect([
-            new NavigationSection(name: 'General', children: [
-                new NavigationItem('README', route('docs.show-readme', [
-                    'project' => $branch->repository->project,
-                    'repository' => $branch->repository,
-                    'branch' => $branch,
-                ])),
-            ]),
-            ...$sections,
-        ]);
+        $this->loadSystemComponents();
     }
 
     /**
@@ -56,5 +30,36 @@ class Navigation extends Component
     public function render(): View|Closure|string
     {
         return view('components.atlas.navigation');
+    }
+
+    protected function loadSystemComponents(): void
+    {
+        $this->branch->load('systemComponents:id,branch_id,order,path,status', 'repository.project');
+        $sections = $this->branch->systemComponents
+            ->sortBy('order')
+            ->mapWithKeys(fn (SystemComponent $component) => [$component->folder => new NavigationSection($component->folder)])
+            ->toArray();
+
+        $this->branch->systemComponents
+            ->each(fn (SystemComponent $component) => $sections[$component->folder]->addItem(new NavigationItem(
+                name: $component->name,
+                url: route('docs.show-component', [
+                    'project' => $this->branch->repository->project,
+                    'repository' => $this->branch->repository,
+                    'branch' => $this->branch,
+                    'systemComponent' => $component,
+                ]),
+            )));
+
+        $this->sections = collect([
+            new NavigationSection(name: 'General', children: [
+                new NavigationItem('README', route('docs.show-readme', [
+                    'project' => $this->branch->repository->project,
+                    'repository' => $this->branch->repository,
+                    'branch' => $this->branch,
+                ])),
+            ]),
+            ...$sections,
+        ]);
     }
 }

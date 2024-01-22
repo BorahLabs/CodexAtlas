@@ -92,3 +92,29 @@ it('tries to register the webhook', function () {
     $repoName = new RepositoryName(username: 'codexatlastest1', name: 'codexatlastest');
     $gitlab->registerWebhook($repoName);
 });
+
+it('gets the user account', function () {
+    $user = User::factory()->inPayAsYouGoMode()->create();
+    $sourceCodeAccount = SourceCodeAccount::factory()->bitbucket()->create([
+        'team_id' => $user->currentTeam->id,
+    ]);
+    $bitbucket = (new GitlabProvider())->withCredentials($sourceCodeAccount);
+    $account = $bitbucket->account();
+    expect($account->name)->toBe($sourceCodeAccount->name);
+    expect($account->id)->toBe($sourceCodeAccount->external_id);
+})->skip('No permissions?');
+
+it('gets all the repositories', function () {
+    $user = User::factory()->inPayAsYouGoMode()->create();
+    $sourceCodeAccount = SourceCodeAccount::factory()->bitbucket()->create([
+        'team_id' => $user->currentTeam->id,
+    ]);
+    $bitbucket = (new GitlabProvider())->withCredentials($sourceCodeAccount);
+    $repositories = $bitbucket->repositories();
+    expect($repositories)->toBeArray();
+    expect(count($repositories))->toBeGreaterThan(0);
+    expect($repositories[0]->id)->not->toBeEmpty();
+    expect($repositories[0]->name)->toBe('codexatlastest');
+    expect($repositories[0]->owner)->toBe('codexatlastest1');
+    expect($repositories[0]->workspace)->toBeNull();
+})->skip('No permissions?');

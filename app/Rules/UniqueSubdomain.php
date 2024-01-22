@@ -22,11 +22,15 @@ class UniqueSubdomain implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $domain = str($value)->finish('.'.config('app.main_domain'))->toString();
+        $domain = str($value)->lower()->finish('.'.config('app.main_domain'))->toString();
         $exists = Platform::where('team_id', '!=', $this->team->id)
             ->where('domain', $domain)
             ->exists();
-        if ($exists) {
+        $forbiddenDomains = collect(config('codex.forbidden_subdomains'))
+            ->map(fn (string $item) => str($item)->finish('.'.config('app.main_domain'))->toString())
+            ->flip()
+            ->toArray();
+        if ($exists || isset($forbiddenDomains[$domain])) {
             $fail(__('This domain is already assigned to another team. Please, select a new one.'));
         }
     }

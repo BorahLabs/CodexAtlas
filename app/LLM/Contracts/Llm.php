@@ -10,8 +10,6 @@ abstract class Llm
 {
     abstract public function completion(string $systemPrompt, string $userPrompt): CompletionResponse;
 
-    abstract public function embed(string ...$texts): array;
-
     abstract public function fileDescriptionSystemPrompt(Project $project, File $file): string;
 
     abstract public function fileDescriptionUserPrompt(Project $project, File $file): string;

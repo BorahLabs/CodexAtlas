@@ -24,13 +24,21 @@ class Angular extends Framework
 
     public function relevant(): array
     {
-        // TODO:
-        return [];
+        return [
+            '*.ts',
+            '*.html',
+            '*.scss',
+            '*.css',
+            '*.js',
+        ];
     }
 
     public function ignorable(): array
     {
-        // TODO:
-        return [];
+        return [
+            '*.spec.*',
+            '*.e2e-spec.*',
+            'karma.conf.*',
+        ];
     }
 }

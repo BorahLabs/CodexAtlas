@@ -1,7 +1,7 @@
 <?php
 
+use App\Models\Team;
 use App\Models\User;
-use Laravel\Jetstream\Features;
 use Laravel\Jetstream\Http\Livewire\DeleteUserForm;
 use Livewire\Livewire;
 
@@ -13,9 +13,18 @@ test('user accounts can be deleted', function () {
         ->call('deleteUser');
 
     expect($user->fresh())->toBeNull();
-})->skip(function () {
-    return ! Features::hasAccountDeletionFeatures();
-}, 'Account deletion is not enabled.');
+});
+
+test('user accounts with a subscribed team can be deleted', function () {
+    $this->actingAs($user = User::factory()->create());
+    $team = Team::factory()->inLimitedCompanyPlanMode()->create([
+        'personal_team' => false,
+    ]);
+    $user->ownedTeams()->save($team);
+    $component = Livewire::test(DeleteUserForm::class)
+        ->set('password', 'password')
+        ->call('deleteUser');
+})->expectException(\Stripe\Exception\ApiErrorException::class); // expects exception on Stripe because sub does not exist
 
 test('correct password must be provided before account can be deleted', function () {
     $this->actingAs($user = User::factory()->create());
@@ -26,6 +35,4 @@ test('correct password must be provided before account can be deleted', function
         ->assertHasErrors(['password']);
 
     expect($user->fresh())->not->toBeNull();
-})->skip(function () {
-    return ! Features::hasAccountDeletionFeatures();
-}, 'Account deletion is not enabled.');
+});

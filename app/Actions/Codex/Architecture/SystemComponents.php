@@ -66,12 +66,8 @@ class SystemComponents
         return $framework;
     }
 
-    private function filterFiles(array $files, ?Framework $framework): array
+    private function filterFiles(array $files, Framework $framework): array
     {
-        if (is_null($framework)) {
-            return $files;
-        }
-
         $filtered = [];
         foreach ($files as $file) {
             if ($framework->shouldBeIgnored($file->path)) {

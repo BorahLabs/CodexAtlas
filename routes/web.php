@@ -2,6 +2,10 @@
 
 use App\Actions\Github\Auth\HandleGithubInstallation;
 use App\Actions\Platform\DownloadDocsAsMarkdown;
+use App\Actions\Platform\Guides\DeleteGuide;
+use App\Actions\Platform\Guides\ShowEditGuide;
+use App\Actions\Platform\Guides\ShowGuide;
+use App\Actions\Platform\Guides\ShowNewGuide;
 use App\Actions\Platform\Projects\ShowProject;
 use App\Actions\Platform\Projects\StoreProject;
 use App\Actions\Platform\Repositories\StoreRepository;
@@ -60,6 +64,22 @@ Route::middleware(ControlRequestsFromPlatform::class)->group(function () {
     Route::get('/docs/{project}/{repository}/{branch}/download', DownloadDocsAsMarkdown::class)
         ->scopeBindings()
         ->name('docs.download');
+    Route::get('/docs/{project}/{repository}/{branch}/guides/new', ShowNewGuide::class)
+        ->scopeBindings()
+        ->can('create', \App\Models\CustomGuide::class)
+        ->name('docs.guides.new');
+    Route::get('/docs/{project}/{repository}/{branch}/guides/{customGuide}/edit', ShowEditGuide::class)
+        ->scopeBindings()
+        ->can('update', 'customGuide')
+        ->name('docs.guides.edit');
+    Route::post('/docs/{project}/{repository}/{branch}/guides/{customGuide}/destroy', DeleteGuide::class)
+        ->scopeBindings()
+        ->can('delete', 'customGuide')
+        ->name('docs.guides.destroy');
+    Route::get('/docs/{project}/{repository}/{branch}/guides/{customGuide}', ShowGuide::class)
+        ->scopeBindings()
+        ->can('view', 'customGuide')
+        ->name('docs.guides.show');
     Route::get('/docs/{project}/{repository}/{branch}/readme', ShowReadme::class)
         ->scopeBindings()
         ->name('docs.show-readme');
@@ -70,5 +90,6 @@ Route::middleware(ControlRequestsFromPlatform::class)->group(function () {
 
 Route::any('/secret-auth', function () {
     abort_unless(config('app.password_protected.enabled'), 404);
+
     return view('password-protection');
 })->name('password-protected')->middleware('throttle:5,1');

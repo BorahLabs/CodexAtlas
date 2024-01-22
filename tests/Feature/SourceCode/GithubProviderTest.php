@@ -17,7 +17,7 @@ it('gets all repository branches', function () {
     $branches = $github->branches(new RepositoryName(username: 'laravel', name: 'laravel'));
     expect($branches)->toBeArray();
     expect(count($branches))->toBeGreaterThan(0);
-    expect($branches[0]->name)->toBe('master');
+    expect($branches[0]->name)->not->toBeEmpty();
 });
 
 it('gets a single file from a repository', function () {

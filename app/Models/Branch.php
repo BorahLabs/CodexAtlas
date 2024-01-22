@@ -35,6 +35,17 @@ class Branch extends Model
             ->orderBy('order', 'ASC');
     }
 
+    public function customGuides(): HasMany
+    {
+        return $this->hasMany(CustomGuide::class)
+            ->orderBy('title', 'ASC');
+    }
+
+    public function branchDocuments(): HasMany
+    {
+        return $this->hasMany(BranchDocument::class);
+    }
+
     public function dto(): DTOBranch
     {
         return new DTOBranch(

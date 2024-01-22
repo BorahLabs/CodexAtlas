@@ -24,13 +24,18 @@ class Next extends Framework
 
     public function relevant(): array
     {
-        // TODO:
-        return [];
+        return [
+            '*.js',
+            '*.jsx',
+            '*.ts',
+            '*.tsx',
+            '*.css',
+            '*.scss',
+        ];
     }
 
     public function ignorable(): array
     {
-        // TODO:
         return [];
     }
 }

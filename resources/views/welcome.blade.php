@@ -7,7 +7,7 @@
                         class="font-heading text-4xl sm:text-6xl md:text-7xl xl:text-8xl text-white font-semibold leading-none mb-8">
                         Instantly document your code</h1>
                     <p class="text-2xl text-gray-400 mb-8">
-                        <span class="block">Connect CodexAtlas to your GitHub account</span>
+                        <span class="block">Connect CodexAtlas to your GitHub, Gitlab or Bitbucket accounts</span>
                         <span class="block">and keep your documentation updated</span>
                     </p>
                     <a class="group inline-flex h-14 px-7 items-center justify-center text-base font-medium text-black hover:text-white bg-violet-500 hover:bg-violet-600 transition duration-200 rounded-full"

@@ -14,6 +14,10 @@ class GenerateTeamPlatformDomain
     public function handle(Team $team): string
     {
         $suffix = '';
+        $forbiddenDomains = collect(config('codex.forbidden_subdomains'))
+            ->map(fn (string $item) => str($item)->finish('.'.config('app.main_domain'))->toString())
+            ->flip()
+            ->toArray();
         while (true) {
             $domain = str($team->name)
                 ->slug()
@@ -22,7 +26,7 @@ class GenerateTeamPlatformDomain
                 ->lower()
                 ->toString();
             $platform = Platform::where('domain', $domain)->exists();
-            if (! $platform) {
+            if (! $platform && ! isset($forbiddenDomains[$domain])) {
                 return $domain;
             }
 

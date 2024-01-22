@@ -23,6 +23,7 @@ class FileWhitelist
         }
 
         $extension = mb_strtolower(pathinfo($path, PATHINFO_EXTENSION));
+
         return isset(config('codex.atlas.allowed_extensions')[$extension]);
     }
 }

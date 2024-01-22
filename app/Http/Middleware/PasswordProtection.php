@@ -8,9 +8,6 @@ class PasswordProtection
 {
     /**
      * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
      */
     public function handle(\Illuminate\Http\Request $request, Closure $next): mixed
     {
@@ -29,8 +26,9 @@ class PasswordProtection
         $secret = $request->input('secret');
         if ($secret && $secret === config('app.password_protected.password')) {
             $request->session()->put('password_protection_authenticated', true);
+
             return $request->routeIs('password-protected') ? redirect()->route('homepage') : $next($request);
-        } else if ($secret && $secret !== config('app.password_protected.password')) {
+        } elseif ($secret && $secret !== config('app.password_protected.password')) {
             return redirect()
                 ->route('password-protected')
                 ->with('error', 'Invalid password');

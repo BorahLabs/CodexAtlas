@@ -22,7 +22,7 @@ class GetRepository
         return new Repository(
             id: GetUuidFromJson::getUuid($api['uuid']),
             name: $api['name'],
-            owner: $api['owner']['type'],
+            owner: $api['owner']['username'],
             workspace: $api['workspace']['slug'],
             description: $api['description'] ?? null,
         );

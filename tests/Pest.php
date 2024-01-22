@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\Project;
+use App\Models\SourceCodeAccount;
+use App\Models\Team;
+use App\SourceCode\DTO\RepositoryName;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -42,7 +46,24 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function createLaravelProject(Team $team)
 {
-    // ..
+    $project = Project::factory()->create([
+        'team_id' => $team->id,
+    ]);
+    $sourceCodeAccount = SourceCodeAccount::factory()->github()->create([
+        'team_id' => $team->id,
+    ]);
+    $repo = new RepositoryName(username: 'laravel', name: 'laravel');
+    $repository = $project->repositories()->create([
+        'source_code_account_id' => $sourceCodeAccount->id,
+        'project_id' => $project->id,
+        'username' => $repo->username,
+        'name' => $repo->name,
+        'workspace' => $repo->workspace ?? null,
+    ]);
+
+    $branch = $repository->branches()->createQuietly(['name' => 'master']);
+
+    return [$project, $sourceCodeAccount, $repository, $branch];
 }

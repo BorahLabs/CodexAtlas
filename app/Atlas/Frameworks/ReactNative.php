@@ -14,8 +14,7 @@ class ReactNative extends Framework
 
     public function usesFramework(Folder $folder): bool
     {
-        // TODO:
-        return $folder->hasFile('composer.json') && $folder->hasFile('artisan');
+        return $folder->hasFile('app.json') && $folder->hasFile('package.json');
     }
 
     public function customContext(): ?string
@@ -25,13 +24,21 @@ class ReactNative extends Framework
 
     public function relevant(): array
     {
-        // TODO:
-        return [];
+        return [
+            '*.js',
+            '*.ts',
+            '*.tsx',
+            '*.jsx',
+        ];
     }
 
     public function ignorable(): array
     {
-        // TODO:
-        return [];
+        return [
+            '*.spec.js',
+            '*.spec.ts',
+            '*.spec.tsx',
+            '*.spec.jsx',
+        ];
     }
 }

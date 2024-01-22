@@ -50,7 +50,7 @@ class ProcessSystemComponent
             }
 
             if ($existingFile) {
-                $completion = new CompletionResponse(
+                $completion = CompletionResponse::make(
                     completion: $existingFile->markdown_docs,
                     processingTimeMilliseconds: 0,
                     inputTokens: 0,

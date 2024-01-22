@@ -2,6 +2,7 @@
 
 namespace App\Actions\LocalFolder;
 
+use App\Atlas\FileWhitelist;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
@@ -19,12 +20,7 @@ class GetAllFiles
         $rawFiles = FacadesFile::files($path);
         $directories = FacadesFile::directories($path);
 
-        $isBlacklisted = fn (string $p) => str($p)->contains([
-            'node_modules',
-            'vendor',
-            '/build/',
-            '/dist/',
-        ]);
+        $isBlacklisted = fn ($path) => FileWhitelist::whitelisted($path);
 
         $files = [];
         foreach ($rawFiles as $file) {
