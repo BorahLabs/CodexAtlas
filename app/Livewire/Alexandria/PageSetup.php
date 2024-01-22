@@ -27,11 +27,7 @@ class PageSetup extends Component
 
     public function mount(): void
     {
-        if ($this->customGuide) {
-            $this->question = $this->customGuide->question;
-            $this->title = $this->customGuide->title;
-            $this->content = $this->customGuide->content;
-        }
+        $this->fillForm();
     }
 
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
@@ -59,20 +55,7 @@ class PageSetup extends Component
             'content' => 'required|string',
         ]);
 
-        if ($this->customGuide) {
-            $guide = $this->customGuide;
-            $guide->update([
-                'question' => $this->questionDriven ? $this->question : null,
-                'title' => $this->title,
-                'content' => $this->content,
-            ]);
-        } else {
-            $guide = $this->branch->customGuides()->create([
-                'question' => $this->questionDriven ? $this->question : null,
-                'title' => $this->title,
-                'content' => $this->content,
-            ]);
-        }
+        $guide = $this->upsertCustomGuide();
 
         return redirect()->route('docs.guides.show', [
             'project' => $this->branch->repository->project,
@@ -86,5 +69,35 @@ class PageSetup extends Component
     public function isEditing(): bool
     {
         return ! is_null($this->customGuide);
+    }
+
+    protected function fillForm(): void
+    {
+        if (! $this->customGuide) {
+            return;
+        }
+
+        $this->question = $this->customGuide->question;
+        $this->title = $this->customGuide->title;
+        $this->content = $this->customGuide->content;
+    }
+
+    protected function upsertCustomGuide(): CustomGuide
+    {
+        if ($this->customGuide) {
+            $this->customGuide->update([
+                'question' => $this->questionDriven ? $this->question : null,
+                'title' => $this->title,
+                'content' => $this->content,
+            ]);
+
+            return $this->customGuide;
+        }
+
+        return $this->branch->customGuides()->create([
+            'question' => $this->questionDriven ? $this->question : null,
+            'title' => $this->title,
+            'content' => $this->content,
+        ]);
     }
 }
