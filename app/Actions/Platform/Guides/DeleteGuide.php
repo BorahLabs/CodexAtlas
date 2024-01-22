@@ -16,7 +16,6 @@ class DeleteGuide
 
     public function handle(User $user, Project $project, Repository $repository, Branch $branch, CustomGuide $customGuide): \Illuminate\Http\RedirectResponse
     {
-        abort_unless($user->can('delete', $customGuide), 403);
         $customGuide->delete();
 
         return redirect()->route('docs.show', [
@@ -28,8 +27,6 @@ class DeleteGuide
 
     public function asController(Request $request, Project $project, Repository $repository, Branch $branch, CustomGuide $customGuide): \Illuminate\Http\RedirectResponse
     {
-        abort_if(is_null($request->user()), 404);
-
         return $this->handle($request->user(), $project, $repository, $branch, $customGuide);
     }
 }

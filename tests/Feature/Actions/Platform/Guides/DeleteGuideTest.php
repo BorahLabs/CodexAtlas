@@ -16,7 +16,7 @@ it('cannot delete a guide page if not logged in', function () {
     $platform->update(['is_public' => true]);
     $this
         ->post($platform->route('docs.guides.destroy', ['project' => $project, 'repository' => $repository, 'branch' => $branch, 'customGuide' => $customGuide]))
-        ->assertNotFound();
+        ->assertForbidden();
 });
 
 it('cannot delete a guide if user belongs to a different team', function () {

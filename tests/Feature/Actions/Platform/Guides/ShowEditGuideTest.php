@@ -19,7 +19,7 @@ it('cannot see the edit guide page if not logged in', function () {
 
     $this
         ->get($platform->route('docs.guides.edit', ['project' => $project, 'repository' => $repository, 'branch' => $branch, 'customGuide' => $customGuide]))
-        ->assertNotFound();
+        ->assertForbidden();
 });
 
 it('cannot access to edit a guide page if user belongs to a different team', function () {

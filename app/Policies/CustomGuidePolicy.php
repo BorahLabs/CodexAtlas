@@ -43,8 +43,12 @@ class CustomGuidePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, CustomGuide $customGuide): bool
+    public function update(?User $user, CustomGuide $customGuide): bool
     {
+        if (is_null($user)) {
+            return false;
+        }
+
         $platform = Platform::current();
         if (is_null($platform)) {
             return false;
@@ -56,8 +60,12 @@ class CustomGuidePolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, CustomGuide $customGuide): bool
+    public function delete(?User $user, CustomGuide $customGuide): bool
     {
+        if (is_null($user)) {
+            return false;
+        }
+
         $platform = Platform::current();
         if (is_null($platform)) {
             return false;
