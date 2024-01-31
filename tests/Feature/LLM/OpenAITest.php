@@ -1,6 +1,7 @@
 <?php
 
 use App\LLM\OpenAI;
+use App\LLM\PromptRequests\DocumentFilePromptRequest;
 use App\Models\User;
 use App\SourceCode\DTO\File;
 
@@ -12,8 +13,8 @@ it('returns right prompts', function () {
     $user = User::factory()->inFreeTrialMode()->create();
     [$project, $sourceCodeAccount, $repository, $branch] = createLaravelProject($user->currentTeam);
     $file = new File(name: 'README.md', path: 'README.md', sha: '', downloadUrl: '', contents: '## Hello World');
-    expect((new OpenAI())->fileDescriptionSystemPrompt($project, $file))->not->toBeEmpty();
-    expect((new OpenAI())->fileDescriptionUserPrompt($project, $file))
+    expect((new OpenAI())->fileDescriptionSystemPrompt($project, $file, new DocumentFilePromptRequest()))->not->toBeEmpty();
+    expect((new OpenAI())->fileDescriptionUserPrompt($project, $file, new DocumentFilePromptRequest()))
         ->not->toBeEmpty()
         ->toContain($project->name)
         ->toContain($file->path)

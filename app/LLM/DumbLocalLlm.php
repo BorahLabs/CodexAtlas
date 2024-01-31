@@ -3,6 +3,7 @@
 namespace App\LLM;
 
 use App\LLM\Contracts\Llm;
+use App\LLM\Contracts\PromptRequest;
 use App\LLM\DTO\CompletionResponse;
 use App\Models\Project;
 use App\SourceCode\DTO\File;
@@ -20,12 +21,12 @@ class DumbLocalLlm extends Llm
         );
     }
 
-    public function fileDescriptionSystemPrompt(Project $project, File $file): string
+    public function fileDescriptionSystemPrompt(Project $project, File $file, PromptRequest $promptRequest): string
     {
         return 'Lorem ipsum dolor sit amet';
     }
 
-    public function fileDescriptionUserPrompt(Project $project, File $file): string
+    public function fileDescriptionUserPrompt(Project $project, File $file, PromptRequest $promptRequest): string
     {
         return 'Lorem ipsum dolor sit amet';
     }
