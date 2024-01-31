@@ -82,4 +82,15 @@ class Folder
 
         return in_array($path, array_map(fn (File $f) => $f->path, $this->files));
     }
+
+    public function getFile(string $path): ?File
+    {
+        foreach ($this->files as $file) {
+            if ($file->path === $path) {
+                return $file;
+            }
+        }
+
+        return null;
+    }
 }

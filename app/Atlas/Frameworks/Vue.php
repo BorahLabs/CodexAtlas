@@ -2,10 +2,10 @@
 
 namespace App\Atlas\Frameworks;
 
-use App\Atlas\Frameworks\Contracts\Framework;
+use App\Atlas\Frameworks\Contracts\FrameworkWithDependencyFiles;
 use App\SourceCode\DTO\Folder;
 
-class Vue extends Framework
+class Vue extends FrameworkWithDependencyFiles
 {
     public function name(): string
     {
@@ -14,8 +14,7 @@ class Vue extends Framework
 
     public function usesFramework(Folder $folder): bool
     {
-        // TODO:
-        return $folder->hasFile('composer.json') && $folder->hasFile('artisan');
+        return $folder->hasFile('package.json') && $this->hasDependencies($folder);
     }
 
     public function customContext(): ?string
@@ -25,13 +24,34 @@ class Vue extends Framework
 
     public function relevant(): array
     {
-        // TODO:
-        return [];
+        return [
+            '*.ts',
+            '*.html',
+            '*.scss',
+            '*.css',
+            '*.js',
+            '*.vue',
+        ];
     }
 
     public function ignorable(): array
     {
-        // TODO:
-        return [];
+        return [
+            '*.spec.*',
+            '*.test.*',
+            'jest.config.*',
+        ];
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            '"vue"',
+        ];
+    }
+
+    public function getDependencyFilePath(): string
+    {
+        return 'package.json';
     }
 }
