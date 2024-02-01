@@ -67,10 +67,16 @@ test('Angular is supported', function () {
 });
 
 test('React is supported', function () {
-})->skip('TODO');
+    $folder = new Folder('', '', '');
+    $folder->addFile(new File(name: 'package.json', path: 'package.json', sha: '', downloadUrl: '', contents: getReactPackageJsonContent()));
+    expect(get_class(Guesser::make()->guessFramework($folder)))->toBe(Frameworks\React::class);
+});
 
 test('Vue is supported', function () {
-})->skip('TODO');
+    $folder = new Folder('', '', '');
+    $folder->addFile(new File(name: 'package.json', path: 'package.json', sha: '', downloadUrl: '', contents: getVuePackageJsonContent()));
+    expect(get_class(Guesser::make()->guessFramework($folder)))->toBe(Frameworks\Vue::class);
+});
 
 test('Fallbacks to general framework', function () {
     $folder = new Folder('', '', '');
@@ -203,3 +209,70 @@ test('Cannot detect unknown language', function () {
     $file = new File(name: 'another-file.md', path: 'another-file.md', sha: '', downloadUrl: '');
     Guesser::make()->guessLanguage($file);
 })->expectException(\App\Exceptions\CouldNotDetectLanguage::class);
+
+function getVuePackageJsonContent(): string {
+    return '{
+        "name": "mi-proyecto-vue",
+        "version": "1.0.0",
+        "description": "Un proyecto Vue.js",
+        "main": "index.js",
+        "scripts": {
+          "start": "vue-cli-service serve",
+          "build": "vue-cli-service build",
+          "lint": "vue-cli-service lint"
+        },
+        "dependencies": {
+          "vue": "^2.6.14",
+          "vue-router": "^3.5.1",
+          "vuex": "^3.6.2"
+        },
+        "devDependencies": {
+          "@vue/cli-plugin-babel": "^4.5.13",
+          "@vue/cli-service": "^4.5.13",
+          "babel-eslint": "^10.1.0",
+          "eslint": "^6.7.2",
+          "eslint-plugin-vue": "^6.7.2",
+          "vue-template-compiler": "^2.6.14"
+        },
+        "browserslist": [
+          "> 1%",
+          "last 2 versions"
+        ]
+      }';
+}
+
+function getReactPackageJsonContent(): string {
+    return '{
+        "name": "mi-proyecto-react",
+        "version": "1.0.0",
+        "description": "Un proyecto React",
+        "main": "index.js",
+        "scripts": {
+          "start": "react-scripts start",
+          "build": "react-scripts build",
+          "test": "react-scripts test",
+          "eject": "react-scripts eject"
+        },
+        "dependencies": {
+          "react": "^17.0.2",
+          "react-dom": "^17.0.2",
+          "react-scripts": "4.0.3",
+          // Otras dependencias específicas del proyecto
+        },
+        "devDependencies": {
+          // Dependencias de desarrollo, como linters, bundlers, etc.
+        },
+        "browserslist": {
+          "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+          ],
+          "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+          ]
+
+      ';
+}
