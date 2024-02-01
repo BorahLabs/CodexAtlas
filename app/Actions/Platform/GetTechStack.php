@@ -28,41 +28,25 @@ class GetTechStack
         $provider = $repository->sourceCodeAccount->getProvider();
         $repositoryName = $repository->nameDto();
         $branchName = $branch->name;
-
-
+        
         $dependencyFiles = $this->getDependencyFiles($provider, $repositoryName, $branchName);
         $dependencyFile = $this->generateFileWithAllDependencies($dependencyFiles);
-
 
         /**
          * @var Llm
         */
         $llm = app(Llm::class);
-
         $key = 'techstack-'.$repository->id.'-'.$branch->id;
         $file = Cache::get($key);
+
+
         if (is_null($file)) {
-            try {
                 $completion = $llm->describeFile($repository->project, $dependencyFile, PromptRequestType::TECH_STACK->value);
                 $file = new File('Tech Stack', 'TechStack', '', '', $completion->completion);
                 Cache::put($key, $file, now()->addMinutes(30));
-            } catch (\Exception $e) {
-                $file = null;
-            }
         }
 
         return $file;
-
-    }
-
-    public function asCommand(Command $command): void
-    {
-        $this->handle(
-            Repository::first(),
-            Branch::first()
-        );
-
-        $command->info('Done!');
     }
 
     private function getDependencyFiles(SourceCodeProvider $provider, RepositoryName $repositoryName, string $branchName) : array

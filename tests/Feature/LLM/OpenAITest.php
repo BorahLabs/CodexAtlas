@@ -2,6 +2,7 @@
 
 use App\LLM\OpenAI;
 use App\LLM\PromptRequests\DocumentFilePromptRequest;
+use App\LLM\PromptRequests\OpenAI\GenerateTechStackPromptRequest;
 use App\LLM\PromptRequests\PromptRequestType;
 use App\Models\User;
 use App\SourceCode\DTO\File;
@@ -36,4 +37,20 @@ it('generates a completion', function () {
     expect($response->inputTokens)->toBeGreaterThan(0);
     expect($response->outputTokens)->toBeGreaterThan(0);
     expect($response->totalTokens)->toBe($response->inputTokens + $response->outputTokens);
+});
+
+
+it('return right prompt to get tech stack request', function () {
+    $user = User::factory()->inFreeTrialMode()->create();
+    [$project, $sourceCodeAccount, $repository, $branch] = createLaravelProject($user->currentTeam);
+    $file = new File(name: 'README.md', path: 'README.md', sha: '', downloadUrl: '', contents: '## Hello World');
+
+    $promptRequest = (new OpenAI())->getPromptRequest(PromptRequestType::TECH_STACK->value);
+
+    expect($promptRequest)->toBeInstanceOf(GenerateTechStackPromptRequest::class);
+    expect($promptRequest->fileDescriptionSystemPrompt($project, $file))->not->toBeEmpty();
+    expect($promptRequest->fileDescriptionUserPrompt($project, $file))
+        ->not->toBeEmpty()
+        ->toContain($project->name)
+        ->toContain($file->contents);
 });

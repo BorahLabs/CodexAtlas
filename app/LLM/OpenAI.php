@@ -9,8 +9,6 @@ use App\LLM\DTO\CompletionResponse;
 use App\LLM\PromptRequests\OpenAI\DocumentFilePromptRequest;
 use App\LLM\PromptRequests\OpenAI\GenerateTechStackPromptRequest;
 use App\LLM\PromptRequests\PromptRequestType;
-use App\Models\Project;
-use App\SourceCode\DTO\File;
 use OpenAI\Client;
 
 class OpenAI extends Llm implements HasApiKey
