@@ -5,11 +5,19 @@ namespace App\LLM;
 use App\LLM\Contracts\Llm;
 use App\LLM\Contracts\PromptRequest;
 use App\LLM\DTO\CompletionResponse;
+use App\LLM\PromptRequests\DumpLlm\DumpLlmPromptRequest;
 use App\Models\Project;
 use App\SourceCode\DTO\File;
 
 class DumbLocalLlm extends Llm
 {
+
+    public function getPromptRequest(string $promptIdentifier): PromptRequest
+    {
+        return match($promptIdentifier) {
+            default => new DumpLlmPromptRequest()
+        };
+    }
     public function completion(string $systemPrompt, string $userPrompt): CompletionResponse
     {
         return CompletionResponse::make(
@@ -19,16 +27,6 @@ class DumbLocalLlm extends Llm
             outputTokens: 0,
             totalTokens: 0,
         );
-    }
-
-    public function fileDescriptionSystemPrompt(Project $project, File $file, PromptRequest $promptRequest): string
-    {
-        return 'Lorem ipsum dolor sit amet';
-    }
-
-    public function fileDescriptionUserPrompt(Project $project, File $file, PromptRequest $promptRequest): string
-    {
-        return 'Lorem ipsum dolor sit amet';
     }
 
     public function modelName(): string

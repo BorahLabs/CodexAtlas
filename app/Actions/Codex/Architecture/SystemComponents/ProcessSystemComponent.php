@@ -6,7 +6,7 @@ use App\Enums\SystemComponentStatus;
 use App\LLM\Contracts\Llm;
 use App\LLM\DTO\CompletionResponse;
 use App\LLM\OpenAI;
-use App\LLM\PromptRequests\DocumentFilePromptRequest;
+use App\LLM\PromptRequests\PromptRequestType;
 use App\Models\Branch;
 use App\Models\ProcessingLogEntry;
 use App\Models\SystemComponent;
@@ -59,7 +59,7 @@ class ProcessSystemComponent
                     totalTokens: 0,
                 );
             } else {
-                $completion = $llm->describeFile($project, $file, new DocumentFilePromptRequest());
+                $completion = $llm->describeFile($project, $file, PromptRequestType::DOCUMENT_FILE->value);
             }
 
             $branch->systemComponents()->updateOrCreate([

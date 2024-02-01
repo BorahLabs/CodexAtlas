@@ -10,16 +10,15 @@ abstract class Llm
 {
     abstract public function completion(string $systemPrompt, string $userPrompt): CompletionResponse;
 
-    abstract public function fileDescriptionSystemPrompt(Project $project, File $file, PromptRequest $promptRequest): string;
-
-    abstract public function fileDescriptionUserPrompt(Project $project, File $file, PromptRequest $promptRequest): string;
-
     abstract public function modelName(): string;
 
-    public function describeFile(Project $project, File $file, PromptRequest $promptRequest): CompletionResponse
+    abstract public function getPromptRequest(string $promptIdentifier): PromptRequest;
+
+    public function describeFile(Project $project, File $file, string $promptRequestIdentifier): CompletionResponse
     {
-        $system = $this->fileDescriptionSystemPrompt($project, $file, $promptRequest);
-        $user = $this->fileDescriptionUserPrompt($project, $file, $promptRequest);
+        $promptRequest = $this->getPromptRequest($promptRequestIdentifier);
+        $system = $promptRequest->fileDescriptionSystemPrompt($project, $file);
+        $user = $promptRequest->fileDescriptionUserPrompt($project, $file);
 
         return $this->completion($system, $user);
     }

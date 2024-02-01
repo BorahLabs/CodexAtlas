@@ -27,7 +27,7 @@ class GetTechStack
         $branchName = $branch->name;
 
         $dependencyFiles = $this->getDependencyFiles($provider, $repositoryName, $branchName);
-        // dd($dependencyFiles);
+        dd($dependencyFiles);
 
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\LLM\PromptRequests;
+namespace App\LLM\PromptRequests\OpenAI;
 
 use App\LLM\Contracts\PromptRequest;
 use App\Models\Project;

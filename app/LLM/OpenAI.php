@@ -6,6 +6,9 @@ use App\LLM\Contracts\HasApiKey;
 use App\LLM\Contracts\Llm;
 use App\LLM\Contracts\PromptRequest;
 use App\LLM\DTO\CompletionResponse;
+use App\LLM\PromptRequests\OpenAI\DocumentFilePromptRequest;
+use App\LLM\PromptRequests\OpenAI\GenerateTechStackPromptRequest;
+use App\LLM\PromptRequests\PromptRequestType;
 use App\Models\Project;
 use App\SourceCode\DTO\File;
 use OpenAI\Client;
@@ -14,15 +17,12 @@ class OpenAI extends Llm implements HasApiKey
 {
     private ?string $key = null;
 
-    public function fileDescriptionSystemPrompt(Project $project, File $file, PromptRequest $promptRequest): string
+    public function getPromptRequest(string $promptIdentifier): PromptRequest
     {
-
-        return $promptRequest->fileDescriptionSystemPrompt($project, $file);
-    }
-
-    public function fileDescriptionUserPrompt(Project $project, File $file, PromptRequest $promptRequest): string
-    {
-        return $promptRequest->fileDescriptionUserPrompt($project, $file);
+        return match($promptIdentifier) {
+            PromptRequestType::DOCUMENT_FILE->value => new DocumentFilePromptRequest(),
+            PromptRequestType::TECH_STACK->value => new GenerateTechStackPromptRequest(),
+        };
     }
 
     public function modelName(): string
