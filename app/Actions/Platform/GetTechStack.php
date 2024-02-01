@@ -3,6 +3,8 @@
 namespace App\Actions\Platform;
 
 use App\Atlas\DependencyFiles;
+use App\LLM\Contracts\Llm;
+use App\LLM\PromptRequests\PromptRequestType;
 use App\Models\Branch;
 use App\Models\Repository;
 use App\SourceCode\Contracts\SourceCodeProvider;
@@ -11,6 +13,7 @@ use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\RepositoryName;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Psy\Util\Str;
 
@@ -26,8 +29,29 @@ class GetTechStack
         $repositoryName = $repository->nameDto();
         $branchName = $branch->name;
 
+
         $dependencyFiles = $this->getDependencyFiles($provider, $repositoryName, $branchName);
-        dd($dependencyFiles);
+        $dependencyFile = $this->generateFileWithAllDependencies($dependencyFiles);
+
+
+        /**
+         * @var Llm
+        */
+        $llm = app(Llm::class);
+
+        $key = 'techstack-'.$repository->id.'-'.$branch->id;
+        $file = Cache::get($key);
+        if (is_null($file)) {
+            try {
+                $completion = $llm->describeFile($repository->project, $dependencyFile, PromptRequestType::TECH_STACK->value);
+                $file = new File('Tech Stack', 'TechStack', '', '', $completion->completion);
+                Cache::put($key, $file, now()->addMinutes(30));
+            } catch (\Exception $e) {
+                $file = null;
+            }
+        }
+
+        return $file;
 
     }
 
@@ -58,6 +82,17 @@ class GetTechStack
         }
 
         return $dependencyFiles;
+    }
+
+    private function generateFileWithAllDependencies(array $dependencyFiles): File
+    {
+        $content = '';
+
+        foreach ($dependencyFiles as $dependencyFile) {
+            $content .= $dependencyFile->name . ':\n' . $dependencyFile->contents . '\n\n';
+        }
+
+        return new File(name: 'Dependency Files', contents: $content, path: '', downloadUrl: '', sha: '');
     }
 
 }
