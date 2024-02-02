@@ -78,6 +78,20 @@ test('Vue is supported', function () {
     expect(get_class(Guesser::make()->guessFramework($folder)))->toBe(Frameworks\Vue::class);
 });
 
+test('Can get correct file from folder in Vue', function () {
+    $folder = new Folder('', '', '');
+    $file = new File(name:'package.json', path:'package.json', sha:'', downloadUrl:'', contents:getVuePackageJsonContent());
+    $folder->addFile($file);
+    expect($folder->getFile('package.json'))->toBe($file);
+});
+
+test('Can get correct file from folder in react', function () {
+    $folder = new Folder('', '', '');
+    $file = new File(name:'package.json', path:'package.json', sha:'', downloadUrl:'', contents:getReactPackageJsonContent());
+    $folder->addFile($file);
+    expect($folder->getFile('package.json'))->toBe($file);
+});
+
 test('Fallbacks to general framework', function () {
     $folder = new Folder('', '', '');
     $folder->addFile(new File(name: 'index.php', path: 'index.php', sha: '', downloadUrl: ''));

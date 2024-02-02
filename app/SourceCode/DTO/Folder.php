@@ -83,6 +83,21 @@ class Folder
         return in_array($path, array_map(fn (File $f) => $f->path, $this->files));
     }
 
+    public function hasFolder(string $path, bool $recursive = false): bool
+    {
+        if (! $recursive) {
+            return in_array($path, array_map(fn (Folder $f) => basename($f->path), $this->folders));
+        }
+
+        foreach ($this->folders as $folder) {
+            if ($folder->path === $path || $folder->hasFolder($path, true)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function getFile(string $path): ?File
     {
         foreach ($this->files as $file) {
