@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\SourceCode\DTO\File;
 use Borah\KnowledgeBase\DTO\KnowledgeEmbeddingText;
 use Borah\KnowledgeBase\Traits\BelongsToKnowledgeBase;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -30,5 +31,10 @@ class BranchDocument extends Model
         ];
 
         return $embeddings;
+    }
+
+    public function formatToFile(): File
+    {
+        return new File(name: $this->name, path: $this->path, sha: '',downloadUrl: '', contents: $this->content);
     }
 }
