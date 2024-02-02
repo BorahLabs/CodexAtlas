@@ -8,7 +8,7 @@ use App\SourceCode\DTO\File;
 
 class DocumentFilePromptRequest implements PromptRequest
 {
-    public function fileDescriptionSystemPrompt(Project $project, File $file) : string
+    public function systemPrompt(Project $project, File $file) : string
     {
         return 'You are an expert in writing software documentation. Write a short description of the provided file with the following structure:
 
@@ -43,7 +43,7 @@ class DocumentFilePromptRequest implements PromptRequest
         - If there are no methods or no classes, please do not include the section in the output';;
     }
 
-    public function fileDescriptionUserPrompt(Project $project, File $file): string
+    public function userPrompt(Project $project, File $file): string
     {
         return 'You are writing documentation for a file in the '.$project->name.' project. The file is located at '.$file->path.'. These are the file contents:
             ```'.$file->extension().'

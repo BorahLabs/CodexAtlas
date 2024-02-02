@@ -59,7 +59,7 @@ class ProcessSystemComponent
                     totalTokens: 0,
                 );
             } else {
-                $completion = $llm->describeFile($project, $file, PromptRequestType::DOCUMENT_FILE->value);
+                $completion = $llm->describeFile($project, $file, PromptRequestType::DOCUMENT_FILE);
             }
 
             $branch->systemComponents()->updateOrCreate([

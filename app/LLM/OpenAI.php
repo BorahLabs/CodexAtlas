@@ -15,11 +15,11 @@ class OpenAI extends Llm implements HasApiKey
 {
     private ?string $key = null;
 
-    public function getPromptRequest(string $promptIdentifier): PromptRequest
+    public function getPromptRequest(PromptRequestType $promptIdentifier): PromptRequest
     {
         return match($promptIdentifier) {
-            PromptRequestType::DOCUMENT_FILE->value => new DocumentFilePromptRequest(),
-            PromptRequestType::TECH_STACK->value => new GenerateTechStackPromptRequest(),
+            PromptRequestType::DOCUMENT_FILE => new DocumentFilePromptRequest(),
+            PromptRequestType::TECH_STACK => new GenerateTechStackPromptRequest(),
         };
     }
 

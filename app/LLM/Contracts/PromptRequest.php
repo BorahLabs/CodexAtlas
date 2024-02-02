@@ -7,7 +7,7 @@ use App\SourceCode\DTO\File;
 
 interface PromptRequest
 {
-    public function fileDescriptionSystemPrompt(Project $project, File $file): string;
+    public function systemPrompt(Project $project, File $file): string;
 
-    public function fileDescriptionUserPrompt(Project $project, File $file): string;
+    public function userPrompt(Project $project, File $file): string;
 }

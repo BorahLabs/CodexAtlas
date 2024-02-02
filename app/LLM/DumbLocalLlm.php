@@ -6,13 +6,14 @@ use App\LLM\Contracts\Llm;
 use App\LLM\Contracts\PromptRequest;
 use App\LLM\DTO\CompletionResponse;
 use App\LLM\PromptRequests\DumpLlm\DumpLlmPromptRequest;
+use App\LLM\PromptRequests\PromptRequestType;
 use App\Models\Project;
 use App\SourceCode\DTO\File;
 
 class DumbLocalLlm extends Llm
 {
 
-    public function getPromptRequest(string $promptIdentifier): PromptRequest
+    public function getPromptRequest(PromptRequestType $promptIdentifier): PromptRequest
     {
         return match($promptIdentifier) {
             default => new DumpLlmPromptRequest()

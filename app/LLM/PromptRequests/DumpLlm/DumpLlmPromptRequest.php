@@ -8,12 +8,12 @@ use App\SourceCode\DTO\File;
 
 class DumpLlmPromptRequest implements PromptRequest {
 
-    public function fileDescriptionSystemPrompt(Project $project, File $file) : string
+    public function systemPrompt(Project $project, File $file) : string
     {
         return 'Lorem ipsum dolor sit amet';
     }
 
-    public function fileDescriptionUserPrompt(Project $project, File $file): string
+    public function userPrompt(Project $project, File $file): string
     {
         return 'Lorem ipsum dolor sit amet';
     }

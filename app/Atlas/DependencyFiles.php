@@ -12,7 +12,7 @@ class DependencyFiles {
         'requirements.txt',
         'Gemfile',
         'npm-shrinkwrap.json',
-        'yarn.lock'
+        'Podfile'
     ];
 
     public static function getFolderDependencyFiles(Folder $folder) : array

@@ -14,6 +14,8 @@ use App\SourceCode\DTO\Folder;
 use App\SourceCode\DTO\RepositoryName;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Psy\Util\Str;
 
@@ -28,22 +30,30 @@ class GetTechStack
         $provider = $repository->sourceCodeAccount->getProvider();
         $repositoryName = $repository->nameDto();
         $branchName = $branch->name;
-        
+
         $dependencyFiles = $this->getDependencyFiles($provider, $repositoryName, $branchName);
         $dependencyFile = $this->generateFileWithAllDependencies($dependencyFiles);
-
         /**
          * @var Llm
         */
         $llm = app(Llm::class);
-        $key = 'techstack-'.$repository->id.'-'.$branch->id;
-        $file = Cache::get($key);
+        $techStack = $branch->branchDocuments()->where('path', 'TechStackFile')->first();
 
+        $file = null;
+        if($techStack) {
+            $key = sha1($techStack->content);
+            $file = Cache::get($key);
+        }
 
         if (is_null($file)) {
-                $completion = $llm->describeFile($repository->project, $dependencyFile, PromptRequestType::TECH_STACK->value);
-                $file = new File('Tech Stack', 'TechStack', '', '', $completion->completion);
-                Cache::put($key, $file, now()->addMinutes(30));
+                $completion = $llm->describeFile($repository->project, $dependencyFile, PromptRequestType::TECH_STACK);
+                $branchDocument = $branch->branchDocuments()->updateOrCreate(
+                    ['path' => 'TechStackFile'],
+                    ['name' => 'TechStackFile', 'content' => $completion->completion]
+                );
+                $key = sha1($branchDocument->content);
+                $file = new File('TechStackFile', 'TechStackFile', '', '', $completion->completion);
+                Cache::put($key, $file, now()->addWeek(1));
         }
 
         return $file;
@@ -73,7 +83,7 @@ class GetTechStack
         $content = '';
 
         foreach ($dependencyFiles as $dependencyFile) {
-            $content .= $dependencyFile->name . ':\n' . $dependencyFile->contents . '\n\n';
+            $content .= $dependencyFile->name . ":\n" . $dependencyFile->contents . "\n\n";
         }
 
         return new File(name: 'Dependency Files', contents: $content, path: '', downloadUrl: '', sha: '');

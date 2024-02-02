@@ -15,9 +15,9 @@ it('returns right prompts', function () {
     $user = User::factory()->inFreeTrialMode()->create();
     [$project, $sourceCodeAccount, $repository, $branch] = createLaravelProject($user->currentTeam);
     $file = new File(name: 'README.md', path: 'README.md', sha: '', downloadUrl: '', contents: '## Hello World');
-    $promptRequest = (new OpenAI())->getPromptRequest(PromptRequestType::DOCUMENT_FILE->value);
-    expect($promptRequest->fileDescriptionSystemPrompt($project, $file))->not->toBeEmpty();
-    expect($promptRequest->fileDescriptionUserPrompt($project, $file))
+    $promptRequest = (new OpenAI())->getPromptRequest(PromptRequestType::DOCUMENT_FILE);
+    expect($promptRequest->systemPrompt($project, $file))->not->toBeEmpty();
+    expect($promptRequest->userPrompt($project, $file))
         ->not->toBeEmpty()
         ->toContain($project->name)
         ->toContain($file->path)
@@ -45,11 +45,11 @@ it('return right prompt to get tech stack request', function () {
     [$project, $sourceCodeAccount, $repository, $branch] = createLaravelProject($user->currentTeam);
     $file = new File(name: 'README.md', path: 'README.md', sha: '', downloadUrl: '', contents: '## Hello World');
 
-    $promptRequest = (new OpenAI())->getPromptRequest(PromptRequestType::TECH_STACK->value);
+    $promptRequest = (new OpenAI())->getPromptRequest(PromptRequestType::TECH_STACK);
 
     expect($promptRequest)->toBeInstanceOf(GenerateTechStackPromptRequest::class);
-    expect($promptRequest->fileDescriptionSystemPrompt($project, $file))->not->toBeEmpty();
-    expect($promptRequest->fileDescriptionUserPrompt($project, $file))
+    expect($promptRequest->systemPrompt($project, $file))->not->toBeEmpty();
+    expect($promptRequest->userPrompt($project, $file))
         ->not->toBeEmpty()
         ->toContain($project->name)
         ->toContain($file->contents);

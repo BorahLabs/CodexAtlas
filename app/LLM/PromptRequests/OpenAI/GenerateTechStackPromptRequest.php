@@ -8,7 +8,7 @@ use App\SourceCode\DTO\File;
 
 class GenerateTechStackPromptRequest implements PromptRequest
 {
-    public function fileDescriptionSystemPrompt(Project $project, File $file) : string
+    public function systemPrompt(Project $project, File $file) : string
     {
         return 'You are an expert in writing tech stack files been able to determine the main frameworks used.:
 
@@ -21,16 +21,12 @@ class GenerateTechStackPromptRequest implements PromptRequest
         Some rules:
 
         - Only talk about the most important frameworks.
-        - If it uses a stylyng framework add it.
-        - The description must have around 50 words but dont show the count of the words.
-        - Show all of them in the same list without splitting it.
-        - Only name 7.
         - Format the output using Markdown. Feel free to add bold, italic or even tables if you need them.
         - Do not output the original file.
         - Finish the documentation by writing "END" in a new line';
     }
 
-    public function fileDescriptionUserPrompt(Project $project, File $file): string
+    public function userPrompt(Project $project, File $file): string
     {
         return 'You are writing documentation for a file in the '.$project->name.' project. These are the file dependencies of the project:
             ```
