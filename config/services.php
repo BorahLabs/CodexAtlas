@@ -62,4 +62,9 @@ return [
         ],
     ],
 
+    'modal' => [
+        'codex' => [
+            'describe_file_endpoint' => env('MODAL_CODEX_DESCRIBE_FILE_ENDPOINT'),
+        ],
+    ],
 ];
