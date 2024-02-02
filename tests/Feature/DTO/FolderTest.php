@@ -71,10 +71,10 @@ test('Can check if a file exists recursively', function () {
 });
 
 test('Can check if a folder exists recursively', function () {
-    $folder = new Folder('', '', '');
-    $secondFolder = new Folder('folder', 'folder', '');
-    $thirdFolder = new Folder('thirdFolder', 'thirdFolder', '');
-
+    $folder = new Folder('firstFolder', 'firstFolder', '');
+    $secondFolder = new Folder('secondFolder', 'firstFolder/secondFolder', '');
+    $thirdFolder = new Folder('thirdFolder', 'firstFolder/secondFolder/thirdFolder', '');
+    
     $secondFolder->addFolder($thirdFolder);
     expect($folder->hasFolder($thirdFolder->path, true))->toBe(false);
     $folder->addFolder($secondFolder);

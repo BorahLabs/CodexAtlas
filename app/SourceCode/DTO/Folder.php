@@ -90,12 +90,12 @@ class Folder
         }
 
         foreach ($this->folders as $folder) {
-            if ($folder->hasFolder($path, false)) {
+            if ($folder->path === $path || $folder->hasFolder($path, true)) {
                 return true;
             }
         }
 
-        return in_array($path, array_map(fn (Folder $f) => $f->path, $this->folders));
+        return false;
     }
 
     public function getFile(string $path): ?File
