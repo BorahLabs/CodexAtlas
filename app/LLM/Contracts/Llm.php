@@ -13,11 +13,11 @@ abstract class Llm
 
     abstract public function modelName(): string;
 
-    abstract public function getPromptRequest(PromptRequestType $promptIdentifier): PromptRequest;
+    abstract public function getPromptRequest(PromptRequestType $promptRequestType): PromptRequest;
 
-    public function describeFile(Project $project, File $file, PromptRequestType $promptRequestIdentifier): CompletionResponse
+    public function describeFile(Project $project, File $file, PromptRequestType $promptRequestType): CompletionResponse
     {
-        $promptRequest = $this->getPromptRequest($promptRequestIdentifier);
+        $promptRequest = $this->getPromptRequest($promptRequestType);
         $system = $promptRequest->systemPrompt($project, $file);
         $user = $promptRequest->userPrompt($project, $file);
 

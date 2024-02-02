@@ -13,9 +13,9 @@ use App\SourceCode\DTO\File;
 class DumbLocalLlm extends Llm
 {
 
-    public function getPromptRequest(PromptRequestType $promptIdentifier): PromptRequest
+    public function getPromptRequest(PromptRequestType $promptRequestType): PromptRequest
     {
-        return match($promptIdentifier) {
+        return match($promptRequestType) {
             default => new DumpLlmPromptRequest()
         };
     }

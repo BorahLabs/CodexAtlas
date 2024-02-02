@@ -10,8 +10,6 @@ class DependencyFiles {
         'composer.json',
         'package.json',
         'requirements.txt',
-        'Gemfile',
-        'npm-shrinkwrap.json',
         'Podfile'
     ];
 
