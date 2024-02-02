@@ -9,9 +9,7 @@ use App\LLM\PromptRequests\PromptRequestType;
 use App\Models\Branch;
 use App\Models\BranchDocument;
 use App\Models\Repository;
-use App\SourceCode\DTO\Branch as DTOBranch;
 use App\SourceCode\DTO\File;
-use App\SourceCode\DTO\Folder;
 
 class GenerateTechStackDocumentation {
 
@@ -19,7 +17,7 @@ class GenerateTechStackDocumentation {
 
     public function handle(Repository $repository, Branch $branch): BranchDocument
     {
-        $dependencyFiles = $this->getDependencyFiles($repository, $branch);
+        $dependencyFiles = DependencyFiles::getDependencyFilesFromBranch($branch);
         $dependencyFile = $this->generateFileWithAllDependencies($dependencyFiles);
 
         /**
@@ -32,29 +30,6 @@ class GenerateTechStackDocumentation {
             ['path' => 'TechStackFile'],
             ['name' => 'TechStackFile', 'content' => $completion->completion]
         );
-    }
-
-    private function getDependencyFiles(Repository $repository, Branch $branch) : array
-    {
-        $provider = $repository->sourceCodeAccount->getProvider();
-        $repositoryName = $repository->nameDto();
-        $branchName = $branch->name;
-
-        $filesAndFolders = $provider->files(
-            repository: $repositoryName,
-            branch: new DTOBranch(name: $branchName),
-            path: null,
-        );
-        $folder = Folder::makeWithFiles($filesAndFolders, $repositoryName->name, $repositoryName->username, sha1($repositoryName->fullName));
-        $dependencyFileNames = DependencyFiles::getFolderDependencyFiles($folder);
-
-        $dependencyFiles = [];
-
-        foreach($dependencyFileNames as $dependencyFileName) {
-            $dependencyFiles[] = $provider->file($repositoryName, new DTOBranch(name:$branchName), $dependencyFileName);
-        }
-
-        return $dependencyFiles;
     }
 
     private function generateFileWithAllDependencies(array $dependencyFiles): File

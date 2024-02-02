@@ -3,6 +3,7 @@
 namespace App\Actions\Codex;
 
 use App\Actions\Codex\Architecture\SystemComponents\ProcessSystemComponent;
+use App\Atlas\DependencyFiles;
 use App\Enums\FileChange;
 use App\Models\Branch;
 use App\SourceCode\DTO\Diff;
@@ -33,6 +34,11 @@ class UpdateDocumentationFromDiff
                 continue;
             }
 
+            if($this->isDependencyFile($branch, $item)) {
+                GenerateTechStackDocumentation::dispatch($branch->repository, $branch);
+                continue;
+            }
+
             $file = new File(
                 name: basename($item->path),
                 path: $item->path,
@@ -42,5 +48,16 @@ class UpdateDocumentationFromDiff
             ProcessSystemComponent::dispatch($branch, $file, $order);
             $order += 1;
         }
+    }
+
+    private function isDependencyFile(Branch $branch, DiffItem $diff): bool
+    {
+        $dependencyFiles = DependencyFiles::getDependencyFilesFromBranch($branch);
+        foreach($dependencyFiles as $dependencyFile) {
+            if($dependencyFile->path === $diff->path) {
+                return true;
+            }
+        }
+        return false;
     }
 }
