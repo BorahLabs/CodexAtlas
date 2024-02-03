@@ -17,6 +17,7 @@ class UpdateDocumentationFromDiff
 
     public function handle(Branch $branch, Diff $diff): void
     {
+        $alreadyTechDocumentationGenerated = false;
         $order = ($branch->systemComponents()->max('order') ?? 0) + 1;
         $itemsToDelete = collect($diff->changes)
             ->filter(fn (DiffItem $item) => $item->change === FileChange::Removed)
@@ -34,8 +35,9 @@ class UpdateDocumentationFromDiff
                 continue;
             }
 
-            if($this->isDependencyFile($branch, $item)) {
+            if($this->isDependencyFile($branch, $item) && !$alreadyTechDocumentationGenerated) {
                 GenerateTechStackDocumentation::dispatch($branch->repository, $branch);
+                $alreadyTechDocumentationGenerated = true;
                 continue;
             }
 
