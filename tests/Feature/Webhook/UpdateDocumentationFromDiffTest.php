@@ -4,11 +4,10 @@ use App\Actions\Codex\GenerateTechStackDocumentation;
 use App\Actions\Codex\UpdateDocumentationFromDiff;
 use App\Enums\FileChange;
 use App\Models\SystemComponent;
+use App\Models\User;
 use App\SourceCode\DTO\Diff;
 use App\SourceCode\DTO\DiffItem;
-use App\Models\User;
 use Illuminate\Support\Facades\Queue;
-
 
 it('Delete system component when removed from source code provider', function () {
     $user = User::factory()->inFreeTrialMode()->create();
@@ -65,6 +64,7 @@ function generateFakeDependenciesModifiedDiff(): Diff
     $diff = new Diff();
     $diffItem = new DiffItem('composer.json', FileChange::Modified);
     $diff->add($diffItem);
+
     return $diff;
 }
 
@@ -73,6 +73,7 @@ function generateFakeDiff(): Diff
     $diff = new Diff();
     $diffItem = new DiffItem('test.php', FileChange::Modified);
     $diff->add($diffItem);
+
     return $diff;
 }
 
@@ -81,5 +82,6 @@ function generateRemovedFileDiff(SystemComponent $systemComponent): Diff
     $diff = new Diff();
     $diffItem = new DiffItem($systemComponent->path, FileChange::Removed);
     $diff->add($diffItem);
+
     return $diff;
 }

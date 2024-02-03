@@ -8,7 +8,7 @@ use App\SourceCode\DTO\File;
 
 class DocumentFilePromptRequest implements PromptRequest
 {
-    public function systemPrompt(Project $project, File $file) : string
+    public function systemPrompt(Project $project, File $file): string
     {
         return 'You are an expert in writing software documentation. Write a short description of the provided file with the following structure:
 
@@ -40,7 +40,7 @@ class DocumentFilePromptRequest implements PromptRequest
         - Format the output using Markdown. Feel free to add bold, italic or even tables if you need them
         - Do not output the original file
         - Finish the documentation by writing "END" in a new line
-        - If there are no methods or no classes, please do not include the section in the output';;
+        - If there are no methods or no classes, please do not include the section in the output';
     }
 
     public function userPrompt(Project $project, File $file): string

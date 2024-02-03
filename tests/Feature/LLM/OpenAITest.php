@@ -1,7 +1,6 @@
 <?php
 
 use App\LLM\OpenAI;
-use App\LLM\PromptRequests\DocumentFilePromptRequest;
 use App\LLM\PromptRequests\OpenAI\GenerateTechStackPromptRequest;
 use App\LLM\PromptRequests\PromptRequestType;
 use App\Models\User;
@@ -38,7 +37,6 @@ it('generates a completion', function () {
     expect($response->outputTokens)->toBeGreaterThan(0);
     expect($response->totalTokens)->toBe($response->inputTokens + $response->outputTokens);
 });
-
 
 it('return right prompt to get tech stack request', function () {
     $user = User::factory()->inFreeTrialMode()->create();

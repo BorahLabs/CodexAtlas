@@ -17,7 +17,7 @@ class OpenAI extends Llm implements HasApiKey
 
     public function getPromptRequest(PromptRequestType $promptRequestType): PromptRequest
     {
-        return match($promptRequestType) {
+        return match ($promptRequestType) {
             PromptRequestType::DOCUMENT_FILE => new DocumentFilePromptRequest(),
             PromptRequestType::TECH_STACK => new GenerateTechStackPromptRequest(),
         };

@@ -35,6 +35,6 @@ class BranchDocument extends Model
 
     public function formatToFile(): File
     {
-        return new File(name: $this->name, path: $this->path, sha: '',downloadUrl: '', contents: $this->content);
+        return new File(name: $this->name, path: $this->path, sha: '', downloadUrl: '', contents: $this->content);
     }
 }

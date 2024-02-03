@@ -8,7 +8,7 @@ use App\SourceCode\DTO\File;
 
 class GenerateTechStackPromptRequest implements PromptRequest
 {
-    public function systemPrompt(Project $project, File $file) : string
+    public function systemPrompt(Project $project, File $file): string
     {
         return 'You are an expert in writing tech stack files been able to determine the main frameworks used.:
 

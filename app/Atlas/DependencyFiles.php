@@ -3,25 +3,24 @@
 namespace App\Atlas;
 
 use App\Models\Branch;
-use App\Models\Repository;
 use App\SourceCode\DTO\Branch as DTOBranch;
 use App\SourceCode\DTO\Folder;
 
-class DependencyFiles {
-
+class DependencyFiles
+{
     const DEPENDENCY_FILES = [
         'composer.json',
         'package.json',
         'requirements.txt',
-        'Podfile'
+        'Podfile',
     ];
 
-    public static function getFolderDependencyFiles(Folder $folder) : array
+    public static function getFolderDependencyFiles(Folder $folder): array
     {
-        return array_filter(self::DEPENDENCY_FILES, fn(string $dependencyFile) => $folder->hasFile($dependencyFile));
+        return array_filter(self::DEPENDENCY_FILES, fn (string $dependencyFile) => $folder->hasFile($dependencyFile));
     }
 
-    public static function getDependencyFilesFromBranch(Branch $branch) : array
+    public static function getDependencyFilesFromBranch(Branch $branch): array
     {
         $repository = $branch->repository;
         $provider = $repository->sourceCodeAccount->getProvider();
@@ -38,8 +37,8 @@ class DependencyFiles {
 
         $dependencyFiles = [];
 
-        foreach($dependencyFileNames as $dependencyFileName) {
-            $dependencyFiles[] = $provider->file($repositoryName, new DTOBranch(name:$branchName), $dependencyFileName);
+        foreach ($dependencyFileNames as $dependencyFileName) {
+            $dependencyFiles[] = $provider->file($repositoryName, new DTOBranch(name: $branchName), $dependencyFileName);
         }
 
         return $dependencyFiles;

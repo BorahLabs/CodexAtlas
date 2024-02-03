@@ -35,9 +35,10 @@ class UpdateDocumentationFromDiff
                 continue;
             }
 
-            if($this->isDependencyFile($branch, $item) && !$alreadyTechDocumentationGenerated) {
+            if ($this->isDependencyFile($branch, $item) && ! $alreadyTechDocumentationGenerated) {
                 GenerateTechStackDocumentation::dispatch($branch->repository, $branch);
                 $alreadyTechDocumentationGenerated = true;
+
                 continue;
             }
 
@@ -55,11 +56,12 @@ class UpdateDocumentationFromDiff
     private function isDependencyFile(Branch $branch, DiffItem $diff): bool
     {
         $dependencyFiles = DependencyFiles::getDependencyFilesFromBranch($branch);
-        foreach($dependencyFiles as $dependencyFile) {
-            if($dependencyFile->path === $diff->path) {
+        foreach ($dependencyFiles as $dependencyFile) {
+            if ($dependencyFile->path === $diff->path) {
                 return true;
             }
         }
+
         return false;
     }
 }

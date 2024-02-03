@@ -7,18 +7,16 @@ use App\LLM\Contracts\PromptRequest;
 use App\LLM\DTO\CompletionResponse;
 use App\LLM\PromptRequests\DumpLlm\DumpLlmPromptRequest;
 use App\LLM\PromptRequests\PromptRequestType;
-use App\Models\Project;
-use App\SourceCode\DTO\File;
 
 class DumbLocalLlm extends Llm
 {
-
     public function getPromptRequest(PromptRequestType $promptRequestType): PromptRequest
     {
-        return match($promptRequestType) {
+        return match ($promptRequestType) {
             default => new DumpLlmPromptRequest()
         };
     }
+
     public function completion(string $systemPrompt, string $userPrompt): CompletionResponse
     {
         return CompletionResponse::make(

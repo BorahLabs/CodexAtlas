@@ -14,6 +14,7 @@ class ShowTechStack
     public function handle(Project $project, Repository $repository, Branch $branch): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $file = GetTechStack::make()->handle($repository, $branch);
+
         return view('docs-homepage', [
             'project' => $project,
             'repository' => $repository,

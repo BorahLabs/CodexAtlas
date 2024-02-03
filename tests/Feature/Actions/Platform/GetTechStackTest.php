@@ -36,4 +36,3 @@ it('check when a tech stack file is generated belongs to the correct branch', fu
     $branchDocumentation = GenerateTechStackDocumentation::run($repository, $branch);
     expect($branchDocumentation->branch->id)->toBe($branch->id);
 });
-

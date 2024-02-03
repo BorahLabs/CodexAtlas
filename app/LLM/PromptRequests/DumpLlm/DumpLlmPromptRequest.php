@@ -6,9 +6,9 @@ use App\LLM\Contracts\PromptRequest;
 use App\Models\Project;
 use App\SourceCode\DTO\File;
 
-class DumpLlmPromptRequest implements PromptRequest {
-
-    public function systemPrompt(Project $project, File $file) : string
+class DumpLlmPromptRequest implements PromptRequest
+{
+    public function systemPrompt(Project $project, File $file): string
     {
         return 'Lorem ipsum dolor sit amet';
     }
@@ -18,4 +18,3 @@ class DumpLlmPromptRequest implements PromptRequest {
         return 'Lorem ipsum dolor sit amet';
     }
 }
-

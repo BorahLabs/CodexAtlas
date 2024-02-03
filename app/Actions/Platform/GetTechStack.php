@@ -19,11 +19,10 @@ class GetTechStack
 
         $branchDocument = $branch->branchDocuments()->where('path', 'TechStackFile')->first();
 
-        if(!$branchDocument) {
+        if (! $branchDocument) {
             $branchDocument = GenerateTechStackDocumentation::run($repository, $branch);
         }
 
         return $branchDocument->formatToFile();
     }
-
 }
