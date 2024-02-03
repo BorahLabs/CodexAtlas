@@ -1,6 +1,8 @@
 <?php
 
 use App\LLM\OpenAI;
+use App\LLM\PromptRequests\OpenAI\GenerateTechStackPromptRequest;
+use App\LLM\PromptRequests\PromptRequestType;
 use App\Models\User;
 use App\SourceCode\DTO\File;
 
@@ -12,8 +14,9 @@ it('returns right prompts', function () {
     $user = User::factory()->inFreeTrialMode()->create();
     [$project, $sourceCodeAccount, $repository, $branch] = createLaravelProject($user->currentTeam);
     $file = new File(name: 'README.md', path: 'README.md', sha: '', downloadUrl: '', contents: '## Hello World');
-    expect((new OpenAI())->fileDescriptionSystemPrompt($project, $file))->not->toBeEmpty();
-    expect((new OpenAI())->fileDescriptionUserPrompt($project, $file))
+    $promptRequest = (new OpenAI())->getPromptRequest(PromptRequestType::DOCUMENT_FILE);
+    expect($promptRequest->systemPrompt($project, $file))->not->toBeEmpty();
+    expect($promptRequest->userPrompt($project, $file))
         ->not->toBeEmpty()
         ->toContain($project->name)
         ->toContain($file->path)
@@ -33,4 +36,19 @@ it('generates a completion', function () {
     expect($response->inputTokens)->toBeGreaterThan(0);
     expect($response->outputTokens)->toBeGreaterThan(0);
     expect($response->totalTokens)->toBe($response->inputTokens + $response->outputTokens);
+});
+
+it('return right prompt to get tech stack request', function () {
+    $user = User::factory()->inFreeTrialMode()->create();
+    [$project, $sourceCodeAccount, $repository, $branch] = createLaravelProject($user->currentTeam);
+    $file = new File(name: 'README.md', path: 'README.md', sha: '', downloadUrl: '', contents: '## Hello World');
+
+    $promptRequest = (new OpenAI())->getPromptRequest(PromptRequestType::TECH_STACK);
+
+    expect($promptRequest)->toBeInstanceOf(GenerateTechStackPromptRequest::class);
+    expect($promptRequest->systemPrompt($project, $file))->not->toBeEmpty();
+    expect($promptRequest->userPrompt($project, $file))
+        ->not->toBeEmpty()
+        ->toContain($project->name)
+        ->toContain($file->contents);
 });

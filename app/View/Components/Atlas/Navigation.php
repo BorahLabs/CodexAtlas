@@ -58,6 +58,11 @@ class Navigation extends Component
                     'repository' => $this->branch->repository,
                     'branch' => $this->branch,
                 ])),
+                new NavigationItem('Tech Stack', route('docs.show-tech-stack', [
+                    'project' => $this->branch->repository->project,
+                    'repository' => $this->branch->repository,
+                    'branch' => $this->branch,
+                ])),
             ]),
             ...$sections,
         ]);

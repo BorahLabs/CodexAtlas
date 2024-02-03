@@ -3,6 +3,7 @@
 namespace App\Actions\Codex\Architecture;
 
 use App\Actions\Codex\Architecture\SystemComponents\ProcessSystemComponent;
+use App\Actions\Codex\GenerateTechStackDocumentation;
 use App\Atlas\FileWhitelist;
 use App\Atlas\Frameworks\Contracts\Framework;
 use App\Atlas\Guesser;
@@ -55,6 +56,8 @@ class SystemComponents
             ProcessSystemComponent::dispatch($branch, $file, $order);
             $order += 1;
         }
+
+        GenerateTechStackDocumentation::dispatch($repository, $branch);
     }
 
     private function detectFramework(Folder $folder): Framework

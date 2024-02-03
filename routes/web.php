@@ -11,6 +11,7 @@ use App\Actions\Platform\Projects\StoreProject;
 use App\Actions\Platform\Repositories\StoreRepository;
 use App\Actions\Platform\ShowDocs;
 use App\Actions\Platform\ShowReadme;
+use App\Actions\Platform\ShowTechStack;
 use App\Actions\Platform\SourceCodeAccounts\StoreAccountPersonalAccessToken;
 use App\Actions\Platform\Webhook\HandleWebhook;
 use App\Http\Middleware\ControlRequestsFromPlatform;
@@ -83,6 +84,9 @@ Route::middleware(ControlRequestsFromPlatform::class)->group(function () {
     Route::get('/docs/{project}/{repository}/{branch}/readme', ShowReadme::class)
         ->scopeBindings()
         ->name('docs.show-readme');
+    Route::get('/docs/{project}/{repository}/{branch}/tech-stack', ShowTechStack::class)
+        ->scopeBindings()
+        ->name('docs.show-tech-stack');
     Route::get('/docs/{project}/{repository}/{branch}/{systemComponent}', ShowDocs::class)
         ->scopeBindings()
         ->name('docs.show-component');
