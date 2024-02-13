@@ -34,7 +34,7 @@
                         <figcaption class="mt-10 flex items-center gap-x-6">
                             <div class="text-base">
                                 <div class="font-semibold text-gray-900">David García</div>
-                                <div class="mt-1 text-gray-500">Founder of undisclosed app</div>
+                                <div class="mt-1 text-gray-500">Freelancer</div>
                             </div>
                         </figcaption>
                     </figure>
