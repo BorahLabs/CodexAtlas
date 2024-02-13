@@ -1,5 +1,5 @@
 <div class="flex items-center justify-between" x-data>
-    <h2 class="font-semibold text-xl text-gray-200 leading-tight">
+    <h2 class="font-semibold text-xl text-newGray-200 leading-tight">
         <a
             href="{{ $project->team->currentPlatform()->route('projects.show', ['project' => $project]) }}">{{ $project->name }}</a>
         &gt; <a
@@ -10,7 +10,7 @@
             @foreach ($repository->branches as $repoBranch)
                 <option @selected($repoBranch->id === $branch->id)
                     value="{{ $project->team->currentPlatform()->route('docs.show', ['project' => $project, 'repository' => $repository, 'branch' => $repoBranch]) }}"
-                    class="text-gray-800">
+                    class="text-newGray-800">
                     {{ $repoBranch->name }}</option>
             @endforeach
         </select>

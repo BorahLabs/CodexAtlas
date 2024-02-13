@@ -26,12 +26,12 @@
 <body class="font-sans antialiased">
     <x-banner />
 
-    <div class="min-h-screen bg-gray-900">
+    <div class="min-h-screen bg-newGray-900">
         @livewire('navigation-menu')
 
         <!-- Page Heading -->
         @if (isset($header))
-            <header class="bg-gray-800 shadow">
+            <header class="bg-newGray-800 shadow">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>
@@ -39,7 +39,7 @@
         @endif
 
         @if (isset($stickyHeader))
-            <header class="bg-gray-800 shadow z-40 sticky top-0">
+            <header class="bg-newGray-800 shadow z-40 sticky top-0">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     {{ $stickyHeader }}
                 </div>

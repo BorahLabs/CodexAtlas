@@ -9,10 +9,10 @@
                     <x-application-logo class="h-20" :name="true" nameClass="text-4xl font-bold text-white" />
                 </a>
             </div>
-            <div class="pt-10 border-t border-gray-800">
+            <div class="pt-10 border-t border-newGray-800">
                 <div class="md:flex items-center justify-between">
                     <div class="mb-6 md:mb-0">
-                        <span class="text-gray-600 tracking-tight">© {{ config('app.name') }}. All rights
+                        <span class="text-newGray-600 tracking-tight">© {{ config('app.name') }}. All rights
                             reserved</span>
                     </div>
                     <div><a class="inline-block mr-10 text-white hover:underline tracking-tight"

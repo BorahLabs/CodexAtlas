@@ -6,7 +6,7 @@
                     <h1
                         class="font-heading text-4xl sm:text-6xl md:text-7xl xl:text-8xl text-white font-semibold leading-none mb-8">
                         Instantly document your code</h1>
-                    <p class="text-2xl text-gray-400 mb-8">
+                    <p class="text-2xl text-newGray-400 mb-8">
                         <span class="block">Connect CodexAtlas to your GitHub, Gitlab or Bitbucket accounts</span>
                         <span class="block">and keep your documentation updated</span>
                     </p>
@@ -44,7 +44,8 @@
                     <h2
                         class="font-heading text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-medium text-white tracking-tight mb-6">
                         Spend more time developing</h2>
-                    <p class="text-xl text-gray-400">CodexAtlas reduces 99% of the manual work on documenting software
+                    <p class="text-xl text-newGray-400">CodexAtlas reduces 99% of the manual work on documenting
+                        software
                         projects by using the latest advancements in Artificial Intelligence.</p>
                 </div>
                 <div class="flex flex-wrap -mx-4">
@@ -77,7 +78,7 @@
                                     </h4>
                                 </div>
                             </div>
-                            <p class="text-xl text-gray-400">Powered by state-of-the-art artificial intelligence,
+                            <p class="text-xl text-newGray-400">Powered by state-of-the-art artificial intelligence,
                                 ensuring the right understanding for your code.</p>
                         </div>
                     </div>
@@ -105,7 +106,7 @@
                                     </h4>
                                 </div>
                             </div>
-                            <p class="text-xl text-gray-400">CodexAtlas is trained on the most popular languages and
+                            <p class="text-xl text-newGray-400">CodexAtlas is trained on the most popular languages and
                                 frameworks. If we still don't support yours, feel free to get in touch.</p>
                         </div>
                     </div>
@@ -131,7 +132,8 @@
                                     </h4>
                                 </div>
                             </div>
-                            <p class="text-xl text-gray-400">CodexAtlas is connected to your repository provider, and
+                            <p class="text-xl text-newGray-400">CodexAtlas is connected to your repository provider,
+                                and
                                 it will monitor changes in your code to automatically keep the documentation updated.
                             </p>
                         </div>
@@ -151,7 +153,7 @@
                     <h2
                         class="font-heading text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-medium text-white tracking-tight mb-6">
                         How does it work?</h2>
-                    <p class="text-xl text-gray-400">Setting up a new repository is a straight-forward process.</p>
+                    <p class="text-xl text-newGray-400">Setting up a new repository is a straight-forward process.</p>
                 </div>
                 <div class="flex flex-wrap items-center -mx-4 mb-16">
                     <div class="w-full md:w-1/2 px-4 mb-8 md:mb-0">
@@ -230,7 +232,7 @@
                 <h2
                     class="font-heading text-4xl xs:text-5xl sm:text-6xl lg:text-7xl font-medium text-white tracking-tight mb-6">
                     In the works</h2>
-                <p class="max-w-xl text-xl text-gray-500 tracking-tight">We are constantly improving CodexAtlas and
+                <p class="max-w-xl text-xl text-newGray-500 tracking-tight">We are constantly improving CodexAtlas and
                     keeping it up-to-date with the latest versions of each framework and language. But we are also doing
                     some other cool stuff that will be available soon.</p>
             </div>
@@ -244,7 +246,8 @@
                                     <h2
                                         class="text-3xl sm:text-4xl mb-2 font-medium text-white group-hover:text-sky-900">
                                         Self-host your docs</h2>
-                                    <p class="text-gray-500 tracking-tight leading-5">We are working on connecting to
+                                    <p class="text-newGray-500 tracking-tight leading-5">We are working on connecting
+                                        to
                                         Confluence, GitHub Wikis and Notion, apart from letting you download your
                                         documentation in Markdown format.</p>
                                 </div>
@@ -259,7 +262,7 @@
                                     <h3
                                         class="text-3xl sm:text-4xl mb-2 font-medium text-white group-hover:text-sky-900">
                                         On-premise enterprise plan</h3>
-                                    <p class="text-gray-500 tracking-tight leading-5">We understand that for some
+                                    <p class="text-newGray-500 tracking-tight leading-5">We understand that for some
                                         organizations, code is something really private. We are working on an on-premise
                                         version so that your code will never leave your servers.</p>
                                 </div>
@@ -274,7 +277,7 @@
                                     <h3
                                         class="text-3xl sm:text-4xl mb-2 font-medium text-white group-hover:text-sky-900">
                                         Intelligent feature copilot</h3>
-                                    <p class="text-gray-500 tracking-tight leading-5">We want to reduce the time
+                                    <p class="text-newGray-500 tracking-tight leading-5">We want to reduce the time
                                         between introducing a new person to a project and developing their first
                                         feature. Having all the knowledge of your code will help us do it.</p>
                                 </div>
@@ -299,7 +302,7 @@
                 <h2
                     class="font-heading text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-medium text-white tracking-tight mb-6">
                     Check our demos</h2>
-                <p class="max-w-xl mx-auto text-xl text-gray-500 leading-relaxed tracking-tight">Feel
+                <p class="max-w-xl mx-auto text-xl text-newGray-500 leading-relaxed tracking-tight">Feel
                     free to check our demos at how your project could look like in CodexAtlas.</p>
             </div>
         </div>
@@ -332,7 +335,8 @@
                 <h2
                     class="font-heading text-4xl xs:text-5xl sm:text-6xl xl:text-7xl font-medium text-white tracking-tight mb-4">
                     Choose Your Plan</h2>
-                <p class="max-w-md mx-auto text-lg leading-snug tracking-tight text-gray-500">Nunc et tellus non erat
+                <p class="max-w-md mx-auto text-lg leading-snug tracking-tight text-newGray-500">Nunc et tellus non
+                    erat
                     accumsan aliquam eget non mi. Integer fringilla pellentesque finibus.</p>
             </div>
             <div class="relative z-10 max-w-md lg:max-w-8xl mx-auto">
@@ -384,7 +388,7 @@
                 </div>
                 <div class="relative mx-auto mb-8 p-10 rounded-3xl overflow-hidden mt-12 lg:mt-24">
                     <div
-                        class="absolute top-0 left-0 w-full h-full backdrop-filter backdrop-blur-md bg-gray-500 bg-opacity-20 group-hover:bg-violet-400 group-hover:bg-opacity-100 transition duration-150">
+                        class="absolute top-0 left-0 w-full h-full backdrop-filter backdrop-blur-md bg-newGray-500 bg-opacity-20 group-hover:bg-violet-400 group-hover:bg-opacity-100 transition duration-150">
                     </div>
                     <div class="relative flex flex-wrap md:flex-nowrap -mx-4 items-center">
                         <div class="w-full md:w-auto px-4 mb-8 md:mb-0">
@@ -392,7 +396,8 @@
                                 <img src="{{ asset('casper-assets/pricing/robot.png') }}" alt="">
                                 <div class=" mt-3 sm:mt-0 sm:ml-8">
                                     <h3 class="text-3xl font-medium text-white">Enterprise</h3>
-                                    <p class="text-sm text-gray-300 max-w-lg mt-2">Not sure if we can work together? We
+                                    <p class="text-sm text-newGray-300 max-w-lg mt-2">Not sure if we can work together?
+                                        We
                                         can
                                         help you
                                         integrate CodexAtlas in your company and increase the productivity of your

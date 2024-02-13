@@ -5,12 +5,12 @@
         <img class="block w-full h-44 object-cover" src="{{ $imageUrl }}" alt="">
         <div class="relative p-10">
             <div
-                class="absolute top-0 left-0 w-full h-full backdrop-filter backdrop-blur-md bg-gray-500 bg-opacity-20 group-hover:bg-violet-400 group-hover:bg-opacity-100 transition duration-150">
+                class="absolute top-0 left-0 w-full h-full backdrop-filter backdrop-blur-md bg-newGray-500 bg-opacity-20 group-hover:bg-violet-400 group-hover:bg-opacity-100 transition duration-150">
             </div>
             <div class="relative">
                 <span class="block mb-10 text-4xl font-semibold text-white">{{ $price }}</span>
                 <span class="block mb-2 text-2xl font-medium text-white">{!! $title !!}</span>
-                <p class="max-w-xs text-sm text-gray-300 mb-8">{{ $description }}</p>
+                <p class="max-w-xs text-sm text-newGray-300 mb-8">{{ $description }}</p>
                 <div>
                     <span class="block mb-4 text-lg font-medium text-white tracking-tight">What's
                         included:</span>

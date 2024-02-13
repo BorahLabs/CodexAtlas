@@ -14,6 +14,7 @@ use OpenAI\Client;
 class OpenAI extends Llm implements HasApiKey
 {
     private ?string $key = null;
+    private ?string $model = null;
 
     public function getPromptRequest(PromptRequestType $promptRequestType): PromptRequest
     {
@@ -23,9 +24,16 @@ class OpenAI extends Llm implements HasApiKey
         };
     }
 
+    public function withModel(string $model): static
+    {
+        $this->model = $model;
+
+        return $this;
+    }
+
     public function modelName(): string
     {
-        return config('services.openai.completion_model');
+        return $this->model ?? config('services.openai.completion_model');
     }
 
     public function completion(string $systemPrompt, string $userPrompt): CompletionResponse

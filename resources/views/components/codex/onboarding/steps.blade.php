@@ -2,7 +2,7 @@
     'current' => 1,
 ])
 <div {{ $attributes }} x-data="{ isOpen: true }" x-modelable="isOpen">
-    <div class="bg-gray-800 overflow-hidden shadow-xl p-8 sm:rounded-lg text-slate-100">
+    <div class="bg-newGray-800 overflow-hidden shadow-xl p-8 sm:rounded-lg text-slate-100">
         <div class="max-w-4xl mx-auto">
             <div class="flex space-x-4 justify-center">
                 <x-application-mark class="h-8" />

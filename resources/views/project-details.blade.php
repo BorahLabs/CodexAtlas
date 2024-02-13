@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-newGray-200 leading-tight">
             {{ $project->name }}
         </h2>
     </x-slot>
@@ -13,7 +13,7 @@
                 <x-codex.onboarding.steps :current="3" x-show="showOnboarding" x-model="showOnboarding" />
             @endif
             <div x-show="!showOnboarding" x-cloak>
-                <div class="bg-gray-800 overflow-hidden shadow-xl p-8 sm:rounded-lg">
+                <div class="bg-newGray-800 overflow-hidden shadow-xl p-8 sm:rounded-lg">
                     <x-codex.repository-list :project="$project" />
                 </div>
                 <x-codex.free-plan-banner class="mt-12" />
