@@ -18,8 +18,7 @@
             border-color: white transparent transparent transparent;
         }
     </style>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https://unpkg.com/alpinejs@3.13.3/dist/cdn.min.js" defer></script>
+    @vite(['resources/css/app.css'])
 
     @production
         <script src="https://cdn.usefathom.com/script.js" data-site="FEPWQLXW" defer></script>
@@ -31,7 +30,9 @@
         {{ $slot }}
     </div>
 
+    <script src="https://unpkg.com/alpinejs@3.13.3/dist/cdn.min.js" defer></script>
     @filamentScripts
+    @vite(['resources/js/app.js'])
 </body>
 
 </html>

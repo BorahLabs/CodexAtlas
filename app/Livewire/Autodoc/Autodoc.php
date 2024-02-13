@@ -2,66 +2,51 @@
 
 namespace App\Livewire\Autodoc;
 
-use App\Actions\Codex\Architecture\FilterFilesByFramework;
-use App\Actions\LocalFolder\GetAllFiles;
 use App\LLM\Contracts\Llm;
 use App\LLM\OpenAI;
+use App\LLM\PromptRequests\PromptRequestType;
+use App\Models\AutodocLead;
 use App\Models\Project;
-use App\SourceCode\DTO\Branch;
-use App\SourceCode\DTO\RepositoryName;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
-use Filament\Forms;
+use App\SourceCode\DTO\File;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
+use Laravel\Cashier\Cashier;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
-use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
-use ZipArchive;
 
-class Autodoc extends Component implements HasForms
+class Autodoc extends Component
 {
-    use InteractsWithForms;
+    protected $listeners = [
+        'autodoc:lead-registered' => 'leadRegistered',
+        'autodoc:file-uploaded' => 'fileUploaded',
+    ];
 
     public ?array $data = [];
-
-    public ?string $email = null;
-    public ?string $zipPath = null;
-    public ?string $completion = null;
-    public ?int $numberOfFiles = null;
-
-    public function mount()
-    {
-        $this->form->fill();
-    }
+    public ?AutodocLead $lead = null;
 
     public function render()
     {
         return view('autodoc.livewire.autodoc');
     }
 
-    public function form(Form $form): Form
+    public function leadRegistered(string $leadId): void
     {
-        return $form
-            ->schema([
-                Forms\Components\FileUpload::make('file')
-                    ->label('Your code')
-                    ->required()
-                    ->acceptedFileTypes(['application/zip'])
-                    ->storeFileNamesIn('originalFileName')
-                    ->disk('tmp'),
-            ])
-            ->statePath('data');
+        $this->lead = AutodocLead::findOrFail($leadId);
+    }
+
+    public function fileUploaded(): void
+    {
+        $this->lead->refresh();
     }
 
     #[Computed]
     public function priceInCents(): int
     {
         return match(true) {
-            $this->numberOfFiles <= 100 => 1000,
-            $this->numberOfFiles <= 500 => 4000,
-            $this->numberOfFiles <= 1000 => 7000,
+            $this->lead->number_of_files <= 100 => 1000,
+            $this->lead->number_of_files <= 500 => 4000,
+            $this->lead->number_of_files <= 1000 => 7000,
             default => 0,
         };
     }
@@ -72,29 +57,14 @@ class Autodoc extends Component implements HasForms
         return number_format($this->priceInCents / 100, 2) . '€';
     }
 
-    public function uploadFile(): void
-    {
-        $data = $this->form->getState();
-        $filePath = $this->disk()->path($data['file']);
-        $baseName = $this->getBaseName();
-        $absolutePath = $this->extractZip($filePath, $baseName);
-        [$repoName, $filesAndFolders] = $this->getFiles($baseName, $absolutePath);
-        [$framework, $files] = FilterFilesByFramework::make()->handle($filesAndFolders, $repoName);
-
-        $this->zipPath = $absolutePath;
-        $this->numberOfFiles = count($files);
-    }
-
     public function processFirstFile(): void
     {
-        abort_if($this->zipPath === null, 500, 'No zip file has been loaded yet.');
+        abort_if(is_null($this->lead->first_file), 500, 'Could not find code.');
 
-        $data = $this->form->getState();
-        $baseName = $this->getBaseName();
-        [$repoName, $filesAndFolders] = $this->getFiles($baseName, $this->zipPath);
-        [$framework, $files] = FilterFilesByFramework::make()->handle($filesAndFolders, $repoName);
+        if ($this->lead->first_file_completion) {
+            return;
+        }
 
-        $fileName = str(basename($data['originalFileName']))->before('.zip')->toString();
         /**
          * @var Llm
          */
@@ -103,53 +73,43 @@ class Autodoc extends Component implements HasForms
             $llm->withModel('gpt-4-turbo-preview');
         }
 
-        $completion = $llm->describeFile(new Project(['name' => $fileName]), $files[0]);
-        $this->completion = $completion->completion;
+        $file = File::from(json_decode($this->lead->first_file, true));
+        $completion = $llm->describeFile(new Project(['name' => '']), $file, PromptRequestType::DOCUMENT_FILE);
+        $this->lead->update([
+            'first_file_completion' => '# '.$file->name."\n\n".$completion->completion,
+        ]);
     }
 
-    protected function extractZip(string $filePath, string $baseName): string
+    public function pay()
     {
-        $zip = new ZipArchive();
-        $res = $zip->open($filePath);
-        if ($res !== true) {
-            throw new \Exception('Could not open zip file');
-        }
+        $stripe = Cashier::stripe();
+        $session = $stripe->checkout->sessions->create([
+            'success_url' => URL::signedRoute('autodoc.success', ['autodocLead' => $this->lead]),
+            'line_items' => [
+              [
+                'quantity' => 1,
+                'price_data' => [
+                    'currency' => 'eur',
+                    'product_data' => [
+                        'name' => 'Code documentation',
+                        'description' => 'Documentation for '.$this->lead->number_of_files.' files',
+                    ],
+                    'unit_amount' => $this->priceInCents,
+                ],
+              ],
+            ],
+            'metadata' => [
+                'autodoc_lead_id' => $this->lead->id,
+            ],
+            'mode' => 'payment',
+        ]);
 
-        if ($this->disk()->exists($baseName)) {
-            $this->disk()->deleteDirectory($baseName);
-        }
+        $this->lead->update([
+            'stripe_session_id' => $session->id,
+            'status' => 'paying',
+        ]);
 
-        $absolutePath = $this->disk()->path($baseName);
-        $zip->extractTo($absolutePath);
-        $zip->close();
-        unlink($filePath);
-
-        return $absolutePath;
-    }
-
-    protected function getFiles(string $baseName, string $absolutePath): array
-    {
-        $repoName = '';
-        do {
-            $directories = $this->disk()->directories($baseName.DIRECTORY_SEPARATOR.$repoName);
-            if (count($directories) !== 1) {
-                break;
-            }
-
-            $repoName = $directories[0];
-        } while (count($directories) === 1);
-
-        $repoName = str($repoName)->after($baseName.DIRECTORY_SEPARATOR)->toString();
-        $repository = new RepositoryName(
-            username: $absolutePath,
-            name: $repoName,
-        );
-        $files = GetAllFiles::make()->handle(
-            repository: $repository,
-            branch: new Branch(name: 'main'),
-        );
-
-       return [$repository, $files];
+        return redirect($session->url);
     }
 
     protected function getBaseName(): string

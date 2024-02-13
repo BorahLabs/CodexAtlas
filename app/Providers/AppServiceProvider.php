@@ -6,7 +6,9 @@ use App\LLM\Contracts\Llm;
 use App\LLM\DumbLocalLlm;
 use App\LLM\OpenAI;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
 use Lorisleiva\Actions\Facades\Actions;
 
 class AppServiceProvider extends ServiceProvider
@@ -33,5 +35,10 @@ class AppServiceProvider extends ServiceProvider
         } else {
             $this->app->bind(Llm::class, fn () => new OpenAI());
         }
+
+        Livewire::setUpdateRoute(function ($handle) {
+            return Route::post('/livewire/update', $handle)
+                ->middleware(\App\Http\Middleware\ConfigureRequestsFromAutodoc::class);
+        });
     }
 }

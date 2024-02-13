@@ -1,5 +1,7 @@
 <?php
 
+use App\Actions\Autodoc\HandleStripeWebhook;
+use App\Actions\Autodoc\ShowStatus;
 use App\Actions\Github\Auth\HandleGithubInstallation;
 use App\Actions\Platform\DownloadDocsAsMarkdown;
 use App\Actions\Platform\Guides\DeleteGuide;
@@ -14,6 +16,7 @@ use App\Actions\Platform\ShowReadme;
 use App\Actions\Platform\ShowTechStack;
 use App\Actions\Platform\SourceCodeAccounts\StoreAccountPersonalAccessToken;
 use App\Actions\Platform\Webhook\HandleWebhook;
+use App\Http\Middleware\ConfigureRequestsFromAutodoc;
 use App\Http\Middleware\ControlRequestsFromPlatform;
 use App\Http\Middleware\OnlyFromCodexAtlas;
 use App\Http\Middleware\VerifyCsrfToken;
@@ -30,9 +33,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::domain('code.codexatlas.test')->group(function () {
-    Route::view('/', 'autodoc.welcome');
-});
+Route::domain('code.codexatlas.test')
+    ->middleware(ConfigureRequestsFromAutodoc::class)
+    ->group(function () {
+        Route::view('/', 'autodoc.welcome');
+        Route::get('/success/{autodocLead}', ShowStatus::class)
+            ->name('autodoc.success')
+            ->middleware('signed');
+    });
+
+Route::post('/stripe/webhook', HandleStripeWebhook::class);
 
 Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
     Route::view('/', 'welcome')
@@ -90,6 +100,9 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
         Route::get('/docs/{project}/{repository}/{branch}/readme', ShowReadme::class)
             ->scopeBindings()
             ->name('docs.show-readme');
+        Route::get('/docs/{project}/{repository}/{branch}/tech-stack', ShowTechStack::class)
+            ->scopeBindings()
+            ->name('docs.show-tech-stack');
         Route::get('/docs/{project}/{repository}/{branch}/{systemComponent}', ShowDocs::class)
             ->scopeBindings()
             ->name('docs.show-component');
