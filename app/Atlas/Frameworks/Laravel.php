@@ -12,6 +12,11 @@ class Laravel extends Framework
         return 'Laravel';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/laravel.svg');
+    }
+
     public function usesFramework(Folder $folder): bool
     {
         return $folder->hasFile('composer.json') && $folder->hasFile('artisan');

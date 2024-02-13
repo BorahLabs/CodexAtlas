@@ -33,5 +33,5 @@
             </path>
         </svg>
     </span>
-    <img class="w-[185px] m-0" src="{{ asset('images/laurel.svg') }}">
+    <img class="w-[185px] !m-0" src="{{ asset('images/laurel.svg') }}">
 </div>

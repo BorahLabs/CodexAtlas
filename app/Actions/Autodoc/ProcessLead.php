@@ -55,7 +55,8 @@ class ProcessLead
             ];
         }
 
-        Storage::disk('tmp')->deleteDirectory($folderPath);
+        $s3->delete($lead->zip_path);
+        $local->deleteDirectory($folderPath);
 
         // bulk insert so it does not trigger any event
         SystemComponent::insert($components);

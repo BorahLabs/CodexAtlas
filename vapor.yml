@@ -14,7 +14,9 @@ environments:
     warm: 10
     runtime: "php-8.2:al2"
     network: codex-atlas-production
-    domain: "*.codexatlas.app"
+    domain:
+      - "*.codexatlas.app"
+      - automaticdocs.app
     build:
       - "COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev"
       - "php artisan event:cache"

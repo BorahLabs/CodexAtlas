@@ -14,18 +14,23 @@ class LeadStatus extends Component
     public function render()
     {
         $branch = $this->autodocLead->branch;
-        $total = $branch->systemComponents()->count();
-        $processed = $branch->systemComponents()
-            ->whereNotIn('status', [SystemComponentStatus::Pending, SystemComponentStatus::Generating])
-            ->count();
-        $systemComponents = $branch->systemComponents()->pluck('status', 'path');
+        $data = [
+            'total' => 0,
+            'processed' => 0,
+            'finished' => false,
+            'systemComponents' => [],
+        ];
+        if ($branch) {
+            $data['total'] = $branch->systemComponents()->count();
+            $data['processed'] = $branch->systemComponents()
+                ->whereNotIn('status', [SystemComponentStatus::Pending, SystemComponentStatus::Generating])
+                ->count();
+            $data['systemComponents'] = $branch->systemComponents()->pluck('status', 'path');
+        }
 
-        return view('autodoc.livewire.lead-status', [
-            'processed' => $processed,
-            'total' => $total,
-            'finished' => $processed === $total,
-            'systemComponents' => $systemComponents,
-        ]);
+        $data['finished'] = $data['total'] > 0 && $data['processed'] === $data['total'];
+
+        return view('autodoc.livewire.lead-status', $data);
     }
 
     public function downloadDocs()

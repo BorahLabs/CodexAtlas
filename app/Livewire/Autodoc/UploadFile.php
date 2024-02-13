@@ -36,7 +36,7 @@ class UploadFile extends Component implements HasForms
                     ->acceptedFileTypes(['application/zip'])
                     ->storeFileNamesIn('originalFileName')
                     ->disk('tmp')
-                    ->helperText('Your code will be deleted from our servers after a maximum of 2 hours.'),
+                    ->helperText('Your code will be deleted from our servers right after it\'s documented.'),
             ])
             ->statePath('data');
     }
@@ -54,6 +54,10 @@ class UploadFile extends Component implements HasForms
         $folderPath = ExtractZip::make()->handle($data['file'], $baseName);
         [$repoName, $filesAndFolders] = GetFiles::make()->handle($baseName);
         [$framework, $files] = FilterFilesByFramework::make()->handle($filesAndFolders, $repoName);
+
+        if (count($files) === 0) {
+            return;
+        }
 
         $contents = $files[0]->contents();
         $firstFile = [

@@ -9,7 +9,9 @@ use App\LLM\PromptRequests\PromptRequestType;
 use App\Models\AutodocLead;
 use App\Models\Project;
 use App\Models\SystemComponent;
+use App\Notifications\Autodoc\DocumentationCompleted;
 use App\SourceCode\DTO\File;
+use Illuminate\Support\Facades\Notification;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class ProcessAutodocSystemComponent
@@ -54,6 +56,20 @@ class ProcessAutodocSystemComponent
                 'file_contents' => null,
                 'status' => SystemComponentStatus::Error,
             ]);
+        }
+
+        $total = $lead->branch->systemComponents()->count();
+        $processed = $lead->branch->systemComponents()
+            ->whereNotIn('status', [SystemComponentStatus::Pending, SystemComponentStatus::Generating])
+            ->count();
+        $finished = $total > 0 && $processed === $total;
+        if ($finished) {
+            $lead->update([
+                'status' => SystemComponentStatus::Generated,
+            ]);
+
+            Notification::route('mail', $lead->email)
+                ->notify(new DocumentationCompleted($lead));
         }
     }
 }

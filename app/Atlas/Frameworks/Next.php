@@ -12,6 +12,11 @@ class Next extends Framework
         return 'Next';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/nextjs.svg');
+    }
+
     public function usesFramework(Folder $folder): bool
     {
         return $folder->hasFile('next.config.js') || $folder->hasFile('next.config.ts');

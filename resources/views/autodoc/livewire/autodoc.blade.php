@@ -1,12 +1,12 @@
 <div>
-    <div class="grid grid-cols-2 gap-8">
-        <div class="max-w-prose">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="w-full text-sm max-w-prose mx-auto lg:mx-0 md:text-base">
             <div class="flex overflow-hidden">
                 @for ($i = 0; $i < 50; $i++)
                     <div class="triangle rotate-180"></div>
                 @endfor
             </div>
-            <div class="bg-white p-8 h-[40rem] overflow-auto prose">
+            <div class="bg-white p-8 lg:h-[50rem] xl:h-[42rem] overflow-auto prose-sm prose md:prose-base">
                 <div wire:loading wire:target="processFirstFile">
                     <x-autodoc.number1 />
                     <h1>Generating first draft...</h1>
@@ -26,6 +26,7 @@
                         <p>💸 <u>Avoid high onboarding costs</u> for new team members due to lack of documentation</p>
                         <p>✅ Receive the <u>documentation for the relevant files</u> in minutes in your email</p>
                         <p>🔒 Your code will be deleted from our servers right after it's processed</p>
+                        <p>❤️ Not satisfied? Payment refund with no questions asked</p>
                     @endif
                 </div>
             </div>
@@ -35,7 +36,7 @@
                 @endfor
             </div>
         </div>
-        <div class="bg-gray-950 dark rounded-md p-8 self-center">
+        <div class="bg-gray-950 dark rounded-md p-8 self-center w-full lg:max-w-md lg:mx-auto">
             @if ($lead)
                 @if ($lead->zip_path)
                     <div wire:key="step-2" wire:init="processFirstFile" class="prose prose-invert">

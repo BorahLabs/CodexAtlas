@@ -12,6 +12,11 @@ class Angular extends Framework
         return 'Angular';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/angular.svg');
+    }
+
     public function usesFramework(Folder $folder): bool
     {
         return $folder->hasFile('angular.json') && $folder->hasFile('package.json');

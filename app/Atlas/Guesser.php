@@ -17,7 +17,7 @@ class Guesser
 
     public function guessFramework(Folder $folder): Framework
     {
-        $frameworks = $this->supportedFrameworks();
+        $frameworks = static::supportedFrameworks();
         foreach ($frameworks as $framework) {
             if ($framework->usesFramework($folder)) {
                 return $framework;
@@ -28,7 +28,7 @@ class Guesser
     /**
      * @return Framework[]
      */
-    private function supportedFrameworks(): array
+    public static function supportedFrameworks(): array
     {
         return [
             new Frameworks\Laravel(),

@@ -33,7 +33,8 @@ class GetStartedForm extends Component implements HasForms
                     ->placeholder('john.doe@email.com')
                     ->autofocus()
                     ->validationAttribute('email')
-                    ->required(),
+                    ->required()
+                    ->helperText('We will use it to send you the documentation. No spam.'),
                 // Turnstile::make('turnstile'),
             ])
             ->statePath('data');

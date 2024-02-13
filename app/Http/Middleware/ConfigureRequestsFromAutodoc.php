@@ -15,12 +15,8 @@ class ConfigureRequestsFromAutodoc
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $host = config('app.fake_domain') ?? $request->host();
-        if ($host !== 'code.codexatlas.test') {
-            return $next($request);
-        }
-
         config([
+            'app.name' => 'AutomaticDocs',
             'cashier.key' => config('autodoc.stripe.key'),
             'cashier.secret' => config('autodoc.stripe.secret'),
             'cashier.webhook.secret' => config('autodoc.stripe.webhook_secret'),
