@@ -20,6 +20,8 @@ class ConfigureRequestsFromAutodoc
             'cashier.key' => config('autodoc.stripe.key'),
             'cashier.secret' => config('autodoc.stripe.secret'),
             'cashier.webhook.secret' => config('autodoc.stripe.webhook_secret'),
+            'mail.from.address' => config('mail.autodoc.from.address'),
+            'mail.from.name' => config('mail.autodoc.from.name'),
         ]);
 
         return $next($request);
