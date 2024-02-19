@@ -17,7 +17,7 @@ class RemoveUnprocessedFiles
     public function handle()
     {
         AutodocLead::query()
-            ->where('status', 'pending')
+            ->whereIn('status', ['pending', 'paying'])
             ->whereNotNull('zip_path')
             ->where('created_at', '<', now()->subHours(2))
             ->each(function (AutodocLead $lead) {
