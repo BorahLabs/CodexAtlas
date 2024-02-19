@@ -18,6 +18,7 @@ class RemoveUnprocessedFiles
     {
         AutodocLead::query()
             ->where('status', 'pending')
+            ->whereNotNull('zip_path')
             ->where('created_at', '<', now()->subHours(2))
             ->each(function (AutodocLead $lead) {
                 $disk = Storage::disk('s3');
