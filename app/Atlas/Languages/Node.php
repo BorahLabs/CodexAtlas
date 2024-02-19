@@ -12,6 +12,11 @@ class Node implements Language
         return 'NodeJS';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/node.png');
+    }
+
     public function customContext(): ?string
     {
         return null;

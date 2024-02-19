@@ -12,6 +12,11 @@ class Javascript implements Language
         return 'Javascript';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/js.svg');
+    }
+
     public function customContext(): ?string
     {
         return null;

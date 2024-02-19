@@ -47,7 +47,7 @@ class Guesser
 
     public function guessLanguage(File $file): Language
     {
-        $languages = $this->supportedLanguages();
+        $languages = static::supportedLanguages();
         foreach ($languages as $language) {
             if ($language->isOwnFile($file)) {
                 return $language;
@@ -60,7 +60,7 @@ class Guesser
     /**
      * @return Language[]
      */
-    private function supportedLanguages(): array
+    public static function supportedLanguages(): array
     {
         return [
             new Languages\Cobol(),

@@ -12,6 +12,11 @@ class Html implements Language
         return 'HTML';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/html.svg');
+    }
+
     public function customContext(): ?string
     {
         return null;

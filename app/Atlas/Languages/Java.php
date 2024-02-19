@@ -12,6 +12,11 @@ class Java implements Language
         return 'Java';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/java.svg');
+    }
+
     public function customContext(): ?string
     {
         return null;

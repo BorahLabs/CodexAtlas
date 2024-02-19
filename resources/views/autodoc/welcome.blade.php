@@ -161,7 +161,8 @@
                         We support your framework
                     </h2>
                     <p class="mt-6 text-lg leading-8 text-gray-600">
-                        Automatic Docs is created to support the following frameworks. Don't see yours? Get in touch
+                        Automatic Docs is created to support the following frameworks and languages. Don't see yours?
+                        Get in touch
                         using the chat button on the bottom right!
                     </p>
                     <div class="mt-8 flex items-center gap-x-6">
@@ -171,14 +172,23 @@
                         </a>
                     </div>
                 </div>
-                <div
-                    class="mx-auto grid w-full max-w-xl grid-cols-2 items-center gap-y-12 sm:gap-y-14 lg:mx-0 lg:max-w-none lg:pl-8">
-                    @foreach (\App\Atlas\Guesser::supportedFrameworks() as $framework)
-                        @if ($imageUrl = $framework->imageUrl())
-                            <img class="max-h-10 w-full object-contain object-left" src="{{ $imageUrl }}"
-                                alt="{{ $framework->name() }}" width="105" height="48">
-                        @endif
-                    @endforeach
+                <div>
+
+                    <div
+                        class="mx-auto grid w-full max-w-xl grid-cols-2 justify-center items-center gap-y-12 gap-x-6 sm:gap-y-14 md:grid-cols-3 lg:grid-cols-4 lg:mx-0 lg:max-w-none lg:pl-8">
+                        @foreach (\App\Atlas\Guesser::supportedFrameworks() as $framework)
+                            @if ($imageUrl = $framework->imageUrl())
+                                <img class="max-h-10 w-full object-contain object-center" src="{{ $imageUrl }}"
+                                    alt="{{ $framework->name() }}" width="105" height="48" loading="lazy">
+                            @endif
+                        @endforeach
+                        @foreach (\App\Atlas\Guesser::supportedLanguages() as $language)
+                            @if ($imageUrl = $language->imageUrl())
+                                <img class="max-h-10 w-full object-contain object-center" src="{{ $imageUrl }}"
+                                    alt="{{ $language->name() }}" width="105" height="48" loading="lazy">
+                            @endif
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>

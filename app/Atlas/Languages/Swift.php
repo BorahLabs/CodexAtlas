@@ -12,6 +12,11 @@ class Swift implements Language
         return 'Swift';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/swift.svg');
+    }
+
     public function customContext(): ?string
     {
         return null;

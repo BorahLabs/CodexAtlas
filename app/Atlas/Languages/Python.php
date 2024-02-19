@@ -12,6 +12,11 @@ class Python implements Language
         return 'Python';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/python.svg');
+    }
+
     public function customContext(): ?string
     {
         return null;

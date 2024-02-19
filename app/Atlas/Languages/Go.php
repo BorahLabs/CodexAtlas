@@ -12,6 +12,11 @@ class Go implements Language
         return 'Go';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/go.svg');
+    }
+
     public function customContext(): ?string
     {
         return null;

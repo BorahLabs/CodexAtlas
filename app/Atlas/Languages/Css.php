@@ -12,6 +12,11 @@ class Css implements Language
         return 'CSS';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/css.svg');
+    }
+
     public function customContext(): ?string
     {
         return null;
