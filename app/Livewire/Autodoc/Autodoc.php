@@ -85,6 +85,7 @@ class Autodoc extends Component
         $stripe = Cashier::stripe();
         $session = $stripe->checkout->sessions->create([
             'success_url' => URL::signedRoute('autodoc.success', ['autodocLead' => $this->lead]),
+            'allow_promotion_codes' => true,
             'line_items' => [
               [
                 'quantity' => 1,
