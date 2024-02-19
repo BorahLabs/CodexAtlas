@@ -10,6 +10,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Forms;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
@@ -56,6 +57,11 @@ class UploadFile extends Component implements HasForms
         [$framework, $files] = FilterFilesByFramework::make()->handle($filesAndFolders, $repoName);
 
         if (count($files) === 0) {
+            Notification::make()
+                ->title('No files found')
+                ->body('We could not find any documentable files in the uploaded zip.')
+                ->danger()
+                ->send();
             return;
         }
 

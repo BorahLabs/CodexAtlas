@@ -53,6 +53,7 @@
     </footer>
 
 
+    @livewire('notifications')
     <script src="https://unpkg.com/alpinejs@3.13.3/dist/cdn.min.js" defer></script>
     @filamentScripts
     @vite(['resources/js/app.js'])
