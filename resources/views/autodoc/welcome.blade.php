@@ -1,7 +1,8 @@
 <x-autodoc.web-layout>
-    <section class="py-16 relative bg-black" id="banner">
+    <section class="pb-16 relative bg-black" id="banner">
         <div class="opacity-15 absolute inset-0 bg-cover bg-center"
             style="background-image: url('{{ asset('images/chip.jpeg') }}')"></div>
+        <img src="{{ asset('images/automaticdocs.png') }}" alt="AutomaticDocs" class="h-16 md:h-24 w-auto block mb-12" />
         <div class="relative container mx-auto px-4">
             <livewire:autodoc.autodoc />
         </div>
