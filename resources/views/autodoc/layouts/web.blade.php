@@ -5,9 +5,22 @@
     <title>@yield('title', 'Automatic Documentation for software projects')</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta property="og:site_name" content="AutomaticDocs">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AutomaticDocs">
+    <meta property="og:description"
+        content="Save money and use AI to generate the documentation for your project instead of spending your developers' time on it.">
+    <meta property="og:url" content="https://automaticdocs.app/">
+    <meta property="og:image" content="{{ asset('images/autodoc_og.jpg') }}">
+    <meta name="twitter:image" content="{{ asset('images/autodoc_og.jpg') }}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="AutomaticDocs">
+    <meta name="twitter:description"
+        content="Save money and use AI to generate the documentation for your project instead of spending your developers' time on it.">
+    <meta name="twitter:url" content="https://automaticdocs.app/">
+
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,800&display=swap" rel="stylesheet" />
-
     @filamentStyles
     <style>
         .triangle {
