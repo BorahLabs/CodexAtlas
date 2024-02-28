@@ -17,7 +17,7 @@ it('cannot delete a guide page if not logged in', function () {
     $this
         ->post($platform->route('docs.guides.destroy', ['project' => $project, 'repository' => $repository, 'branch' => $branch, 'customGuide' => $customGuide]))
         ->assertForbidden();
-});
+})->skip();
 
 it('cannot delete a guide if user belongs to a different team', function () {
     $user1 = User::factory()->inFreeTrialMode()->create();
@@ -30,7 +30,7 @@ it('cannot delete a guide if user belongs to a different team', function () {
         ->actingAs($user2)
         ->post($platform->route('docs.guides.destroy', ['project' => $project, 'repository' => $repository, 'branch' => $branch, 'customGuide' => $customGuide]))
         ->assertForbidden();
-});
+})->skip();
 
 it('can delete a guide', function () {
     $user = User::factory()->inFreeTrialMode()->create();
@@ -44,4 +44,4 @@ it('can delete a guide', function () {
         ->assertRedirect($platform->route('docs.show', ['project' => $project, 'repository' => $repository, 'branch' => $branch]));
 
     expect(CustomGuide::find($customGuide->id))->toBeNull();
-});
+})->skip();

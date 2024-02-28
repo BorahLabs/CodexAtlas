@@ -83,22 +83,22 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
         Route::get('/docs/{project}/{repository}/{branch}/download', DownloadDocsAsMarkdown::class)
             ->scopeBindings()
             ->name('docs.download');
-        Route::get('/docs/{project}/{repository}/{branch}/guides/new', ShowNewGuide::class)
-            ->scopeBindings()
-            ->can('create', \App\Models\CustomGuide::class)
-            ->name('docs.guides.new');
-        Route::get('/docs/{project}/{repository}/{branch}/guides/{customGuide}/edit', ShowEditGuide::class)
-            ->scopeBindings()
-            ->can('update', 'customGuide')
-            ->name('docs.guides.edit');
-        Route::post('/docs/{project}/{repository}/{branch}/guides/{customGuide}/destroy', DeleteGuide::class)
-            ->scopeBindings()
-            ->can('delete', 'customGuide')
-            ->name('docs.guides.destroy');
-        Route::get('/docs/{project}/{repository}/{branch}/guides/{customGuide}', ShowGuide::class)
-            ->scopeBindings()
-            ->can('view', 'customGuide')
-            ->name('docs.guides.show');
+        // Route::get('/docs/{project}/{repository}/{branch}/guides/new', ShowNewGuide::class)
+        //     ->scopeBindings()
+        //     ->can('create', \App\Models\CustomGuide::class)
+        //     ->name('docs.guides.new');
+        // Route::get('/docs/{project}/{repository}/{branch}/guides/{customGuide}/edit', ShowEditGuide::class)
+        //     ->scopeBindings()
+        //     ->can('update', 'customGuide')
+        //     ->name('docs.guides.edit');
+        // Route::post('/docs/{project}/{repository}/{branch}/guides/{customGuide}/destroy', DeleteGuide::class)
+        //     ->scopeBindings()
+        //     ->can('delete', 'customGuide')
+        //     ->name('docs.guides.destroy');
+        // Route::get('/docs/{project}/{repository}/{branch}/guides/{customGuide}', ShowGuide::class)
+        //     ->scopeBindings()
+        //     ->can('view', 'customGuide')
+        //     ->name('docs.guides.show');
         Route::get('/docs/{project}/{repository}/{branch}/readme', ShowReadme::class)
             ->scopeBindings()
             ->name('docs.show-readme');

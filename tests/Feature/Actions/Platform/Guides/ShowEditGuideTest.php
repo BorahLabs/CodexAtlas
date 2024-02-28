@@ -20,7 +20,7 @@ it('cannot see the edit guide page if not logged in', function () {
     $this
         ->get($platform->route('docs.guides.edit', ['project' => $project, 'repository' => $repository, 'branch' => $branch, 'customGuide' => $customGuide]))
         ->assertForbidden();
-});
+})->skip();
 
 it('cannot access to edit a guide page if user belongs to a different team', function () {
     $user1 = User::factory()->inFreeTrialMode()->create();
@@ -33,7 +33,7 @@ it('cannot access to edit a guide page if user belongs to a different team', fun
         ->actingAs($user2)
         ->get($platform->route('docs.guides.edit', ['project' => $project, 'repository' => $repository, 'branch' => $branch, 'customGuide' => $customGuide]))
         ->assertForbidden();
-});
+})->skip();
 
 it('can access to edit a guide page', function () {
     $user = User::factory()->inFreeTrialMode()->create();
@@ -46,7 +46,7 @@ it('can access to edit a guide page', function () {
         ->get($platform->route('docs.guides.edit', ['project' => $project, 'repository' => $repository, 'branch' => $branch, 'customGuide' => $customGuide]))
         ->assertSuccessful()
         ->assertSeeLivewire(PageSetup::class);
-});
+})->skip();
 
 it('can edit a guide page', function () {
     $user = User::factory()->inFreeTrialMode()->create();
@@ -70,4 +70,4 @@ it('can edit a guide page', function () {
     $this->assertEquals('My new guide', $customGuide->title);
     $this->assertEquals('This is the content of my new guide', $customGuide->content);
     $this->assertEquals('What is the answer to life, the universe and everything?', $customGuide->question);
-});
+})->skip();
