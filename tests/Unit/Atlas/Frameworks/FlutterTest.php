@@ -26,6 +26,7 @@ it('detects the framework correctly', function () {
 
 it('has the right relevant files', function () {
     expect((new Flutter())->relevant())->toBe([
+        '*/lib/*.dart',
         'lib/*.dart',
     ]);
 });

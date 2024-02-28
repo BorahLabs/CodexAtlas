@@ -57,6 +57,7 @@ return [
             'tsx',
             'less',
             'sass',
+            'dart',
         ]),
     ],
 ];

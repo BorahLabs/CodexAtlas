@@ -30,6 +30,7 @@ class Flutter extends FrameworkWithDependencyFiles
     public function relevant(): array
     {
         return [
+            '*/lib/*.dart',
             'lib/*.dart',
         ];
     }
