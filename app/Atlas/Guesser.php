@@ -41,6 +41,7 @@ class Guesser
             new Frameworks\Angular(),
             new Frameworks\Vue(),
             new Frameworks\React(),
+            new Frameworks\Flutter(),
             new Frameworks\GeneralFramework(),
         ];
     }
@@ -76,6 +77,7 @@ class Guesser
             new Languages\Python(),
             new Languages\Rust(),
             new Languages\Swift(),
+            new Languages\Dart(),
         ];
     }
 }
