@@ -17,7 +17,10 @@ class GetFiles
         $absolutePath = Storage::disk('tmp')->path($baseName);
         $repoName = '';
         do {
-            $directories = Storage::disk('tmp')->directories($baseName.DIRECTORY_SEPARATOR.$repoName);
+            $directories = collect(Storage::disk('tmp')->directories($baseName.DIRECTORY_SEPARATOR.$repoName))
+                ->filter(fn (string $directory) => !str($directory)->endsWith('.git') && !str($directory)->contains('__MACOSX'))
+                ->values()
+                ->all();
             if (count($directories) !== 1) {
                 break;
             }
