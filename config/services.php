@@ -62,4 +62,13 @@ return [
         ],
     ],
 
+    'gh' => [
+        'api_endpoint' => env('GITHUB_API_ENDPOINT'),
+    ],
+
+    'openAI' => [
+        'api_endpoint' => env('OPENAI_API_ENDPOINT'),
+        'token' => env('OPENAI_API_TOKEN')
+    ]
+
 ];
