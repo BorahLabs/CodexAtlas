@@ -58,6 +58,8 @@ return [
             'less',
             'sass',
             'dart',
+            'rb',
+            'erb',
         ]),
     ],
 ];

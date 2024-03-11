@@ -42,6 +42,7 @@ class Guesser
             new Frameworks\Vue(),
             new Frameworks\React(),
             new Frameworks\Flutter(),
+            new Frameworks\RubyOnRails(),
             new Frameworks\GeneralFramework(),
         ];
     }
@@ -78,6 +79,7 @@ class Guesser
             new Languages\Rust(),
             new Languages\Swift(),
             new Languages\Dart(),
+            new Languages\Ruby(),
         ];
     }
 }
