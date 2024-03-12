@@ -1,4 +1,8 @@
-<div x-modelable="selected" x-data="{ selected: '{{ $accounts->first()?->id }}', isAdding: {{ session()->has('provider') || $accounts->isEmpty() ? 'true' : 'false' }}, provider: {{ session()->has('provider') ? "'" . session('provider') . "'" : 'null' }} }" {{ $attributes }} x-cloak>
+<div x-modelable="selected" x-data="{
+    selected: '{{ $accounts->first()?->id }}',
+    isAdding: {{ session()->has('provider') || $accounts->isEmpty() ? 'true' : 'false' }},
+    provider: {{ session()->has('provider') ? "'" . session('provider') . "'" : 'null' }}
+}" {{ $attributes }} x-cloak>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         <!-- When listing accounts -->
         @foreach ($accounts as $account)
@@ -20,7 +24,7 @@
 
         <button type="button" x-show="!isAdding"
             class="border border-slate-600 rounded-md p-4 flex flex-col justify-center items-center space-y-4 hover:border-violet-500"
-            x-on:click="isAdding = true; provider = null">
+            x-on:click="isAdding = true; provider = null; $dispatch('source-code-add')">
             <x-codex.icons.plus class="h-12 w-12 text-slate-700" />
             <p class="text-slate-300 font-bold text-sm">{{ __('Add new account') }}</p>
         </button>
@@ -48,13 +52,13 @@
                 'border-slate-600 hover:border-violet-500': provider !== 'bitbucket',
                 'border-violet-500': provider === 'bitbucket',
             }"
-            x-on:click="provider = 'bitbucket'">
+            x-on:click="provider = 'bitbucket';">
             <x-codex.icons.bitbucket class="h-12 w-12 text-slate-700" />
             <p class="text-slate-300 font-bold text-sm">{{ __('Add Bitbucket account') }}</p>
         </button>
         <button type="button" x-show="isAdding"
             class="border border-slate-600 rounded-md p-4 flex flex-col justify-center items-center space-y-4 hover:border-violet-500"
-            x-on:click="isAdding = false; provider = null">
+            x-on:click="isAdding = false; provider = null; $dispatch('source-code-cancel')">
             <x-codex.icons.cancel class="h-12 w-12 text-slate-700" />
             <p class="text-slate-300 font-bold text-sm">{{ __('Cancel') }}</p>
         </button>

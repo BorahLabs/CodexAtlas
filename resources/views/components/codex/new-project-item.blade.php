@@ -2,7 +2,7 @@
     $id = uniqid();
 @endphp
 <div class="relative flex">
-    <div class="bg-gradient-to-b from-[#6042ffb3] to-transparent p-px rounded-xl w-full flex">
+    <div class="bg-gradient-to-b from-[#6042ffb3] to-transparent p-px rounded-xl w-full flex min-h-[300px]">
         <div class="bg-dark p-6 rounded-xl w-full flex">
             <div class="bg-gradient-to-b from-[#6042ff] to-transparent p-px rounded-xl w-full flex">
                 <div
