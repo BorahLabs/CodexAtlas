@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SystemComponent extends Model implements Embeddable
 {
-    use BelongsToKnowledgeBase;
+    // use BelongsToKnowledgeBase;
     use HasFactory;
     use HasUuids;
     use SoftDeletes;

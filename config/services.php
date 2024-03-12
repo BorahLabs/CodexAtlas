@@ -51,8 +51,15 @@ return [
 
     'openai' => [
         'key' => env('OPENAI_API_KEY'),
-        'completion_model' => env('OPENAI_COMPLETION_MODEL', 'gpt-3.5-turbo-16k'),
+        'completion_model' => env('OPENAI_COMPLETION_MODEL', 'gpt-3.5-turbo-0125'),
         'embeddings_model' => env('OPENAI_EMBEDDINGS_MODEL', 'text-embedding-ada-002'),
+    ],
+
+    'cloudflare' => [
+        'turnstile' => [
+            'site_key' => env('TURNSTILE_SITE_KEY'),
+            'secret_key' => env('TURNSTILE_SECRET_KEY'),
+        ],
     ],
 
 ];

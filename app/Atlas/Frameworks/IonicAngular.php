@@ -12,6 +12,11 @@ class IonicAngular extends Framework
         return 'Ionic + Angular';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/ionic.svg');
+    }
+
     public function usesFramework(Folder $folder): bool
     {
         return $folder->hasFile('ionic.config.json') && $folder->hasFile('angular.json');

@@ -12,6 +12,11 @@ class Django extends Framework
         return 'Django';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/django.png');
+    }
+
     public function usesFramework(Folder $folder): bool
     {
         return $folder->hasFile('manage.py');

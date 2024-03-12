@@ -12,6 +12,11 @@ class ReactNative extends Framework
         return 'React Native';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/expo.svg');
+    }
+
     public function usesFramework(Folder $folder): bool
     {
         return $folder->hasFile('app.json') && $folder->hasFile('package.json');

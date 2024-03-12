@@ -10,8 +10,10 @@
                         @guest
                             <a class="inline-flex py-2 px-4 mr-4 items-center justify-center text-sm font-medium uppercase text-white hover:text-violet-500"
                                 href="{{ route('login') }}">{{ __('Log in') }}</a>
-                            <a class="inline-flex h-11 py-2 px-4 items-center justify-center text-sm font-medium uppercase text-black hover:text-white bg-violet-500 hover:bg-violet-600 transition duration-200 rounded-full"
-                                href="{{ route('register') }}">{{ __('Register') }}</a>
+                            @if (Route::has('register'))
+                                <a class="inline-flex h-11 py-2 px-4 items-center justify-center text-sm font-medium uppercase text-black hover:text-white bg-violet-500 hover:bg-violet-600 transition duration-200 rounded-full"
+                                    href="{{ route('register') }}">{{ __('Register') }}</a>
+                            @endif
                         @else
                             <a class="inline-flex h-11 py-2 px-4 items-center justify-center text-sm font-medium uppercase text-black hover:text-white bg-violet-500 hover:bg-violet-600 transition duration-200 rounded-full"
                                 href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a>

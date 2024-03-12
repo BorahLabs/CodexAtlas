@@ -27,7 +27,7 @@
                         @foreach (Laravel\Jetstream\Jetstream::$permissions as $permission)
                             <label class="flex items-center">
                                 <x-checkbox wire:model="createApiTokenForm.permissions" :value="$permission" />
-                                <span class="ms-2 text-sm text-gray-400">{{ $permission }}</span>
+                                <span class="ms-2 text-sm text-newGray-400">{{ $permission }}</span>
                             </label>
                         @endforeach
                     </div>
@@ -71,13 +71,13 @@
 
                                 <div class="flex items-center ms-2">
                                     @if ($token->last_used_at)
-                                        <div class="text-sm text-gray-400">
+                                        <div class="text-sm text-newGray-400">
                                             {{ __('Last used') }} {{ $token->last_used_at->diffForHumans() }}
                                         </div>
                                     @endif
 
                                     @if (Laravel\Jetstream\Jetstream::hasPermissions())
-                                        <button class="cursor-pointer ms-6 text-sm text-gray-400 underline"
+                                        <button class="cursor-pointer ms-6 text-sm text-newGray-400 underline"
                                             wire:click="manageApiTokenPermissions({{ $token->id }})">
                                             {{ __('Permissions') }}
                                         </button>
@@ -108,8 +108,8 @@
             </div>
 
             <x-input x-ref="plaintextToken" type="text" readonly :value="$plainTextToken"
-                class="mt-4 bg-gray-100 px-4 py-2 rounded font-mono text-sm text-gray-500 w-full break-all" autofocus
-                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                class="mt-4 bg-newGray-100 px-4 py-2 rounded font-mono text-sm text-newGray-500 w-full break-all"
+                autofocus autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
                 @showing-token-modal.window="setTimeout(() => $refs.plaintextToken.select(), 250)" />
         </x-slot>
 
@@ -131,7 +131,7 @@
                 @foreach (Laravel\Jetstream\Jetstream::$permissions as $permission)
                     <label class="flex items-center">
                         <x-checkbox wire:model="updateApiTokenForm.permissions" :value="$permission" />
-                        <span class="ms-2 text-sm text-gray-400">{{ $permission }}</span>
+                        <span class="ms-2 text-sm text-newGray-400">{{ $permission }}</span>
                     </label>
                 @endforeach
             </div>

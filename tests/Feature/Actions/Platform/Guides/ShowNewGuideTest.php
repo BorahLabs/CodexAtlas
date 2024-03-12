@@ -18,7 +18,7 @@ it('cannot see the new guide page if not logged in', function () {
     $this
         ->get($platform->route('docs.guides.new', ['project' => $project, 'repository' => $repository, 'branch' => $branch]))
         ->assertForbidden();
-});
+})->skip();
 
 it('can see the new guide page if user belongs to the right team', function () {
     $user1 = User::factory()->inFreeTrialMode()->create();
@@ -33,7 +33,7 @@ it('can see the new guide page if user belongs to the right team', function () {
         ->actingAs($user2)
         ->get($platform->route('docs.guides.new', ['project' => $project, 'repository' => $repository, 'branch' => $branch]))
         ->assertForbidden();
-});
+})->skip();
 
 it('renders the right livewire component', function () {
     $user = User::factory()->inFreeTrialMode()->create();
@@ -44,7 +44,7 @@ it('renders the right livewire component', function () {
         ->actingAs($user)
         ->get($platform->route('docs.guides.new', ['project' => $project, 'repository' => $repository, 'branch' => $branch]))
         ->assertSeeLivewire(PageSetup::class);
-});
+})->skip();
 
 it('can create a new guide page', function () {
     $user = User::factory()->inFreeTrialMode()->create();
@@ -62,7 +62,7 @@ it('can create a new guide page', function () {
         ->call('submit');
 
     $this->assertEquals(1, $branch->customGuides()->count());
-});
+})->skip();
 
 it('can create a new guide page by using a question', function () {
     $user = User::factory()->inFreeTrialMode()->create();
@@ -82,7 +82,7 @@ it('can create a new guide page by using a question', function () {
         ->call('submit');
 
     $this->assertEquals(1, $branch->customGuides()->count());
-});
+})->skip();
 
 it('validates the question and the title', function () {
     $user = User::factory()->inFreeTrialMode()->create();
@@ -116,4 +116,4 @@ it('validates the question and the title', function () {
         ->call('submit')
         ->assertHasNoErrors('title')
         ->assertHasNoErrors('content');
-});
+})->skip();

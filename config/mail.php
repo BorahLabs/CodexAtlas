@@ -104,6 +104,13 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    'autodoc' => [
+        'from' => [
+            'address' => env('AUTODOC_MAIL_FROM_ADDRESS', env('MAIL_FROM_ADDRESS')),
+            'name' => env('AUTODOC_MAIL_FROM_NAME', env('MAIL_FROM_NAME')),
+        ],
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Markdown Mail Settings

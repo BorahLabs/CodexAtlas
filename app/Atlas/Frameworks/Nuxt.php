@@ -12,6 +12,11 @@ class Nuxt extends Framework
         return 'NuxtJS';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/nuxt.svg');
+    }
+
     public function usesFramework(Folder $folder): bool
     {
         return $folder->hasFile('nuxt.config.ts') || $folder->hasFile('nuxt.config.js');

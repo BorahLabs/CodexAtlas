@@ -12,6 +12,11 @@ class DotNet implements Language
         return '.NET';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/dotnet.svg');
+    }
+
     public function customContext(): ?string
     {
         return null;

@@ -3,8 +3,10 @@
 <input {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge([
     'class' => match ($style) {
         'dark'
-            => 'border-gray-700 bg-gray-900 text-gray-300 focus:border-violet-600 focus:ring-violet-600 rounded-md shadow-sm',
+            => 'border-newGray-700 bg-newGray-900 text-newGray-300 focus:border-violet-600 focus:ring-violet-600 rounded-md shadow-sm',
         'light'
-            => 'border-gray-400 bg-gray-100 text-gray-700 focus:border-violet-600 focus:ring-violet-600 rounded-md shadow-sm',
+            => 'border-newGray-400 bg-newGray-100 text-newGray-700 focus:border-violet-600 focus:ring-violet-600 rounded-md shadow-sm',
+        'transparent'
+            => 'border-transparent bg-[#121826] text-newGray-300 focus:border-transparent focus:ring-0 shadow-none',
     },
 ]) !!}>

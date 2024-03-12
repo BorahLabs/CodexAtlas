@@ -7,14 +7,16 @@ environments:
     queue-memory: 512
     concurrency: 50
     queue-concurrency: 20
-    timeout: 20
+    timeout: 90
     queue-timeout: 300
     storage: codex-atlas
     database: codex-atlas-production
     warm: 10
     runtime: "php-8.2:al2"
     network: codex-atlas-production
-    domain: "*.codexatlas.app"
+    domain:
+      - "*.codexatlas.app"
+      - automaticdocs.app
     build:
       - "COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev"
       - "php artisan event:cache"
@@ -50,9 +52,5 @@ environments:
       - "php artisan migrate --force"
     firewall:
       rate-limit: 1000
-      bot-control:
-        - CategorySearchEngine
-        - CategorySocialMedia
-        - CategoryScrapingFramework
     queues:
       - codex-staging

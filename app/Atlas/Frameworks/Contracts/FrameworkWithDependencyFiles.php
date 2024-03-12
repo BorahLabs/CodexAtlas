@@ -12,7 +12,7 @@ abstract class FrameworkWithDependencyFiles extends Framework {
 
     public function hasDependencies(Folder $folder): bool
     {
-        $fileContent = $folder->getFile($this->getDependencyFilePath())?->contents;
+        $fileContent = $folder->getFile($this->getDependencyFilePath())?->contents();
         return str($fileContent)->containsAll($this->getDependencies());
     }
 }

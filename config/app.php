@@ -61,6 +61,8 @@ return [
 
     'main_domain' => env('APP_DOMAIN', 'codexatlas.app'),
 
+    'autodoc_domain' => env('AUTODOC_DOMAIN', 'automaticdocs.app'),
+
     'fake_domain' => env('FAKED_APP_DOMAIN'),
 
     'indexable' => env('APP_INDEXABLE', false),

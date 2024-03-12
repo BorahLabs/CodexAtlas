@@ -20,11 +20,11 @@
                             placeholder="sk-**********" />
                     @else
                         <div
-                            class="border-gray-700 bg-slate-700 text-gray-300 rounded-md shadow-sm mt-1 w-full border-r-0 flex">
+                            class="border-newGray-700 bg-slate-700 text-newGray-300 rounded-md shadow-sm mt-1 w-full border-r-0 flex">
                             <span
                                 class="block p-2">{{ preg_replace('/(\*{3,})/', ' · · · · · ', Str::mask(auth()->user()->currentTeam->openai_key, '*', 3, -4)) }}</span>
                             <button type="button" wire:click="$set('isEditing', true)"
-                                class="text-gray-400 ml-auto hover:text-gray-300 px-2">
+                                class="text-newGray-400 ml-auto hover:text-newGray-300 px-2">
                                 <x-codex.icons.pencil class="h-5 w-5" />
                             </button>
                         </div>

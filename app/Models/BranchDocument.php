@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BranchDocument extends Model
 {
-    use BelongsToKnowledgeBase;
+    // use BelongsToKnowledgeBase;
     use HasFactory;
     use HasUuids;
 

@@ -12,6 +12,11 @@ class PHP implements Language
         return 'PHP';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/php.svg');
+    }
+
     public function customContext(): ?string
     {
         return null;

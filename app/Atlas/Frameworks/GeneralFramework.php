@@ -12,6 +12,11 @@ class GeneralFramework extends Framework
         return 'Default';
     }
 
+    public function imageUrl(): ?string
+    {
+        return null;
+    }
+
     public function usesFramework(Folder $folder): bool
     {
         return true;

@@ -12,6 +12,11 @@ class Vue extends FrameworkWithDependencyFiles
         return 'Vue';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/vue.svg');
+    }
+
     public function usesFramework(Folder $folder): bool
     {
         return $folder->hasFile('package.json') && $this->hasDependencies($folder);

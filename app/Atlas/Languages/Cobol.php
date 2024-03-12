@@ -12,6 +12,11 @@ class Cobol implements Language
         return 'COBOL';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/cobol.jpeg');
+    }
+
     public function customContext(): ?string
     {
         return null;

@@ -15,7 +15,7 @@ class DownloadDocsAsMarkdown
 {
     use AsAction;
 
-    public function handle(Project $project, Repository $repository, Branch $branch): string
+    public function handle(Project $project, Repository $repository, Branch $branch, bool $withReadme = true): string
     {
         $zip = new ZipArchive();
         $path = tempnam(sys_get_temp_dir(), 'docs').'.zip';
@@ -23,9 +23,11 @@ class DownloadDocsAsMarkdown
             throw new \Exception('Could not create zip file');
         }
 
-        $readme = GetReadme::make()->handle($repository, $branch);
-        if ($readme) {
-            $zip->addFromString('README.md', $readme->contents());
+        if ($withReadme) {
+            $readme = GetReadme::make()->handle($repository, $branch);
+            if ($readme) {
+                $zip->addFromString('README.md', $readme->contents());
+            }
         }
 
         $branch
@@ -44,6 +46,8 @@ class DownloadDocsAsMarkdown
     {
         $zipPath = $this->handle($project, $repository, $branch);
 
-        return response()->download($zipPath, $repository->name.'-'.$branch->name.'.zip');
+        return response()
+            ->download($zipPath, $repository->name.'-'.$branch->name.'.zip')
+            ->deleteFileAfterSend();
     }
 }

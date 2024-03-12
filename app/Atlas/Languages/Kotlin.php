@@ -12,6 +12,11 @@ class Kotlin implements Language
         return 'Kotlin';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/kotlin.svg');
+    }
+
     public function customContext(): ?string
     {
         return null;

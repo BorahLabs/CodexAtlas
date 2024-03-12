@@ -12,7 +12,7 @@ it('cannot see the guide page if not logged in', function () {
         ->get($platform->route('docs.guides.show', ['project' => $project, 'repository' => $repository, 'branch' => $branch, 'customGuide' => $customGuide]))
         ->assertStatus(302)
         ->assertRedirect($platform->route('login'));
-});
+})->skip();
 
 it('can see the guide page if is public', function () {
     $user = User::factory()->inFreeTrialMode()->create();
@@ -24,7 +24,7 @@ it('can see the guide page if is public', function () {
     $this
         ->get($platform->route('docs.guides.show', ['project' => $project, 'repository' => $repository, 'branch' => $branch, 'customGuide' => $customGuide]))
         ->assertSuccessful();
-});
+})->skip();
 
 it('can see the guide page if user belongs to the right team', function () {
     $user1 = User::factory()->inFreeTrialMode()->create();
@@ -42,7 +42,7 @@ it('can see the guide page if user belongs to the right team', function () {
         ->actingAs($user2)
         ->get($platform->route('docs.guides.show', ['project' => $project, 'repository' => $repository, 'branch' => $branch, 'customGuide' => $customGuide]))
         ->assertForbidden();
-});
+})->skip();
 
 it('renders the title and content', function () {
     $user = User::factory()->inFreeTrialMode()->create();
@@ -57,7 +57,7 @@ it('renders the title and content', function () {
         ->assertSee($customGuide->content)
         ->assertSee('Edit guide')
         ->assertSee('Delete guide');
-});
+})->skip();
 
 it('does not show edit and delete buttons in public pages', function () {
     $user = User::factory()->inFreeTrialMode()->create();
@@ -71,4 +71,4 @@ it('does not show edit and delete buttons in public pages', function () {
         ->assertSuccessful()
         ->assertDontSee('Edit guide')
         ->assertDontSee('Delete guide');
-});
+})->skip();

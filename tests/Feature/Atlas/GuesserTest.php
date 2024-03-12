@@ -78,16 +78,22 @@ test('Vue is supported', function () {
     expect(get_class(Guesser::make()->guessFramework($folder)))->toBe(Frameworks\Vue::class);
 });
 
+test('Flutter is supported', function () {
+    $folder = new Folder('', '', '');
+    $folder->addFile(new File(name: 'pubspec.yaml', path: 'pubspec.yaml', sha: '', downloadUrl: '', contents: getFlutterPubspecContent()));
+    expect(get_class(Guesser::make()->guessFramework($folder)))->toBe(Frameworks\Flutter::class);
+});
+
 test('Can get correct file from folder in Vue', function () {
     $folder = new Folder('', '', '');
-    $file = new File(name:'package.json', path:'package.json', sha:'', downloadUrl:'', contents:getVuePackageJsonContent());
+    $file = new File(name:'package.json', path:'package.json', sha:'', downloadUrl:'', contents: getVuePackageJsonContent());
     $folder->addFile($file);
     expect($folder->getFile('package.json'))->toBe($file);
 });
 
 test('Can get correct file from folder in react', function () {
     $folder = new Folder('', '', '');
-    $file = new File(name:'package.json', path:'package.json', sha:'', downloadUrl:'', contents:getReactPackageJsonContent());
+    $file = new File(name:'package.json', path:'package.json', sha:'', downloadUrl:'', contents: getReactPackageJsonContent());
     $folder->addFile($file);
     expect($folder->getFile('package.json'))->toBe($file);
 });
@@ -289,4 +295,19 @@ function getReactPackageJsonContent(): string {
           ]
 
       ';
+}
+
+function getFlutterPubspecContent(): string {
+    return 'name: my_flutter_app
+    description: A new Flutter project
+    version: 1.0.0
+    environment:
+      sdk: ">=2.12.0 <3.0.0"
+    dependencies:
+      flutter:
+        sdk: flutter
+    dev_dependencies:
+      flutter_test:
+        sdk: flutter
+    ';
 }

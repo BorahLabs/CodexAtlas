@@ -17,7 +17,7 @@ class Guesser
 
     public function guessFramework(Folder $folder): Framework
     {
-        $frameworks = $this->supportedFrameworks();
+        $frameworks = static::supportedFrameworks();
         foreach ($frameworks as $framework) {
             if ($framework->usesFramework($folder)) {
                 return $framework;
@@ -28,7 +28,7 @@ class Guesser
     /**
      * @return Framework[]
      */
-    private function supportedFrameworks(): array
+    public static function supportedFrameworks(): array
     {
         return [
             new Frameworks\Laravel(),
@@ -41,13 +41,15 @@ class Guesser
             new Frameworks\Angular(),
             new Frameworks\Vue(),
             new Frameworks\React(),
+            new Frameworks\Flutter(),
+            new Frameworks\RubyOnRails(),
             new Frameworks\GeneralFramework(),
         ];
     }
 
     public function guessLanguage(File $file): Language
     {
-        $languages = $this->supportedLanguages();
+        $languages = static::supportedLanguages();
         foreach ($languages as $language) {
             if ($language->isOwnFile($file)) {
                 return $language;
@@ -60,7 +62,7 @@ class Guesser
     /**
      * @return Language[]
      */
-    private function supportedLanguages(): array
+    public static function supportedLanguages(): array
     {
         return [
             new Languages\Cobol(),
@@ -76,6 +78,8 @@ class Guesser
             new Languages\Python(),
             new Languages\Rust(),
             new Languages\Swift(),
+            new Languages\Dart(),
+            new Languages\Ruby(),
         ];
     }
 }

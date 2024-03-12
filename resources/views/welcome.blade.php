@@ -6,20 +6,22 @@
                     <h1
                         class="font-heading text-4xl sm:text-6xl md:text-7xl xl:text-8xl text-white font-semibold leading-none mb-8">
                         Instantly document your code</h1>
-                    <p class="text-2xl text-gray-400 mb-8">
+                    <p class="text-2xl text-newGray-400 mb-8">
                         <span class="block">Connect CodexAtlas to your GitHub, Gitlab or Bitbucket accounts</span>
                         <span class="block">and keep your documentation updated</span>
                     </p>
-                    <a class="group inline-flex h-14 px-7 items-center justify-center text-base font-medium text-black hover:text-white bg-violet-500 hover:bg-violet-600 transition duration-200 rounded-full"
-                        href="{{ route('register') }}">
-                        <span class="mr-2">{{ __('Try it for free') }}</span>
-                        <svg width="24" height="24" viewbox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M17.9199 6.62C17.8185 6.37565 17.6243 6.18147 17.3799 6.08C17.2597 6.02876 17.1306 6.00158 16.9999 6H6.99994C6.73472 6 6.48037 6.10536 6.29283 6.29289C6.1053 6.48043 5.99994 6.73478 5.99994 7C5.99994 7.26522 6.1053 7.51957 6.29283 7.70711C6.48037 7.89464 6.73472 8 6.99994 8H14.5899L6.28994 16.29C6.19621 16.383 6.12182 16.4936 6.07105 16.6154C6.02028 16.7373 5.99414 16.868 5.99414 17C5.99414 17.132 6.02028 17.2627 6.07105 17.3846C6.12182 17.5064 6.19621 17.617 6.28994 17.71C6.3829 17.8037 6.4935 17.8781 6.61536 17.9289C6.73722 17.9797 6.86793 18.0058 6.99994 18.0058C7.13195 18.0058 7.26266 17.9797 7.38452 17.9289C7.50638 17.8781 7.61698 17.8037 7.70994 17.71L15.9999 9.41V17C15.9999 17.2652 16.1053 17.5196 16.2928 17.7071C16.4804 17.8946 16.7347 18 16.9999 18C17.2652 18 17.5195 17.8946 17.707 17.7071C17.8946 17.5196 17.9999 17.2652 17.9999 17V7C17.9984 6.86932 17.9712 6.74022 17.9199 6.62Z"
-                                fill="currentColor"></path>
-                        </svg>
-                    </a>
+                    @if (Route::has('register'))
+                        <a class="group inline-flex h-14 px-7 items-center justify-center text-base font-medium text-black hover:text-white bg-violet-500 hover:bg-violet-600 transition duration-200 rounded-full"
+                            href="{{ route('register') }}">
+                            <span class="mr-2">{{ __('Try it for free') }}</span>
+                            <svg width="24" height="24" viewbox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M17.9199 6.62C17.8185 6.37565 17.6243 6.18147 17.3799 6.08C17.2597 6.02876 17.1306 6.00158 16.9999 6H6.99994C6.73472 6 6.48037 6.10536 6.29283 6.29289C6.1053 6.48043 5.99994 6.73478 5.99994 7C5.99994 7.26522 6.1053 7.51957 6.29283 7.70711C6.48037 7.89464 6.73472 8 6.99994 8H14.5899L6.28994 16.29C6.19621 16.383 6.12182 16.4936 6.07105 16.6154C6.02028 16.7373 5.99414 16.868 5.99414 17C5.99414 17.132 6.02028 17.2627 6.07105 17.3846C6.12182 17.5064 6.19621 17.617 6.28994 17.71C6.3829 17.8037 6.4935 17.8781 6.61536 17.9289C6.73722 17.9797 6.86793 18.0058 6.99994 18.0058C7.13195 18.0058 7.26266 17.9797 7.38452 17.9289C7.50638 17.8781 7.61698 17.8037 7.70994 17.71L15.9999 9.41V17C15.9999 17.2652 16.1053 17.5196 16.2928 17.7071C16.4804 17.8946 16.7347 18 16.9999 18C17.2652 18 17.5195 17.8946 17.707 17.7071C17.8946 17.5196 17.9999 17.2652 17.9999 17V7C17.9984 6.86932 17.9712 6.74022 17.9199 6.62Z"
+                                    fill="currentColor"></path>
+                            </svg>
+                        </a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -44,7 +46,8 @@
                     <h2
                         class="font-heading text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-medium text-white tracking-tight mb-6">
                         Spend more time developing</h2>
-                    <p class="text-xl text-gray-400">CodexAtlas reduces 99% of the manual work on documenting software
+                    <p class="text-xl text-newGray-400">CodexAtlas reduces 99% of the manual work on documenting
+                        software
                         projects by using the latest advancements in Artificial Intelligence.</p>
                 </div>
                 <div class="flex flex-wrap -mx-4">
@@ -77,7 +80,7 @@
                                     </h4>
                                 </div>
                             </div>
-                            <p class="text-xl text-gray-400">Powered by state-of-the-art artificial intelligence,
+                            <p class="text-xl text-newGray-400">Powered by state-of-the-art artificial intelligence,
                                 ensuring the right understanding for your code.</p>
                         </div>
                     </div>
@@ -105,7 +108,7 @@
                                     </h4>
                                 </div>
                             </div>
-                            <p class="text-xl text-gray-400">CodexAtlas is trained on the most popular languages and
+                            <p class="text-xl text-newGray-400">CodexAtlas is trained on the most popular languages and
                                 frameworks. If we still don't support yours, feel free to get in touch.</p>
                         </div>
                     </div>
@@ -131,7 +134,8 @@
                                     </h4>
                                 </div>
                             </div>
-                            <p class="text-xl text-gray-400">CodexAtlas is connected to your repository provider, and
+                            <p class="text-xl text-newGray-400">CodexAtlas is connected to your repository provider,
+                                and
                                 it will monitor changes in your code to automatically keep the documentation updated.
                             </p>
                         </div>
@@ -151,7 +155,7 @@
                     <h2
                         class="font-heading text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-medium text-white tracking-tight mb-6">
                         How does it work?</h2>
-                    <p class="text-xl text-gray-400">Setting up a new repository is a straight-forward process.</p>
+                    <p class="text-xl text-newGray-400">Setting up a new repository is a straight-forward process.</p>
                 </div>
                 <div class="flex flex-wrap items-center -mx-4 mb-16">
                     <div class="w-full md:w-1/2 px-4 mb-8 md:mb-0">
@@ -230,7 +234,7 @@
                 <h2
                     class="font-heading text-4xl xs:text-5xl sm:text-6xl lg:text-7xl font-medium text-white tracking-tight mb-6">
                     In the works</h2>
-                <p class="max-w-xl text-xl text-gray-500 tracking-tight">We are constantly improving CodexAtlas and
+                <p class="max-w-xl text-xl text-newGray-500 tracking-tight">We are constantly improving CodexAtlas and
                     keeping it up-to-date with the latest versions of each framework and language. But we are also doing
                     some other cool stuff that will be available soon.</p>
             </div>
@@ -244,7 +248,8 @@
                                     <h2
                                         class="text-3xl sm:text-4xl mb-2 font-medium text-white group-hover:text-sky-900">
                                         Self-host your docs</h2>
-                                    <p class="text-gray-500 tracking-tight leading-5">We are working on connecting to
+                                    <p class="text-newGray-500 tracking-tight leading-5">We are working on connecting
+                                        to
                                         Confluence, GitHub Wikis and Notion, apart from letting you download your
                                         documentation in Markdown format.</p>
                                 </div>
@@ -259,7 +264,7 @@
                                     <h3
                                         class="text-3xl sm:text-4xl mb-2 font-medium text-white group-hover:text-sky-900">
                                         On-premise enterprise plan</h3>
-                                    <p class="text-gray-500 tracking-tight leading-5">We understand that for some
+                                    <p class="text-newGray-500 tracking-tight leading-5">We understand that for some
                                         organizations, code is something really private. We are working on an on-premise
                                         version so that your code will never leave your servers.</p>
                                 </div>
@@ -274,7 +279,7 @@
                                     <h3
                                         class="text-3xl sm:text-4xl mb-2 font-medium text-white group-hover:text-sky-900">
                                         Intelligent feature copilot</h3>
-                                    <p class="text-gray-500 tracking-tight leading-5">We want to reduce the time
+                                    <p class="text-newGray-500 tracking-tight leading-5">We want to reduce the time
                                         between introducing a new person to a project and developing their first
                                         feature. Having all the knowledge of your code will help us do it.</p>
                                 </div>
@@ -299,7 +304,7 @@
                 <h2
                     class="font-heading text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-medium text-white tracking-tight mb-6">
                     Check our demos</h2>
-                <p class="max-w-xl mx-auto text-xl text-gray-500 leading-relaxed tracking-tight">Feel
+                <p class="max-w-xl mx-auto text-xl text-newGray-500 leading-relaxed tracking-tight">Feel
                     free to check our demos at how your project could look like in CodexAtlas.</p>
             </div>
         </div>
@@ -332,11 +337,12 @@
                 <h2
                     class="font-heading text-4xl xs:text-5xl sm:text-6xl xl:text-7xl font-medium text-white tracking-tight mb-4">
                     Choose Your Plan</h2>
-                <p class="max-w-md mx-auto text-lg leading-snug tracking-tight text-gray-500">Nunc et tellus non erat
-                    accumsan aliquam eget non mi. Integer fringilla pellentesque finibus.</p>
+                <p class="max-w-md mx-auto text-lg leading-snug tracking-tight text-newGray-500">
+                    From pet projects to enterprise-grade systems, we've got it!
+                </p>
             </div>
             <div class="relative z-10 max-w-md lg:max-w-8xl mx-auto">
-                <div class="flex flex-wrap -mx-4">
+                {{-- <div class="flex flex-wrap -mx-4">
                     <x-homepage.pricing-card :imageUrl="asset('casper-assets/pricing/pricing-top-1.png')" price="Free" title="Free Trial"
                         description="Try out CodexAtlas without any
                     compromise and without your credit card. For free."
@@ -352,7 +358,7 @@
                             'Pull Request Assistant',
                             'AI Chatbot',
                             'Premium support',
-                        ]" cta="Start for free" :ctaUrl="route('register')" />
+                        ]" cta="Start for free" :ctaUrl="Route::has('register') ? route('register') : '#'" />
                     <x-homepage.pricing-card :imageUrl="asset('casper-assets/pricing/pricing-top-2.png')" price="Pay as you go" title="Your own OpenAI Key"
                         description="Use CodexAtlas with your own OpenAI API Key." :included="[
                             'Real-time documentation updates',
@@ -365,7 +371,7 @@
                             'Pull Request Assistant',
                             'AI Chatbot',
                             'Premium support',
-                        ]" cta="Start for free" :ctaUrl="route('register')" />
+                        ]" cta="Start for free" :ctaUrl="Route::has('register') ? route('register') : '#'" />
                     @php
                         $monthlyPlan = \App\Cashier\StripePlanProvider::plans()->firstWhere('id', config('spark.billables.user.plans.0.monthly_id'));
                     @endphp
@@ -381,10 +387,10 @@
                             'AI Chatbot',
                             'Premium support',
                         ]" :notIncluded="[]" cta="Subscribe" :ctaUrl="route('spark.portal')" />
-                </div>
+                </div> --}}
                 <div class="relative mx-auto mb-8 p-10 rounded-3xl overflow-hidden mt-12 lg:mt-24">
                     <div
-                        class="absolute top-0 left-0 w-full h-full backdrop-filter backdrop-blur-md bg-gray-500 bg-opacity-20 group-hover:bg-violet-400 group-hover:bg-opacity-100 transition duration-150">
+                        class="absolute top-0 left-0 w-full h-full backdrop-filter backdrop-blur-md bg-newGray-500 bg-opacity-20 group-hover:bg-violet-400 group-hover:bg-opacity-100 transition duration-150">
                     </div>
                     <div class="relative flex flex-wrap md:flex-nowrap -mx-4 items-center">
                         <div class="w-full md:w-auto px-4 mb-8 md:mb-0">
@@ -392,7 +398,8 @@
                                 <img src="{{ asset('casper-assets/pricing/robot.png') }}" alt="">
                                 <div class=" mt-3 sm:mt-0 sm:ml-8">
                                     <h3 class="text-3xl font-medium text-white">Enterprise</h3>
-                                    <p class="text-sm text-gray-300 max-w-lg mt-2">Not sure if we can work together? We
+                                    <p class="text-sm text-newGray-300 max-w-lg mt-2">Not sure if we can work together?
+                                        We
                                         can
                                         help you
                                         integrate CodexAtlas in your company and increase the productivity of your
@@ -427,44 +434,6 @@
             </div>
         </div>
     </section>
-
-    {{-- <section class="relative py-12 md:py-20 bg-body overflow-hidden">
-        <div class="container mx-auto px-4">
-            <div class="max-w-lg lg:max-w-8xl mx-auto">
-                <div class="flex flex-wrap -mx-4">
-                    <div class="w-full lg:w-3/5 px-4 mb-8 lg:mb-0">
-                        <div
-                            class="h-full py-16 px-14 bg-gradient-to-br from-blueGray-700 via-blueGray-900 to-sky-900 rounded-3xl">
-                            <div class="relative max-w-md mx-auto lg:mx-0">
-                                <h2
-                                    class="max-w-sm font-heading text-4xl xs:text-5xl sm:text-6xl font-medium text-white tracking-tight mb-4">
-                                    Free for limited time</h2>
-                                <p class="text-lg text-blue-100 tracking-tight mb-34">CodexAtlas will be offered for
-                                    free during the alpha phase. Sign up and stay free!</p>
-                                <a class="group mt-8 inline-flex w-full md:w-auto h-14 px-7 items-center justify-center text-base font-medium text-violet-900 hover:text-white bg-white hover:bg-violet-600 transition duration-200 rounded-full"
-                                    href="{{ route('register') }}">
-                                    <span class="mr-2">{{ __('Start for free') }}</span>
-                                    <svg width="24" height="24" viewbox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M17.9199 6.62C17.8185 6.37565 17.6243 6.18147 17.3799 6.08C17.2597 6.02876 17.1306 6.00158 16.9999 6H6.99994C6.73472 6 6.48037 6.10536 6.29283 6.29289C6.1053 6.48043 5.99994 6.73478 5.99994 7C5.99994 7.26522 6.1053 7.51957 6.29283 7.70711C6.48037 7.89464 6.73472 8 6.99994 8H14.5899L6.28994 16.29C6.19621 16.383 6.12182 16.4936 6.07105 16.6154C6.02028 16.7373 5.99414 16.868 5.99414 17C5.99414 17.132 6.02028 17.2627 6.07105 17.3846C6.12182 17.5064 6.19621 17.617 6.28994 17.71C6.3829 17.8037 6.4935 17.8781 6.61536 17.9289C6.73722 17.9797 6.86793 18.0058 6.99994 18.0058C7.13195 18.0058 7.26266 17.9797 7.38452 17.9289C7.50638 17.8781 7.61698 17.8037 7.70994 17.71L15.9999 9.41V17C15.9999 17.2652 16.1053 17.5196 16.2928 17.7071C16.4804 17.8946 16.7347 18 16.9999 18C17.2652 18 17.5195 17.8946 17.707 17.7071C17.8946 17.5196 17.9999 17.2652 17.9999 17V7C17.9984 6.86932 17.9712 6.74022 17.9199 6.62Z"
-                                            fill="currentColor"></path>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full lg:w-2/5 px-4">
-                        <div
-                            class="w-full h-full rounded-3xl bg-gradient-to-tr from-[#070C2A] to-violet-900 flex items-center justify-center py-8">
-                            <x-application-logo class="w-32 h-32" :name="true" :vertical="true"
-                                nameClass="text-3xl text-white font-bold" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> --}}
 
     <section class="relative py-12 md:py-24 bg-body overflow-hidden">
         <div class="relative container mx-auto px-4">

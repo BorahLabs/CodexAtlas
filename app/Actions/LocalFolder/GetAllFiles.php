@@ -33,7 +33,7 @@ class GetAllFiles
                 'path' => str($file->getPathname())->after($repository->fullName.DIRECTORY_SEPARATOR)->toString(),
                 'absolute_path' => $file->getPathname(),
                 'sha' => sha1($file->getContents()),
-                'download_url' => $file->getPath(),
+                'download_url' => $file->getPathname(),
             ]);
         }
 

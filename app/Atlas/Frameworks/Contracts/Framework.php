@@ -9,6 +9,8 @@ abstract class Framework
 {
     abstract public function name(): string;
 
+    abstract public function imageUrl(): ?string;
+
     abstract public function usesFramework(Folder $folder): bool;
 
     abstract public function customContext(): ?string;

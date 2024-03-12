@@ -12,6 +12,11 @@ class Spring extends Framework
         return 'Spring';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/spring.svg');
+    }
+
     public function usesFramework(Folder $folder): bool
     {
         return $folder->hasFile('pom.xml');

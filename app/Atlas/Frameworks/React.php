@@ -13,6 +13,11 @@ class React extends FrameworkWithDependencyFiles
         return 'React';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/react.svg');
+    }
+
     public function usesFramework(Folder $folder): bool
     {
         return $folder->hasFile('package.json') && $this->hasDependencies($folder);

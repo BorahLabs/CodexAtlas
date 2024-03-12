@@ -41,10 +41,7 @@ class SystemComponents
             path: null,
         );
 
-        logger()->debug('[Codex] Detecting framework for branch '.$branch->id);
-        $framework = $this->detectFramework(Folder::makeWithFiles($filesAndFolders, $repoName->name, $repoName->username, sha1($repoName->fullName)));
-        logger()->debug('[Codex] Framework detected: '.$framework->name().' for branch '.$branch->id);
-        $files = $this->filterFiles($filesAndFolders, $framework);
+        [$framework, $files] = FilterFilesByFramework::make()->handle($filesAndFolders, $repoName);
 
         if (! is_null($subscriptionType->maxFilesPerRepository())) {
             $files = array_slice($files, 0, $subscriptionType->maxFilesPerRepository());
@@ -58,36 +55,5 @@ class SystemComponents
         }
 
         GenerateTechStackDocumentation::dispatch($repository, $branch);
-    }
-
-    private function detectFramework(Folder $folder): Framework
-    {
-        // First, we will try to see if there's one framework in the whole project
-        $framework = Guesser::make()->guessFramework($folder);
-
-        // TODO: Detect mulitple frameworks in subfolders. Monorepos? Inertia (maybe Inertia and Livewire should be their own framework?
-        return $framework;
-    }
-
-    private function filterFiles(array $files, Framework $framework): array
-    {
-        $filtered = [];
-        foreach ($files as $file) {
-            if ($framework->shouldBeIgnored($file->path)) {
-                continue;
-            }
-
-            if ($file instanceof Folder) {
-                $filtered = [
-                    ...$filtered,
-                    ...$this->filterFiles($file->files, $framework),
-                    ...$this->filterFiles($file->folders, $framework),
-                ];
-            } elseif ($framework->mightBeRelevant($file->path) && FileWhitelist::whitelisted($file->path)) {
-                $filtered[] = $file;
-            }
-        }
-
-        return $filtered;
     }
 }

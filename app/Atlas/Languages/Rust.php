@@ -12,6 +12,11 @@ class Rust implements Language
         return 'Rust';
     }
 
+    public function imageUrl(): ?string
+    {
+        return asset('logos/rust.svg');
+    }
+
     public function customContext(): ?string
     {
         return null;
