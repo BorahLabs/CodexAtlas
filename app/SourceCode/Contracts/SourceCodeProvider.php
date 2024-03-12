@@ -67,6 +67,14 @@ abstract class SourceCodeProvider
     abstract public function icon(): string;
 
     /**
+     * Path to the view containing the icon of the provider
+     */
+    public function circledIcon(): string
+    {
+        return $this->icon().'-circle';
+    }
+
+    /**
      * Name of the provider
      */
     abstract public function name(): string;
