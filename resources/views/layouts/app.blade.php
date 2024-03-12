@@ -23,33 +23,41 @@
     @endproduction
 </head>
 
-<body class="font-sans antialiased">
+<body class="font-sans antialiased bg-dark">
     <x-banner />
 
-    <div class="min-h-screen bg-newGray-900">
-        @livewire('navigation-menu')
+    <div class="min-h-screen overflow-hidden">
+        <div
+            class="w-[941px] h-[941px] flex-shrink-0 rounded-full border-radius: bg-[radial-gradient(50%_50%_at_50%_50%,_rgba(138,_51,_226,_0.52)_0%,_#070C2A_81%)] filter-[blur(75px)] fixed left-[-386px] top-[184px] -z-1">
+        </div>
+        <div
+            class="w-[941px] h-[941px] flex-shrink-0 rounded-full border-radius: bg-[radial-gradient(50%_50%_at_50%_50%,_rgba(138,_51,_226,_0.52)_0%,_#070C2A_81%)] filter-[blur(75px)] fixed left-[calc(100%_-_900px)] top-[calc(100%_-_250px)] -z-1 hidden xl:block">
+        </div>
+        <div class="relative">
+            @livewire('navigation-menu')
 
-        <!-- Page Heading -->
-        @if (isset($header))
-            <header class="bg-newGray-800 shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endif
+            <!-- Page Heading -->
+            @if (isset($header))
+                <header class="bg-dark">
+                    <div class="max-w-7xl mx-auto pt-20 pb-6 px-4 sm:px-6 lg:px-8">
+                        {{ $header }}
+                    </div>
+                </header>
+            @endif
 
-        @if (isset($stickyHeader))
-            <header class="bg-newGray-800 shadow z-40 sticky top-0">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $stickyHeader }}
-                </div>
-            </header>
-        @endif
+            @if (isset($stickyHeader))
+                <header class="bg-[#070C2A] z-40 sticky top-0">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        {{ $stickyHeader }}
+                    </div>
+                </header>
+            @endif
 
-        <!-- Page Content -->
-        <main>
-            {{ $slot }}
-        </main>
+            <!-- Page Content -->
+            <main>
+                {{ $slot }}
+            </main>
+        </div>
     </div>
 
     @stack('modals')

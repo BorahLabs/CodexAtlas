@@ -33,6 +33,8 @@ export default {
                 black: '#000',
                 white: '#fff',
 
+                dark: '#070C2A',
+
                 orange: {
                     50: '#fff7ed',
                     100: '#ffedd5',

@@ -17,6 +17,8 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@tsparticles/engine": "^3.3.0",
+        "@tsparticles/preset-firefly": "^3.0.2",
         "highlight.js": "^11.9.0",
         "highlightjs-blade": "^0.1.0"
     }

@@ -8,7 +8,9 @@ use App\Actions\Platform\Guides\DeleteGuide;
 use App\Actions\Platform\Guides\ShowEditGuide;
 use App\Actions\Platform\Guides\ShowGuide;
 use App\Actions\Platform\Guides\ShowNewGuide;
+use App\Actions\Platform\Projects\ShowNewProject;
 use App\Actions\Platform\Projects\ShowProject;
+use App\Actions\Platform\Projects\ShowProjectList;
 use App\Actions\Platform\Projects\StoreProject;
 use App\Actions\Platform\Repositories\StoreRepository;
 use App\Actions\Platform\ShowDocs;
@@ -57,8 +59,9 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
         'verified',
     ])->group(function () {
         Route::middleware('team-domain')->group(function () {
-            Route::view('/dashboard', 'dashboard')->name('dashboard');
+            Route::get('/projects', ShowProjectList::class)->name('dashboard');
             Route::post('/projects', StoreProject::class)->name('projects.store');
+            Route::get('/projects/new', ShowNewProject::class)->name('projects.new')->can('create-project');
             Route::get('/projects/{project}', ShowProject::class)->name('projects.show');
 
             Route::post('/projects/{project}/repositories', StoreRepository::class)->name('repositories.store');

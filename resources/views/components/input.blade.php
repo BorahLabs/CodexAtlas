@@ -6,5 +6,7 @@
             => 'border-newGray-700 bg-newGray-900 text-newGray-300 focus:border-violet-600 focus:ring-violet-600 rounded-md shadow-sm',
         'light'
             => 'border-newGray-400 bg-newGray-100 text-newGray-700 focus:border-violet-600 focus:ring-violet-600 rounded-md shadow-sm',
+        'transparent'
+            => 'border-transparent bg-[#121826] text-newGray-300 focus:border-transparent focus:ring-0 shadow-none',
     },
 ]) !!}>
