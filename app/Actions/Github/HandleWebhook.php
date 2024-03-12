@@ -3,7 +3,9 @@
 namespace App\Actions\Github;
 
 use App\Actions\Codex\UpdateDocumentationFromDiff;
+use App\Actions\PullRequestAssistant\Github\HandlePullRequestComment;
 use App\Enums\FileChange;
+use App\Enums\GithubWebhookEvents;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Diff;
 use App\SourceCode\DTO\DiffItem;
@@ -17,14 +19,14 @@ class HandleWebhook
 
     public function handle(SourceCodeAccount $account, array $payload, Request $request): mixed
     {
-        switch ($request->header('x-github-event')) {
-            case 'ping':
-                return response()->json([
-                    'message' => 'pong',
-                ]);
-            case 'push':
-                return $this->handlePush($account, $payload);
-        }
+        return match($request->header('x-github-event')) {
+            GithubWebhookEvents::PING->value => response()->json([
+                'message' => 'pong',
+            ]),
+            GithubWebhookEvents::PUSH->value => $this->handlePush($account, $payload),
+            GithubWebhookEvents::PULL_REQUEST_COMMENT->value => HandlePullRequestComment::run($request),
+            default => null
+        };
     }
 
     private function handlePush(SourceCodeAccount $account, array $payload): void

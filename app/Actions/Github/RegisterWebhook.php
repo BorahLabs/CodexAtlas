@@ -3,6 +3,7 @@
 namespace App\Actions\Github;
 
 use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
+use App\Enums\GithubWebhookEvents;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\RepositoryName;
 use Illuminate\Support\Str;
@@ -22,11 +23,11 @@ class RegisterWebhook
             ->create($repositoryName->username, $repositoryName->name, [
                 'name' => 'web',
                 'config' => [
-                    'url' => route('webhook', ['sourceCodeAccount' => $account]),
+                    'url' => config('services.ngrok.active_helper')? config('services.ngrok.ngrok_domain')."/webhook/{$account->id}" : route('webhook', ['sourceCodeAccount' => $account]),
                     'content_type' => 'json',
                     'secret' => $secret,
                 ],
-                'events' => ['push'],
+                'events' => [GithubWebhookEvents::PUSH->value, GithubWebhookEvents::PULL_REQUEST_COMMENT->value],
                 'active' => true,
             ]);
 
