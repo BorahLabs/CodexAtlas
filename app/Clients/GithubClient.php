@@ -52,6 +52,5 @@ class GithubClient {
     {
         //manage error
         logger($e);
-        dd($e);
     }
 }
