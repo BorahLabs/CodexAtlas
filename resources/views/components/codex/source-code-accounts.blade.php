@@ -35,10 +35,10 @@
                         style="background-image: url('{{ asset('images/source-provider-card-bd.png') }}'); background-position: center; background-size: cover; background-repeat: no-repeat;">
                         <button type="button"
                             class=" rounded-md p-4 flex flex-col justify-center items-center space-y-4 w-full hover:border-violet-500"
-                            x-data="{ enabled: () => '{{ $account->id }}' === selected }">
-                            <x-dynamic-component x-data="{ active: enabled() }" :component="$account->getProvider()->circledClearGradientIcon()" class="h-16 w-16" />
+                            x-data="{ enabled: () => '{{ $account->id }}' === selected }" x-on:click="selected = '{{ $account->id }}'">
+                            <x-dynamic-component x-data="{ active: enabled }" :component="$account->getProvider()->circledClearGradientIcon()" class="h-16 w-16" />
                             <span class="font-medium"
-                                x-bind:class="enabled() ? 'text-white-gradient' : 'text-primary-gradient'">{{ $account->name }}</span>
+                                x-bind:class="enabled() ? 'text-white-gradient' : 'text-[#222564]'">{{ $account->name }}</span>
                         </button>
                     </div>
                 </x-bordered-black-box>

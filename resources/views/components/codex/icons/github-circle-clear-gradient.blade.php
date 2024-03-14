@@ -10,8 +10,8 @@
     <defs>
         <linearGradient id="paint0_linear_{{ $id }}" x1="33.6362" y1="1.08691" x2="33.6362" y2="67.3225"
             gradientUnits="userSpaceOnUse">
-            <stop x-bind:stop-color="active ? 'white' : '#262870'" />
-            <stop offset="0.885" x-bind:stop-color="active ? '#9A88F5' : '#151466'" />
+            <stop x-bind:stop-color="active() ? 'white' : '#262870'" />
+            <stop offset="0.885" x-bind:stop-color="active() ? '#9A88F5' : '#151466'" />
         </linearGradient>
         <clipPath id="clip0_{{ $id }}">
             <rect width="67" height="68" fill="white" />

@@ -13,16 +13,16 @@
     <defs>
         <linearGradient id="paint0_linear_{{ $id }}" x1="34.9999" y1="-0.000976563" x2="34.9999"
             y2="64.9976" gradientUnits="userSpaceOnUse">
-            <stop x-bind:stop-color="active ? 'white' : '#262870'" />
-            <stop offset="0.885" x-bind:stop-color="active ? '#9A88F5' : '#151466'" />
+            <stop x-bind:stop-color="active() ? 'white' : '#262870'" />
+            <stop offset="0.885" x-bind:stop-color="active() ? '#9A88F5' : '#151466'" />
         </linearGradient>
         <linearGradient id="paint1_linear_{{ $id }}" x1="38.722" y1="21.8096" x2="38.722"
             y2="64.9347" gradientUnits="userSpaceOnUse">
-            <stop x-bind:stop-color="active ? 'white' : '#262870'" />
-            <stop offset="0.885" x-bind:stop-color="active ? '#9A88F5' : '#151466'" />
+            <stop x-bind:stop-color="active() ? 'white' : '#262870'" />
+            <stop offset="0.885" x-bind:stop-color="active() ? '#9A88F5' : '#151466'" />
         </linearGradient>
         <clipPath id="clip0_{{ $id }}">
-            <rect width="70" height="65" x-bind:fill="active ? 'white' : '#262870'" />
+            <rect width="70" height="65" x-bind:fill="active() ? 'white' : '#262870'" />
         </clipPath>
     </defs>
 </svg>
