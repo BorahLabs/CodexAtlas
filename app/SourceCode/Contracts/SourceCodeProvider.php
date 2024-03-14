@@ -74,6 +74,11 @@ abstract class SourceCodeProvider
         return $this->icon().'-circle';
     }
 
+    public function circledClearGradientIcon(): string
+    {
+        return $this->icon().'-circle-clear-gradient';
+    }
+
     /**
      * Name of the provider
      */
