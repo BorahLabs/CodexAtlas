@@ -52,13 +52,14 @@
                     @if (auth()->user()->currentTeam->sourceCodeAccounts->isNotEmpty())
                         <div class="flex items-end mt-8">
                             <div class="w-full">
-                                <x-label for="name" value="{{ __('Repository name') }}" />
-                                <x-input id="name" type="text" class="mt-1 block w-full" name="name"
+                                <x-label for="name" style="lightweight" value="{{ __('Repository name') }}"
+                                    class="mb-2" />
+                                <x-bordered-input id="name" type="text" class="block w-full" name="name"
                                     :autofocus="$project->repositories->isEmpty()" placeholder="Account/Repository" />
                                 <x-input-error for="name" class="mt-2" />
                             </div>
                             <div class="flex-shrink-0 pb-1 ml-8">
-                                <x-button type="submit">{{ __('Add repo') }}</x-button>
+                                <x-button theme="primary" type="submit">{{ __('Add repo') }}</x-button>
                             </div>
                         </div>
                     @endif

@@ -34,7 +34,7 @@
                     <div class="w-full bg-black rounded-xl"
                         style="background-image: url('{{ asset('images/source-provider-card-bd.png') }}'); background-position: center; background-size: cover; background-repeat: no-repeat;">
                         <button type="button"
-                            class=" rounded-md p-4 flex flex-col justify-center items-center space-y-4 w-full hover:border-violet-500"
+                            class="rounded-md p-4 flex flex-col justify-center items-center space-y-4 w-full hover:border-violet-500"
                             x-data="{ enabled: () => '{{ $account->id }}' === selected }" x-on:click="selected = '{{ $account->id }}'">
                             <x-dynamic-component x-data="{ active: enabled }" :component="$account->getProvider()->circledClearGradientIcon()" class="h-16 w-16" />
                             <span class="font-medium"
@@ -44,55 +44,77 @@
                 </x-bordered-black-box>
             @endforeach
 
-            <button type="button" x-show="!isAdding"
-                class="border border-slate-600 rounded-md p-4 flex flex-col justify-center items-center space-y-4 hover:border-violet-500"
-                x-on:click="isAdding = true; provider = null; $dispatch('source-code-add')">
-                <x-codex.icons.plus class="h-12 w-12 text-slate-700" />
-                <p class="text-slate-300 font-bold text-sm">{{ __('Add new account') }}</p>
-            </button>
+            <x-bordered-black-box :single="true" innerClass="flex w-full overflow-hidden" x-show="!isAdding">
+                <div class="w-full bg-black rounded-xl"
+                    style="background-image: url('{{ asset('images/source-provider-card-bd.png') }}'); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                    <button type="button"
+                        class="rounded-md p-4 flex flex-col justify-center items-center space-y-4 w-full hover:border-violet-500"
+                        x-data="{ enabled: () => isAdding }"
+                        x-on:click="isAdding = true; provider = null; $dispatch('source-code-add')">
+                        <x-codex.icons.plus x-data="{ active: enabled }" class="h-16 w-16" />
+                        <span class="font-medium text-[#222564]">{{ __('Add account') }}</span>
+                    </button>
+                </div>
+            </x-bordered-black-box>
 
             <!-- When adding a new account -->
-            <a href="{{ route('github.redirect') }}" x-show="isAdding"
-                class="border border-slate-600 rounded-md p-4 flex flex-col justify-center text-center items-center space-y-4 hover:border-violet-500"
-                x-on:click="provider = null">
-                <x-codex.icons.github class="h-12 w-12 text-slate-700" />
-                <p class="text-slate-300 font-bold text-sm">{{ __('Add GitHub account') }}</p>
-            </a>
-            <button type="button" x-show="isAdding"
-                class="border rounded-md p-4 flex flex-col justify-center items-center space-y-4"
-                x-bind:class="{
-                    'border-slate-600 hover:border-violet-500': provider !== 'gitlab',
-                    'border-violet-500': provider === 'gitlab',
-                }"
-                x-on:click="provider = 'gitlab'">
-                <x-codex.icons.gitlab class="h-12 w-12 text-slate-700" />
-                <p class="text-slate-300 font-bold text-sm">{{ __('Add Gitlab account') }}</p>
-            </button>
-            <button type="button" x-show="isAdding"
-                class="border rounded-md p-4 flex flex-col justify-center items-center space-y-4"
-                x-bind:class="{
-                    'border-slate-600 hover:border-violet-500': provider !== 'bitbucket',
-                    'border-violet-500': provider === 'bitbucket',
-                }"
-                x-on:click="provider = 'bitbucket';">
-                <x-codex.icons.bitbucket class="h-12 w-12 text-slate-700" />
-                <p class="text-slate-300 font-bold text-sm">{{ __('Add Bitbucket account') }}</p>
-            </button>
-            <button type="button" x-show="isAdding"
-                class="border border-slate-600 rounded-md p-4 flex flex-col justify-center items-center space-y-4 hover:border-violet-500"
-                x-on:click="isAdding = false; provider = null; $dispatch('source-code-cancel')">
-                <x-codex.icons.cancel class="h-12 w-12 text-slate-700" />
-                <p class="text-slate-300 font-bold text-sm">{{ __('Cancel') }}</p>
-            </button>
+            <x-bordered-black-box :single="true" innerClass="flex w-full overflow-hidden" x-show="isAdding">
+                <div class="w-full bg-black rounded-xl"
+                    style="background-image: url('{{ asset('images/source-provider-card-bd.png') }}'); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                    <a href="{{ route('github.redirect') }}"
+                        class="rounded-md p-4 flex flex-col justify-center items-center space-y-4 w-full hover:border-violet-500 text-center"
+                        x-data="{ enabled: () => provider === 'github' || provider === null }">
+                        <x-codex.icons.github-circle-clear-gradient x-data="{ active: enabled }" class="h-16 w-16" />
+                        <span class="font-medium"
+                            x-bind:class="enabled() ? 'text-white-gradient' : 'text-[#222564]'">{{ __('Add GitHub account') }}</span>
+                    </a>
+                </div>
+            </x-bordered-black-box>
+            <x-bordered-black-box :single="true" innerClass="flex w-full overflow-hidden" x-show="isAdding">
+                <div class="w-full bg-black rounded-xl"
+                    style="background-image: url('{{ asset('images/source-provider-card-bd.png') }}'); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                    <button type="button"
+                        class="rounded-md p-4 flex flex-col justify-center items-center space-y-4 w-full hover:border-violet-500 text-center"
+                        x-data="{ enabled: () => provider === 'gitlab' }" x-on:click="provider = 'gitlab'">
+                        <x-codex.icons.gitlab-circle-clear-gradient x-data="{ active: enabled }" class="h-16 w-16" />
+                        <span class="font-medium"
+                            x-bind:class="enabled() ? 'text-white-gradient' : 'text-[#222564]'">{{ __('Add Gitlab account') }}</span>
+                        </a>
+                </div>
+            </x-bordered-black-box>
+            <x-bordered-black-box :single="true" innerClass="flex w-full overflow-hidden" x-show="isAdding">
+                <div class="w-full bg-black rounded-xl"
+                    style="background-image: url('{{ asset('images/source-provider-card-bd.png') }}'); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                    <button type="button"
+                        class="rounded-md p-4 flex flex-col justify-center items-center space-y-4 w-full hover:border-violet-500 text-center"
+                        x-data="{ enabled: () => provider === 'bitbucket' }" x-on:click="provider = 'bitbucket'">
+                        <x-codex.icons.bitbucket-circle-clear-gradient x-data="{ active: enabled }" class="h-16 w-16" />
+                        <span class="font-medium"
+                            x-bind:class="enabled() ? 'text-white-gradient' : 'text-[#222564]'">{{ __('Add Bitbucket account') }}</span>
+                        </a>
+                </div>
+            </x-bordered-black-box>
+            <x-bordered-black-box :single="true" innerClass="flex w-full overflow-hidden" x-show="isAdding">
+                <div class="w-full bg-black rounded-xl"
+                    style="background-image: url('{{ asset('images/source-provider-card-bd.png') }}'); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                    <button type="button"
+                        class="rounded-md p-4 flex flex-col justify-center items-center space-y-4 w-full hover:border-violet-500"
+                        x-data="{ enabled: () => !isAdding }"
+                        x-on:click="isAdding = false; provider = null; $dispatch('source-code-cancel')">
+                        <x-codex.icons.cancel x-data="{ active: enabled }" class="h-16 w-16" />
+                        <span class="font-medium text-[#222564]">{{ __('Cancel') }}</span>
+                    </button>
+                </div>
+            </x-bordered-black-box>
             <div x-show="provider !== null" class="col-span-1 sm:col-span-2 md:col-span-4">
                 <form action="{{ route('source-code-accounts.pat.store') }}" method="POST">
                     @csrf
                     <input type="hidden" name="provider" x-model="provider" />
-                    <x-label for="pat-user">{{ __('Username') }}</x-label>
-                    <x-input id="pat-user" type="text" class="mt-1 block w-full" name="username" required />
+                    <x-label style="lightweight" for="pat-user" class="mb-2">{{ __('Username') }}</x-label>
+                    <x-bordered-input id="pat-user" type="text" class="block w-full" name="username" required />
                     <x-input-error for="username" />
-                    <x-label for="pat" class="mt-4">{{ __('App token') }}</x-label>
-                    <x-input id="pat" type="text" class="mt-1 block w-full" name="pat" required />
+                    <x-label style="lightweight" for="pat" class="mt-4 mb-2">{{ __('App token') }}</x-label>
+                    <x-bordered-input id="pat" type="text" class="block w-full" name="pat" required />
                     <x-input-error for="pat" />
                     <p x-show="provider === 'gitlab'" class="text-sm text-slate-300 mt-2">
                         You can generate a Personal Access Token for Gitlab <a
@@ -106,7 +128,7 @@
                         <strong>Account and Repositories</strong>, and <strong>Read and write</strong> in
                         <strong>Webhooks</strong>.
                     </p>
-                    <x-button type="submit" class="mt-4">{{ __('Add account') }}</x-button>
+                    <x-button theme="primary" type="submit" class="mt-4">{{ __('Add account') }}</x-button>
                 </form>
             </div>
         </div>
