@@ -28,7 +28,8 @@
         "livewire/livewire": "^3.4",
         "lorisleiva/laravel-actions": "^2.8",
         "openai-php/laravel": "^0.8",
-        "spatie/laravel-sitemap": "^7.2"
+        "spatie/laravel-sitemap": "^7.2",
+        "wire-elements/modal": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",

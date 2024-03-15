@@ -25,8 +25,8 @@
                                             text="External Platforms" :disabled="true" icon="mosaic" />
                                     </li>
                                     <li class="py-2">
-                                        <x-codex.projects.nav-link to="route('projects.show', ['project' => $project])"
-                                            text="Glossary" :disabled="true" icon="book" />
+                                        <x-codex.projects.nav-link :to="route('glossary.show', ['project' => $project])" text="Glossary"
+                                            icon="book" />
                                     </li>
                                     <li class="py-2">
                                         <x-codex.projects.nav-link to="route('projects.show', ['project' => $project])"
