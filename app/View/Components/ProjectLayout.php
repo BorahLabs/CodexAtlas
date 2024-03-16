@@ -11,7 +11,7 @@ class ProjectLayout extends Component
     public function __construct(
         public Project $project,
     ) {
-      //
+        //
     }
 
     /**

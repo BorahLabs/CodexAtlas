@@ -23,6 +23,7 @@ class Autodoc extends Component
     ];
 
     public ?array $data = [];
+
     public ?AutodocLead $lead = null;
 
     public function render()
@@ -43,7 +44,7 @@ class Autodoc extends Component
     #[Computed]
     public function priceInCents(): int
     {
-        return match(true) {
+        return match (true) {
             $this->lead->number_of_files <= 100 => 1000,
             $this->lead->number_of_files <= 500 => 4000,
             $this->lead->number_of_files <= 1000 => 7000,
@@ -54,7 +55,7 @@ class Autodoc extends Component
     #[Computed]
     public function formattedPrice(): string
     {
-        return number_format($this->priceInCents / 100, 2) . '€';
+        return number_format($this->priceInCents / 100, 2).'€';
     }
 
     public function processFirstFile(): void
@@ -87,17 +88,17 @@ class Autodoc extends Component
             'success_url' => URL::signedRoute('autodoc.success', ['autodocLead' => $this->lead]),
             'allow_promotion_codes' => true,
             'line_items' => [
-              [
-                'quantity' => 1,
-                'price_data' => [
-                    'currency' => 'eur',
-                    'product_data' => [
-                        'name' => 'Code documentation',
-                        'description' => 'Documentation for '.$this->lead->number_of_files.' files',
+                [
+                    'quantity' => 1,
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'product_data' => [
+                            'name' => 'Code documentation',
+                            'description' => 'Documentation for '.$this->lead->number_of_files.' files',
+                        ],
+                        'unit_amount' => $this->priceInCents,
                     ],
-                    'unit_amount' => $this->priceInCents,
                 ],
-              ],
             ],
             'metadata' => [
                 'autodoc_lead_id' => $this->lead->id,

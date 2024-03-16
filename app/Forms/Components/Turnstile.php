@@ -15,6 +15,7 @@ class Turnstile extends Field
             'secret' => config('services.cloudflare.turnstile.secret_key'),
             'response' => $token,
         ];
+
         return Http::asForm()
             ->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', $data)
             ->json('success', false);

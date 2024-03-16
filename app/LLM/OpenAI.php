@@ -14,6 +14,7 @@ use OpenAI\Client;
 class OpenAI extends Llm implements HasApiKey
 {
     private ?string $key = null;
+
     private ?string $model = null;
 
     public function getPromptRequest(PromptRequestType $promptRequestType): PromptRequest

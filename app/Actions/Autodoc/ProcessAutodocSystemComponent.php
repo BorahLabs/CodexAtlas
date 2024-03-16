@@ -9,10 +9,7 @@ use App\LLM\PromptRequests\PromptRequestType;
 use App\Models\AutodocLead;
 use App\Models\Project;
 use App\Models\SystemComponent;
-use App\Notifications\Autodoc\DocumentationCompleted;
-use App\Notifications\Autodoc\FileRemoved;
 use App\SourceCode\DTO\File;
-use Illuminate\Support\Facades\Notification;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class ProcessAutodocSystemComponent
@@ -65,14 +62,7 @@ class ProcessAutodocSystemComponent
             ->count();
         $finished = $total > 0 && $processed === $total;
         if ($finished) {
-            $lead->update([
-                'status' => SystemComponentStatus::Generated,
-            ]);
-
-            Notification::route('mail', $lead->email)
-                ->notify(new DocumentationCompleted($lead));
-            Notification::route('mail', $lead->email)
-                ->notify(new FileRemoved($lead));
+            FinishLeadProcessing::run($lead);
         }
     }
 }

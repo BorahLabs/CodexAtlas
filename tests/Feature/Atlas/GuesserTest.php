@@ -86,14 +86,14 @@ test('Flutter is supported', function () {
 
 test('Can get correct file from folder in Vue', function () {
     $folder = new Folder('', '', '');
-    $file = new File(name:'package.json', path:'package.json', sha:'', downloadUrl:'', contents: getVuePackageJsonContent());
+    $file = new File(name: 'package.json', path: 'package.json', sha: '', downloadUrl: '', contents: getVuePackageJsonContent());
     $folder->addFile($file);
     expect($folder->getFile('package.json'))->toBe($file);
 });
 
 test('Can get correct file from folder in react', function () {
     $folder = new Folder('', '', '');
-    $file = new File(name:'package.json', path:'package.json', sha:'', downloadUrl:'', contents: getReactPackageJsonContent());
+    $file = new File(name: 'package.json', path: 'package.json', sha: '', downloadUrl: '', contents: getReactPackageJsonContent());
     $folder->addFile($file);
     expect($folder->getFile('package.json'))->toBe($file);
 });
@@ -230,7 +230,8 @@ test('Cannot detect unknown language', function () {
     Guesser::make()->guessLanguage($file);
 })->expectException(\App\Exceptions\CouldNotDetectLanguage::class);
 
-function getVuePackageJsonContent(): string {
+function getVuePackageJsonContent(): string
+{
     return '{
         "name": "mi-proyecto-vue",
         "version": "1.0.0",
@@ -261,7 +262,8 @@ function getVuePackageJsonContent(): string {
       }';
 }
 
-function getReactPackageJsonContent(): string {
+function getReactPackageJsonContent(): string
+{
     return '{
         "name": "mi-proyecto-react",
         "version": "1.0.0",
@@ -297,7 +299,8 @@ function getReactPackageJsonContent(): string {
       ';
 }
 
-function getFlutterPubspecContent(): string {
+function getFlutterPubspecContent(): string
+{
     return 'name: my_flutter_app
     description: A new Flutter project
     version: 1.0.0

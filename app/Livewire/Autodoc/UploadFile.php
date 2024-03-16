@@ -6,10 +6,10 @@ use App\Actions\Autodoc\ExtractZip;
 use App\Actions\Autodoc\GetFiles;
 use App\Actions\Codex\Architecture\FilterFilesByFramework;
 use App\Models\AutodocLead;
+use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
-use Filament\Forms;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -62,6 +62,7 @@ class UploadFile extends Component implements HasForms
                 ->body('We could not find any documentable files in the uploaded zip.')
                 ->danger()
                 ->send();
+
             return;
         }
 

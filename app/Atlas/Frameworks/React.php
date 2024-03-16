@@ -2,7 +2,6 @@
 
 namespace App\Atlas\Frameworks;
 
-use App\Atlas\Frameworks\Contracts\Framework;
 use App\Atlas\Frameworks\Contracts\FrameworkWithDependencyFiles;
 use App\SourceCode\DTO\Folder;
 
@@ -52,7 +51,7 @@ class React extends FrameworkWithDependencyFiles
     public function getDependencies(): array
     {
         return [
-            '"react"'
+            '"react"',
         ];
     }
 

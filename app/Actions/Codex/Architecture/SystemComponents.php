@@ -4,13 +4,9 @@ namespace App\Actions\Codex\Architecture;
 
 use App\Actions\Codex\Architecture\SystemComponents\ProcessSystemComponent;
 use App\Actions\Codex\GenerateTechStackDocumentation;
-use App\Atlas\FileWhitelist;
-use App\Atlas\Frameworks\Contracts\Framework;
-use App\Atlas\Guesser;
 use App\Models\Branch;
 use App\SourceCode\Contracts\SourceCodeProvider;
 use App\SourceCode\DTO\Branch as DTOBranch;
-use App\SourceCode\DTO\Folder;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class SystemComponents

@@ -2,8 +2,8 @@
 
 namespace App\SourceCode;
 
-use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
 use App\Actions\Github;
+use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
 use App\Exceptions\ExceededProviderRateLimit;
 use App\SourceCode\Contracts\DownloadsZipFile;
 use App\SourceCode\Contracts\HandlesWebhook;

@@ -18,7 +18,7 @@ class GetFiles
         $repoName = '';
         do {
             $directories = collect(Storage::disk('tmp')->directories($baseName.DIRECTORY_SEPARATOR.$repoName))
-                ->filter(fn (string $directory) => !str($directory)->endsWith('.git') && !str($directory)->contains('__MACOSX'))
+                ->filter(fn (string $directory) => ! str($directory)->endsWith('.git') && ! str($directory)->contains('__MACOSX'))
                 ->values()
                 ->all();
             if (count($directories) !== 1) {
@@ -38,6 +38,6 @@ class GetFiles
             branch: new Branch(name: 'main'),
         );
 
-       return [$repository, $files];
+        return [$repository, $files];
     }
 }

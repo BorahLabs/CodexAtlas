@@ -39,6 +39,7 @@ class LeadStatus extends Component
         $repository = $branch->repository;
         $project = $repository->project;
         $path = DownloadDocsAsMarkdown::make()->handle($project, $repository, $branch, withReadme: false);
+
         return response()->download($path, 'documentation.zip')->deleteFileAfterSend();
     }
 }

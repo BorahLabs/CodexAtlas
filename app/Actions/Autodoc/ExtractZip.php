@@ -26,7 +26,6 @@ class ExtractZip
             throw new \Exception('Could not open zip file');
         }
 
-
         $zip->extractTo($absolutePath);
         $zip->close();
 
