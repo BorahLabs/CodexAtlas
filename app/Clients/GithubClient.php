@@ -13,12 +13,8 @@ class GithubClient {
     public function send(GithubRequest $request) {
         $this->setClient($request);
         $options = $this->getOptions($request);
-        try {
-            $response = $this->client->request($request->getMethod(), $request->getUri(), $options);
-            return $request->transformResponse(json_decode($response->getBody()->getContents(), true));
-        } catch(ClientException $e) {
-            return $this->handleException($e, $request);
-        }
+        $response = $this->client->request($request->getMethod(), $request->getUri(), $options);
+        return $request->transformResponse(json_decode($response->getBody()->getContents(), true));
     }
 
     private function setClient(GithubRequest $githubRequest)
@@ -40,17 +36,7 @@ class GithubClient {
             $options['body'] = json_encode($request->getBody());
         }
 
-        if ($request->getQueryParams()) {
-            $options['query'] = $request->getQueryParams();
-        }
-
         return $options;
 
-    }
-
-    private function handleException(ClientException $e, GithubRequest $request)
-    {
-        //manage error
-        logger($e);
     }
 }

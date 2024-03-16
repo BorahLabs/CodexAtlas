@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class NgrokHelper
 {
+    // @codeCoverageIgnoreStart
+
     /**
      * Handle an incoming request.
      *
@@ -23,4 +25,6 @@ class NgrokHelper
         }
         return $next($request);
     }
+    // @codeCoverageIgnoreEnd
+
 }

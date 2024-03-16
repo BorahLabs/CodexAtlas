@@ -35,7 +35,8 @@ return [
         'client_id' => env('GITHUB_CLIENT_ID'),
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
         'redirect' => env('GITHUB_CALLBACK_URL'),
-        'gh_app_redirect_url' => env('GITHUB_APP_REDIRECT_URL', 'https://github.com/apps/codexatlas/installations/select_target')
+        'gh_app_redirect_url' => env('GITHUB_APP_REDIRECT_URL', 'https://github.com/apps/codexatlas/installations/select_target'),
+        'factory_impersonate_token' => env('FACTORY_GH_IMPERSONATE_TOKEN')
     ],
 
     'gitlab' => [

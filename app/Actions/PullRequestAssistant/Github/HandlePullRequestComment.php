@@ -12,14 +12,14 @@ class HandlePullRequestComment
 
     public const COMMIT_MESSAGE = 'Codex - PR Assitant commit';
 
-    public function handle(Request $request)
+    public function handle(Request $request): bool
     {
         if($request->get('action') !== 'created') {
-            return;
+            return false;
         }
 
         if(!str($request->input('comment.body'))->startsWith('/codex')) {
-            return ;
+            return false;
         }
 
         $commentContent = str($request->input('comment.body'))->after('/codex ');
@@ -30,12 +30,14 @@ class HandlePullRequestComment
         $formattedLLMResponse = SendRequestToLLM::run($requestChangedFileLines, $commentContent);
 
         if ($formattedLLMResponse === null || $formattedLLMResponse === []) {
-            return;
+            return false;
         }
 
         $newFile = $this->generateNewFileWithLLMResponse($fileLines, $startLine, $endLine, $formattedLLMResponse);
 
         PushNewFileToGithub::run($repository, $branch, $filePath, $repositoryOwner, $newFile, self::COMMIT_MESSAGE);
+
+        return true;
     }
 
     private function getRepositoryInformation(Request $request): array
