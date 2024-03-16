@@ -18,7 +18,13 @@ class ProcessAutodocSystemComponent
 
     public function handle(SystemComponent $systemComponent, AutodocLead $lead)
     {
-        abort_if(empty(trim($systemComponent->file_contents)), 422, 'File contents are empty');
+        if (empty(trim($systemComponent->file_contents))) {
+            $systemComponent->updateQuietly([
+                'status' => SystemComponentStatus::Error,
+            ]);
+            $this->checkIfShouldFinish($lead);
+            abort(422, 'File contents are empty');
+        }
 
         $lead->update([
             'status' => SystemComponentStatus::Generating->value,
@@ -56,6 +62,11 @@ class ProcessAutodocSystemComponent
             ]);
         }
 
+        $this->checkIfShouldFinish($lead);
+    }
+
+    protected function checkIfShouldFinish(AutodocLead $lead)
+    {
         $total = $lead->branch->systemComponents()->count();
         $processed = $lead->branch->systemComponents()
             ->whereNotIn('status', [SystemComponentStatus::Pending, SystemComponentStatus::Generating])

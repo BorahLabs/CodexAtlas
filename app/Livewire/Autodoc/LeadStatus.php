@@ -28,7 +28,7 @@ class LeadStatus extends Component
             $data['systemComponents'] = $branch->systemComponents()->pluck('status', 'path');
         }
 
-        $data['finished'] = $data['total'] > 0 && $data['processed'] === $data['total'];
+        $data['finished'] = $this->autodocLead->status === SystemComponentStatus::Generated->value;
 
         return view('autodoc.livewire.lead-status', $data);
     }

@@ -9,10 +9,17 @@
             format when it finishes. You can close this screen if you want.</p>
     @endif
 
-    <div>
-        <h2 class="mb-0 text-4xl mt-0">{{ $processed }} / {{ $total }}</h2>
-        <p>successfully documented files</p>
-    </div>
+    @if ($finished)
+        <div>
+            <h2 class="mb-0 text-4xl mt-0">{{ $processed }}</h2>
+            <p>files were successfully documented!</p>
+        </div>
+    @else
+        <div>
+            <h2 class="mb-0 text-4xl mt-0">{{ $processed }} / {{ $total }}</h2>
+            <p>successfully documented files</p>
+        </div>
+    @endif
 
     @if ($finished)
         <x-filament::button type="button" wire:click="downloadDocs">Download documentation</x-filament::button>
