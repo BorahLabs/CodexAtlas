@@ -2,12 +2,13 @@
 
 use App\Actions\PullRequestAssistant\Github\HandlePullRequestComment;
 use App\Actions\PullRequestAssistant\Github\SendRequestToLLM;
+use App\LLM\Contracts\Llm;
+use App\LLM\OpenAI;
 use App\Models\Project;
 use App\Models\SourceCodeAccount;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Str;
-use Exception;
 
 
 
@@ -46,6 +47,7 @@ it('Can push new content from AI reponse to Github', function () {
     $request = Request::create('/', 'POST', $jsonPayload);
     $decodedContent = json_decode($jsonString, true);
     $request->merge($decodedContent);
+    app()->bind(Llm::class, fn () => new OpenAI());
     expect(HandlePullRequestComment::run($request))->toBe(true);
 });
 
@@ -83,6 +85,7 @@ it('Dont push new content from AI reponse to Github when comment action is not c
     $request = Request::create('/', 'POST', $jsonPayload);
     $decodedContent = json_decode($jsonString, true);
     $request->merge($decodedContent);
+    app()->bind(Llm::class, fn () => new OpenAI());
     expect(HandlePullRequestComment::run($request))->toBe(false);
 });
 
@@ -120,6 +123,7 @@ it('Dont push new content from AI reponse to Github when comment does not start 
     $request = Request::create('/', 'POST', $jsonPayload);
     $decodedContent = json_decode($jsonString, true);
     $request->merge($decodedContent);
+    app()->bind(Llm::class, fn () => new OpenAI());
     expect(HandlePullRequestComment::run($request))->toBe(false);
 });
 
@@ -157,6 +161,7 @@ it('Dont push new content from AI reponse to Github when invalid line range', fu
     $request = Request::create('/', 'POST', $jsonPayload);
     $decodedContent = json_decode($jsonString, true);
     $request->merge($decodedContent);
+    app()->bind(Llm::class, fn () => new OpenAI());
     expect(fn() => HandlePullRequestComment::run($request))->toThrow(Exception::class);
 });
 
@@ -196,6 +201,7 @@ it('Dont push new content from AI invalid reponse', function () {
     $request = Request::create('/', 'POST', $jsonPayload);
     $decodedContent = json_decode($jsonString, true);
     $request->merge($decodedContent);
+    app()->bind(Llm::class, fn () => new OpenAI());
     expect(HandlePullRequestComment::run($request))->toBe(false);
 });
 
@@ -225,5 +231,6 @@ it('Dont push new content from when invalid gh credentials', function () {
     $request = Request::create('/', 'POST', $jsonPayload);
     $decodedContent = json_decode($jsonString, true);
     $request->merge($decodedContent);
+    app()->bind(Llm::class, fn () => new OpenAI());
     expect(fn() => HandlePullRequestComment::run($request))->toThrow(Exception::class);
 });

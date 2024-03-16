@@ -9,7 +9,7 @@ use App\SourceCode\Traits\GetGithubAccessToken;
 class MakePushRequest extends GithubRequest
 {
     use GetGithubAccessToken;
-    
+
     public function __construct(
         private string $repositoryOwner,
         private string $repository,
@@ -25,11 +25,6 @@ class MakePushRequest extends GithubRequest
     public function getUri(): string
     {
         return "/repos/{$this->repositoryOwner}/{$this->repository}/git/refs/heads/{$this->branch}";
-    }
-
-    public function transformResponse(array $response): array
-    {
-        return $response;
     }
 
     public function getBody(): ?array

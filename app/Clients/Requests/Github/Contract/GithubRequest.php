@@ -18,10 +18,4 @@ abstract class GithubRequest
     {
         return null;
     }
-
-    public function getQueryParams(): ?array
-    {
-        return null;
-    }
-
 }

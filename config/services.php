@@ -65,7 +65,7 @@ return [
     'ngrok' => [
         'active_helper' => false, // put it to true if you are using ngrok and  ALWAYS SHOULD BE FALSE
         'user_id' => '9b22f325-516a-48b2-8ffa-9d724a08267c', //userId to automatically login
-        'ngrok_domain' => 'https://cff9-88-25-31-8.ngrok-free.app' //ngrok url
+        'ngrok_domain' => 'https://74ba-88-25-31-8.ngrok-free.app' //ngrok url
     ],
 
     'gh' => [
