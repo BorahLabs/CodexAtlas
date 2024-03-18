@@ -20,7 +20,7 @@ class GithubClient {
     private function setClient(GithubRequest $githubRequest)
     {
         $this->client = new Client([
-            'base_uri' => config('services.gh.api_endpoint'),
+            'base_uri' => config('services.github.api_endpoint'),
             'headers' => [
                 'Authorization' => 'Bearer '.$githubRequest->getAccessToken(),
                 'Accept' => 'application/vnd.github.v3+json',

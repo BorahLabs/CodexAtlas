@@ -36,7 +36,8 @@ return [
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
         'redirect' => env('GITHUB_CALLBACK_URL'),
         'gh_app_redirect_url' => env('GITHUB_APP_REDIRECT_URL', 'https://github.com/apps/codexatlas/installations/select_target'),
-        'factory_impersonate_token' => env('FACTORY_GH_IMPERSONATE_TOKEN')
+        'factory_impersonate_token' => env('FACTORY_GH_IMPERSONATE_TOKEN'),
+        'api_endpoint' => env('GITHUB_API_ENDPOINT')
     ],
 
     'gitlab' => [
@@ -65,16 +66,6 @@ return [
     'ngrok' => [
         'active_helper' => false, // put it to true if you are using ngrok and  ALWAYS SHOULD BE FALSE
         'user_id' => '9b22f325-516a-48b2-8ffa-9d724a08267c', //userId to automatically login
-        'ngrok_domain' => 'https://74ba-88-25-31-8.ngrok-free.app' //ngrok url
+        'ngrok_domain' => 'https://6eb9-88-25-31-8.ngrok-free.app' //ngrok url
     ],
-
-    'gh' => [
-        'api_endpoint' => env('GITHUB_API_ENDPOINT'),
-    ],
-
-    'openAI' => [
-        'api_endpoint' => env('OPENAI_API_ENDPOINT'),
-        'token' => env('OPENAI_API_TOKEN')
-    ]
-
 ];

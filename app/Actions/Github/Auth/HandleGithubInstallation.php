@@ -22,7 +22,6 @@ class HandleGithubInstallation
         [$token, $expiresAt] = GetInstallationToken::run($installationId);
         $installation = GitHub::apps()->getInstallation($installationId);
 
-        //todo: get team_id from url
         return SourceCodeAccount::updateOrCreate([
             'team_id' => $team?->id,
             'provider' => SourceCodeProvider::GitHub,
