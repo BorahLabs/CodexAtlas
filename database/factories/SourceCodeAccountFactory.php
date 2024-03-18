@@ -50,4 +50,15 @@ class SourceCodeAccountFactory extends Factory
             'access_token' => 'ATBBLMUSzuV8mmRCcyMdBrsVrjAND1DF6F7C',
         ]);
     }
+
+    public function prAssistantGithub(): static
+    {
+        return $this->state([
+            'provider' => \App\Enums\SourceCodeProvider::GitHub,
+            'name' => 'ismaelilloDev',
+            'external_id' => '127984176',
+            'installation_id' => '48486190',
+            'impersonate_token' => config('services.github.factory_impersonate_token')
+        ]);
+    }
 }

@@ -17,16 +17,18 @@ use App\Http\Middleware\OnlyFromCodexAtlas;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
+
+
 Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
     Route::view('/', 'welcome')
         ->middleware('central-domain')
         ->name('homepage');
 
-    Route::middleware([
-        'auth:sanctum',
-        config('jetstream.auth_session'),
-        'verified',
-    ])->group(function () {
+    $middlewares = [];
+    config('services.ngrok.active_helper')? $middlewares[] = 'ngrok-helper' : $middlewares[] = 'auth:sanctum';
+    $middlewares = [...$middlewares, config('jetstream.auth_session'), 'verified'];
+
+    Route::middleware($middlewares)->group(function () {
         Route::middleware('team-domain')->group(function () {
             Route::get('/projects', ShowProjectList::class)->name('dashboard');
             Route::post('/projects', StoreProject::class)->name('projects.store');
@@ -38,7 +40,7 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
 
         Route::post('/accounts/pat', StoreAccountPersonalAccessToken::class)->name('source-code-accounts.pat.store');
         Route::prefix('github')->group(function () {
-            Route::get('redirect', fn () => redirect()->to('https://github.com/apps/codexatlas/installations/select_target'))->name('github.redirect');
+            Route::get('redirect', fn () => redirect()->to(config('services.github.gh_app_redirect_url')))->name('github.redirect');
             Route::get('installation', HandleGithubInstallation::class)->name('github.installation')->middleware('throttle:3,1');
         });
     });

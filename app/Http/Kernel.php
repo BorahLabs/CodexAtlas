@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\NgrokHelper;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -68,5 +69,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'central-domain' => \App\Http\Middleware\ForceCentralDomain::class,
         'team-domain' => \App\Http\Middleware\ForceTeamDomain::class,
+        'ngrok-helper' => NgrokHelper::class
     ];
 }

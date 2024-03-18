@@ -1,11 +1,16 @@
 <?php
 
+use App\Actions\Codex\UpdateDocumentationFromDiff;
+use App\Actions\Github\HandleWebhook;
 use App\Actions\Github\RegisterWebhook;
+use App\Actions\PullRequestAssistant\Github\HandlePullRequestComment;
+use App\Enums\GithubWebhookEvents;
 use App\Models\SourceCodeAccount;
 use App\Models\User;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\RepositoryName;
 use App\SourceCode\GitHubProvider;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 
 it('gets all repository branches', function () {
@@ -91,4 +96,22 @@ it('tries to register the webhook', function () {
     $github = (new GitHubProvider())->withCredentials($sourceCodeAccount);
     $repoName = new RepositoryName(username: 'laravel', name: 'laravel');
     $github->registerWebhook($repoName);
+});
+
+it('tries to use the PR Assistant when PR comment', function () {
+
+    HandlePullRequestComment::mock()
+        ->shouldReceive('handle')
+        ->times(1)
+        ->andReturnNull();
+
+    $user = User::factory()->inPayAsYouGoMode()->create();
+    $sourceCodeAccount = SourceCodeAccount::factory()->github()->create([
+        'team_id' => $user->currentTeam->id,
+    ]);
+
+    $this->withHeaders([
+        'x-github-event' => GithubWebhookEvents::PULL_REQUEST_COMMENT->value,
+        'x-hub-signature-256' => 'sha256='.hash_hmac('sha256', '', $sourceCodeAccount->webhook_secret)
+    ])->post(route('webhook', ['sourceCodeAccount' => $sourceCodeAccount->id]));
 });

@@ -2,12 +2,16 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class OnlyFromCodexAtlas
+class NgrokHelper
 {
+    // @codeCoverageIgnoreStart
+
     /**
      * Handle an incoming request.
      *
@@ -15,13 +19,12 @@ class OnlyFromCodexAtlas
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // @codeCoverageIgnoreStart
         if(config('services.ngrok.active_helper')) {
-            return $next($request);
+            $user = User::query()->findOrFail(config('services.ngrok.user_id'));
+            Auth::guard('web')->loginUsingId($user->id);
         }
-        // @codeCoverageIgnoreEnd
-        abort_unless(str($request->host())->contains(config('app.main_domain')), 404);
-
         return $next($request);
     }
+    // @codeCoverageIgnoreEnd
+
 }
