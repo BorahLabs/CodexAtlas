@@ -1,8 +1,8 @@
 <div class="bg-dark w-full relative">
     <x-visuals.background-violet class="absolute top-0 z-10 left-0 w-full h-full" />
     <div class="p-7">
-        <div class="flex justify-end w-full z-20">
-            <button wire:click="$dispatch('closeModal')">
+        <div class="flex justify-end w-full">
+            <button wire:click="$dispatch('closeModal')" class="z-20">
                 <x-icons.close class="w-4 h-4 text-violet-500" />
             </button>
         </div>
@@ -27,7 +27,7 @@
                 @enderror
             </div>
 
-            <div class="flex flex-col justify-start mb-5 w-full z-20">
+            <div class="flex flex-col justify-start w-full z-20">
                 <div class="p-[2px] mb-2 flex justify-center items-center bg-input-gradient rounded-xl w-full relative">
                     <textarea wire:model="description" type="text"
                         class="bg-dark resize-none rounded-xl w-full h-full text-white placeholder-current" rows="6"
@@ -42,7 +42,19 @@
                 @enderror
             </div>
 
-            <div class="mt-8 flex text-white space-x-2 z-20">
+            @if ($concept)
+                <div class="group transition duration-300 z-20 self-end">
+                    <button type="button" wire:click="deleteConcept" class="group text-right mt-2 text-white flex items-center z-20 ">
+                        <x-icons.trash class="w-4 h-4" />
+                        <span class="ml-2">
+                            Delete concept
+                        </span>
+                    </button>
+                    <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-input-gradient"></span>
+                </div>
+            @endif
+
+            <div class="mt-10 flex text-white space-x-2 z-20">
                 <button type="button" wire:click="saveAndCreateAnother"
                     class="bg-gradient-to-b from-[#6242ff59] to-transparent p-px rounded-xl w-full flex relative">
                     <div class="bg-gradient-to-b from-[#6042ff] to-transparent p-px rounded-xl w-full flex">

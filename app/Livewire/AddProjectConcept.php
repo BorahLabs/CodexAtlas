@@ -20,14 +20,16 @@ class AddProjectConcept extends ModalComponent
         'description' => 'required',
     ];
 
-    public function render()
+    public function mount()
     {
-
         if($this->concept){
             $this->name = $this->concept->name;
             $this->description = $this->concept->description;
         }
+    }
 
+    public function render()
+    {
         $this->createAnother = false;
         return view('livewire.add-project-concept');
     }
@@ -79,5 +81,14 @@ class AddProjectConcept extends ModalComponent
     {
         $this->createAnother = true;
         $this->save();
+    }
+
+    public function deleteConcept()
+    {
+        $this->concept->delete();
+
+        $this->dispatch('project-concept-created');
+
+        $this->forceClose()->closeModal();
     }
 }
