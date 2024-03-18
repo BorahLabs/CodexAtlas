@@ -15,6 +15,11 @@ class OnlyFromCodexAtlas
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // @codeCoverageIgnoreStart
+        if(config('services.ngrok.active_helper')) {
+            return $next($request);
+        }
+        // @codeCoverageIgnoreEnd
         abort_unless(str($request->host())->contains(config('app.main_domain')), 404);
 
         return $next($request);
