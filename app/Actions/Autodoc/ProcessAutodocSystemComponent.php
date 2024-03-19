@@ -7,6 +7,7 @@ use App\LLM\Contracts\Llm;
 use App\LLM\OpenAI;
 use App\LLM\PromptRequests\PromptRequestType;
 use App\Models\AutodocLead;
+use App\Models\ProcessingLogEntry;
 use App\Models\Project;
 use App\Models\SystemComponent;
 use App\SourceCode\DTO\File;
@@ -55,6 +56,7 @@ class ProcessAutodocSystemComponent
                 'file_contents' => null,
                 'status' => SystemComponentStatus::Generated,
             ]);
+            ProcessingLogEntry::write($systemComponent->branch, $file->path, class_basename($llm), $llm->modelName(), $completion);
         } catch (\Exception $e) {
             $systemComponent->updateQuietly([
                 'file_contents' => null,
