@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\ProjectConcept;
 use Illuminate\Support\Facades\Route;
 use LivewireUI\Modal\ModalComponent;
+use Livewire\Attributes\On;
 
 class AddProjectConcept extends ModalComponent
 {
@@ -39,6 +40,13 @@ class AddProjectConcept extends ModalComponent
         return 'xl';
     }
 
+    #[On('close-add-project-modal')]
+    public function close()
+    {
+        $this->forceClose()->closeModal();
+    }
+
+
     public function save()
     {
         $this->validate();
@@ -57,7 +65,7 @@ class AddProjectConcept extends ModalComponent
             ]);
         }
 
-        $this->dispatch('project-concept-created');
+        $this->dispatch('sync-project-concepts');
 
         if($this->createAnother){
             $this->clearInputs();
@@ -87,8 +95,13 @@ class AddProjectConcept extends ModalComponent
     {
         $this->concept->delete();
 
-        $this->dispatch('project-concept-created');
+        $this->dispatch('sync-project-concepts');
 
         $this->forceClose()->closeModal();
+    }
+
+    public static function dispatchCloseEvent(): bool
+    {
+        return true;
     }
 }

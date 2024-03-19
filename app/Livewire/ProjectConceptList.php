@@ -11,7 +11,7 @@ class ProjectConceptList extends Component
 {
     public Project $project;
 
-    #[On('project-concept-created')]
+    #[On('sync-project-concepts')]
     public function updateList()
     {
         $this->dispatch('$refresh');
@@ -20,13 +20,5 @@ class ProjectConceptList extends Component
     public function render()
     {
         return view('livewire.project-concept-list');
-    }
-
-    public function deleteConcept($concept)
-    {
-        ProjectConcept::query()->where('id', $concept)->delete();
-
-        $this->dispatch('$refresh');
-
     }
 }

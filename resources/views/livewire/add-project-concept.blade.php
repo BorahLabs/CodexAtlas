@@ -44,7 +44,7 @@
 
             @if ($concept)
                 <div class="group transition duration-300 z-20 self-end">
-                    <button type="button" wire:click="deleteConcept" class="group text-right mt-2 text-white flex items-center z-20 ">
+                    <button type="button" wire:click="$dispatch('openModal', { component: 'glossary.delete-confirmation-modal', arguments: { concept: '{{ $concept->id }}' }})" class="group text-right mt-2 text-white flex items-center z-20 ">
                         <x-icons.trash class="w-4 h-4" />
                         <span class="ml-2">
                             Delete concept

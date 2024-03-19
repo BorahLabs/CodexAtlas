@@ -56,3 +56,7 @@
 #guide-content img {
     @apply rounded-xl border-white border-8 shadow-xl;
 }
+
+.button-hover-white {
+    @apply overflow-hidden transition-all  before:absolute before:right-0 before:top-0 before:h-full before:w-1/6 before:translate-x-12 before:rotate-6 before:bg-white before:opacity-10 before:duration-700 hover:before:-translate-x-[600%];
+}

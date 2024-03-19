@@ -22,7 +22,7 @@
                         </p>
                     </div>
                 </button>
-                <button class="absolute right-4 top-4" wire:click="deleteConcept('{{ $concept->id }}')">
+                <button class="absolute right-4 top-4" wire:click="$dispatch('openModal', { component: 'glossary.delete-confirmation-modal', arguments: { concept: '{{ $concept->id }}' }})">
                     <x-icons.trash class="w-4 h-4" />
                 </button>
             </div>
