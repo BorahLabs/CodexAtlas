@@ -43,6 +43,8 @@ class Guesser
             new Frameworks\React(),
             new Frameworks\Flutter(),
             new Frameworks\RubyOnRails(),
+            new Frameworks\Flask(),
+            new Frameworks\Symfony(),
             new Frameworks\GeneralFramework(),
         ];
     }
