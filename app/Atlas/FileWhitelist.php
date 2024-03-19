@@ -22,6 +22,10 @@ class FileWhitelist
             return false;
         }
 
+        if (str($path)->lower()->endsWith(['.min.js', '.min.css'])) {
+            return false;
+        }
+
         $extension = mb_strtolower(pathinfo($path, PATHINFO_EXTENSION));
 
         return isset(config('codex.atlas.allowed_extensions')[$extension]);
