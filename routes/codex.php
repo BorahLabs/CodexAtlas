@@ -15,6 +15,7 @@ use App\Actions\Platform\Webhook\HandleWebhook;
 use App\Http\Middleware\ControlRequestsFromPlatform;
 use App\Http\Middleware\OnlyFromCodexAtlas;
 use App\Http\Middleware\VerifyCsrfToken;
+use BorahLabs\AwsMarketplaceSaas\Facades\AwsMarketplaceSaas;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
@@ -87,4 +88,6 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
 
         return view('password-protection');
     })->name('password-protected')->middleware('throttle:5,1');
+
+    AwsMarketplaceSaas::registerRoutes();
 });
