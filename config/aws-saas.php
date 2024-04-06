@@ -26,5 +26,12 @@ return [
         ],
     ],
 
-    'user_model' => \App\Models\User::class,
+    'routes' => [
+        'register' => 'register',
+        'login' => 'login',
+        'logout' => 'logout',
+    ],
+
+    'verify_csrf_middleware' => class_exists(\App\Http\Middleware\VerifyCsrfToken::class) ? \App\Http\Middleware\VerifyCsrfToken::class : null,
+    'user_model' => class_exists(\App\Models\User::class) ? \App\Models\User::class : null,
 ];
