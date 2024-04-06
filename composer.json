@@ -10,6 +10,7 @@
     "require": {
         "php": "^8.1",
         "borah/knowledge-base-laravel": "^0.7",
+        "borahlabs/aws-marketplace-saas-laravel": "@dev",
         "filament/filament": "^3.2",
         "filament/forms": "^3.2",
         "graham-campbell/bitbucket": "^10.3",
@@ -90,6 +91,10 @@
         {
             "type": "composer",
             "url": "https://spark.laravel.com"
+        },
+        {
+            "type": "path",
+            "url": "../aws-marketplace-saas-laravel"
         }
     ]
 }

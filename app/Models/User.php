@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use BorahLabs\AwsMarketplaceSaas\Traits\HasAwsSubscription;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,6 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasUuids;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use HasAwsSubscription;
 
     /**
      * The attributes that are mass assignable.

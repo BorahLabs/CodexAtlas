@@ -19,6 +19,7 @@ use App\Http\Middleware\ControlRequestsFromPlatform;
 use App\Http\Middleware\ForceNoIndex;
 use App\Http\Middleware\OnlyFromCodexAtlas;
 use App\Http\Middleware\VerifyCsrfToken;
+use BorahLabs\AwsMarketplaceSaas\Facades\AwsMarketplaceSaas;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
@@ -100,4 +101,5 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
     })->name('password-protected')->middleware('throttle:5,1');
 
     Route::get('sitemap.xml', SitemapController::class);
+    AwsMarketplaceSaas::registerRoutes();
 });

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "53d4e1f7d5f5f470a9124b01ec4d4b68",
+    "content-hash": "8621ff9f9563de187c21762a6f801ee6",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -128,16 +128,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.304.0",
+            "version": "3.303.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "29a79bac02997f3053559f6961a0e83622a14f88"
+                "reference": "9ae5429f7699701cb158780cd287d1549f45ad32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/29a79bac02997f3053559f6961a0e83622a14f88",
-                "reference": "29a79bac02997f3053559f6961a0e83622a14f88",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/9ae5429f7699701cb158780cd287d1549f45ad32",
+                "reference": "9ae5429f7699701cb158780cd287d1549f45ad32",
                 "shasum": ""
             },
             "require": {
@@ -217,9 +217,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.304.0"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.303.4"
             },
-            "time": "2024-04-08T18:03:38+00:00"
+            "time": "2024-04-05T18:04:15+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -510,22 +510,22 @@
         },
         {
             "name": "borah/knowledge-base-laravel",
-            "version": "v0.7.3",
+            "version": "v0.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BorahLabs/Knowledge-Base-Laravel.git",
-                "reference": "cd93953626f68711d39c8784ea4b768769e8cac1"
+                "reference": "406706348f327dbadcd41a72ea0b822c568fd2d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BorahLabs/Knowledge-Base-Laravel/zipball/cd93953626f68711d39c8784ea4b768769e8cac1",
-                "reference": "cd93953626f68711d39c8784ea4b768769e8cac1",
+                "url": "https://api.github.com/repos/BorahLabs/Knowledge-Base-Laravel/zipball/406706348f327dbadcd41a72ea0b822c568fd2d7",
+                "reference": "406706348f327dbadcd41a72ea0b822c568fd2d7",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "^10.0|^11.0",
+                "illuminate/contracts": "^10.0",
                 "php": "^8.1",
-                "spatie/laravel-package-tools": "^1.16.4"
+                "spatie/laravel-package-tools": "^1.14.0"
             },
             "require-dev": {
                 "larastan/larastan": "^2.0.1",
@@ -576,7 +576,7 @@
             ],
             "support": {
                 "issues": "https://github.com/BorahLabs/Knowledge-Base-Laravel/issues",
-                "source": "https://github.com/BorahLabs/Knowledge-Base-Laravel/tree/v0.7.3"
+                "source": "https://github.com/BorahLabs/Knowledge-Base-Laravel/tree/v0.7.2"
             },
             "funding": [
                 {
@@ -584,7 +584,106 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-04-09T11:22:06+00:00"
+            "time": "2024-01-20T14:17:18+00:00"
+        },
+        {
+            "name": "borahlabs/aws-marketplace-saas-laravel",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "../aws-marketplace-saas-laravel",
+                "reference": "83c864374ce31f9f8c26a0b2c472f8bac0e665c0"
+            },
+            "require": {
+                "aws/aws-sdk-php": "^3.303",
+                "illuminate/contracts": "^10.0||^11.0",
+                "php": "^8.2",
+                "spatie/laravel-package-tools": "^1.16"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.14",
+                "nunomaduro/collision": "^8.1.1||^7.10.0",
+                "orchestra/testbench": "^9.0.0||^8.22.0",
+                "pestphp/pest": "^2.34",
+                "pestphp/pest-plugin-arch": "^2.7",
+                "pestphp/pest-plugin-laravel": "^2.3",
+                "pestphp/pest-plugin-type-coverage": "^2.8"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "BorahLabs\\AwsMarketplaceSaas\\AwsMarketplaceSaasServiceProvider"
+                    ],
+                    "aliases": {
+                        "AwsMarketplaceSaas": "BorahLabs\\AwsMarketplaceSaas\\Facades\\AwsMarketplaceSaas"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "BorahLabs\\AwsMarketplaceSaas\\": "src/",
+                    "BorahLabs\\AwsMarketplaceSaas\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "BorahLabs\\AwsMarketplaceSaas\\Tests\\": "tests/",
+                    "Workbench\\App\\": "workbench/app/"
+                }
+            },
+            "scripts": {
+                "post-autoload-dump": [
+                    "@composer run prepare"
+                ],
+                "clear": [
+                    "@php vendor/bin/testbench package:purge-aws-marketplace-saas-laravel --ansi"
+                ],
+                "prepare": [
+                    "@php vendor/bin/testbench package:discover --ansi"
+                ],
+                "build": [
+                    "@composer run prepare",
+                    "@php vendor/bin/testbench workbench:build --ansi"
+                ],
+                "start": [
+                    "Composer\\Config::disableProcessTimeout",
+                    "@composer run build",
+                    "@php vendor/bin/testbench serve"
+                ],
+                "analyse": [
+                    "vendor/bin/phpstan analyse"
+                ],
+                "test": [
+                    "vendor/bin/pest"
+                ],
+                "test-coverage": [
+                    "vendor/bin/pest --coverage"
+                ],
+                "format": [
+                    "vendor/bin/pint"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Borah Labs",
+                    "email": "raul@borah.agency",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This is my package aws-marketplace-saas-laravel",
+            "homepage": "https://github.com/borahlabs/aws-marketplace-saas-laravel",
+            "keywords": [
+                "BorahLabs",
+                "aws-marketplace-saas-laravel",
+                "laravel"
+            ],
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "brick/math",
@@ -3205,16 +3304,16 @@
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",
-            "version": "3.5.6",
+            "version": "3.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirschbaum-development/eloquent-power-joins.git",
-                "reference": "6de51d9ec43af34e77bd1d9908173de1416a0aed"
+                "reference": "ed5af4788f0dad3ce35bb883cecac4293496139a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirschbaum-development/eloquent-power-joins/zipball/6de51d9ec43af34e77bd1d9908173de1416a0aed",
-                "reference": "6de51d9ec43af34e77bd1d9908173de1416a0aed",
+                "url": "https://api.github.com/repos/kirschbaum-development/eloquent-power-joins/zipball/ed5af4788f0dad3ce35bb883cecac4293496139a",
+                "reference": "ed5af4788f0dad3ce35bb883cecac4293496139a",
                 "shasum": ""
             },
             "require": {
@@ -3261,9 +3360,9 @@
             ],
             "support": {
                 "issues": "https://github.com/kirschbaum-development/eloquent-power-joins/issues",
-                "source": "https://github.com/kirschbaum-development/eloquent-power-joins/tree/3.5.6"
+                "source": "https://github.com/kirschbaum-development/eloquent-power-joins/tree/3.5.5"
             },
-            "time": "2024-04-09T00:35:30+00:00"
+            "time": "2024-03-27T11:14:14+00:00"
         },
         {
             "name": "knplabs/github-api",
@@ -4671,16 +4770,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.27.0",
+            "version": "3.26.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "4729745b1ab737908c7d055148c9a6b3e959832f"
+                "reference": "072735c56cc0da00e10716dd90d5a7f7b40b36be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/4729745b1ab737908c7d055148c9a6b3e959832f",
-                "reference": "4729745b1ab737908c7d055148c9a6b3e959832f",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/072735c56cc0da00e10716dd90d5a7f7b40b36be",
+                "reference": "072735c56cc0da00e10716dd90d5a7f7b40b36be",
                 "shasum": ""
             },
             "require": {
@@ -4745,7 +4844,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.27.0"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.26.0"
             },
             "funding": [
                 {
@@ -4757,20 +4856,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-04-07T19:17:50+00:00"
+            "time": "2024-03-25T11:49:53+00:00"
         },
         {
             "name": "league/flysystem-aws-s3-v3",
-            "version": "3.27.0",
+            "version": "3.26.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-aws-s3-v3.git",
-                "reference": "3e6ce2f972f1470db779f04d29c289dcd2c32837"
+                "reference": "885d0a758c71ae3cd6c503544573a1fdb8dc754f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/3e6ce2f972f1470db779f04d29c289dcd2c32837",
-                "reference": "3e6ce2f972f1470db779f04d29c289dcd2c32837",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/885d0a758c71ae3cd6c503544573a1fdb8dc754f",
+                "reference": "885d0a758c71ae3cd6c503544573a1fdb8dc754f",
                 "shasum": ""
             },
             "require": {
@@ -4810,7 +4909,7 @@
                 "storage"
             ],
             "support": {
-                "source": "https://github.com/thephpleague/flysystem-aws-s3-v3/tree/3.27.0"
+                "source": "https://github.com/thephpleague/flysystem-aws-s3-v3/tree/3.26.0"
             },
             "funding": [
                 {
@@ -4822,7 +4921,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-04-07T19:16:54+00:00"
+            "time": "2024-03-24T21:11:18+00:00"
         },
         {
             "name": "league/flysystem-local",
@@ -6226,60 +6325,6 @@
                 "source": "https://github.com/nette/utils/tree/v4.0.4"
             },
             "time": "2024-01-17T16:50:36+00:00"
-        },
-        {
-            "name": "nicmart/tree",
-            "version": "0.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nicmart/Tree.git",
-                "reference": "8d02952acc9779a2c14f7a9c4ac1650c3dacb545"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nicmart/Tree/zipball/8d02952acc9779a2c14f7a9c4ac1650c3dacb545",
-                "reference": "8d02952acc9779a2c14f7a9c4ac1650c3dacb545",
-                "shasum": ""
-            },
-            "require": {
-                "php": "~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0"
-            },
-            "require-dev": {
-                "ergebnis/composer-normalize": "^2.31.0",
-                "ergebnis/license": "^2.4.0",
-                "ergebnis/php-cs-fixer-config": "^6.13.0",
-                "fakerphp/faker": "^1.23.0",
-                "infection/infection": "~0.26.19",
-                "phpunit/phpunit": "^9.6.14",
-                "psalm/plugin-phpunit": "~0.18.4",
-                "vimeo/psalm": "^5.16.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Tree\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolò Martini",
-                    "email": "nicmartnic@gmail.com"
-                },
-                {
-                    "name": "Andreas Möller",
-                    "email": "am@localheinz.com"
-                }
-            ],
-            "description": "A basic but flexible php tree data structure and a fluent tree builder implementation.",
-            "support": {
-                "issues": "https://github.com/nicmart/Tree/issues",
-                "source": "https://github.com/nicmart/Tree/tree/0.8.0"
-            },
-            "time": "2023-12-02T13:24:56+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -8518,73 +8563,6 @@
             "time": "2024-02-15T16:41:13+00:00"
         },
         {
-            "name": "spatie/browsershot",
-            "version": "4.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/browsershot.git",
-                "reference": "b764ca1683facdc1833ea9ee7d735001606fce2b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/browsershot/zipball/b764ca1683facdc1833ea9ee7d735001606fce2b",
-                "reference": "b764ca1683facdc1833ea9ee7d735001606fce2b",
-                "shasum": ""
-            },
-            "require": {
-                "ext-fileinfo": "*",
-                "ext-json": "*",
-                "php": "^8.2",
-                "spatie/temporary-directory": "^2.0",
-                "symfony/process": "^6.0|^7.0"
-            },
-            "require-dev": {
-                "pestphp/pest": "^1.20",
-                "spatie/image": "^3.3",
-                "spatie/phpunit-snapshot-assertions": "^4.2.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\Browsershot\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Freek Van der Herten",
-                    "email": "freek@spatie.be",
-                    "homepage": "https://github.com/freekmurze",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Convert a webpage to an image or pdf using headless Chrome",
-            "homepage": "https://github.com/spatie/browsershot",
-            "keywords": [
-                "chrome",
-                "convert",
-                "headless",
-                "image",
-                "pdf",
-                "puppeteer",
-                "screenshot",
-                "webpage"
-            ],
-            "support": {
-                "source": "https://github.com/spatie/browsershot/tree/4.0.2"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/spatie",
-                    "type": "github"
-                }
-            ],
-            "time": "2024-04-01T08:19:46+00:00"
-        },
-        {
             "name": "spatie/color",
             "version": "1.5.3",
             "source": {
@@ -8642,74 +8620,6 @@
                 }
             ],
             "time": "2022-12-18T12:58:32+00:00"
-        },
-        {
-            "name": "spatie/crawler",
-            "version": "8.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/crawler.git",
-                "reference": "807d145a3c071dc0e69bb7e6783611e2591f9773"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/crawler/zipball/807d145a3c071dc0e69bb7e6783611e2591f9773",
-                "reference": "807d145a3c071dc0e69bb7e6783611e2591f9773",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^7.3",
-                "guzzlehttp/psr7": "^2.0",
-                "illuminate/collections": "^10.0|^11.0",
-                "nicmart/tree": "^0.8.0",
-                "php": "^8.1",
-                "spatie/browsershot": "^3.45|^4.0",
-                "spatie/robots-txt": "^2.0",
-                "symfony/dom-crawler": "^6.0|^7.0"
-            },
-            "require-dev": {
-                "pestphp/pest": "^2.0",
-                "spatie/ray": "^1.37"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\Crawler\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Freek Van der Herten",
-                    "email": "freek@spatie.be"
-                }
-            ],
-            "description": "Crawl all internal links found on a website",
-            "homepage": "https://github.com/spatie/crawler",
-            "keywords": [
-                "crawler",
-                "link",
-                "spatie",
-                "website"
-            ],
-            "support": {
-                "issues": "https://github.com/spatie/crawler/issues",
-                "source": "https://github.com/spatie/crawler/tree/8.2.0"
-            },
-            "funding": [
-                {
-                    "url": "https://spatie.be/open-source/support-us",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/spatie",
-                    "type": "github"
-                }
-            ],
-            "time": "2024-02-15T10:40:48+00:00"
         },
         {
             "name": "spatie/invade",
@@ -8829,201 +8739,6 @@
                 }
             ],
             "time": "2024-03-20T07:29:11+00:00"
-        },
-        {
-            "name": "spatie/laravel-sitemap",
-            "version": "7.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/laravel-sitemap.git",
-                "reference": "4f79443e76a677731edfb4e89fac8816d11e194b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-sitemap/zipball/4f79443e76a677731edfb4e89fac8816d11e194b",
-                "reference": "4f79443e76a677731edfb4e89fac8816d11e194b",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^7.8",
-                "illuminate/support": "^10.0|^11.0",
-                "nesbot/carbon": "^2.71|^3.0",
-                "php": "^8.2",
-                "spatie/crawler": "^8.0.1",
-                "spatie/laravel-package-tools": "^1.16.1",
-                "symfony/dom-crawler": "^6.3.4|^7.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.6.6",
-                "orchestra/testbench": "^8.14|^9.0",
-                "pestphp/pest": "^2.24",
-                "spatie/pest-plugin-snapshots": "^2.1",
-                "spatie/phpunit-snapshot-assertions": "^5.1.2",
-                "spatie/temporary-directory": "^2.2"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Spatie\\Sitemap\\SitemapServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\Sitemap\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Freek Van der Herten",
-                    "email": "freek@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Create and generate sitemaps with ease",
-            "homepage": "https://github.com/spatie/laravel-sitemap",
-            "keywords": [
-                "laravel-sitemap",
-                "spatie"
-            ],
-            "support": {
-                "source": "https://github.com/spatie/laravel-sitemap/tree/7.2.0"
-            },
-            "funding": [
-                {
-                    "url": "https://spatie.be/open-source/support-us",
-                    "type": "custom"
-                }
-            ],
-            "time": "2024-02-15T10:50:21+00:00"
-        },
-        {
-            "name": "spatie/robots-txt",
-            "version": "2.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/robots-txt.git",
-                "reference": "dacba2ba159364987392aa1b0002e196c5923970"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/robots-txt/zipball/dacba2ba159364987392aa1b0002e196c5923970",
-                "reference": "dacba2ba159364987392aa1b0002e196c5923970",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.0"
-            },
-            "require-dev": {
-                "larapack/dd": "^1.0",
-                "phpunit/phpunit": "^8.0 || ^9.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\Robots\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Brent Roose",
-                    "email": "brent@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Determine if a page may be crawled from robots.txt and robots meta tags",
-            "homepage": "https://github.com/spatie/robots-txt",
-            "keywords": [
-                "robots-txt",
-                "spatie"
-            ],
-            "support": {
-                "issues": "https://github.com/spatie/robots-txt/issues",
-                "source": "https://github.com/spatie/robots-txt/tree/2.0.3"
-            },
-            "funding": [
-                {
-                    "url": "https://spatie.be/open-source/support-us",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/spatie",
-                    "type": "github"
-                }
-            ],
-            "time": "2023-11-22T12:57:35+00:00"
-        },
-        {
-            "name": "spatie/temporary-directory",
-            "version": "2.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/temporary-directory.git",
-                "reference": "76949fa18f8e1a7f663fd2eaa1d00e0bcea0752a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/temporary-directory/zipball/76949fa18f8e1a7f663fd2eaa1d00e0bcea0752a",
-                "reference": "76949fa18f8e1a7f663fd2eaa1d00e0bcea0752a",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\TemporaryDirectory\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Alex Vanderbist",
-                    "email": "alex@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Easily create, use and destroy temporary directories",
-            "homepage": "https://github.com/spatie/temporary-directory",
-            "keywords": [
-                "php",
-                "spatie",
-                "temporary-directory"
-            ],
-            "support": {
-                "issues": "https://github.com/spatie/temporary-directory/issues",
-                "source": "https://github.com/spatie/temporary-directory/tree/2.2.1"
-            },
-            "funding": [
-                {
-                    "url": "https://spatie.be/open-source/support-us",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/spatie",
-                    "type": "github"
-                }
-            ],
-            "time": "2023-12-25T11:46:58+00:00"
         },
         {
             "name": "stripe/stripe-php",
@@ -9481,73 +9196,6 @@
                 }
             ],
             "time": "2023-05-23T14:45:45+00:00"
-        },
-        {
-            "name": "symfony/dom-crawler",
-            "version": "v7.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "6cb272cbec4dc7a30a853d2931766b03bea92dda"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/6cb272cbec4dc7a30a853d2931766b03bea92dda",
-                "reference": "6cb272cbec4dc7a30a853d2931766b03bea92dda",
-                "shasum": ""
-            },
-            "require": {
-                "masterminds/html5": "^2.6",
-                "php": ">=8.2",
-                "symfony/polyfill-ctype": "~1.8",
-                "symfony/polyfill-mbstring": "~1.0"
-            },
-            "require-dev": {
-                "symfony/css-selector": "^6.4|^7.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\DomCrawler\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Eases DOM navigation for HTML and XML documents",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/dom-crawler/tree/v7.0.4"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2024-02-12T11:15:03+00:00"
         },
         {
             "name": "symfony/error-handler",
@@ -15798,12 +15446,14 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "borahlabs/aws-marketplace-saas-laravel": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }
