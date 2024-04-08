@@ -8,7 +8,7 @@
                     <x-codex.onboarding.steps :current="3" x-show="showOnboarding" x-model="showOnboarding" />
                 @endif
                 <div x-show="!showOnboarding" x-cloak>
-                    <div class="flex flex-wrap">
+                    <div class="flex flex-wrap space-y-10 sm:space-y-0">
                         <aside class="flex-shrink-0 mr-8">
                             <nav>
                                 <ul class="divide-y divide-[#504A8A]">
@@ -35,7 +35,7 @@
                                 </ul>
                             </nav>
                         </aside>
-                        <div class="min-w-[500px] flex-1">
+                        <div class="sm:min-w-[500px] flex-1">
                             {{ $slot }}
                         </div>
                     </div>

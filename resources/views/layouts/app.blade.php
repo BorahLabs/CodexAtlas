@@ -54,7 +54,7 @@
             @endif
 
             <!-- Page Content -->
-            <main>
+            <main class="px-3 md:px-0">
                 {{ $slot }}
             </main>
         </div>
