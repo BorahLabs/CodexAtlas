@@ -15,6 +15,10 @@ class Branch extends Model
     use HasFactory;
     use HasUuids;
 
+    protected $casts = [
+        'frameworks' => 'array',
+    ];
+
     public static function booted(): void
     {
         parent::booted();

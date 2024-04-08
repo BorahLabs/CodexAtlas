@@ -39,6 +39,9 @@ class SystemComponents
 
         [$framework, $files] = FilterFilesByFramework::make()->handle($filesAndFolders, $repoName);
 
+        //TODO: add framework to json column
+        $branch->update(['frameworks' => [$framework->name()]]);
+
         if (! is_null($subscriptionType->maxFilesPerRepository())) {
             $files = array_slice($files, 0, $subscriptionType->maxFilesPerRepository());
         }
