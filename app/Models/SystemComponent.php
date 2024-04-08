@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Enums\SystemComponentStatus;
-use Borah\KnowledgeBase\Contracts\Embeddable;
 use Borah\KnowledgeBase\DTO\KnowledgeEmbeddingText;
 use Borah\KnowledgeBase\Traits\BelongsToKnowledgeBase;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -13,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SystemComponent extends Model implements Embeddable
+class SystemComponent extends Model
 {
     // use BelongsToKnowledgeBase;
     use HasFactory;
