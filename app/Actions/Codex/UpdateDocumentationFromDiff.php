@@ -4,6 +4,7 @@ namespace App\Actions\Codex;
 
 use App\Actions\Codex\Architecture\SystemComponents\ProcessSystemComponent;
 use App\Atlas\DependencyFiles;
+use App\Atlas\Frameworks\FrameworkFactory;
 use App\Enums\FileChange;
 use App\Models\Branch;
 use App\SourceCode\DTO\Diff;
@@ -39,6 +40,11 @@ class UpdateDocumentationFromDiff
                 GenerateTechStackDocumentation::dispatch($branch->repository, $branch);
                 $alreadyTechDocumentationGenerated = true;
 
+                continue;
+            }
+            $framework = FrameworkFactory::get($branch->framework_name);
+
+            if (! $framework || $framework->shouldBeIgnored($item->path)) {
                 continue;
             }
 

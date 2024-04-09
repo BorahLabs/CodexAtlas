@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\Codex\Architecture\SystemComponents\ProcessSystemComponent;
 use App\Actions\Codex\GenerateTechStackDocumentation;
 use App\Actions\Codex\UpdateDocumentationFromDiff;
 use App\Enums\FileChange;
@@ -59,6 +60,21 @@ it('dont update tech stack from difference recieved in webhook when no changes i
     GenerateTechStackDocumentation::assertPushed(0);
 });
 
+it('dont create system component when there is push and file is ignorable', function () {
+
+    Queue::fake();
+
+    $user = User::factory()->inFreeTrialMode()->create();
+
+    [$project, $sourceCodeAccount, $repository, $branch] = createLaravelProject($user->currentTeam);
+
+    ProcessSystemComponent::assertPushed(0);
+
+    UpdateDocumentationFromDiff::run($branch, generateIgnorableDiff());
+
+    ProcessSystemComponent::assertPushed(0);
+});
+
 function generateFakeDependenciesModifiedDiff(): Diff
 {
     $diff = new Diff();
@@ -72,6 +88,15 @@ function generateFakeDiff(): Diff
 {
     $diff = new Diff();
     $diffItem = new DiffItem('test.php', FileChange::Modified);
+    $diff->add($diffItem);
+
+    return $diff;
+}
+
+function generateIgnorableDiff(): Diff
+{
+    $diff = new Diff();
+    $diffItem = new DiffItem('app/Providers/AppServiceProvider.php', FileChange::Modified);
     $diff->add($diffItem);
 
     return $diff;

@@ -38,6 +38,7 @@ class SystemComponents
         );
 
         [$framework, $files] = FilterFilesByFramework::make()->handle($filesAndFolders, $repoName);
+        $branch->update(['framework_name' => $framework->name()]);
 
         if (! is_null($subscriptionType->maxFilesPerRepository())) {
             $files = array_slice($files, 0, $subscriptionType->maxFilesPerRepository());

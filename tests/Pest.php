@@ -63,7 +63,7 @@ function createLaravelProject(Team $team)
         'workspace' => $repo->workspace ?? null,
     ]);
 
-    $branch = $repository->branches()->createQuietly(['name' => 'master']);
+    $branch = $repository->branches()->createQuietly(['name' => 'master', 'framework_name' => 'Laravel']);
 
     return [$project, $sourceCodeAccount, $repository, $branch];
 }
