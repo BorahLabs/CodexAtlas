@@ -16,18 +16,22 @@ return new class extends Migration
     {
         Branch::query()->whereNull('framework_name')->each(function(Branch $branch) {
 
-            $repository = $branch->repository;
-            $sourceCodeAccount = $repository->sourceCodeAccount;
-            /**
-             * @var SourceCodeProvider
-             */
-            $provider = $sourceCodeAccount->getProvider();
-            $repoName = $repository->nameDto();
-            $filesAndFolders = $provider->files(
-                repository: $repoName,
-                branch: new DTOBranch(name: $branch->name),
-                path: null,
-            );
+            try {
+                $repository = $branch->repository;
+                $sourceCodeAccount = $repository->sourceCodeAccount;
+                /**
+                 * @var SourceCodeProvider
+                 */
+                $provider = $sourceCodeAccount->getProvider();
+                $repoName = $repository->nameDto();
+                $filesAndFolders = $provider->files(
+                    repository: $repoName,
+                    branch: new DTOBranch(name: $branch->name),
+                    path: null,
+                );
+            } catch (Exception $e) {
+                return true;
+            }
 
             [$framework, $files] = FilterFilesByFramework::make()->handle($filesAndFolders, $repoName);
             $branch->update(['framework_name' => $framework->name()]);
