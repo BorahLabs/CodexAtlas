@@ -1,21 +1,36 @@
 <?php
 
+namespace App\Console\Commands\Maintenance;
+
 use App\Actions\Codex\Architecture\FilterFilesByFramework;
 use App\Models\Branch;
 use App\SourceCode\DTO\Branch as DTOBranch;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Exception;
+use Illuminate\Console\Command;
 
-return new class extends Migration
+class UpdateFrameworkOnBranches extends Command
 {
     /**
-     * Run the migrations.
+     * The name and signature of the console command.
+     *
+     * @var string
      */
-    public function up(): void
+    protected $signature = 'maintenance:update-framework-on-branches';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Command description';
+
+    /**
+     * Execute the console command.
+     */
+    public function handle()
     {
         Branch::query()->whereNull('framework_name')->each(function(Branch $branch) {
-
+            $this->info('Processing branch '.$branch->id);
             try {
                 $repository = $branch->repository;
                 $sourceCodeAccount = $repository->sourceCodeAccount;
@@ -33,6 +48,8 @@ return new class extends Migration
                     path: null,
                 );
             } catch (Exception $e) {
+                $this->warning('An error occurred while fetching files for branch '.$branch->id);
+                $this->warning($e->getMessage());
                 return true;
             }
 
@@ -40,12 +57,4 @@ return new class extends Migration
             $branch->update(['framework_name' => $framework->name()]);
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        //
-    }
-};
+}
