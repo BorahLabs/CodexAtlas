@@ -20,7 +20,7 @@ class DumbLocalLlm extends Llm
     public function completion(string $systemPrompt, string $userPrompt): CompletionResponse
     {
         return CompletionResponse::make(
-            completion: "## TLDR\nThis is a test generation without using AI.\n\nIf you're seeing this, it means it worked!",
+            completion: '{"worked" : true}',
             processingTimeMilliseconds: 0,
             inputTokens: 0,
             outputTokens: 0,

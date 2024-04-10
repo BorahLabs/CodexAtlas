@@ -10,6 +10,7 @@ use App\LLM\PromptRequests\PromptRequestType;
 use App\Models\Branch;
 use App\Models\ProcessingLogEntry;
 use App\Models\SystemComponent;
+use App\Services\FormatterHelper;
 use App\SourceCode\DTO\File;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -26,7 +27,6 @@ class ProcessSystemComponent
     public function handle(Branch $branch, File $file, int $order): void
     {
         logger()->debug('[Codex] Processing file '.$file->path.' branch '.$branch->id);
-
         $repository = $branch->repository;
         $sourceCodeAccount = $repository->sourceCodeAccount;
         $project = $repository->project;
@@ -41,6 +41,7 @@ class ProcessSystemComponent
                 ->whereIn('branch_id', $branches->pluck('id'))
                 ->where('status', SystemComponentStatus::Generated)
                 ->where('sha', $file->sha)
+                ->whereNotNull('json_docs')
                 ->first();
             /**
              * @var Llm
@@ -68,8 +69,9 @@ class ProcessSystemComponent
                 'order' => $order,
                 'sha' => $file->sha,
                 'path' => $file->path,
+                'markdown_docs' => $this->generateMarkdown(json_decode($completion->completion, true), $file->path),
                 'file_contents' => $team->stores_code ? $file->contents() : null,
-                'markdown_docs' => $this->formatExplanation($completion->completion, $file->path),
+                'json_docs' => json_decode($completion->completion, true),
                 'status' => SystemComponentStatus::Generated,
             ]);
 
@@ -88,18 +90,39 @@ class ProcessSystemComponent
         }
     }
 
-    private function formatExplanation(string $explanation, string $path): string
+    private function generateMarkdown(?array $completion, $path): ?string
     {
-        $lines = explode("\n", $explanation);
-        $formatted = [];
-        foreach ($lines as $line) {
-            if (str_starts_with($line, '# ')) {
-                continue;
-            }
-
-            $formatted[] = $line;
+        if(!$completion) {
+            return null;
         }
 
-        return '# '.basename($path)."\n\n".implode("\n", $formatted);
+        $completion = FormatterHelper::convertArrayKeysToLowerCase($completion);
+
+        $markdown = '# '.basename($path)."\n\n";
+        if(isset($completion['tldr'])) {
+            $markdown .= '## TLDR'."\n";
+            $markdown .= $completion['tldr'];
+        }
+
+        if(isset($completion['classes']) && !empty($completion['classes'])) {
+            $markdown .= "\n\n".'## Classes'."\n\n";
+            foreach($completion['classes'] as $class) {
+                if(isset($class['name']) && isset($class['description'])) {
+                    $markdown .= '### '.$class['name']."\n";
+                    $markdown .= $class['description']."\n\n";
+                    if(isset($class['methods']) && !empty($class['methods'])) {
+                        $markdown .= '### Methods'."\n\n";
+                        foreach($class['methods'] as $method) {
+                            if(isset($method['name']) && isset($method ['description'])){
+                                $markdown .= '#### '. $method['name']."\n";
+                                $markdown .= $method['description']."\n\n";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $markdown;
     }
 }

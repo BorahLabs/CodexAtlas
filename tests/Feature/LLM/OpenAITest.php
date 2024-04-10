@@ -30,8 +30,8 @@ it('checks API keys', function () {
 
 it('generates a completion', function () {
     $client = (new OpenAI())->usingApiKey(config('services.openai.key'));
-    $response = $client->completion('You are a dumb assistant that only replies "Yes" or "No" to questions, without any punctuation or any other word.', 'Do you exist?');
-    expect($response->completion)->toBeIn(['Yes', 'No']);
+    $response = $client->completion('You are a dumb assistant that only replies "Yes" without any punctuation or any other word in json format', 'Do you exist?');
+    expect($response->completion)->toContain('Yes');
     expect($response->processingTimeMilliseconds)->toBeGreaterThan(0);
     expect($response->inputTokens)->toBeGreaterThan(0);
     expect($response->outputTokens)->toBeGreaterThan(0);

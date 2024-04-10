@@ -16,6 +16,10 @@ class BranchDocument extends Model
     use HasFactory;
     use HasUuids;
 
+    protected $casts = [
+        'json_docs' => 'array'
+    ];
+
     public function branch(): BelongsTo
     {
         return $this->belongsTo(Branch::class);

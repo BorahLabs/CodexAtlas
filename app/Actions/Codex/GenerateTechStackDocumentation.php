@@ -26,10 +26,12 @@ class GenerateTechStackDocumentation
         $llm = app(Llm::class);
 
         $completion = $llm->describeFile($repository->project, $dependencyFile, PromptRequestType::TECH_STACK);
+        $dependencies = json_decode($completion->completion, true);
+        $markdownTechStackDocument = $this->generateMarkdownTechStackDocument($dependencies);
 
         return $branch->branchDocuments()->updateOrCreate(
             ['path' => 'TechStackFile'],
-            ['name' => 'TechStackFile', 'content' => $completion->completion]
+            ['name' => 'TechStackFile', 'content' => $markdownTechStackDocument , 'json_docs' => $dependencies]
         );
     }
 
@@ -42,5 +44,14 @@ class GenerateTechStackDocumentation
         }
 
         return new File(name: 'Dependency Files', contents: $content, path: '', downloadUrl: '', sha: '');
+    }
+
+    private function generateMarkdownTechStackDocument(array $dependencies): string
+    {
+        $markdown = '';
+        foreach($dependencies as $key => $dependency) {
+            $markdown .= '# '. $key."\n\n".$dependency."\n\n";
+        }
+        return $markdown;
     }
 }
