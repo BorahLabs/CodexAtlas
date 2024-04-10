@@ -52,3 +52,9 @@ it('return right prompt to get tech stack request', function () {
         ->toContain($project->name)
         ->toContain($file->contents);
 });
+
+it('Can set a specific model correctly ', function () {
+    $client = new OpenAI();
+    $client->withModel('Test GPT');
+    expect($client->modelName())->toBe('Test GPT');
+});

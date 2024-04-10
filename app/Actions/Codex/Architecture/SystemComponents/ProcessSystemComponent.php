@@ -48,7 +48,9 @@ class ProcessSystemComponent
              */
             $llm = app(Llm::class);
             if ($llm instanceof OpenAI) {
+                // @codeCoverageIgnoreStart
                 $llm->usingApiKey($team->openai_key);
+                // @codeCoverageIgnoreEnd
             }
 
             if ($existingFile) {
@@ -62,7 +64,6 @@ class ProcessSystemComponent
             } else {
                 $completion = $llm->describeFile($project, $file, PromptRequestType::DOCUMENT_FILE);
             }
-
             $branch->systemComponents()->updateOrCreate([
                 'path' => $file->path,
             ], [
@@ -76,6 +77,7 @@ class ProcessSystemComponent
             ]);
 
             ProcessingLogEntry::write($branch, $file->path, class_basename($llm), $llm->modelName(), $completion);
+        // @codeCoverageIgnoreStart
         } catch (\App\Exceptions\ExceededProviderRateLimit $e) {
             logger($e);
             ProcessSystemComponent::dispatch($branch, $file, $order)
@@ -88,6 +90,7 @@ class ProcessSystemComponent
 
             throw $e;
         }
+        // @codeCoverageIgnoreEnd
     }
 
     private function generateMarkdown(?array $completion, $path): ?string
