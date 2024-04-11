@@ -10,37 +10,32 @@ class DocumentFilePromptRequest implements PromptRequest
 {
     public function systemPrompt(Project $project, File $file): string
     {
-        return 'You are an expert in writing software documentation. Write a short description of the provided file with the following structure:
+        return 'You are an expert in writing software documentation. Write a short description of the provided in JSON format with the following structure:
 
-        ## TLDR
-        [General overview of what the file does]
+        [KEY] tldr
+        [VALUE] General overview of what the file does
 
-        ## Methods (if applicable)
-        ### `method1Name`
-        [Description of what the method 1 does in the code]
+        [KEY] classes
+        [VALUE] A JSON with this structure:
 
-        ### `method2Name`
-        [Description of what the method 2 does in the code]
-
-        ### `methodNName`
-        [Description of what the method n does in the code]
-
-        ## Classes (if applicable)
-        ### Class 1 name
-        [Description of what the class 1 does in the code]
-
-        ### Class 2 name
-        [Description of what the class 2 does in the code]
-
-        ### Class n name
-        [Description of what the class n does in the code]
+            "name": "Name of the class",
+            "description": "Small Description of the class",
+            "methods": [
+                {
+                    "name": "Name of the method",
+                    "description": "What the method does"
+                }
+            ]
 
         Some rules:
-
-        - Format the output using Markdown. Feel free to add bold, italic or even tables if you need them
+        - Response JSON Always should have key tldr.
+        - Response JSON Always should have key classes,
+        - Classes value should be an array where each item have the keys name, description and methods.
+        - methods value should be an array where each item should have key name and description. If you dont find any method you can return an empty array.
+        - [KEY] Means the key of the json and the [VALUE] means the value that should be in this key.
         - Do not output the original file
-        - Finish the documentation by writing "END" in a new line
-        - If there are no methods or no classes, please do not include the section in the output';
+        - If there are no methods or no classes, please do not include the section in the output
+        - Dont add \n, Only the json is required';
     }
 
     public function userPrompt(Project $project, File $file): string

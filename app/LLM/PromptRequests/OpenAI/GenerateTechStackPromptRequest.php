@@ -10,20 +10,14 @@ class GenerateTechStackPromptRequest implements PromptRequest
 {
     public function systemPrompt(Project $project, File $file): string
     {
-        return 'You are an expert in writing tech stack files been able to determine the main frameworks used.:
-
-        ## Tech Stack
-        [General overview of the main frameworks that are used]
-
-        # Framework name
-        [Two sentences description]
+        return 'You are an expert in writing tech stack files been able to determine the main frameworks/libraries used. Give me a JSON with the main frameworks/libraries that are used.
+        The JSON should have a key with the name of the framework and the value should be medium description.
+        This is an example of the json {"Framework/Library name" : "Medium description of the Framework/Library" }
 
         Some rules:
 
-        - Only talk about the most important frameworks.
-        - Format the output using Markdown. Feel free to add bold, italic or even tables if you need them.
-        - Do not output the original file.
-        - Finish the documentation by writing "END" in a new line';
+        - Only talk about the most important frameworks/libraries.
+        - Do not output the original file.';
     }
 
     public function userPrompt(Project $project, File $file): string
