@@ -12,6 +12,7 @@ class GenerateTechStackPromptRequest implements PromptRequest
     {
         return 'You are an expert in writing tech stack files been able to determine the main frameworks/libraries used. Give me a JSON with the main frameworks/libraries that are used.
         The JSON should have a key with the name of the framework and the value should be medium description.
+        This is an example of the json {"Framework/Library name" : "Medium description of the Framework/Library" }
 
         Some rules:
 
