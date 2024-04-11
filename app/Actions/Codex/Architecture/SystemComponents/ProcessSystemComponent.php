@@ -63,18 +63,19 @@ class ProcessSystemComponent
                 );
             } else {
                 $completion = $llm->describeFile($project, $file, PromptRequestType::DOCUMENT_FILE);
+                $branch->systemComponents()->updateOrCreate([
+                    'path' => $file->path,
+                ], [
+                    'order' => $order,
+                    'sha' => $file->sha,
+                    'path' => $file->path,
+                    'markdown_docs' => $this->generateMarkdown(json_decode($completion->completion, true), $file->path),
+                    'file_contents' => $team->stores_code ? $file->contents() : null,
+                    'json_docs' => json_decode($completion->completion, true),
+                    'status' => SystemComponentStatus::Generated,
+                ]);
             }
-            $branch->systemComponents()->updateOrCreate([
-                'path' => $file->path,
-            ], [
-                'order' => $order,
-                'sha' => $file->sha,
-                'path' => $file->path,
-                'markdown_docs' => $this->generateMarkdown(json_decode($completion->completion, true), $file->path),
-                'file_contents' => $team->stores_code ? $file->contents() : null,
-                'json_docs' => json_decode($completion->completion, true),
-                'status' => SystemComponentStatus::Generated,
-            ]);
+
 
             ProcessingLogEntry::write($branch, $file->path, class_basename($llm), $llm->modelName(), $completion);
         // @codeCoverageIgnoreStart
@@ -96,7 +97,9 @@ class ProcessSystemComponent
     private function generateMarkdown(?array $completion, $path): ?string
     {
         if(!$completion) {
+            // @codeCoverageIgnoreStart
             return null;
+            // @codeCoverageIgnoreEnd
         }
 
         $completion = FormatterHelper::convertArrayKeysToLowerCase($completion);

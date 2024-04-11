@@ -5,12 +5,18 @@ namespace App\LLM\PromptRequests\OpenAI;
 use App\LLM\Contracts\PromptRequest;
 use App\Models\Project;
 use App\SourceCode\DTO\File;
+use App\Traits\HasFileDTO;
+use App\Traits\HasProject;
 
 class DocumentFilePromptRequest implements PromptRequest
 {
+    use HasProject, HasFileDTO;
+
     public function systemPrompt(Project $project, File $file): string
     {
-        return 'You are an expert in writing software documentation. Write a short description of the provided in JSON format with the following structure:
+        return 'You are an expert in writing software documentation.
+        Sometimes you may receive previous json generated. In that case, do the merge of the new json with the old one.
+        Write a short description of the provided in JSON format with the following structure:
 
         [KEY] tldr
         [VALUE] General overview of what the file does

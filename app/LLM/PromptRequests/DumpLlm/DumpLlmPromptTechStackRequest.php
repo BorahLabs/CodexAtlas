@@ -6,9 +6,13 @@ use App\LLM\Contracts\PromptRequest;
 use App\LLM\PromptRequests\PromptRequestType;
 use App\Models\Project;
 use App\SourceCode\DTO\File;
+use App\Traits\HasFileDTO;
+use App\Traits\HasProject;
 
 class DumpLlmPromptTechStackRequest implements PromptRequest
 {
+    use HasFileDTO, HasProject;
+    
     public function systemPrompt(Project $project, File $file): string
     {
         return PromptRequestType::TECH_STACK->value;

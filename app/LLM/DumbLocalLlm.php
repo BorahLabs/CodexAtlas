@@ -2,24 +2,38 @@
 
 namespace App\LLM;
 
+use App\Actions\Helper\GetTotalPromptRequestTokens;
+use App\LLM\Contracts\CanSupportPartialRequestInterface;
 use App\LLM\Contracts\Llm;
 use App\LLM\Contracts\PromptRequest;
 use App\LLM\DTO\CompletionResponse;
 use App\LLM\PromptRequests\DumpLlm\DumpLlmPromptRequest;
 use App\LLM\PromptRequests\DumpLlm\DumpLlmPromptTechStackRequest;
 use App\LLM\PromptRequests\PromptRequestType;
+use App\Traits\CanSupportPartialRequest;
 
-class DumbLocalLlm extends Llm
+class DumbLocalLlm extends Llm implements CanSupportPartialRequestInterface
 {
+    use CanSupportPartialRequest;
+
+    public ?PromptRequest $promptRequest = null;
+
     public function getPromptRequest(PromptRequestType $promptRequestType): PromptRequest
     {
-        return match ($promptRequestType) {
+        $this->promptRequest = match ($promptRequestType) {
             PromptRequestType::TECH_STACK => new DumpLlmPromptTechStackRequest(),
             default => new DumpLlmPromptRequest()
         };
+
+        return $this->promptRequest;
     }
 
     public function completion(string $systemPrompt, string $userPrompt): CompletionResponse
+    {
+        return $this->handlePartialCompletionResponse($this->promptRequest, 'lorem ipsum');
+    }
+
+    public function makeRequest(string $prompt, string $systemPrompt, ?string $previousAnswer = null): ?CompletionResponse
     {
         return CompletionResponse::make(
             completion: $this->getCompletionResponse($systemPrompt),
@@ -28,6 +42,17 @@ class DumbLocalLlm extends Llm
             outputTokens: 0,
             totalTokens: 0,
         );
+    }
+
+    public function getMaxAmountOfTokens(): ?int
+    {
+        return 1;
+    }
+
+
+    public function getTotalPromptTokens(string $userPrompt, string $systemPrompt): int
+    {
+        return GetTotalPromptRequestTokens::run($userPrompt, $systemPrompt, config('services.openai.completion_model'));
     }
 
     public function modelName(): string
