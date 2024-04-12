@@ -38,33 +38,7 @@
             @endcan
         </header>
         @can('create-repository')
-            <x-bordered-black-box :single="true" x-data="{
-                sourceCodeAccount: '{{ auth()->user()->currentTeam->sourceCodeAccounts->first()?->id }}',
-                shouldShowForm: true
-            }" class="mt-12 mb-16" x-cloak
-                x-show="showAddRepository" x-on:source-code-add.window="shouldShowForm = false"
-                x-on:source-code-cancel.window="shouldShowForm = true">
-                <x-codex.source-code-accounts :accounts="auth()->user()->currentTeam->sourceCodeAccounts" x-model="sourceCodeAccount" />
-                <form action="{{ route('repositories.store', ['project' => $project]) }}" method="POST" class="mt-4"
-                    x-show="shouldShowForm">
-                    @csrf
-                    <input type="hidden" name="source_code_account_id" x-model="sourceCodeAccount" />
-                    @if (auth()->user()->currentTeam->sourceCodeAccounts->isNotEmpty())
-                        <div class="flex items-end mt-8">
-                            <div class="w-full">
-                                <x-label for="name" style="lightweight" value="{{ __('Repository name') }}"
-                                    class="mb-2" />
-                                <x-bordered-input id="name" type="text" class="block w-full" name="name"
-                                    :autofocus="$project->repositories->isEmpty()" placeholder="Account/Repository" />
-                                <x-input-error for="name" class="mt-2" />
-                            </div>
-                            <div class="flex-shrink-0 pb-1 ml-8">
-                                <x-button theme="primary" type="submit">{{ __('Add repo') }}</x-button>
-                            </div>
-                        </div>
-                    @endif
-                </form>
-            </x-bordered-black-box>
+            <livewire:atlas.add-repository :project="$project" />
         @endcan
         <x-codex.repository-list :project="$project" />
         <x-codex.free-plan-banner class="mt-12" />
