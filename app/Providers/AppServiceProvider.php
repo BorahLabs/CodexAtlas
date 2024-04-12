@@ -38,7 +38,7 @@ class AppServiceProvider extends ServiceProvider
 
         Livewire::setUpdateRoute(function ($handle) {
             return Route::post('/livewire/update', $handle)
-                ->middleware(\App\Http\Middleware\ConfigureRequestsFromAutodoc::class);
+                ->middleware('web', \App\Http\Middleware\ConfigureRequestsFromAutodoc::class);
         });
     }
 }

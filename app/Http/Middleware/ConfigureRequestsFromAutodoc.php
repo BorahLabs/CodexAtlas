@@ -15,6 +15,10 @@ class ConfigureRequestsFromAutodoc
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if ($request->host() !== config('app.autodoc_domain')) {
+            return $next($request);
+        }
+
         config([
             'app.name' => 'AutomaticDocs',
             'cashier.key' => config('autodoc.stripe.key'),
