@@ -41,10 +41,6 @@ class FilterFilesByFramework
     {
         $filtered = [];
         foreach ($files as $file) {
-            if ($framework->shouldBeIgnored($file->path)) {
-                continue;
-            }
-
             if ($file instanceof Folder) {
                 $filtered = [
                     ...$filtered,
@@ -52,6 +48,10 @@ class FilterFilesByFramework
                     ...$this->filterFiles($file->folders, $framework),
                 ];
             } elseif ($framework->mightBeRelevant($file->path) && FileWhitelist::whitelisted($file->path)) {
+                if ($framework->shouldBeIgnored($file->path)) {
+                    continue;
+                }
+
                 $filtered[] = $file;
             }
         }
