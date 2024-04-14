@@ -56,6 +56,11 @@ class MarkdownFile implements Arrayable
         ]);
     }
 
+    public function isComingSoon(): bool
+    {
+        return $this->meta('coming_soon') == 1;
+    }
+
     public function meta(string $key): ?string
     {
         return $this->metadata[$key] ?? null;
