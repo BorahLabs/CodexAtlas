@@ -2,6 +2,7 @@
 
 namespace App\Actions\Autodoc;
 
+use App\Actions\Codex\Architecture\SystemComponents\ConvertSystemComponentMarkdown;
 use App\Enums\SystemComponentStatus;
 use App\LLM\Contracts\Llm;
 use App\LLM\OpenAI;
@@ -55,8 +56,9 @@ class ProcessAutodocSystemComponent
             ]);
             $completion = retry(3, fn () => $llm->describeFile(new Project(['name' => '']), $file, PromptRequestType::DOCUMENT_FILE), 5000);
             $systemComponent->updateQuietly([
-                'markdown_docs' => $completion->completion,
+                'markdown_docs' => ConvertSystemComponentMarkdown::make()->handle(json_decode($completion->completion, true), $file->path),
                 'file_contents' => null,
+                'json_docs' => json_decode($completion->completion, true),
                 'status' => SystemComponentStatus::Generated,
             ]);
             ProcessingLogEntry::write($systemComponent->branch, $file->path, class_basename($llm), $llm->modelName(), $completion);

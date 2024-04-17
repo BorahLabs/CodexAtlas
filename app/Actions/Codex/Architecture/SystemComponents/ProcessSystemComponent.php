@@ -73,7 +73,7 @@ class ProcessSystemComponent
                 'order' => $order,
                 'sha' => $file->sha,
                 'path' => $file->path,
-                'markdown_docs' => $this->generateMarkdown(json_decode($completion->completion, true), $file->path),
+                'markdown_docs' => ConvertSystemComponentMarkdown::make()->handle(json_decode($completion->completion, true), $file->path),
                 'file_contents' => $team->stores_code ? $file->contents() : null,
                 'json_docs' => json_decode($completion->completion, true),
                 'status' => SystemComponentStatus::Generated,
@@ -94,41 +94,5 @@ class ProcessSystemComponent
             throw $e;
         }
         // @codeCoverageIgnoreEnd
-    }
-
-    private function generateMarkdown(?array $completion, $path): ?string
-    {
-        if(!$completion) {
-            return null;
-        }
-
-        $completion = FormatterHelper::convertArrayKeysToLowerCase($completion);
-
-        $markdown = '# '.basename($path)."\n\n";
-        if(isset($completion['tldr'])) {
-            $markdown .= '## TLDR'."\n";
-            $markdown .= $completion['tldr'];
-        }
-
-        if(isset($completion['classes']) && !empty($completion['classes'])) {
-            $markdown .= "\n\n".'## Classes'."\n\n";
-            foreach($completion['classes'] as $class) {
-                if(isset($class['name']) && isset($class['description'])) {
-                    $markdown .= '### '.$class['name']."\n";
-                    $markdown .= $class['description']."\n\n";
-                    if(isset($class['methods']) && !empty($class['methods'])) {
-                        $markdown .= '### Methods'."\n\n";
-                        foreach($class['methods'] as $method) {
-                            if(isset($method['name']) && isset($method ['description'])){
-                                $markdown .= '#### '. $method['name']."\n";
-                                $markdown .= $method['description']."\n\n";
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        return $markdown;
     }
 }

@@ -25,10 +25,14 @@
             </p>
         </div>
     @else
-        <h2 class="text-2xl font-bold text-center">{{ $systemComponent->name }} documentation</h2>
-        <div class="prose" wire:poll.5s>
+        <div class="prose prose-invert" wire:poll.5s>
             @if ($systemComponent->markdown_docs)
                 {!! Str::markdown($systemComponent->markdown_docs) !!}
+            @elseif($systemComponent->status->isError())
+                <h2 class="text-center">Error. Please, try again later or try another file</h2>
+            @else
+                <h2 class="text-center" x-data="{ dots: '' }" x-init="setInterval(() => dots.length === 3 ? dots = '' : dots += '.', 500)"
+                    x-text="'Generating your documentation' + dots"></h2>
             @endif
         </div>
     @endif
