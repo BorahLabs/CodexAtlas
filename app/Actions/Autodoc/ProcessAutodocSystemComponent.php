@@ -17,17 +17,20 @@ class ProcessAutodocSystemComponent
 {
     use AsAction;
 
-    public function handle(SystemComponent $systemComponent, AutodocLead $lead)
+    public function handle(SystemComponent $systemComponent, ?AutodocLead $lead = null)
     {
         if (empty(trim($systemComponent->file_contents))) {
             $systemComponent->updateQuietly([
                 'status' => SystemComponentStatus::Error,
             ]);
-            $this->checkIfShouldFinish($lead);
+            if ($lead) {
+                $this->checkIfShouldFinish($lead);
+            }
+
             abort(422, 'File contents are empty');
         }
 
-        $lead->update([
+        $lead?->update([
             'status' => SystemComponentStatus::Generating->value,
         ]);
         $systemComponent->updateQuietly([
@@ -64,7 +67,9 @@ class ProcessAutodocSystemComponent
             ]);
         }
 
-        $this->checkIfShouldFinish($lead);
+        if ($lead) {
+            $this->checkIfShouldFinish($lead);
+        }
     }
 
     protected function checkIfShouldFinish(AutodocLead $lead)

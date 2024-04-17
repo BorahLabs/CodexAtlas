@@ -9,6 +9,7 @@ use App\LLM\OpenAI;
 use App\LLM\PromptRequests\PromptRequestType;
 use App\Models\Branch;
 use App\Models\ProcessingLogEntry;
+use App\Models\SourceCodeAccount;
 use App\Models\SystemComponent;
 use App\Services\FormatterHelper;
 use App\SourceCode\DTO\File;
@@ -28,7 +29,9 @@ class ProcessSystemComponent
     {
         logger()->debug('[Codex] Processing file '.$file->path.' branch '.$branch->id);
         $repository = $branch->repository;
-        $sourceCodeAccount = $repository->sourceCodeAccount;
+        $sourceCodeAccount = SourceCodeAccount::query()
+            ->withoutGlobalScopes()
+            ->findOrFail($repository->source_code_account_id);
         $project = $repository->project;
         $branches = $repository->branches;
         $team = $project->team;
