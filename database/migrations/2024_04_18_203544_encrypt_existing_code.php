@@ -14,7 +14,7 @@ return new class extends Migration
             ->whereNotNull('file_contents')
             ->each(function (SystemComponent $systemComponent) {
                 try {
-                    if (count($systemComponent->file_contents) > 0) {
+                    if (strlen($systemComponent->file_contents) > 0) {
                         return true;
                     }
                 } catch (\Exception $e) {
