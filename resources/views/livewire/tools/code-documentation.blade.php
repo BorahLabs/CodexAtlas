@@ -3,7 +3,8 @@
         <h2 class="text-2xl font-bold text-center">Upload a {{ $lang->name() }} file to get started</h2>
         <div class="text-center mt-8">
             <label
-                class="inline-flex items-center px-4 py-3 bg-violet-600 border border-transparent rounded-xl font-semibold text-xs text-white uppercase tracking-widest hover:bg-violet-500 focus:bg-violet-700 active:bg-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-violet-700 transition ease-in-out duration-150 cursor-pointer">
+                class="inline-flex items-center px-4 py-3 bg-violet-600 border border-transparent rounded-xl font-semibold text-xs text-white uppercase tracking-widest hover:bg-violet-500 focus:bg-violet-700 active:bg-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-violet-700 transition ease-in-out duration-150 cursor-pointer"
+                x-data="{ active: () => true }">
                 <x-codex.icons.plus class="h-4 w-4 mr-4" />
                 <span>Click here to upload your file</span>
                 <input type="file" class="sr-only" wire:model="file">

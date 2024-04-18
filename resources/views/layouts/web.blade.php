@@ -8,8 +8,8 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,800&display=swap" rel="stylesheet" />
 
+    @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https://unpkg.com/alpinejs@3.13.3/dist/cdn.min.js" defer></script>
 
     @production
         <script src="https://cdn.usefathom.com/script.js" data-site="FEPWQLXW" defer></script>
@@ -23,6 +23,8 @@
         {{ $slot }}
         <x-homepage.footer />
     </div>
+
+    @livewireScriptConfig
 </body>
 
 </html>
