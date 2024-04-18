@@ -87,7 +87,7 @@ class CodeDocumentation extends Component
 
     public function userExceedsLimitsOfRequests(): bool
     {
-        return Cache::get('code-documentation:user-requests:'.$this->ip, 0) >= 3;
+        return Cache::get('code-documentation:user-requests:'.$this->ip, 0) >= 30;
     }
 
     public function render()
