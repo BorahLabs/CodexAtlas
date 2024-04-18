@@ -41,14 +41,14 @@ return new class extends Migration
             'user_id' => $user->id,
         ]);
 
-        $account = SourceCodeAccount::createQuietly([
+        $account = SourceCodeAccount::create([
             'team_id' => $team->id,
             'provider' => 'local',
             'name' => 'Code Documentation',
             'external_id' => 'code-documentation',
         ]);
 
-        $project = Project::createQuietly([
+        $project = Project::create([
             'team_id' => $team->id,
             'name' => 'Code Documentation',
         ]);
