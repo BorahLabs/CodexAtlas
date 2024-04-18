@@ -2,6 +2,8 @@
 
 use App\Models\SystemComponent;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -19,9 +21,11 @@ return new class extends Migration
                     }
                 } catch (\Exception $e) {
                     // Encryption error. Code is not encrypted!
-                    $systemComponent->update([
-                        'file_contents' => $systemComponent->getRawOriginal('file_contents'),
-                    ]);
+                    DB::table('system_components')
+                        ->where('id', $systemComponent->id)
+                        ->update([
+                            'file_contents' => Crypt::encryptString($systemComponent->getRawOriginal('file_contents')),
+                        ]);
                 }
             });
     }
