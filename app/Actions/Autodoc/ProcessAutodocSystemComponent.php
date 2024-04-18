@@ -18,7 +18,7 @@ class ProcessAutodocSystemComponent
 {
     use AsAction;
 
-    public function handle(SystemComponent $systemComponent, ?AutodocLead $lead = null)
+    public function handle(SystemComponent $systemComponent, ?AutodocLead $lead = null, string $model = 'gpt-4-turbo')
     {
         if (empty(trim($systemComponent->file_contents))) {
             $systemComponent->updateQuietly([
@@ -44,7 +44,7 @@ class ProcessAutodocSystemComponent
              */
             $llm = app(Llm::class);
             if ($llm instanceof OpenAI) {
-                $llm->withModel('gpt-4-turbo-preview');
+                $llm->withModel($model);
             }
 
             $file = File::from([
