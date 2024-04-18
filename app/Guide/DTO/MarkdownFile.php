@@ -16,7 +16,7 @@ class MarkdownFile implements Arrayable
         public readonly string $path,
     ) {
         $file = $this->fetchFile();
-        $this->contents = $file['contents'];
+        $this->contents = $this->parseContents($file['contents']);
         $this->metadata = $file['meta'];
     }
 
@@ -99,5 +99,11 @@ class MarkdownFile implements Arrayable
             'meta' => $meta ?? [],
             'contents' => $contents ?? $fileContents,
         ];
+    }
+
+    protected function parseContents(string $contents): string
+    {
+        $contents = preg_replace_callback('/!\[(.*)\]\((.+)\)/', fn ($matches) => '!['.$matches[1].']('.asset($matches[2].')'), $contents);
+        return $contents;
     }
 }
