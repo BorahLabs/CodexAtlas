@@ -36,7 +36,7 @@ class GuideController extends Controller
         ]);
     }
 
-    protected function folders(): Collection
+    public function folders(): Collection
     {
         return collect(File::directories(resource_path('guide')))
             ->map(fn (string $path) => basename($path))

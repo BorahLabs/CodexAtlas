@@ -13,6 +13,7 @@ use App\Actions\Platform\ShowTechStack;
 use App\Actions\Platform\SourceCodeAccounts\StoreAccountPersonalAccessToken;
 use App\Actions\Platform\Webhook\HandleWebhook;
 use App\Http\Controllers\Website\GuideController;
+use App\Http\Controllers\Website\SitemapController;
 use App\Http\Controllers\Website\Tools\CodeDocumentationToolController;
 use App\Http\Middleware\ControlRequestsFromPlatform;
 use App\Http\Middleware\OnlyFromCodexAtlas;
@@ -96,4 +97,6 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
 
         return view('password-protection');
     })->name('password-protected')->middleware('throttle:5,1');
+
+    Route::get('sitemap.xml', SitemapController::class);
 });
