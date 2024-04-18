@@ -19,7 +19,7 @@
             </x-bordered-black-box>
             <div class="relative w-full px-4 mt-24">
                 <div
-                    class="absolute bottom-0 right-0 w-186 h-186 bg-gradient-to-t from-violet-700 via-darkBlue-900 to-transparent rounded-full filter blur-4xl">
+                    class="absolute bottom-0 right-0 w-186 h-186 bg-gradient-to-t from-violet-700 via-darkBlue-900 to-transparent rounded-full filter blur-4xl pointer-events-none">
                 </div>
                 <div class="relative max-w-lg lg:max-w-none mx-auto">
                     <h2 class="text-4xl font-bold text-center text-white">Frequently Asked Questions</h2>
@@ -33,7 +33,7 @@
                         <x-homepage.faq-question question="Is my code stored by CodexAtlas?"
                             answer="No. An encrypted version of your code is stored only while its being processed and it's deleted immediately." />
                         <x-homepage.faq-question question="I want to use it, but I cannot share my code with OpenAI"
-                            answer="If you can work with a custom Azure model in your own account, let us know. If not, we want to let you know that we can work with custom models that could be deployed in your own servers. Feel free to get in touch with us!" />
+                            answer="If you can work with a custom Azure model in your own account, let us know. If not, Codex also works with open source models that can run on-premises, on your own servers, so your data is always yours. Feel free to get in touch with us!" />
                     </div>
                 </div>
             </div>
