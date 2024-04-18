@@ -16,6 +16,7 @@ use App\Http\Controllers\Website\GuideController;
 use App\Http\Controllers\Website\SitemapController;
 use App\Http\Controllers\Website\Tools\CodeDocumentationToolController;
 use App\Http\Middleware\ControlRequestsFromPlatform;
+use App\Http\Middleware\ForceNoIndex;
 use App\Http\Middleware\OnlyFromCodexAtlas;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
@@ -58,7 +59,7 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
         ->withoutMiddleware(VerifyCsrfToken::class)
         ->name('webhook');
 
-    Route::middleware(ControlRequestsFromPlatform::class)->group(function () {
+    Route::middleware([ControlRequestsFromPlatform::class, ForceNoIndex::class])->group(function () {
         Route::get('/docs/{project}/{repository}/{branch}', ShowDocs::class)
             ->scopeBindings()
             ->name('docs.show');
