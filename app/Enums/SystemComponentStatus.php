@@ -9,4 +9,9 @@ enum SystemComponentStatus: string
     case Generated = 'generated';
     case Error = 'error';
     case Regenerating = 'regenerating';
+
+    public function isError(): bool
+    {
+        return $this->value === self::Error;
+    }
 }

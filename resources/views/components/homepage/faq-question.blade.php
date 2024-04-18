@@ -19,7 +19,7 @@
         </span>
     </button>
     <div x-cloak class="p-4" x-show="open" x-transition>
-        <p class="max-w-xl mt-2 text-lg tracking-tight text-violet-100">
+        <p class="w-full mt-2 text-lg tracking-tight text-violet-100">
             {{ $answer }}</p>
     </div>
 </div>

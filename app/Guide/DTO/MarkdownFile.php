@@ -48,12 +48,12 @@ class MarkdownFile implements Arrayable
             ->toString();
     }
 
-    public function url(): string
+    public function url(bool $absolute = true): string
     {
         return route('guide.show', [
             'folder' => $this->folderId(),
             'file' => $this->id(),
-        ]);
+        ], absolute: $absolute);
     }
 
     public function isComingSoon(): bool

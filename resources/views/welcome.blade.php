@@ -462,7 +462,7 @@
                                 answer="Absolutely. Just get in touch and we will set up a forever-free platform for your project." />
                             <x-homepage.faq-question
                                 question="I want to use it, but I cannot share my code with OpenAI"
-                                answer="If you can work with a custom Azure model in your own account, let us know. If not, we want to let you know that we can work with custom models that could be deployed in your own servers. Feel free to get in touch with us!" />
+                                answer="If you can work with a custom Azure model in your own account, let us know. If not, Codex also works with open source models that can run on-premises, on your own servers, so your data is always yours. Feel free to get in touch with us!" />
                             <x-homepage.faq-question question="Is my code stored by CodexAtlas?"
                                 answer="No. Your code is never stored in our servers. It's just read to create the documentation and then deleted. We do store a vector representation of the code to provide advanced AI capabilities." />
                         </div>
