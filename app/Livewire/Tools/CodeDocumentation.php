@@ -9,6 +9,7 @@ use App\Enums\SystemComponentStatus;
 use App\Models\SystemComponent;
 use App\Models\Tool;
 use App\SourceCode\DTO\File;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
@@ -23,6 +24,9 @@ class CodeDocumentation extends Component
     public string $language;
 
     #[Locked]
+    public string $ip;
+
+    #[Locked]
     public ?string $systemComponentId = null;
 
     public ?string $filePath;
@@ -31,10 +35,20 @@ class CodeDocumentation extends Component
 
     public ?TemporaryUploadedFile $file = null;
 
+    public function mount()
+    {
+        $this->ip = request()->ip();
+    }
+
     public function updatedFile()
     {
         $this->resetErrorBag();
         if (is_null($this->file)) {
+            return;
+        }
+
+        if ($this->userExceedsLimitsOfRequests()) {
+            $this->addError('file', 'You have exceeded the limit of requests. Please, try again later or sign up.');
             return;
         }
 
@@ -64,9 +78,16 @@ class CodeDocumentation extends Component
             'markdown_docs' => null,
             'status' => SystemComponentStatus::Pending->value,
         ]);
-        ProcessAutodocSystemComponent::dispatch($systemComponent);
+
+        Cache::increment('code-documentation:user-requests:'.$this->ip);
+        ProcessAutodocSystemComponent::dispatch($systemComponent, model: 'gpt-3.5-turbo-1106');
         $this->systemComponent = $systemComponent;
         $this->filePath = $file->path;
+    }
+
+    public function userExceedsLimitsOfRequests(): bool
+    {
+        return Cache::get('code-documentation:user-requests:'.$this->ip, 0) >= 3;
     }
 
     public function render()
