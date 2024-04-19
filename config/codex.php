@@ -62,4 +62,6 @@ return [
             'erb',
         ]),
     ],
+    'payment_mode' => env('PAYMENT_MODE', 'spark'),
+    'aws_marketplace_link' => env('AWS_MARKETPLACE_URL', '#'),
 ];
