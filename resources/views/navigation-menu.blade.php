@@ -57,10 +57,24 @@
                                             {{ __('Team Settings') }}
                                         </x-dropdown-link>
 
-                                        <!-- Billing -->
-                                        <x-dropdown-link href="{{ route('spark.portal') }}">
-                                            {{ __('Team Billing') }}
-                                        </x-dropdown-link>
+                                        @if (paymentIsWithSpark())
+                                            <!-- Billing -->
+                                            <x-dropdown-link href="{{ route('spark.portal') }}">
+                                                {{ __('Team Billing') }}
+                                            </x-dropdown-link>
+                                        @elseif(paymentIsWithAws() && Auth::user()->currentTeam->user_id === Auth::user()->id)
+                                            @if (Auth::user()->isSubscribedOnAws())
+                                                <span
+                                                    class="block w-full px-4 py-2 text-start text-sm leading-5 text-newGray-300 transition duration-150 ease-in-out">
+                                                    {{ __('Active AWS Subscription') }}
+                                                </span>
+                                            @else
+                                                <x-dropdown-link href="{{ config('codex.aws_marketplace_link') }}"
+                                                    target="_blank">
+                                                    {{ __('Subscribe with AWS') }}
+                                                </x-dropdown-link>
+                                            @endif
+                                        @endif
 
                                         @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                                             <x-dropdown-link href="{{ route('teams.create') }}">
