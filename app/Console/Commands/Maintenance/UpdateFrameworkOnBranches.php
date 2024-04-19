@@ -29,12 +29,12 @@ class UpdateFrameworkOnBranches extends Command
      */
     public function handle()
     {
-        Branch::query()->whereNull('framework_name')->each(function(Branch $branch) {
+        Branch::query()->whereNull('framework_name')->each(function (Branch $branch) {
             $this->info('Processing branch '.$branch->id);
             try {
                 $repository = $branch->repository;
                 $sourceCodeAccount = $repository->sourceCodeAccount;
-                if (!$sourceCodeAccount) {
+                if (! $sourceCodeAccount) {
                     return true;
                 }
                 /**
@@ -50,6 +50,7 @@ class UpdateFrameworkOnBranches extends Command
             } catch (Exception $e) {
                 $this->warning('An error occurred while fetching files for branch '.$branch->id);
                 $this->warning($e->getMessage());
+
                 return true;
             }
 

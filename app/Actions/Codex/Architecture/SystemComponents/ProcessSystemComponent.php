@@ -11,7 +11,6 @@ use App\Models\Branch;
 use App\Models\ProcessingLogEntry;
 use App\Models\SourceCodeAccount;
 use App\Models\SystemComponent;
-use App\Services\FormatterHelper;
 use App\SourceCode\DTO\File;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -80,7 +79,7 @@ class ProcessSystemComponent
             ]);
 
             ProcessingLogEntry::write($branch, $file->path, class_basename($llm), $llm->modelName(), $completion);
-        // @codeCoverageIgnoreStart
+            // @codeCoverageIgnoreStart
         } catch (\App\Exceptions\ExceededProviderRateLimit $e) {
             logger($e);
             ProcessSystemComponent::dispatch($branch, $file, $order)

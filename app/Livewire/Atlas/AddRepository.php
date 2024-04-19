@@ -34,6 +34,7 @@ class AddRepository extends Component
             $provider = $account->getProvider();
             $repositories = cache()->remember('repository-list:'.$account->id, now()->addMinutes(5), fn () => $provider->repositories());
             usort($repositories, fn ($a, $b) => $a->fullName <=> $b->fullName);
+
             return $repositories;
         } catch (\Exception $e) {
             return [];

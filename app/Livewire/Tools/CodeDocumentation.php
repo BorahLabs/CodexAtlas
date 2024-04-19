@@ -49,6 +49,7 @@ class CodeDocumentation extends Component
 
         if ($this->userExceedsLimitsOfRequests()) {
             $this->addError('file', 'You have exceeded the limit of requests. Please, try again later or sign up.');
+
             return;
         }
 
@@ -65,6 +66,7 @@ class CodeDocumentation extends Component
         $language = $this->language();
         if (! $language->isOwnFile($file)) {
             $this->addError('file', 'The file is not a '.$language->name().' file.');
+
             return;
         }
 

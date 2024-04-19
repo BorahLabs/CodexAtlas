@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Website;
 
 use App\Guide\DTO\MarkdownFile;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 
@@ -13,6 +12,7 @@ class GuideController extends Controller
     public function index()
     {
         $folders = $this->folders();
+
         return redirect($folders->first()['children']->first()->url());
     }
 
@@ -44,7 +44,7 @@ class GuideController extends Controller
                 $folder => [
                     'name' => str($folder)->after('_')->headline()->toString(),
                     'children' => collect(File::files(resource_path("guide/{$folder}")))
-                        ->map(fn(string $path) => new MarkdownFile(
+                        ->map(fn (string $path) => new MarkdownFile(
                             folder: $folder,
                             path: $path,
                         )),

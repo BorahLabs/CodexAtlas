@@ -104,6 +104,7 @@ class MarkdownFile implements Arrayable
     protected function parseContents(string $contents): string
     {
         $contents = preg_replace_callback('/!\[(.*)\]\((.+)\)/', fn ($matches) => '!['.$matches[1].']('.asset($matches[2].')'), $contents);
+
         return $contents;
     }
 }

@@ -43,7 +43,7 @@ class OpenAI extends Llm implements HasApiKey
         // wrapping on a retry function to avoid the limit per minute error
         $response = retry(3, fn () => $this->client()->chat()->create([
             'model' => $this->modelName(),
-            'response_format' => [ "type" => "json_object" ],
+            'response_format' => ['type' => 'json_object'],
             'messages' => [
                 [
                     'role' => 'system',
@@ -57,6 +57,7 @@ class OpenAI extends Llm implements HasApiKey
             'stop' => ['-----', "\nEND"],
         ]), 61500);
         $end = intval(microtime(true) * 1000);
+
         return CompletionResponse::make(
             completion: $response->choices[0]->message->content,
             processingTimeMilliseconds: $end - $start,

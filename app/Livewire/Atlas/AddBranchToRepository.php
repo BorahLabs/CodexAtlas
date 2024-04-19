@@ -9,8 +9,11 @@ use Livewire\Component;
 class AddBranchToRepository extends Component
 {
     public Repository $repository;
+
     public bool $isAddingBranch = false;
+
     public array $branches = [];
+
     public string $selectedBranch = '';
 
     public function startAddingBranch()
@@ -61,6 +64,7 @@ class AddBranchToRepository extends Component
          */
         $provider = $account->getProvider();
         $branches = $provider->branches($repoName);
+
         return $branches;
     }
 

@@ -16,13 +16,13 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
+    use HasAwsSubscription;
     use HasFactory;
     use HasProfilePhoto;
     use HasTeams;
     use HasUuids;
     use Notifiable;
     use TwoFactorAuthenticatable;
-    use HasAwsSubscription;
 
     /**
      * The attributes that are mass assignable.
