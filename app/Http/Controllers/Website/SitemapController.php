@@ -15,7 +15,6 @@ class SitemapController extends Controller
     {
         $sitemap = SitemapGenerator::create(config('app.url'))->getSitemap();
 
-        $sitemap->add(Url::create(route('homepage', absolute: false))->setPriority(1.0));
         foreach (Guesser::supportedLanguages() as $language) {
             $sitemap->add(Url::create(route('tools.code-documentation', ['language' => Str::slug($language->name())], absolute: false))->setPriority(0.9)->setChangeFrequency('weekly'));
         }
