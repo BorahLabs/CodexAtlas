@@ -1,4 +1,5 @@
 <x-web-layout>
+    @section('title', 'Code documentation automated with AI | CodexAtlas')
     <div class="relative pt-24 lg:pt-44 pb-40 lg:pb-72">
         <div class="relative z-10 container mx-auto px-4">
             <div class="flex flex-wrap -mx-4 items-center">

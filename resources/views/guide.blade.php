@@ -1,4 +1,5 @@
 <x-web-layout>
+    @section('title', $currentFile->name() . ' | CodexAtlas')
     <div class="py-8">
         <div class="mx-auto max-w-7xl px-4 grid grid-cols-1 gap-12 sm:grid-cols-3 md:grid-cols-4 text-white">
             <aside class="col-span-1 space-y-4" x-data="{ folder: '{{ $currentFolder['children']->first()->folderId() }}' }">
@@ -41,7 +42,8 @@
                         <h1>Coming soon</h1>
                         <p>Oops! We are still working on this functionality, but you should be able to enjoy it quite
                             soon!</p>
-                        <p>Get in touch with <a href="mailto:raul@borah.agency">our CTO</a> if you want to learn more.
+                        <p>Get in touch with <a href="mailto:support@codexatlas.app">our CTO</a> if you want to learn
+                            more.
                         </p>
                     </div>
                 @else

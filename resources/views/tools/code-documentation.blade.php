@@ -1,4 +1,5 @@
 <x-web-layout>
+    @section('title', 'Free ' . $language->name() . ' Code Documentation | CodexAtlas')
     <section class="py-8">
         <div class="w-full sm:max-w-2xl mt-6 p-6 mx-auto shadow-md overflow-hidden sm:rounded-lg prose prose-invert">
             <h1 class="text-4xl font-bold text-center">Free {{ $language->name() }} Code Documentation</h1>
