@@ -99,6 +99,14 @@ class Team extends JetstreamTeam
             return SubscriptionType::Unlimited;
         }
 
+        if (paymentIsWithAws()) {
+            if ($this->owner->isSubscribedOnAws()) {
+                return SubscriptionType::PayAsYouGo;
+            }
+
+            return SubscriptionType::FreeTrial;
+        }
+
         if ($plan = $this->sparkPlan()) {
             return $this->openai_key ? SubscriptionType::UnlimitedCompanyPlan : SubscriptionType::LimitedCompanyPlan;
         }
