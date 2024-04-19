@@ -12,7 +12,7 @@ To do it, access your first project and click on *Add GitHub account*. This will
 
 ![Adding a Github account](/guides/adding-github-account.png)
 
-If you are connecting the same Github account to multiple teams, please [get in touch](raul@borah.agency).
+If you are connecting the same Github account to multiple teams, please [get in touch](mailto:raul@borah.agency).
 
 ## Adding a Github repository
 

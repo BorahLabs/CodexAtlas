@@ -22,6 +22,10 @@ class SitemapController extends Controller
 
         foreach ((new GuideController)->folders() as $folder) {
             foreach ($folder['children'] as $file) {
+                if ($file->isComingSoon()) {
+                    continue;
+                }
+
                 $sitemap->add(Url::create($file->url(absolute: false))->setPriority(0.8)->setChangeFrequency('weekly'));
             }
         }

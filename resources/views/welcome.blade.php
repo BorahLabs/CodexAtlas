@@ -32,8 +32,6 @@
     <section class="relative py-12 md:py-24 bg-body overflow-hidden">
         <img class="absolute bottom-0 right-0" src="{{ asset('casper-assets/features/double-line-circle.svg') }}"
             alt="">
-        <img class="hidden md:block z-10 absolute top-0 left-0 mt-24 ml-4 lg:ml-24 xl:ml-64 animate-spinStar"
-            src="{{ asset('casper-assets/features/blink-star.png') }}" alt="">
         <div class="relative container mx-auto px-4">
             <div
                 class="absolute bottom-0 left-0 -mb-20 w-160 h-160 bg-gradient-to-t from-purple-700 to-darkBlue-900 rounded-full filter blur-4xl">
@@ -225,8 +223,6 @@
 
     <section class="relative py-12 md:py-24 bg-body overflow-hidden">
         <div class="relative container mx-auto px-4">
-            <img class="hidden md:block absolute top-0 right-0 animate-spinStar z-10"
-                src="casper-assets/services/blink-star.png" alt="">
             <div
                 class="absolute top-0 right-0 -mr-52 -mt-64 w-186 h-186 bg-gradient-to-t from-purple-600 via-darkBlue-900 rounded-full filter blur-4xl">
             </div>
@@ -297,8 +293,6 @@
         </div>
         <img class="absolute top-0 right-0 mt-16" src="{{ asset('casper-assets/portfolio/double-lines.svg') }}"
             alt="">
-        <img class="hidden md:block absolute top-0 right-0 mt-8 mr-20 lg:mr-40 animate-spinStar z-10"
-            src="{{ asset('casper-assets/services/blink-star.png') }}" alt="">
         <div class="relative container mx-auto px-4">
             <div class="relative max-w-2xl mx-auto mb-12 text-center">
                 <h2
@@ -325,7 +319,6 @@
     </section>
 
     <section class="relative py-12 md:pb-24 lg:pb-32 bg-body overflow-hidden">
-        <img class="absolute bottom-0 left-0 w-full" src="casper-assets/pricing/triangle-bottom.png" alt="">
         <div class="relative container mx-auto px-4 z-10">
             <div
                 class="absolute top-0 left-0 -mt-40 -ml-52 w-186 z-10 h-186 bg-gradient-to-t from-violet-700 via-darkBlue-900 to-transparent rounded-full filter blur-4xl">
