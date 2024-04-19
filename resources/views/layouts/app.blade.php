@@ -12,11 +12,8 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,800&display=swap" rel="stylesheet" />
 
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    <!-- Styles -->
     @livewireStyles
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @production
         <script src="https://cdn.usefathom.com/script.js" data-site="FEPWQLXW" defer></script>
@@ -62,7 +59,7 @@
 
     @stack('modals')
 
-    @livewireScripts
+    @livewireScriptConfig
 </body>
 
 </html>
