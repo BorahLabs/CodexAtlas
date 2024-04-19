@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\SparkPaymentModeGuard;
 use App\Models\Team;
 use Spark\Features;
 
@@ -29,7 +30,7 @@ return [
     |
     */
 
-    'middleware' => ['web', 'auth'],
+    'middleware' => ['web', 'auth', SparkPaymentModeGuard::class],
 
     /*
     |--------------------------------------------------------------------------
