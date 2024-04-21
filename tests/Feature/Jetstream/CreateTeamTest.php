@@ -15,7 +15,10 @@ test('teams cannot be created in free mode', function () {
     $this->get(route('teams.create'))->assertStatus(403);
 });
 
-test('user can own maximum 1 team in free mode', function (User $user) {
+test('user can own maximum 1 team in free mode', function (string $paymentMode, string $planMode) {
+    config(['codex.payment_mode' => $paymentMode]);
+    $user = User::factory()->{$planMode}()->create();
+
     $this->actingAs($user);
     $this->get(route('teams.create'))->assertStatus(200);
 
@@ -24,9 +27,14 @@ test('user can own maximum 1 team in free mode', function (User $user) {
         ->call('createTeam');
 
     expect($user->fresh()->ownedTeams)->toHaveCount(2);
-    $this->actingAs($user->fresh())->get(route('teams.create'))->assertStatus(403);
+    if (config('codex.payment_mode') === 'spark') {
+        $this->actingAs($user->fresh())->get(route('teams.create'))->assertStatus(403);
+    } else {
+        $this->actingAs($user->fresh())->get(route('teams.create'))->assertStatus(200);
+    }
 })->with([
-    fn () => User::factory()->inPayAsYouGoMode()->create(),
-    fn () => User::factory()->inLimitedCompanyPlanMode()->create(),
-    fn () => User::factory()->inUnlimitedCompanyPlanMode()->create(),
+    fn () => ['spark', 'inPayAsYouGoMode'],
+    fn () => ['spark', 'inLimitedCompanyPlanMode'],
+    fn () => ['spark', 'inUnlimitedCompanyPlanMode'],
+    fn () => ['aws', 'inPayAsYouGoMode'],
 ]);
