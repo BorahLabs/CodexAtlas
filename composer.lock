@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "477971132391ffd6141c4875b5cdf851",
+    "content-hash": "703df6db625ab9014edd402957e3b188",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -588,11 +588,17 @@
         },
         {
             "name": "borahlabs/aws-marketplace-saas-laravel",
-            "version": "dev-main",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:BorahLabs/aws-marketplace-saas-laravel.git",
+                "reference": "c86984101769303c7ab0fada5540885fbcfc6cea"
+            },
             "dist": {
-                "type": "path",
-                "url": "../aws-marketplace-saas-laravel",
-                "reference": "83c864374ce31f9f8c26a0b2c472f8bac0e665c0"
+                "type": "zip",
+                "url": "https://satis.borah.agency/dist/borahlabs/aws-marketplace-saas-laravel/borahlabs-aws-marketplace-saas-laravel-c86984101769303c7ab0fada5540885fbcfc6cea-zip-7f8a81.zip",
+                "reference": "c86984101769303c7ab0fada5540885fbcfc6cea",
+                "shasum": "698a5e18c390e0cb03e10e09f0f0a8c026d8ea16"
             },
             "require": {
                 "aws/aws-sdk-php": "^3.303",
@@ -681,9 +687,7 @@
                 "aws-marketplace-saas-laravel",
                 "laravel"
             ],
-            "transport-options": {
-                "relative": true
-            }
+            "time": "2024-04-21T10:50:00+00:00"
         },
         {
             "name": "brick/math",
@@ -16119,9 +16123,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "borahlabs/aws-marketplace-saas-laravel": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
