@@ -3,10 +3,10 @@
     <div class="relative pt-24 lg:pt-44 pb-40 lg:pb-72">
         <div class="relative z-10 container mx-auto px-4">
             <div class="flex flex-wrap items-center">
-                <div class="max-w-md mx-auto lg:max-w-5xl text-center">
+                <div class="max-w-lg mx-auto lg:max-w-6xl text-center">
                     <h1
-                        class="font-heading text-4xl sm:text-6xl md:text-7xl xl:text-8xl text-white font-semibold leading-none mb-8">
-                        Document your code using AI</h1>
+                        class="font-heading text-4xl sm:text-6xl md:text-6xl xl:text-[5rem] text-white font-semibold leading-none mb-8">
+                        Create code documentation using AI</h1>
                     <p class="text-2xl text-newGray-400 mb-8">
                         <span class="block">Connect CodexAtlas to your GitHub, Gitlab or Bitbucket accounts</span>
                         <span class="block">and keep your documentation always up-to-date.</span>
