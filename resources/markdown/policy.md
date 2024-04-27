@@ -16,7 +16,7 @@ We take all reasonable steps to protect your information, including the use of e
 
 ## Information Removal
 
-To request the removal of your information from our platform, please contact us at support@codexatlas.app. We will promptly respond to such requests in accordance with applicable laws.
+To request the removal of your information from our platform, please contact us at raul@borah.agency. We will promptly respond to such requests in accordance with applicable laws.
 
 ## Third-Party Services
 
@@ -28,6 +28,6 @@ We may update this privacy policy from time to time. It is your responsibility t
 
 ## Contact Information
 
-For any questions or concerns regarding your privacy or this privacy policy, please contact us at support@codexatlas.app.
+For any questions or concerns regarding your privacy or this privacy policy, please contact us at raul@borah.agency.
 
 By using CodexAtlas, you agree to the terms and conditions outlined in this document and consent to the practices described in the privacy policy. If you do not agree to these terms, please do not use our platform.

@@ -59,7 +59,7 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
-    'main_domain' => env('APP_DOMAIN', 'codexatlas.app'),
+    'main_domain' => env('APP_DOMAIN', 'codedocumentation.app'),
 
     'autodoc_domain' => env('AUTODOC_DOMAIN', 'automaticdocs.app'),
 

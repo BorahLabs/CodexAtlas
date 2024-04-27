@@ -16,6 +16,7 @@ environments:
     network: codex-atlas-production
     domain:
       - "*.codexatlas.app"
+      - "*.codedocumentation.app"
       - automaticdocs.app
     build:
       - "COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev"

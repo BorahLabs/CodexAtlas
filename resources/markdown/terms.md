@@ -19,4 +19,4 @@ CodexAtlas may update or change these terms and conditions from time to time wit
 
 ## Contact Information
 
-For any questions or concerns regarding these terms and conditions, please contact us at support@codexatlas.app.
+For any questions or concerns regarding these terms and conditions, please contact us at raul@borah.agency.

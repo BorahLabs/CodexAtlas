@@ -22,6 +22,11 @@ use App\Http\Middleware\VerifyCsrfToken;
 use BorahLabs\AwsMarketplaceSaas\Facades\AwsMarketplaceSaas;
 use Illuminate\Support\Facades\Route;
 
+// codexatlas.app has now changed to codedocumentation.app
+Route::domain('codexatlas.app')->group(function () {
+    Route::get('{any?}', fn ($any = null) => redirect()->to('https://codedocumentation.app/'.$any, 301))->where(['any' => '.*']);
+});
+
 Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
     Route::view('/', 'welcome')
         ->middleware('central-domain')

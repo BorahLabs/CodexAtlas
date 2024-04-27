@@ -501,7 +501,7 @@
                                 'Powered by open source',
                                 'Maintenance included the first year',
                             ]" :notIncluded="[]" cta="Get in touch"
-                            ctaUrl="mailto:support@codexatlas.app" />
+                            ctaUrl="mailto:raul@borah.agency" />
                     </div>
                 </div>
             </div>
