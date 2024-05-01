@@ -18,7 +18,7 @@ class Tool extends Model
         return data_get($this->data, $key);
     }
 
-    public static function codeDocumentation(): static
+    public static function codeDocumentation(): Tool
     {
         return static::query()->where('name', 'code-documentation')->firstOrFail();
     }

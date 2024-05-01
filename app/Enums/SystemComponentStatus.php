@@ -12,6 +12,6 @@ enum SystemComponentStatus: string
 
     public function isError(): bool
     {
-        return $this->value === self::Error;
+        return $this === self::Error;
     }
 }

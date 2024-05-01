@@ -12,7 +12,7 @@ class CodeDocumentationToolController extends Controller
     public function __invoke(string $language, Request $request)
     {
         $language = collect(Guesser::supportedLanguages())->first(fn (Language $lang) => str($lang->name())->slug()->is($language));
-        abort_unless($language, 404);
+        abort_if(is_null($language), 404);
 
         return view('tools.code-documentation', [
             'language' => $language,

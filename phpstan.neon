@@ -1,0 +1,23 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+
+    paths:
+        - app/
+
+    # Level 9 is the highest level
+    level: 5
+
+    ignoreErrors:
+        - '#Access to an undefined property App\\Models#'
+        - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model#'
+        - '#Call to an undefined method Carbon\\Carbon::diffInRealSeconds#'
+        - '#Result of method (.+) \(void\) is used.#'
+        - '#Access to an undefined property App\\Livewire#'
+        - '#Parameter \#2 \$callback of method Illuminate\\Database\\Eloquent\\Relations\\HasMany<(.+)>::when#'
+        - '#Call to an undefined static method GrahamCampbell\\GitHub\\Facades\\#'
+        - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<int,Illuminate\\Database\\Eloquent\\Model>::each\(\) expects callable\(Illuminate\\Database\\Eloquent\\Model, int\): mixed#'
+
+    excludePaths:
+        - ./app/Actions/Codex/Alexandria/*.php

@@ -6,6 +6,7 @@ use App\Guide\DTO\MarkdownFile;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
+use Symfony\Component\Finder\SplFileInfo;
 
 class GuideController extends Controller
 {
@@ -44,9 +45,9 @@ class GuideController extends Controller
                 $folder => [
                     'name' => str($folder)->after('_')->headline()->toString(),
                     'children' => collect(File::files(resource_path("guide/{$folder}")))
-                        ->map(fn (string $path) => new MarkdownFile(
+                        ->map(fn (SplFileInfo $file) => new MarkdownFile(
                             folder: $folder,
-                            path: $path,
+                            path: $file->getPath(),
                         )),
                 ],
             ]);

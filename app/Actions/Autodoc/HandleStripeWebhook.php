@@ -14,9 +14,9 @@ class HandleStripeWebhook
 
     public function handle()
     {
-        logger(request()->all());
         $event = \Stripe\Webhook::constructEvent(request()->getContent(), request()->header('stripe-signature'), config('autodoc.stripe.webhook_secret'));
         if ($event->type === 'checkout.session.completed') {
+            // @phpstan-ignore-next-line
             $lead = AutodocLead::findOrFail($event->data->object->metadata['autodoc_lead_id']);
             $lead->update([
                 'status' => 'processing',

@@ -8,7 +8,7 @@ use App\Exceptions\CouldNotDetectLanguage;
 use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
 
-class Guesser
+final class Guesser
 {
     public static function make(): static
     {
@@ -23,6 +23,8 @@ class Guesser
                 return $framework;
             }
         }
+
+        return new Frameworks\GeneralFramework();
     }
 
     /**

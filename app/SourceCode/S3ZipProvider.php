@@ -87,10 +87,6 @@ class S3ZipProvider extends SourceCodeProvider implements ReceivesZipFile
             throw new \Exception('Could not open zip file');
         }
 
-        if (Storage::disk('tmp')->exists($path)) {
-            Storage::disk('tmp')->deleteDirectory($path);
-        }
-
         $absolutePath = Storage::disk('tmp')->path($path);
         $zip->extractTo($absolutePath);
         $zip->close();

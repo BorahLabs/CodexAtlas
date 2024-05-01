@@ -38,7 +38,11 @@ class HandleGithubInstallation
         $request->validate([
             'installation_id' => 'required|string',
         ]);
-        $this->handle($request->input('installation_id'), $request->user()->currentTeam);
+        /**
+         * @var Team $team
+         */
+        $team = $request->user()->currentTeam;
+        $this->handle($request->input('installation_id'), $team);
 
         return redirect()->route('dashboard');
     }

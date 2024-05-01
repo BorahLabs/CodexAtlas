@@ -22,6 +22,9 @@ class HandleWebhook
     {
         $changes = data_get($payload, 'push.changes', []);
         $repositoryName = $account->provider->repositoryName(data_get($payload, 'repository.full_name'));
+        /**
+         * @var \App\Models\Repository $repository
+         */
         $repository = $account
             ->repositories()
             ->where('name', $repositoryName->name)
@@ -32,6 +35,9 @@ class HandleWebhook
 
         $branches = [];
         foreach ($changes as $change) {
+            /**
+             * @var \App\Models\Branch|null $branch
+             */
             $branch = $repository->branches()->where('name', $change['new']['name'])->first();
             if (is_null($branch)) {
                 // If we are not using that branch, we can ignore it

@@ -30,7 +30,11 @@ class StoreProject
 
         Gate::authorize('create-project');
 
-        $project = $this->handle($request->user()->currentTeam, $request->input('name'));
+        /**
+         * @var Team $team
+         */
+        $team = $request->user()->currentTeam;
+        $project = $this->handle($team, $request->input('name'));
 
         LogUserPerformedAction::dispatch(\App\Enums\Platform::Codex, \App\Enums\NotificationType::Success, 'New project '.$project->name.' created', [
             'project' => $project->id,

@@ -95,12 +95,16 @@ class Team extends JetstreamTeam
 
     public function subscriptionType(): SubscriptionType
     {
-        if (str_ends_with($this->owner->email, '@codexatlas.app')) {
+        /**
+         * @var User $owner
+         */
+        $owner = $this->owner;
+        if (str_ends_with($owner->email, '@codexatlas.app')) {
             return SubscriptionType::Unlimited;
         }
 
         if (paymentIsWithAws()) {
-            if ($this->owner->isSubscribedOnAws()) {
+            if ($owner->isSubscribedOnAws()) {
                 return SubscriptionType::PayAsYouGo;
             }
 

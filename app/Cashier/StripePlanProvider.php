@@ -35,6 +35,7 @@ class StripePlanProvider
                     $price = substr($price, 0, -2);
                 }
 
+                // @phpstan-ignore-next-line
                 $plan->price = $price;
 
                 $plan->currency = $stripePrice->currency;

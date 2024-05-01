@@ -52,7 +52,7 @@ abstract class SourceCodeProvider
     /**
      * Returns a list of the files in the repository, recursively
      *
-     * @return File|Folder[]
+     * @return File[]|Folder[]
      */
     abstract public function files(RepositoryName $repository, Branch $branch, ?string $path = null): array;
 
