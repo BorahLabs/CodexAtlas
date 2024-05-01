@@ -37,7 +37,7 @@ We are working hard on making the documentation **much** better. This is what we
 - Automatic **audio/video documentation of each use case**
 - Question-driven page generation, useful for things like *Installation guide*, *How does currency sync work?*
 
-If you want to beta test any of these, feel free to [reach out to our CTO](mailto:raul@borah.agency).
+If you want to beta test any of these, feel free to [reach out to our CTO](mailto:support@codexatlas.app).
 
 For now, you can get started with file-based documentation and start speeding up the onboarding of your colleagues.
 
