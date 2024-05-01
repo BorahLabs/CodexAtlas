@@ -2,6 +2,7 @@
 
 namespace App\Actions\Platform;
 
+use App\Actions\InternalNotifications\LogUserPerformedAction;
 use App\Models\Branch;
 use App\Models\CustomGuide;
 use App\Models\Project;
@@ -45,6 +46,11 @@ class DownloadDocsAsMarkdown
     public function asController(Project $project, Repository $repository, Branch $branch): BinaryFileResponse
     {
         $zipPath = $this->handle($project, $repository, $branch);
+
+        LogUserPerformedAction::dispatch(\App\Enums\Platform::Codex, \App\Enums\NotificationType::Success, 'User downloaded docs', [
+            'user' => request()->user()?->id ?? 'unknown',
+            'branch' => $branch->id,
+        ]);
 
         return response()
             ->download($zipPath, $repository->name.'-'.$branch->name.'.zip')

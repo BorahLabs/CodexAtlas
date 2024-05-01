@@ -2,6 +2,7 @@
 
 namespace App\Actions\Autodoc;
 
+use App\Actions\InternalNotifications\LogUserPerformedAction;
 use App\Models\AutodocLead;
 use App\Notifications\Autodoc\PurchaseCompleted;
 use Illuminate\Support\Facades\Notification;
@@ -22,7 +23,10 @@ class HandleStripeWebhook
             ]);
 
             Notification::route('mail', $lead->email)->notify(new PurchaseCompleted($lead));
-
+            LogUserPerformedAction::dispatch(\App\Enums\Platform::AutomaticDocs, \App\Enums\NotificationType::Success, 'Purchase completed', [
+                'lead' => $lead->id,
+                'email' => $lead->email,
+            ]);
             ProcessLead::dispatch($lead);
         }
 

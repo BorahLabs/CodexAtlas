@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Actions\InternalNotifications\LogUserPerformedAction;
 use App\Models\Team;
 use App\Models\User;
 use BorahLabs\AwsMarketplaceSaas\Facades\AwsMarketplaceSaas;
@@ -36,6 +37,10 @@ class CreateNewUser implements CreatesNewUsers
                 'password' => Hash::make($input['password']),
             ]), function (User $user) {
                 $this->createTeam($user);
+                LogUserPerformedAction::dispatch(\App\Enums\Platform::Codex, \App\Enums\NotificationType::Info, 'New user', [
+                    'email' => $user->email,
+                    'name' => $user->name,
+                ]);
                 AwsMarketplaceSaas::afterUserRegistered($user);
             });
         });
