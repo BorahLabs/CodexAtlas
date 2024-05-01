@@ -24,7 +24,7 @@ class AwsSaasProvider extends ServiceProvider
     public function boot(): void
     {
         AwsMarketplaceSaas::addDimension(
-            name: 'BRANCH',
+            name: 'FILE',
             model: ProcessingLogEntry::class,
             query: function (Builder $query, User $user) {
                 $teams = $user->ownedTeams->pluck('id')->toArray();
