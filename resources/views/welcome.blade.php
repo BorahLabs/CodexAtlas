@@ -500,8 +500,7 @@
                                 'SLA agreement',
                                 'Powered by open source',
                                 'Maintenance included the first year',
-                            ]" :notIncluded="[]" cta="Get in touch"
-                            ctaUrl="mailto:support@codexatlas.app" />
+                            ]" :notIncluded="[]" cta="Get in touch" :ctaUrl="'mailto:' . config('codex.support_email')" />
                     </div>
                 </div>
             </div>

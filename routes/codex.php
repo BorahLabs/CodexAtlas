@@ -31,6 +31,9 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
     Route::view('/', 'welcome')
         ->middleware('central-domain')
         ->name('homepage');
+    Route::view('/enterprise-code-documentation', 'enterprise')
+        ->middleware('central-domain')
+        ->name('enterprise');
 
     Route::get('/tools/code-documentation-{language}', CodeDocumentationToolController::class)
         ->middleware('central-domain')

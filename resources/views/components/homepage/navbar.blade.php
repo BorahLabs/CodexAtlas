@@ -9,6 +9,8 @@
                     <div class="hidden lg:block mr-10">
                         <a class="inline-flex py-2 px-4 mr-4 items-center justify-center text-sm font-medium uppercase text-white hover:text-violet-500"
                             href="{{ route('guide.index') }}">{{ __('Guide') }}</a>
+                        <a class="inline-flex py-2 px-4 mr-4 items-center justify-center text-sm font-medium uppercase text-white hover:text-violet-500"
+                            href="{{ route('enterprise') }}">{{ __('Enterprise') }}</a>
                         @guest
                             <a class="inline-flex py-2 px-4 mr-4 items-center justify-center text-sm font-medium uppercase text-white hover:text-violet-500"
                                 href="{{ route('login') }}">{{ __('Log in') }}</a>

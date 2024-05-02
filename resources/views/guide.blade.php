@@ -42,7 +42,8 @@
                         <h1>Coming soon</h1>
                         <p>Oops! We are still working on this functionality, but you should be able to enjoy it quite
                             soon!</p>
-                        <p>Get in touch with <a href="mailto:support@codexatlas.app">our CTO</a> if you want to learn
+                        <p>Get in touch with <a href="mailto:{{ config('codex.support_email') }}">our CTO</a> if you
+                            want to learn
                             more.
                         </p>
                     </div>

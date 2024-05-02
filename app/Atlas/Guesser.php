@@ -33,18 +33,18 @@ final class Guesser
     public static function supportedFrameworks(): array
     {
         return [
-            new Frameworks\Laravel(),
+            new Frameworks\Flutter(),
             new Frameworks\Spring(),
             new Frameworks\Django(),
-            new Frameworks\IonicAngular(),
+            new Frameworks\Laravel(),
+            new Frameworks\RubyOnRails(),
             new Frameworks\Next(),
             new Frameworks\Nuxt(),
+            new Frameworks\IonicAngular(),
             new Frameworks\ReactNative(),
             new Frameworks\Angular(),
             new Frameworks\Vue(),
             new Frameworks\React(),
-            new Frameworks\Flutter(),
-            new Frameworks\RubyOnRails(),
             new Frameworks\GeneralFramework(),
         ];
     }
