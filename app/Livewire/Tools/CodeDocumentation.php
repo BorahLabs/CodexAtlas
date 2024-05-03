@@ -3,6 +3,7 @@
 namespace App\Livewire\Tools;
 
 use App\Actions\Autodoc\ProcessAutodocSystemComponent;
+use App\Actions\InternalNotifications\LogUserPerformedAction;
 use App\Atlas\Guesser;
 use App\Atlas\Languages\Contracts\Language;
 use App\Enums\SystemComponentStatus;
@@ -83,6 +84,14 @@ class CodeDocumentation extends Component
 
         Cache::increment('code-documentation:user-requests:'.$this->ip);
         ProcessAutodocSystemComponent::dispatch($systemComponent, model: 'gpt-3.5-turbo-1106');
+        LogUserPerformedAction::dispatch(
+            \App\Enums\Platform::Codex,
+            \App\Enums\NotificationType::Success,
+            'User used tool '.$tool->name,
+            [
+                'language' => $language->name(),
+            ],
+        );
         $this->systemComponent = $systemComponent;
         $this->filePath = $file->path;
     }

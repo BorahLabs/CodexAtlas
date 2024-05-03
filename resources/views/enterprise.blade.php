@@ -1,7 +1,8 @@
 <x-web-layout>
     @section('title', 'Privacy-first code documentation for your company | CodexAtlas')
     <section class="relative pb-8 bg-body overflow-hidden">
-        <img class="absolute top-0 right-0" src="casper-assets/headers/circle-double-element-dark.svg" alt="">
+        <img class="absolute top-0 right-0" src="{{ asset('casper-assets/headers/circle-double-element-dark.svg') }}"
+            alt="">
         <div class="relative py-10">
             <div class="container mx-auto px-4">
                 <div class="text-center">
@@ -21,8 +22,8 @@
                         <div
                             class="relative h-148 bg-opacity-0 bg-blueGray-800 group-hover:bg-opacity-100 transition duration-500">
                             <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                                <img class="h-96 transform group-hover:scale-105 transition duration-300"
-                                    src="casper-assets/headers/plant-robo.png" alt="">
+                                <img class="h-96 transform group-hover:scale-105 transition duration-300 object-contain"
+                                    src="{{ asset('casper-assets/headers/plant-robo.png') }}" alt="">
                             </div>
                             <div class="relative flex flex-col p-10 h-full">
                                 <span class="block text-5xl text-white font-medium">01</span>
@@ -38,8 +39,8 @@
                         <div
                             class="relative h-148 bg-opacity-0 bg-orange-600 group-hover:bg-opacity-100 transition duration-500">
                             <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                                <img class="h-96 transform group-hover:scale-105 transition duration-300"
-                                    src="casper-assets/headers/box-items.png" alt="">
+                                <img class="h-96 transform group-hover:scale-105 transition duration-300 object-contain"
+                                    src="{{ asset('casper-assets/headers/box-items.png') }}" alt="">
                             </div>
                             <div class="relative flex flex-col p-10 h-full">
                                 <span class="block text-5xl text-white font-medium">02</span>
@@ -55,8 +56,8 @@
                         <div
                             class="relative h-148 bg-opacity-0 bg-teal-600 group-hover:bg-opacity-100 transition duration-500">
                             <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                                <img class="h-96 px-4 transform group-hover:scale-105 transition duration-300"
-                                    src="casper-assets/headers/robot-knight.png" alt="">
+                                <img class="h-96 px-4 transform group-hover:scale-105 transition duration-300 object-contain"
+                                    src="{{ asset('casper-assets/headers/robot-knight.png') }}" alt="">
                             </div>
                             <div class="relative flex flex-col p-10 h-full">
                                 <span class="block text-5xl text-white font-medium">03</span>
@@ -71,8 +72,8 @@
     </section>
 
     <section class="relative py-12 md:py-24 lg:py-32 bg-body overflow-hidden" id="perpetual-license">
-        <img class="absolute top-0 right-0 -mr-64 lg:-mr-0" src="casper-assets/about/doublie-line-top-right.svg"
-            alt="">
+        <img class="absolute top-0 right-0 -mr-64 lg:-mr-0"
+            src="{{ asset('casper-assets/about/doublie-line-top-right.svg') }}" alt="">
         <div class="relative container mx-auto px-4">
             <div
                 class="absolute top-0 right-0 -mt-80 mr-40 w-186 h-186 bg-gradient-to-t from-violet-900 via-darkBlue-900 to-transparent rounded-full filter blur-4xl">
@@ -128,12 +129,12 @@
                         class="absolute top-0 right-0 -mt-10 -mr-20 w-135 h-135 bg-gradient-to-t from-violet-900 to-darkBlue-900 rounded-full filter blur-4xl">
                     </div>
                     <div class="relative max-w-md xl:max-w-xl mx-auto lg:mx-0 pr-6">
-                        <img class="relative z-10 block w-full" src="casper-assets/features/image-left-chip.png"
-                            alt="">
+                        <img class="relative z-10 block w-full"
+                            src="{{ asset('casper-assets/features/image-left-chip.png') }}" alt="">
                         <img class="absolute top-1/2 right-0 transform -translate-y-1/2 w-7 h-full py-6"
-                            src="casper-assets/features/shadow-first.png" alt="">
+                            src="{{ asset('casper-assets/features/shadow-first.png') }}" alt="">
                         <img class="absolute top-1/2 right-0 transform -translate-y-1/2 -mr-6 h-full py-14 w-6"
-                            src="casper-assets/features/shadow-second.png" alt="">
+                            src="{{ asset('casper-assets/features/shadow-second.png') }}" alt="">
                     </div>
                 </div>
                 <div class="relative w-full lg:w-1/2 px-4 mb-20 lg:mb-0" x-show="slide === 0" x-cloak>
@@ -616,43 +617,6 @@
                     class="absolute top-0 left-0 w-full h-full backdrop-filter backdrop-blur-md bg-gray-500 bg-opacity-20 group-hover:bg-violet-400 group-hover:bg-opacity-100 transition duration-150">
                 </div>
                 <livewire:enterprise-calculator />
-            </div>
-        </div>
-    </section>
-
-    <section class="relative py-12 md:py-24 bg-body overflow-hidden">
-        <div class="relative container mx-auto px-4">
-            <div class="relative flex flex-wrap -mx-4">
-                <div class="w-full lg:w-1/2 xl:w-2/5 px-4 pb-20 lg:pb-32">
-                    <div class="relative z-10 max-w-md mx-auto lg:mx-0">
-                        <div
-                            class="absolute top-0 left-0 -mt-96 hidden -ml-40 w-170 h-170 bg-gradient-to-t from-purple-600 via-darkBlue-900 to-transparent rounded-full filter blur-4xl lg:block">
-                        </div>
-                        <div class="relative">
-                            <h2
-                                class="font-heading text-4xl xs:text-5xl sm:text-6xl font-medium text-white tracking-tight mb-8">
-                                Any questions?</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="relative w-full lg:w-1/2 xl:w-3/5 px-4">
-                    <div
-                        class="absolute bottom-0 right-0 w-186 h-186 bg-gradient-to-t from-violet-700 via-darkBlue-900 to-transparent rounded-full filter blur-4xl">
-                    </div>
-                    <div class="relative max-w-lg lg:max-w-none mx-auto">
-                        <div>
-                            <x-homepage.faq-question question="Can I download the documentation?"
-                                answer="Yes, you will be able to download the documentation in Markdown format to import it in any system you might use." />
-                            <x-homepage.faq-question question="Can I use it for my open source project?"
-                                answer="Absolutely. Just get in touch and we will set up a forever-free platform for your project." />
-                            <x-homepage.faq-question
-                                question="I want to use it, but I cannot share my code with OpenAI"
-                                answer="If you can work with a custom Azure model in your own account, let us know. If not, Codex also works with open source models that can run on-premises, on your own servers, so your data is always yours. Feel free to get in touch with us!" />
-                            <x-homepage.faq-question question="Is my code stored by CodexAtlas?"
-                                answer="No. Your code is never stored in our servers. It's just read to create the documentation and then deleted. We do store a vector representation of the code to provide advanced AI capabilities." />
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
