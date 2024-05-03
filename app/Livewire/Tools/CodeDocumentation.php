@@ -90,6 +90,7 @@ class CodeDocumentation extends Component
             'User used tool '.$tool->name,
             [
                 'language' => $language->name(),
+                'systemComponent' => $systemComponent->id,
             ],
         );
         $this->systemComponent = $systemComponent;
