@@ -1,5 +1,7 @@
 <x-web-layout>
     @section('title', 'Privacy-first code documentation for your company | CodexAtlas')
+    @section('og_title', 'Privacy-first code documentation for your company')
+    @section('og_image', asset('images/enterprise-og.png'))
     <section class="relative pb-8 bg-body overflow-hidden">
         <img class="absolute top-0 right-0" src="{{ asset('casper-assets/headers/circle-double-element-dark.svg') }}"
             alt="">
