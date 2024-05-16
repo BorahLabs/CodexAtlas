@@ -27,6 +27,8 @@
     <meta name="twitter:description" content="@yield('metadescription', 'Reduce the time needed to onboard new developers and get back up to 20% of their time to create new features. Eliminate dependency risk with AI documentation.')">
     <meta name="twitter:image" content="@yield('og_image', asset('images/enterprise-og.png'))">
 
+    <x-partials.favicon />
+
 
     @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
