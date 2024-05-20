@@ -6,6 +6,8 @@ use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Actions\Bitbucket;
 use App\Decorators\Bitbucket\DecoratedRepository;
 use App\Exceptions\ExceededProviderRateLimit;
+use App\Models\SourceCodeAccount;
+use App\Models\Team;
 use App\SourceCode\Contracts\AccountInfoProvider;
 use App\SourceCode\Contracts\HandlesWebhook;
 use App\SourceCode\Contracts\RegistersWebhook;
@@ -100,5 +102,10 @@ class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvide
     public function handleIncomingWebhook(array $payload, Request $request): mixed
     {
         return Bitbucket\HandleWebhook::make()->handle($this->credentials(), $payload);
+    }
+
+    public function searchRepositories(SourceCodeAccount $account, string $query): array
+    {
+        return Bitbucket\SearchRespository::make()->handle($account, $query);
     }
 }

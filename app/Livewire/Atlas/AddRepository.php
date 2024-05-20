@@ -13,9 +13,31 @@ class AddRepository extends Component
 
     public string $sourceCodeAccount;
 
+    public SourceCodeAccount $account;
+
+    public string $search = '';
+
+    public array $repositories;
+
     public function mount()
     {
         $this->sourceCodeAccount = auth()->user()->currentTeam->sourceCodeAccounts->first()?->id ?? '';
+
+        $this->account = SourceCodeAccount::query()->findOrFail($this->sourceCodeAccount);
+
+        $this->getRepositories();
+    }
+
+    public function getRepositories()
+    {
+        $this->repositories = $this->account->getProvider()->searchRepositories($this->account, $this->search);
+    }
+
+    public function updatedSourceCodeAccount($value)
+    {
+        $this->account = SourceCodeAccount::query()->findOrFail($this->sourceCodeAccount);
+
+        $this->getRepositories();
     }
 
     #[Computed()]
@@ -23,7 +45,7 @@ class AddRepository extends Component
     {
         try {
             $validAccounts = auth()->user()->currentTeam->sourceCodeAccounts->pluck('id')->toArray();
-            if (! in_array($this->sourceCodeAccount, $validAccounts)) {
+            if (!in_array($this->sourceCodeAccount, $validAccounts)) {
                 return [];
             }
 
@@ -32,7 +54,7 @@ class AddRepository extends Component
              */
             $account = SourceCodeAccount::query()->findOrFail($this->sourceCodeAccount);
             $provider = $account->getProvider();
-            $repositories = cache()->remember('repository-list:'.$account->id, now()->addMinutes(5), fn () => $provider->repositories());
+            $repositories = cache()->remember('repository-list:' . $account->id, now()->addMinutes(5), fn () => $provider->repositories());
             usort($repositories, fn ($a, $b) => $a->fullName <=> $b->fullName);
 
             return $repositories;

@@ -6,6 +6,8 @@ use App\Actions\Gitlab\Auth\GetAuthenticatedAccountGitlabClient;
 use App\Actions\Gitlab\GetProjectIdForRepository;
 use App\Actions\Gitlab;
 use App\Exceptions\ExceededProviderRateLimit;
+use App\Models\SourceCodeAccount;
+use App\Models\Team;
 use App\SourceCode\Contracts\AccountInfoProvider;
 use App\SourceCode\Contracts\DownloadsZipFile;
 use App\SourceCode\Contracts\HandlesWebhook;
@@ -97,5 +99,10 @@ class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider, 
     public function handleIncomingWebhook(array $payload, Request $request): mixed
     {
         return Gitlab\HandleWebhook::make()->handle($this->credentials(), $payload);
+    }
+
+    public function searchRepositories(SourceCodeAccount $account, string $query): array
+    {
+        return Gitlab\SearchRespository::make()->handle($account, $query);
     }
 }

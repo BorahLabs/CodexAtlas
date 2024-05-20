@@ -14,8 +14,14 @@
                     <x-label for="name" style="lightweight" value="{{ __('Repository name') }}" class="mb-2" />
                     {{-- @empty($this->accountRepositories) --}}
                     @if (true)
-                        <x-bordered-input id="name" type="text" class="block w-full" name="name"
+                        <x-bordered-input id="name" list="account-repository-list" type="text" wire:model.live.debounce.200ms="search" class="block w-full" name="name"
                             :autofocus="$project->repositories->isEmpty()" placeholder="Account/Repository" />
+
+                            <datalist id="account-repository-list">
+                                @foreach ($repositories as $repo)
+                                    <option value="{{$repo}}">{{ $repo }}</option>
+                                @endforeach
+                            </datalist>
                     @else
                         <div class="border border-violet-600 rounded-[0.75rem]">
                             <div
