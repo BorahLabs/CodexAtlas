@@ -13,14 +13,12 @@ class SearchRespository
 
     public function handle(SourceCodeAccount $account, string $query)
     {
-        // $response = array();
+        $response = array();
 
-        // collect(GetAllRepositories::make()->handle($account))->each(function($repo) use (&$response){
-        //     array_push($response, $repo->fullName);
-        // });
+        collect(GetAllRepositories::make()->handle($account))->each(function($repo) use (&$response){
+            array_push($response, $repo->fullName);
+        });
 
-        // dd($response);
-
-        return [];
+        return $response;
     }
 }
