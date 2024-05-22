@@ -2,10 +2,13 @@
 
 namespace App\Livewire\Atlas;
 
+use App\Actions\Bitbucket\SearchWorkspaces;
 use App\Models\Project;
 use App\Models\SourceCodeAccount;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use App\Enums\SourceCodeProvider;
+use App\SourceCode\BitbucketProvider;
 
 class AddRepository extends Component
 {
@@ -19,6 +22,14 @@ class AddRepository extends Component
 
     public array $repositories;
 
+    public array $bitbucketWorkspaces = [];
+
+    public array $bitbucketRepositories = [];
+
+    public string $bitbucketWorkspace = '';
+
+    public string $bitbucketRepository = '';
+
     public function mount()
     {
         $this->sourceCodeAccount = auth()->user()->currentTeam->sourceCodeAccounts->first()?->id ?? '';
@@ -30,13 +41,39 @@ class AddRepository extends Component
 
     public function getRepositories()
     {
-        $this->repositories = $this->account->getProvider()->searchRepositories($this->account, $this->search);
+        if($this->account->provider == SourceCodeProvider::Bitbucket){
+            $this->bitbucketWorkspaces = $this->account->getProvider()->searchWorkspaces($this->account, $this->search);
+
+            $this->repositories = [];
+        } else{
+            $this->bitbucketWorkspaces = [];
+            $this->bitbucketRepositories = [];
+
+            $this->repositories = $this->account->getProvider()->searchRepositories($this->account, $this->search);
+        }
+    }
+
+    public function updatedBitbucketWorkspace($value)
+    {
+        $this->bitbucketRepository = '';
+
+        $this->bitbucketRepositories = $this->account->getProvider()->searchRepositories($this->account, $value);
+    }
+
+    public function updatedBitbucketRepository($value)
+    {
+        $this->search = $this->bitbucketWorkspace . '/' . $value;
     }
 
     public function updatedSourceCodeAccount($value)
     {
         $this->account = SourceCodeAccount::query()->findOrFail($this->sourceCodeAccount);
 
+        $this->getRepositories();
+    }
+
+    public function updatedSearch($value)
+    {
         $this->getRepositories();
     }
 

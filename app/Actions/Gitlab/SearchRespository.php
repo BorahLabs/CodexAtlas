@@ -3,6 +3,7 @@
 namespace App\Actions\Gitlab;
 
 use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
+use App\Actions\Gitlab\Auth\GetAuthenticatedAccountGitlabClient;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Repository;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -13,12 +14,26 @@ class SearchRespository
 
     public function handle(SourceCodeAccount $account, string $query)
     {
-        $response = array();
+        /**
+         * @var \GrahamCampbell\GitLab\GitLabManager $client
+         */
+        $client = GetAuthenticatedAccountGitlabClient::make()->handle($account);
 
-        collect(GetAllRepositories::make()->handle($account))->each(function($repo) use (&$response){
-            array_push($response, $repo->fullName);
-        });
+        $repos = $client->projects()->all([
+            'simple' => true,
+            'search_namespaces' => true,
+            'search' => $query,
+            'membership' => true,
+            'per_page' => 10,
+        ]);
 
-        return $response;
+        return collect($repos)
+            ->map(fn (array $repo) => new Repository(
+                id: $repo['id'],
+                name: $repo['name'],
+                owner: $repo['namespace']['path'],
+                description: $repo['description'] ?? null,
+            ))
+            ->toArray();
     }
 }

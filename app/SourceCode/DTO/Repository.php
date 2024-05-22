@@ -2,7 +2,9 @@
 
 namespace App\SourceCode\DTO;
 
-class Repository
+use Livewire\Wireable;
+
+class Repository implements Wireable
 {
     public readonly string $fullName;
 
@@ -20,5 +22,29 @@ class Repository
         }
 
         $this->fullName = $owner.'/'.$name;
+    }
+
+    public function toLivewire()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'owner' => $this->owner,
+            'description' => $this->description,
+            'workspace' => $this->workspace,
+            'fullName' => $this->fullName,
+        ];
+    }
+
+    public static function fromLivewire($value)
+    {
+        $id = $value['id'];
+        $name = $value['name'];
+        $owner = $value['owner'];
+        $description = $value['description'];
+        $workspace = $value['workspace'];
+        $fullName = $value['fullName'];
+
+        return new static($id, $name, $owner, $description, $workspace, $fullName);
     }
 }

@@ -13,12 +13,28 @@ class SearchRespository
 
     public function handle(SourceCodeAccount $account, string $query)
     {
-        $response = array();
+        $client = GetAuthenticatedAccountGithubClient::make()->handle($account);
 
-        collect(GetAllRepositories::make()->handle($account))->each(function($repo) use (&$response){
-            array_push($response, $repo->fullName);
-        });
+        /**
+         * @var \Github\Api\Search $api
+         */
+        $api = $client->search();
 
-        return $response;
+        return  [];
+        if($query){
+            $q = $query . ' in:name user:' . $account->name;
+        } else{
+            $q = 'user:' . $account->name;
+        }
+
+        return collect($api->repositories($q, 'full_name', 'asc')['items'])
+        ->take(10)
+        ->map(fn (array $repo) => new Repository(
+            id: $repo['id'],
+            name: $repo['name'],
+            owner: $repo['owner']['login'],
+            description: $repo['description'] ?? null,
+        ))
+        ->toArray();
     }
 }
