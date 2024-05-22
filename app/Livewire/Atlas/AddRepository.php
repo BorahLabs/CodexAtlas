@@ -60,11 +60,6 @@ class AddRepository extends Component
         $this->bitbucketRepositories = $this->account->getProvider()->searchRepositories($this->account, $value);
     }
 
-    public function updatedBitbucketRepository($value)
-    {
-        $this->search = $this->bitbucketWorkspace . '/' . $value;
-    }
-
     public function updatedSourceCodeAccount($value)
     {
         $this->account = SourceCodeAccount::query()->findOrFail($this->sourceCodeAccount);

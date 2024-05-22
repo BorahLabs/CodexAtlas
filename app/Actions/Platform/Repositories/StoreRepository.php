@@ -9,6 +9,7 @@ use App\SourceCode\Contracts\RegistersWebhook;
 use App\SourceCode\DTO\Branch as DTOBranch;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -19,7 +20,6 @@ class StoreRepository
 
     public function handle(Project $project, string $sourceAccountId, string $name): Repository|RedirectResponse
     {
-        dd($name);
         $sourceCodeAccount = $project->team->sourceCodeAccounts()->findOrFail($sourceAccountId);
         try {
             $repo = $sourceCodeAccount->provider->repositoryName($name);
@@ -93,8 +93,16 @@ class StoreRepository
     {
         $validated = $request->validate([
             'source_code_account_id' => 'required|exists:source_code_accounts,id',
-            'name' => "required|string|max:255|regex:/([\w\-_]+)\/([\w\-_]+)/",
+            'name' => "required_without_all:bitbucket_workspace,bitbucket_repo|string|max:255|regex:/([\w\-_]+)\/([\w\-_]+)/",
+            'bitbucket_workspace' => "string|max:255|required_without:name",
+            'bitbucket_repo' => 'string|max:255|required_without:name'
         ]);
+
+        if(isset($validated['bitbucket_workspace']) && isset($validated['bitbucket_repo'])){
+            $validated['name'] = $validated['bitbucket_workspace'] . '/' . $validated['bitbucket_repo'];
+
+            Arr::forget($validated, ['bitbucket_workspace', 'bitbucket_repo']);
+        }
 
         Gate::authorize('create-repository');
 

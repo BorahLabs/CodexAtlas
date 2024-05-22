@@ -16,9 +16,9 @@
                     @if (true)
                         @if ($account->provider == App\Enums\SourceCodeProvider::Bitbucket)
                             <div class="flex items-center space-x-2 w-full">
-                                <x-bordered-input id="workspace-name" list="bitbucket-account-workspace-list"
+                                <x-bordered-input id="bitbucket_workspace" list="bitbucket-account-workspace-list"
                                     type="text" wire:model.live.debounce.200ms="bitbucketWorkspace"
-                                    class="block w-full" name="name" :autofocus="$project->repositories->isEmpty()" placeholder="Workspace" />
+                                    class="block w-full" name="bitbucket_workspace" :autofocus="$project->repositories->isEmpty()" placeholder="Workspace" />
 
                                 <datalist id="bitbucket-account-workspace-list">
                                     @foreach ($bitbucketWorkspaces as $workspace)
@@ -26,11 +26,11 @@
                                     @endforeach
                                 </datalist>
 
-                                <x-bordered-input id="repository-name" list="bitbucket-account-repository-list"
+                                <x-bordered-input id="bitbucket_repo" list="bitbucket-account-repository-list"
                                     type="text" wire:model.live.debounce.200ms="bitbucketRepository"
-                                    class="block w-full" name="name" :autofocus="$project->repositories->isEmpty()"
+                                    class="block w-full" name="bitbucket_repo" :autofocus="$project->repositories->isEmpty()"
                                     placeholder="Repository" />
-                                    
+
                                 <datalist id="bitbucket-account-repository-list">
                                     @foreach ($bitbucketRepositories as $repo)
                                         <option value="{{ $repo->name }}">{{ $repo->name }}</option>
