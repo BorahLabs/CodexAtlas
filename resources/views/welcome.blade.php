@@ -443,7 +443,7 @@
     </section>
 
     @if (paymentIsWithAws())
-        <section class="relative py-12 md:pb-24 lg:pb-32 bg-body overflow-hidden">
+        <section class="relative py-12 md:pb-24 lg:pb-32 bg-body overflow-hidden" id="pricing">
             <div class="relative container mx-auto px-4 z-10">
                 <div
                     class="absolute top-0 left-0 -mt-40 -ml-52 w-186 z-10 h-186 bg-gradient-to-t from-violet-700 via-darkBlue-900 to-transparent rounded-full filter blur-4xl">
@@ -506,7 +506,7 @@
             </div>
         </section>
     @else
-        <section class="relative py-12 md:pb-24 lg:pb-32 bg-body overflow-hidden">
+        <section class="relative py-12 md:pb-24 lg:pb-32 bg-body overflow-hidden" id="pricing">
             <div class="relative container mx-auto px-4 z-10">
                 <div
                     class="absolute top-0 left-0 -mt-40 -ml-52 w-186 z-10 h-186 bg-gradient-to-t from-violet-700 via-darkBlue-900 to-transparent rounded-full filter blur-4xl">
