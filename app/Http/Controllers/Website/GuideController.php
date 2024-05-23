@@ -47,7 +47,7 @@ class GuideController extends Controller
                     'children' => collect(File::files(resource_path("guide/{$folder}")))
                         ->map(fn (SplFileInfo $file) => new MarkdownFile(
                             folder: $folder,
-                            path: $file->getPath(),
+                            path: $file->getPathname(),
                         )),
                 ],
             ]);
