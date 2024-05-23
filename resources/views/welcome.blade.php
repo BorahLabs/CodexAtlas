@@ -589,12 +589,12 @@
                                             help you
                                             integrate CodexAtlas in your company and increase the productivity of your
                                             developers.</p>
-                                        <ul class="grid grid-cols-3 gap-4 mt-4">
+                                        <ul class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                                             <x-homepage.pricing-included text="On-premise system" />
                                             <x-homepage.pricing-included text="Custom integrations" />
                                             <x-homepage.pricing-included text="Custom SLA" />
                                             <x-homepage.pricing-included text="Dedicated support team" />
-                                            <x-homepage.pricing-included class="col-span-2"
+                                            <x-homepage.pricing-included class="md:col-span-2"
                                                 text="Custom, on-premise AI model (no data shared with OpenAI)" />
                                         </ul>
                                     </div>
