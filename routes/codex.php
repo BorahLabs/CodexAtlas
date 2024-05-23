@@ -42,7 +42,8 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
 
     Route::get('/{from}-to-{to}-code-converter', CodeConvertionController::class)
         ->middleware('central-domain')
-        ->name('tools.code-converter');
+        ->name('tools.code-converter')
+        ->where(['from' => '[a-z\-]+', 'to' => '[a-z\-]+']);
 
     Route::get('/guide', [GuideController::class, 'index'])->name('guide.index');
     Route::get('/guide/{folder}/{file}', [GuideController::class, 'show'])->name('guide.show');
