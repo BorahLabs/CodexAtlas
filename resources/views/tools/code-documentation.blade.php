@@ -18,6 +18,9 @@
             <x-bordered-black-box class="text-white">
                 <livewire:tools.code-documentation :language="$language->name()" />
             </x-bordered-black-box>
+        </div>
+        <x-cta />
+        <div class="w-full sm:max-w-4xl mt-6 p-6 mx-auto">
             <div class="relative w-full px-4 mt-24">
                 <div
                     class="absolute bottom-0 right-0 w-186 h-186 bg-gradient-to-t from-violet-700 via-darkBlue-900 to-transparent rounded-full filter blur-4xl pointer-events-none">

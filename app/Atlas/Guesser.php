@@ -84,4 +84,23 @@ final class Guesser
             new Languages\Ruby(),
         ];
     }
+
+    public static function fromName(string $name): Language|Framework
+    {
+        $languages = static::supportedLanguages();
+        foreach ($languages as $language) {
+            if ($language->name() === $name) {
+                return $language;
+            }
+        }
+
+        $frameworks = static::supportedFrameworks();
+        foreach ($frameworks as $framework) {
+            if ($framework->name() === $name) {
+                return $framework;
+            }
+        }
+
+        throw new \Exception("Could not find language or framework with name: {$name}");
+    }
 }

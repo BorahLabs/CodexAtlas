@@ -19,6 +19,10 @@ class SitemapController extends Controller
             $sitemap->add(Url::create(route('tools.code-documentation', ['language' => Str::slug($language->name())], absolute: false))->setPriority(0.9)->setChangeFrequency('weekly'));
         }
 
+        foreach (\App\CodeConverter\Tools\CodeConverterTool::all() as $tool) {
+            $sitemap->add(Url::create($tool->url(absolute: false))->setPriority(0.9)->setChangeFrequency('weekly'));
+        }
+
         foreach ((new GuideController)->folders() as $folder) {
             foreach ($folder['children'] as $file) {
                 if ($file->isComingSoon()) {

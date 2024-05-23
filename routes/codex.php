@@ -12,6 +12,7 @@ use App\Actions\Platform\ShowReadme;
 use App\Actions\Platform\ShowTechStack;
 use App\Actions\Platform\SourceCodeAccounts\StoreAccountPersonalAccessToken;
 use App\Actions\Platform\Webhook\HandleWebhook;
+use App\Http\Controllers\Website\CodeConvertionController;
 use App\Http\Controllers\Website\GuideController;
 use App\Http\Controllers\Website\SitemapController;
 use App\Http\Controllers\Website\Tools\CodeDocumentationToolController;
@@ -38,6 +39,10 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
     Route::get('/tools/code-documentation-{language}', CodeDocumentationToolController::class)
         ->middleware('central-domain')
         ->name('tools.code-documentation');
+
+    Route::get('/{from}-to-{to}-code-converter', CodeConvertionController::class)
+        ->middleware('central-domain')
+        ->name('tools.code-converter');
 
     Route::get('/guide', [GuideController::class, 'index'])->name('guide.index');
     Route::get('/guide/{folder}/{file}', [GuideController::class, 'show'])->name('guide.show');
