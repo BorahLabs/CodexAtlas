@@ -605,7 +605,7 @@
                             <div class="w-full md:w-auto ml-auto flex-shrink-0 px-4">
                                 <div>
                                     <a class="group inline-flex w-auto h-14 px-7 items-center justify-center text-base font-medium text-black hover:text-violet-500 bg-violet-500 hover:bg-white transition duration-200 rounded-full"
-                                        href="mailto:hi@raullg.com">
+                                        href="mailto:{{ config('codex.support_email') }}">
                                         <span class="mr-2">Get in touch</span>
                                         <svg width="24" height="24" viewbox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
