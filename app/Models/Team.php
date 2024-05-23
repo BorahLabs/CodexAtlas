@@ -112,10 +112,10 @@ class Team extends JetstreamTeam
         }
 
         if ($plan = $this->sparkPlan()) {
-            return $this->openai_key ? SubscriptionType::UnlimitedCompanyPlan : SubscriptionType::LimitedCompanyPlan;
+            return $this->openai_key && config('codex.pay_as_you_go') ? SubscriptionType::UnlimitedCompanyPlan : SubscriptionType::LimitedCompanyPlan;
         }
 
-        if ($this->openai_key) {
+        if ($this->openai_key && config('codex.pay_as_you_go')) {
             return SubscriptionType::PayAsYouGo;
         }
 

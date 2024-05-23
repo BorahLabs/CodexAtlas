@@ -63,6 +63,7 @@ return [
         ]),
     ],
     'payment_mode' => env('PAYMENT_MODE', 'spark'),
+    'pay_as_you_go' => false,
     'aws_marketplace_link' => env('AWS_MARKETPLACE_URL', '#'),
     'support_email' => env('SUPPORT_EMAIL', 'support@codexatlas.app'),
 ];

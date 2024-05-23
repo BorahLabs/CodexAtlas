@@ -1,6 +1,6 @@
 @props(['imageUrl', 'price', 'title', 'description', 'included' => [], 'notIncluded' => [], 'cta', 'ctaUrl'])
 
-<div class="w-full lg:w-1/3 px-4 mb-8 lg:mb-0">
+<div class="w-full {{ config('codex.pay_as_you_go') ? 'lg:w-1/3' : 'lg:w-1/2' }} px-4 mb-8 lg:mb-0">
     <div class="rounded-3xl overflow-hidden">
         <img class="block w-full h-44 object-cover" src="{{ $imageUrl }}" alt="">
         <div class="relative p-10">

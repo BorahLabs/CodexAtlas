@@ -27,7 +27,7 @@
                     </div>
                     <div class="w-full lg:w-1/3 px-4">
                         <div class="flex flex-col items-center justify-center lg:items-center">
-                            @if (paymentIsWithSpark())
+                            @if (paymentIsWithSpark() && config('codex.pay_as_you_go'))
                                 <a class="group inline-flex w-full sm:w-auto h-14 px-7 items-center justify-center text-base font-medium text-black hover:text-violet-800 bg-violet-500 hover:bg-white transition duration-200 rounded-full"
                                     href="{{ route('teams.show', ['team' => auth()->user()->currentTeam]) }}#openai">
                                     <span class="mr-2">Introduce OpenAI Key</span>

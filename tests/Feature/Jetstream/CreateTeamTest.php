@@ -16,7 +16,7 @@ test('teams cannot be created in free mode', function () {
 });
 
 test('user can own maximum 1 team in free mode', function (string $paymentMode, string $planMode) {
-    config(['codex.payment_mode' => $paymentMode]);
+    config(['codex.payment_mode' => $paymentMode, 'codex.pay_as_you_go' => true]);
     $user = User::factory()->{$planMode}()->create();
 
     $this->actingAs($user);

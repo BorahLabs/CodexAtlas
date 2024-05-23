@@ -540,19 +540,21 @@
                                 'AI Chatbot',
                                 'Premium support',
                             ]" cta="Start for free" :ctaUrl="Route::has('register') ? route('register') : '#'" />
-                        <x-homepage.pricing-card :imageUrl="asset('casper-assets/pricing/pricing-top-2.png')" price="Pay as you go" title="Your own OpenAI Key"
-                            description="Use CodexAtlas with your own OpenAI API Key." :included="[
-                                'Real-time documentation updates',
-                                'Unlimited repositories',
-                                'Unlimited branches',
-                                'Unlimited files per branch',
-                            ]"
-                            :notIncluded="[
-                                'Integration with external platforms (Confluence, Notion...)',
-                                'Pull Request Assistant',
-                                'AI Chatbot',
-                                'Premium support',
-                            ]" cta="Start for free" :ctaUrl="Route::has('register') ? route('register') : '#'" />
+                        @if (config('codex.pay_as_you_go'))
+                            <x-homepage.pricing-card :imageUrl="asset('casper-assets/pricing/pricing-top-2.png')" price="Pay as you go"
+                                title="Your own OpenAI Key" description="Use CodexAtlas with your own OpenAI API Key."
+                                :included="[
+                                    'Real-time documentation updates',
+                                    'Unlimited repositories',
+                                    'Unlimited branches',
+                                    'Unlimited files per branch',
+                                ]" :notIncluded="[
+                                    'Integration with external platforms (Confluence, Notion...)',
+                                    'Pull Request Assistant',
+                                    'AI Chatbot',
+                                    'Premium support',
+                                ]" cta="Start for free" :ctaUrl="Route::has('register') ? route('register') : '#'" />
+                        @endif
                         @php
                             $monthlyPlan = \App\Cashier\StripePlanProvider::plans()->firstWhere(
                                 'id',
@@ -566,9 +568,9 @@
                                 'Unlimited repositories',
                                 'Unlimited branches',
                                 'Unlimited files per branch',
-                                'Integration with external platforms (Confluence, Notion...)',
-                                'Pull Request Assistant',
-                                'AI Chatbot',
+                                'Integration with Confluence and Notion (soon)',
+                                'Pull Request Assistant (soon)',
+                                'AI Chatbot (soon)',
                                 'Premium support',
                             ]" :notIncluded="[]" cta="Subscribe" :ctaUrl="route('spark.portal')" />
                     </div>
