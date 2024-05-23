@@ -103,6 +103,6 @@ class GitLabProvider extends SourceCodeProvider implements AccountInfoProvider, 
 
     public function searchRepositories(SourceCodeAccount $account, string $query): array
     {
-        return Gitlab\SearchRespository::make()->handle($account, $query);
+        return Gitlab\SearchRepository::make()->handle($account, $query);
     }
 }

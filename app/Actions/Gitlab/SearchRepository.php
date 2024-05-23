@@ -8,7 +8,7 @@ use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Repository;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class SearchRespository
+class SearchRepository
 {
     use AsAction;
 

@@ -7,7 +7,7 @@ use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Repository;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class SearchRespository
+class SearchRepository
 {
     use AsAction;
 
@@ -21,20 +21,20 @@ class SearchRespository
         $api = $client->search();
 
         return  [];
-        if($query){
+        if ($query) {
             $q = $query . ' in:name user:' . $account->name;
-        } else{
+        } else {
             $q = 'user:' . $account->name;
         }
 
         return collect($api->repositories($q, 'full_name', 'asc')['items'])
-        ->take(10)
-        ->map(fn (array $repo) => new Repository(
-            id: $repo['id'],
-            name: $repo['name'],
-            owner: $repo['owner']['login'],
-            description: $repo['description'] ?? null,
-        ))
-        ->toArray();
+            ->take(10)
+            ->map(fn (array $repo) => new Repository(
+                id: $repo['id'],
+                name: $repo['name'],
+                owner: $repo['owner']['login'],
+                description: $repo['description'] ?? null,
+            ))
+            ->toArray();
     }
 }

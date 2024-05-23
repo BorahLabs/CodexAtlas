@@ -8,6 +8,7 @@ use App\Models\SourceCodeAccount;
 use App\Services\GetUuidFromJson;
 use App\SourceCode\DTO\Repository;
 use Bitbucket\ResultPager;
+use Illuminate\Support\Collection;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class SearchWorkspaces
@@ -25,14 +26,9 @@ class SearchWorkspaces
 
             $workspaces = collect($paginator->fetch($api, 'listWorkspaces')['values']);
 
-            $workspaces = $workspaces->filter(function (array $item) use (&$repos, $client, $paginator, $query) {
-                if (!$query) {
-                    return true;
-                }
-                $slug = $item['slug'];
-
-                return  strpos($slug, $query) == 0;
-            });
+            $workspaces = $workspaces
+                            ->when(!empty($query),
+                            fn (Collection $collection) => $collection->filter(fn (array $item) => str_contains($item['slug'], $query)));
 
             return $workspaces->pluck('slug')->toArray();
         } catch (\Throwable $th) {

@@ -96,6 +96,6 @@ class GitHubProvider extends SourceCodeProvider implements DownloadsZipFile, Han
 
     public function searchRepositories(SourceCodeAccount $account, string $query): array
     {
-        return Github\SearchRespository::make()->handle($account, $query);
+        return Github\SearchRepository::make()->handle($account, $query);
     }
 }

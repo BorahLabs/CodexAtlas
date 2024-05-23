@@ -106,7 +106,7 @@ class BitbucketProvider extends SourceCodeProvider implements AccountInfoProvide
 
     public function searchRepositories(SourceCodeAccount $account, string $query): array
     {
-        return Bitbucket\SearchRespository::make()->handle($account, $query);
+        return Bitbucket\SearchRepository::make()->handle($account, $query);
     }
 
     public function searchWorkspaces(SourceCodeAccount $account, string $query): array

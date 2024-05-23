@@ -10,7 +10,7 @@ use App\SourceCode\DTO\Repository;
 use Bitbucket\ResultPager;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class SearchRespository
+class SearchRepository
 {
     use AsAction;
 
@@ -24,7 +24,7 @@ class SearchRespository
              * @var \Bitbucket\Api\Repositories\Workspaces
              */
             $api = $client->repositories()->workspaces($query);
-            
+
             $repos = collect($paginator->fetch($api, 'list', [['pagelen' => 10]])['values']);
 
             return collect($repos)

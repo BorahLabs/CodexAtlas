@@ -34,22 +34,26 @@ class AddRepository extends Component
     {
         $this->sourceCodeAccount = auth()->user()->currentTeam->sourceCodeAccounts->first()?->id ?? '';
 
-        $this->account = SourceCodeAccount::query()->findOrFail($this->sourceCodeAccount);
+        if($this->sourceCodeAccount){
+            $this->account = SourceCodeAccount::query()->findOrFail($this->sourceCodeAccount);
 
-        $this->getRepositories();
+            $this->getRepositories();
+        }
     }
 
     public function getRepositories()
     {
-        if($this->account->provider == SourceCodeProvider::Bitbucket){
-            $this->bitbucketWorkspaces = $this->account->getProvider()->searchWorkspaces($this->account, $this->search);
+        if($this->account){
+            if($this->account->provider == SourceCodeProvider::Bitbucket){
+                $this->bitbucketWorkspaces = $this->account->getProvider()->searchWorkspaces($this->account, $this->search);
 
-            $this->repositories = [];
-        } else{
-            $this->bitbucketWorkspaces = [];
-            $this->bitbucketRepositories = [];
+                $this->repositories = [];
+            } else{
+                $this->bitbucketWorkspaces = [];
+                $this->bitbucketRepositories = [];
 
-            $this->repositories = $this->account->getProvider()->searchRepositories($this->account, $this->search);
+                $this->repositories = $this->account->getProvider()->searchRepositories($this->account, $this->search);
+            }
         }
     }
 
