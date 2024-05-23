@@ -18,7 +18,7 @@ class ProcessAutodocSystemComponent
 {
     use AsAction;
 
-    public function handle(SystemComponent $systemComponent, ?AutodocLead $lead = null, string $model = 'gpt-4-turbo')
+    public function handle(SystemComponent $systemComponent, ?AutodocLead $lead = null, string $model = 'gpt-4o')
     {
         if (empty(trim($systemComponent->file_contents))) {
             $systemComponent->updateQuietly([

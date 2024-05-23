@@ -83,7 +83,7 @@ class CodeDocumentation extends Component
         ]);
 
         Cache::increment('code-documentation:user-requests:'.$this->ip);
-        ProcessAutodocSystemComponent::dispatch($systemComponent, model: 'gpt-3.5-turbo-1106');
+        ProcessAutodocSystemComponent::dispatch($systemComponent, model: 'gpt-4o');
         LogUserPerformedAction::dispatch(
             \App\Enums\Platform::Codex,
             \App\Enums\NotificationType::Success,
