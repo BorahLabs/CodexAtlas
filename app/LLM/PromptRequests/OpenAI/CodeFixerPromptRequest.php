@@ -18,14 +18,14 @@ class CodeFixerPromptRequest implements SimplePromptRequest
 
         return 'You are an expert in solving software issues. You will receive a piece of code and an error given by this code. Correct the code and give a solution in code with the provided parameters in JSON format with the following structure:
 
-        [KEY] response
-        [VALUE] code in markdown
+        ```json
+        {
+            "response": "```code\nFixed code```"
+        }
 
         Some rules:
-        - Response JSON Always should have key response.
-        - [KEY] Means the key of the json and the [VALUE] means the value that should be in this key.
-        - Do not output the original code
-        - Dont add \n, Only the json is required';
+        - Only return the JSON response
+        - Make sure to add the code block with the right language after the backticks, so that the Markdown gets parsed correctly';
     }
 
     public function userPrompt(array $data): string

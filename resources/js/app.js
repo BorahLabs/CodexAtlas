@@ -17,6 +17,15 @@ window.onTurnstile = function (token) {
     window.dispatchEvent(new CustomEvent('turnstile', {detail: token}));
 };
 
+Livewire.on('update-code', function () {
+    const interval = setInterval(() => {
+        if (document.querySelectorAll('pre code:not(.hljs)').length > 0) {
+            clearInterval(interval);
+            hljs.initHighlighting();
+        }
+    }, 50);
+});
+
 window.addEventListener('load', function () {
     const particleElements = Array.prototype.slice.call(document.querySelectorAll('[data-particles]'));
     particleElements.forEach(function (element) {

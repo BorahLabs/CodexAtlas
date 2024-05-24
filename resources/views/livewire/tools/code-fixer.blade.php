@@ -46,7 +46,7 @@
             <h2 class="font-bold text-4xl text-primary-gradient text-left mt-4 mb-2">
                 Result
             </h2>
-            <pre class="w-full overflow-auto"><code>{{ str($solution)->trim('`') }}</code></pre>
+            {!! Str::markdown($solution) !!}
         </div>
     @endif
 </div>

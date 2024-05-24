@@ -35,8 +35,8 @@ class CodeFixer extends Component
     public function rules()
     {
         return [
-            'code' => 'required',
-            'codeError' => 'required',
+            'code' => 'required|string|max:800',
+            'codeError' => 'required|string|max:400',
         ];
     }
 
@@ -52,11 +52,12 @@ class CodeFixer extends Component
 
         $codeFixings = $tool->todayIpCodeFixingRequests($this->ip);
 
-        return $codeFixings->count() >= 10;
+        return $codeFixings->count() >= 5;
     }
 
     public function sendCode()
     {
+        $this->resetErrorBag();
         $this->validate();
 
         if ($this->userExceedsLimitsOfRequests()) {
@@ -81,7 +82,7 @@ class CodeFixer extends Component
         $userPrompt = $prompt->userPrompt($data);
         $completion = $llm->completion($systemPrompt, $userPrompt);
 
-        $this->solution = (string) json_decode($completion->completion, true)['response'];
+        $this->solution = (string) json_decode($completion->completion, true)['response'] ?? null;
 
         $tool = Tool::codeFixer();
 
@@ -98,6 +99,8 @@ class CodeFixer extends Component
             'User used tool '. $tool->name,
             [],
         );
+
+        $this->dispatch('update-code');
     }
 
     public function render()
