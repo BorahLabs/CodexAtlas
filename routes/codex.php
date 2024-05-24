@@ -2,6 +2,7 @@
 
 use App\Actions\Github\Auth\HandleGithubInstallation;
 use App\Actions\Platform\DownloadDocsAsMarkdown;
+use App\Actions\Platform\Projects\ShowGlossary;
 use App\Actions\Platform\Projects\ShowNewProject;
 use App\Actions\Platform\Projects\ShowProject;
 use App\Actions\Platform\Projects\ShowProjectList;
@@ -65,6 +66,8 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
             Route::get('/projects/{project}', ShowProject::class)->name('projects.show');
 
             Route::post('/projects/{project}/repositories', StoreRepository::class)->name('repositories.store');
+
+            Route::get('/glossary/{project}', ShowGlossary::class)->name('glossary.show');
         });
 
         Route::post('/accounts/pat', StoreAccountPersonalAccessToken::class)->name('source-code-accounts.pat.store');
