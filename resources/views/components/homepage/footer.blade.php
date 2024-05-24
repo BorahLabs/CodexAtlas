@@ -42,6 +42,12 @@
                     @endforeach
                 </ul>
             </div>
+            <div class="mb-10">
+                <a href="{{ route('tools.code-fixer') }}"
+                    class="font-bold text-violet-50 mb-4 uppercase flex items-center justify-start">
+                    <span>Free AI Code Fixer</span>
+                </a>
+            </div>
             <div class="pt-10 border-t border-newGray-800">
                 <div class="md:flex items-center justify-between">
                     <div class="mb-6 md:mb-0">
