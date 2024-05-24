@@ -34,21 +34,27 @@ class CodeFixer extends Component
     #[Locked]
     public string $ip;
 
+    public function rules()
+    {
+        return [
+            'code' => 'required',
+            'codeError' => 'required',
+        ];
+    }
+
     public function mount()
     {
         $this->ip = request()->ip();
     }
 
+
     private function userExceedsLimitsOfRequests(): bool
     {
         $tool = Tool::codeFixer();
 
-        $codeFixings = $tool->codeFixings()
-            ->where('ip', $this->ip)
-            ->where('created_at', '>=', now()->startOfDay())
-            ->where('created_at', '<=', now()->endOfDay());
+        $codeFixings = $tool->todayIpCodeFixingRequests($this->ip);
 
-        if($codeFixings->count() >= 2){
+        if($codeFixings->count() >= 10){
             $this->solution = null;
 
             return true;
@@ -66,6 +72,8 @@ class CodeFixer extends Component
 
     public function sendCode()
     {
+        $this->validate();
+
         $data = [
             'code' => $this->code,
             'codeError' => $this->codeError,
@@ -81,13 +89,23 @@ class CodeFixer extends Component
         $userPrompt = $prompt->userPrompt($data);
         $completion = $llm->completion($systemPrompt, $userPrompt);
 
-        $this->solution = json_decode($completion->completion, true)['response'];
+        $this->solution = (string) json_decode($completion->completion, true)['response'];
 
-        if ($this->userExceedsLimitsOfRequests()) {
-            $this->addError('limit', 'You have exceeded the limit of requests. Please, try again tomorrow or sign up.');
+        // if ($this->userExceedsLimitsOfRequests()) {
+        //     $this->addError('limit', 'You have exceeded the limit of requests. Please, try again tomorrow or sign up.');
 
-            return;
-        }
+        //     return;
+        // }
+
+        $tool = Tool::codeFixer();
+
+        // LogUserPerformedAction::dispatch(
+        //     \App\Enums\Platform::Codex,
+        //     \App\Enums\NotificationType::Success,
+        //     'User used tool '. $tool->name,
+        //     [],
+        // );
+
 
     }
 

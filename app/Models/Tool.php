@@ -33,4 +33,12 @@ class Tool extends Model
     {
         return $this->hasMany(CodeFixing::class);
     }
+
+    public function todayIpCodeFixingRequests(string $ip)
+    {
+        return $this->codeFixings()
+                ->where('ip', $ip)
+                ->where('created_at', '>=', now()->startOfDay())
+                ->where('created_at', '<=', now()->endOfDay());
+    }
 }

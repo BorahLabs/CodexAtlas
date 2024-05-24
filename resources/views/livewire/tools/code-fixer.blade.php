@@ -11,10 +11,18 @@
             </h2>
         </div>
         <div class="w-full">
-            <x-bordered-textarea wire:model.live="code" id="code" type="text" class="block w-full h-64" name="code" />
+            <x-bordered-textarea wire:model.live="code" id="code" type="text" class="block w-full h-64"
+                name="code" />
+            @error('code')
+                <p class="text-red-400 mt-4 text-center">{{ $message }}</p>
+            @enderror
         </div>
         <div>
-            <x-bordered-textarea wire:model.live="codeError" id="codeError" type="text" class="block w-full h-64" name="codeError" />
+            <x-bordered-textarea wire:model.live="codeError" id="codeError" type="text" class="block w-full h-64"
+                name="codeError" />
+            @error('codeError')
+                <p class="text-red-400 mt-4 text-center">{{ $message }}</p>
+            @enderror
         </div>
     </div>
 
@@ -28,10 +36,10 @@
 
     @if ($solution)
         <div class="w-full mt-10">
-            <h2 class="font-bold text-3xl text-primary-gradient text-center mt-4">
+            <h2 class="font-bold text-4xl text-primary-gradient text-left mt-4 mb-2">
                 Result
             </h2>
-            <pre><code>{{$solution}}</code></pre>
+            <pre><code>{{ (string) $solution }}</code></pre>
         </div>
     @endif
 </div>

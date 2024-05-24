@@ -7,7 +7,7 @@
                 No email required. 100% free. Done in 30 seconds.
             </p>
             <p class="text-lg text-center">
-                Fix code for many languages with our free AI-based code fixer tool.
+                Fix your code with our free AI-based code fixer tool.
                 The code that we will generate will not look as sophisticated or detailed as our <a
                     href="{{ route('homepage') }}">professional code documentation service</a> &mdash; but it's 100%
                 free.
