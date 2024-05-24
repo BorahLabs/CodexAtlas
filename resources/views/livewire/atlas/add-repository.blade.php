@@ -1,7 +1,7 @@
-<div class="w-full" x-data="{
+<div x-data="{
     sourceCodeAccount: $wire.entangle('sourceCodeAccount').live,
     shouldShowForm: true
-}" x-show="showAddRepository" class="mt-12 mb-16" x-cloak
+}" x-show="showAddRepository" class="w-full mt-12 mb-16" x-cloak
     x-on:source-code-add.window="shouldShowForm = false" x-on:source-code-cancel.window="shouldShowForm = true">
     <x-bordered-black-box :single="true">
         <x-codex.source-code-accounts :accounts="auth()->user()->currentTeam->sourceCodeAccounts" x-model="sourceCodeAccount" />
