@@ -3,6 +3,7 @@
 namespace App\SourceCode\Contracts;
 
 use App\Models\SourceCodeAccount;
+use App\Models\Team;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
@@ -88,4 +89,11 @@ abstract class SourceCodeProvider
      * Returns a URL to the repository
      */
     abstract public function url(RepositoryName $repository): string;
+
+    /**
+     * Returns a list of the user repositories that matches the query
+     *
+     * @return Repository[]
+     */
+    abstract public function searchRepositories(SourceCodeAccount $account, string $query): array;
 }

@@ -7,23 +7,28 @@ use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Repository;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class GetAllRepositories
+class SearchRepository
 {
     use AsAction;
 
-    /**
-     * @return Repository[]
-     */
-    public function handle(SourceCodeAccount $account): array
+    public function handle(SourceCodeAccount $account, string $query)
     {
         $client = GetAuthenticatedAccountGithubClient::make()->handle($account);
 
         /**
-         * @var \Github\Api\User $api
+         * @var \Github\Api\Search $api
          */
-        $api = $client->user();
+        $api = $client->search();
 
-        return collect($api->repositories($account->name))
+        return  [];
+        if ($query) {
+            $q = $query . ' in:name user:' . $account->name;
+        } else {
+            $q = 'user:' . $account->name;
+        }
+
+        return collect($api->repositories($q, 'full_name', 'asc')['items'])
+            ->take(10)
             ->map(fn (array $repo) => new Repository(
                 id: $repo['id'],
                 name: $repo['name'],

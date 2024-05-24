@@ -3,6 +3,7 @@
 namespace App\SourceCode;
 
 use App\Actions\LocalFolder;
+use App\Models\SourceCodeAccount;
 use App\SourceCode\Contracts\SourceCodeProvider;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\File;
@@ -69,5 +70,10 @@ class LocalFolderProvider extends SourceCodeProvider
     public function url(RepositoryName $repository): string
     {
         throw new \Exception('This should not be displayed in the UI');
+    }
+
+    public function searchRepositories(SourceCodeAccount $account, string $query): array
+    {
+        return [];
     }
 }
