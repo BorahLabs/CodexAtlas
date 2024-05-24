@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\PHP;
 use App\Atlas\Frameworks\Django;
+use App\Atlas\Languages\PHP;
 
 class PHPToDjango extends CodeConverterTool
 {

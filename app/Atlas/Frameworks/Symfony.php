@@ -40,7 +40,7 @@ class Symfony extends Framework
     {
         return [
             'var/cache',
-            'var/logs'
+            'var/logs',
         ];
     }
 }

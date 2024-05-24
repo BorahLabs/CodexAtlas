@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Frameworks\React;
 use App\Atlas\Frameworks\Next;
+use App\Atlas\Frameworks\React;
 
 class ReactToNext extends CodeConverterTool
 {

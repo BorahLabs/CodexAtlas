@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Ruby;
 use App\Atlas\Languages\Dart;
+use App\Atlas\Languages\Ruby;
 
 class RubyToDart extends CodeConverterTool
 {

@@ -15,6 +15,6 @@ final class DemoPlatform
 
     public static function make(string $name, string $description, string $url, string $imageUrl): static
     {
-        return new static($name, $description, $url, $imageUrl);
+        return new self($name, $description, $url, $imageUrl);
     }
 }

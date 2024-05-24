@@ -2,13 +2,11 @@
 
 namespace App\Livewire\Atlas;
 
-use App\Actions\Bitbucket\SearchWorkspaces;
+use App\Enums\SourceCodeProvider;
 use App\Models\Project;
 use App\Models\SourceCodeAccount;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
-use App\Enums\SourceCodeProvider;
-use App\SourceCode\BitbucketProvider;
 
 class AddRepository extends Component
 {
@@ -34,7 +32,7 @@ class AddRepository extends Component
     {
         $this->sourceCodeAccount = auth()->user()->currentTeam->sourceCodeAccounts->first()?->id ?? '';
 
-        if($this->sourceCodeAccount){
+        if ($this->sourceCodeAccount) {
             $this->account = SourceCodeAccount::query()->findOrFail($this->sourceCodeAccount);
 
             $this->getRepositories();
@@ -43,12 +41,12 @@ class AddRepository extends Component
 
     public function getRepositories()
     {
-        if($this->account){
-            if($this->account->provider == SourceCodeProvider::Bitbucket){
+        if ($this->account) {
+            if ($this->account->provider == SourceCodeProvider::Bitbucket) {
                 $this->bitbucketWorkspaces = $this->account->getProvider()->searchWorkspaces($this->account, $this->search);
 
                 $this->repositories = [];
-            } else{
+            } else {
                 $this->bitbucketWorkspaces = [];
                 $this->bitbucketRepositories = [];
 
@@ -81,7 +79,7 @@ class AddRepository extends Component
     {
         try {
             $validAccounts = auth()->user()->currentTeam->sourceCodeAccounts->pluck('id')->toArray();
-            if (!in_array($this->sourceCodeAccount, $validAccounts)) {
+            if (! in_array($this->sourceCodeAccount, $validAccounts)) {
                 return [];
             }
 
@@ -90,7 +88,7 @@ class AddRepository extends Component
              */
             $account = SourceCodeAccount::query()->findOrFail($this->sourceCodeAccount);
             $provider = $account->getProvider();
-            $repositories = cache()->remember('repository-list:' . $account->id, now()->addMinutes(5), fn () => $provider->repositories());
+            $repositories = cache()->remember('repository-list:'.$account->id, now()->addMinutes(5), fn () => $provider->repositories());
             usort($repositories, fn ($a, $b) => $a->fullName <=> $b->fullName);
 
             return $repositories;

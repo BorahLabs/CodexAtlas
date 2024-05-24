@@ -40,6 +40,7 @@ class CodeConverter extends Component
             $result = $tool->convert(request()->ip(), $this->code);
         } catch (RateLimitExceeded $e) {
             $this->addError('code', $e->getMessage());
+
             return;
         }
 

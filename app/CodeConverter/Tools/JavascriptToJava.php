@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Javascript;
 use App\Atlas\Languages\Java;
+use App\Atlas\Languages\Javascript;
 
 class JavascriptToJava extends CodeConverterTool
 {

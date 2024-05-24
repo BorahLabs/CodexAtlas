@@ -36,7 +36,7 @@ class StoreRepository
         } catch (\Exception $e) {
             logger($e);
 
-            LogUserPerformedAction::dispatch(\App\Enums\Platform::Codex, \App\Enums\NotificationType::Warning, 'User tried to add repository '.$repo->fullName . ' and was not found', [
+            LogUserPerformedAction::dispatch(\App\Enums\Platform::Codex, \App\Enums\NotificationType::Warning, 'User tried to add repository '.$repo->fullName.' and was not found', [
                 'project' => $project->id,
                 'project_name' => $project->name,
             ]);
@@ -94,12 +94,12 @@ class StoreRepository
         $validated = $request->validate([
             'source_code_account_id' => 'required|exists:source_code_accounts,id',
             'name' => "required_without_all:bitbucket_workspace,bitbucket_repo|string|max:255|regex:/([\w\-_]+)\/([\w\-_]+)/",
-            'bitbucket_workspace' => "string|max:255|required_without:name",
-            'bitbucket_repo' => 'string|max:255|required_without:name'
+            'bitbucket_workspace' => 'string|max:255|required_without:name',
+            'bitbucket_repo' => 'string|max:255|required_without:name',
         ]);
 
-        if(isset($validated['bitbucket_workspace']) && isset($validated['bitbucket_repo'])){
-            $validated['name'] = $validated['bitbucket_workspace'] . '/' . $validated['bitbucket_repo'];
+        if (isset($validated['bitbucket_workspace']) && isset($validated['bitbucket_repo'])) {
+            $validated['name'] = $validated['bitbucket_workspace'].'/'.$validated['bitbucket_repo'];
 
             Arr::forget($validated, ['bitbucket_workspace', 'bitbucket_repo']);
         }

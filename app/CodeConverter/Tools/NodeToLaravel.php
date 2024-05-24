@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Node;
 use App\Atlas\Frameworks\Laravel;
+use App\Atlas\Languages\Node;
 
 class NodeToLaravel extends CodeConverterTool
 {

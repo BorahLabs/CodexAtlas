@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\PHP;
 use App\Atlas\Frameworks\Spring;
+use App\Atlas\Languages\PHP;
 
 class PHPToSpring extends CodeConverterTool
 {

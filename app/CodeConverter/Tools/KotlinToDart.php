@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Kotlin;
 use App\Atlas\Languages\Dart;
+use App\Atlas\Languages\Kotlin;
 
 class KotlinToDart extends CodeConverterTool
 {

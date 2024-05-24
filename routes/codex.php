@@ -41,7 +41,7 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
         ->middleware('central-domain')
         ->name('tools.code-documentation');
 
-    Route::get('/tools/ai-code-fixer', CodeFixerToolController::class)
+    Route::get('/tools/fix-my-code-with-ai', CodeFixerToolController::class)
         ->middleware('central-domain')
         ->name('tools.code-fixer');
 

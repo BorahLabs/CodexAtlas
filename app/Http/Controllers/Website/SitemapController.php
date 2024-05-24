@@ -6,7 +6,6 @@ use App\Atlas\Guesser;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\Sitemap\SitemapGenerator;
 use Spatie\Sitemap\Tags\Url;
@@ -19,6 +18,7 @@ class SitemapController extends Controller
         $cacheKey = 'codex-sitemap-v2';
         if (Cache::has($cacheKey)) {
             $sitemapContents = Cache::get($cacheKey);
+
             return response($sitemapContents)->header('Content-Type', 'text/xml');
         }
 

@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Java;
 use App\Atlas\Languages\DotNet;
+use App\Atlas\Languages\Java;
 
 class JavaToDotNet extends CodeConverterTool
 {

@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Python;
 use App\Atlas\Frameworks\Laravel;
+use App\Atlas\Languages\Python;
 
 class PythonToLaravel extends CodeConverterTool
 {

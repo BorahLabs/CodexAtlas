@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Swift;
 use App\Atlas\Languages\Kotlin;
+use App\Atlas\Languages\Swift;
 
 class SwiftToKotlin extends CodeConverterTool
 {

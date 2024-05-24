@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Swift;
 use App\Atlas\Languages\Java;
+use App\Atlas\Languages\Swift;
 
 class SwiftToJava extends CodeConverterTool
 {

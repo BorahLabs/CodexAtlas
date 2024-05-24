@@ -4,8 +4,8 @@ namespace App\Console\Commands\Internal;
 
 use App\Atlas\Guesser;
 use Illuminate\Console\Command;
+
 use function Laravel\Prompts\multiselect;
-use function Laravel\Prompts\select;
 
 class MakeCodeConverter extends Command
 {
@@ -44,9 +44,8 @@ class {from}To{to} extends CodeConverterTool
 }
 ';
 
-
-        $from = array_filter(array_map('trim', explode(",", $this->argument('from'))));
-        $to = array_filter(array_map('trim', explode(",", $this->argument('to'))));
+        $from = array_filter(array_map('trim', explode(',', $this->argument('from'))));
+        $to = array_filter(array_map('trim', explode(',', $this->argument('to'))));
         if (empty($from)) {
             $from = multiselect('From: ', options: [
                 ...collect(Guesser::supportedFrameworks())->map(fn ($f) => $f->name())->toArray(),
@@ -76,7 +75,7 @@ class {from}To{to} extends CodeConverterTool
                     '{from}' => class_basename($fromNamespace),
                     '{to}' => class_basename($toNamespace),
                 ]);
-                $className = app_path('CodeConverter/Tools/' . class_basename($fromNamespace) . 'To' . class_basename($toNamespace) . '.php');
+                $className = app_path('CodeConverter/Tools/'.class_basename($fromNamespace).'To'.class_basename($toNamespace).'.php');
                 file_put_contents($className, $classCode);
             }
         }

@@ -13,10 +13,13 @@ class EnterpriseCalculator extends Component
 {
     #[Required]
     public int|float|null $devPricePerHour = 20;
+
     #[Required]
-    public int|null $numberOfDevs = 4;
+    public ?int $numberOfDevs = 4;
+
     #[Required]
-    public int|null $numberOfProjects = 10;
+    public ?int $numberOfProjects = 10;
+
     #[Required]
     public int $documentationReadiness = 1;
 
@@ -68,7 +71,7 @@ class EnterpriseCalculator extends Component
     #[Computed]
     public function price()
     {
-        $systemLoadFactor = match(true) {
+        $systemLoadFactor = match (true) {
             $this->expectedFileChangesPerDay > 2000 => 7,
             $this->expectedFileChangesPerDay > 1000 => 5.5,
             $this->expectedFileChangesPerDay > 500 => 4.3,
@@ -79,7 +82,7 @@ class EnterpriseCalculator extends Component
             default => 1.5,
         };
 
-        $documentationReadinessFactor = match($this->documentationReadiness) {
+        $documentationReadinessFactor = match ($this->documentationReadiness) {
             2 => 1.1,
             3 => 1.3,
             default => 1,
@@ -99,7 +102,7 @@ class EnterpriseCalculator extends Component
         LogUserPerformedAction::dispatch(
             \App\Enums\Platform::Codex,
             \App\Enums\NotificationType::DemoCall,
-            '**DEMO CALL REQUEST** requested by ' . $this->companyEmail . ' @everyone',
+            '**DEMO CALL REQUEST** requested by '.$this->companyEmail.' @everyone',
             [
                 'Email' => $this->companyEmail,
                 'Number of devs' => $this->numberOfDevs,

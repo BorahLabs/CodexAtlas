@@ -37,8 +37,8 @@ class Tool extends Model
     public function todayIpCodeFixingRequests(string $ip)
     {
         return $this->codeFixings()
-                ->where('ip', $ip)
-                ->where('created_at', '>=', now()->startOfDay())
-                ->where('created_at', '<=', now()->endOfDay());
+            ->where('ip', $ip)
+            ->where('created_at', '>=', now()->startOfDay())
+            ->where('created_at', '<=', now()->endOfDay());
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\PHP;
 use App\Atlas\Languages\Go;
+use App\Atlas\Languages\PHP;
 
 class PHPToGo extends CodeConverterTool
 {

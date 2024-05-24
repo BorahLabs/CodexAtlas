@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Go;
 use App\Atlas\Languages\Dart;
+use App\Atlas\Languages\Go;
 
 class GoToDart extends CodeConverterTool
 {

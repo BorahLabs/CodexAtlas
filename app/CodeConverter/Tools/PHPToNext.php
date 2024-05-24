@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\PHP;
 use App\Atlas\Frameworks\Next;
+use App\Atlas\Languages\PHP;
 
 class PHPToNext extends CodeConverterTool
 {

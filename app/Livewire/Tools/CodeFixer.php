@@ -2,24 +2,13 @@
 
 namespace App\Livewire\Tools;
 
-use App\Actions\Autodoc\ProcessAutodocSystemComponent;
 use App\Actions\InternalNotifications\LogUserPerformedAction;
-use App\Atlas\Guesser;
-use App\Atlas\Languages\Contracts\Language;
-use App\Enums\SystemComponentStatus;
 use App\LLM\Contracts\Llm;
 use App\LLM\PromptRequests\OpenAI\CodeFixerPromptRequest;
 use App\Models\CodeFixing;
-use App\Models\SystemComponent;
 use App\Models\Tool;
-use App\SourceCode\DTO\File;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
-use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
-use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class CodeFixer extends Component
 {
@@ -45,7 +34,6 @@ class CodeFixer extends Component
         $this->ip = request()->ip();
     }
 
-
     private function userExceedsLimitsOfRequests(): bool
     {
         $tool = Tool::codeFixer();
@@ -61,7 +49,7 @@ class CodeFixer extends Component
         $this->validate();
 
         if ($this->userExceedsLimitsOfRequests()) {
-            $this->solution = "";
+            $this->solution = '';
             $this->addError('limit', 'You have exceeded the limit of requests. Please, try again tomorrow or sign up.');
 
             return;
@@ -96,7 +84,7 @@ class CodeFixer extends Component
         LogUserPerformedAction::dispatch(
             \App\Enums\Platform::Codex,
             \App\Enums\NotificationType::Success,
-            'User used tool '. $tool->name,
+            'User used tool '.$tool->name,
             [],
         );
 

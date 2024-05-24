@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Ruby;
 use App\Atlas\Frameworks\Django;
+use App\Atlas\Languages\Ruby;
 
 class RubyToDjango extends CodeConverterTool
 {

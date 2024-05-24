@@ -29,7 +29,7 @@ class LogUserPerformedAction
 
         Http::retry(3, 5000)
             ->post('https://discord.com/api/webhooks/1235187187075518554/8HzLsLJji90x5aJti_nu-NMKbEYq0s3hsbvrGo1EijHhG3_cfOGhy5gs2GtiO24npKA4', [
-                'content' => $type->icon() . $text,
+                'content' => $type->icon().$text,
                 'embeds' => [
                     [
                         'fields' => collect($metadata)->map(function ($value, $key) {

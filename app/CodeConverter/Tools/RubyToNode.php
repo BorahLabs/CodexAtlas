@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Ruby;
 use App\Atlas\Languages\Node;
+use App\Atlas\Languages\Ruby;
 
 class RubyToNode extends CodeConverterTool
 {

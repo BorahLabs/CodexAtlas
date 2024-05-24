@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Frameworks\React;
 use App\Atlas\Frameworks\Nuxt;
+use App\Atlas\Frameworks\React;
 
 class ReactToNuxt extends CodeConverterTool
 {

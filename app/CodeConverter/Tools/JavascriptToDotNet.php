@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Javascript;
 use App\Atlas\Languages\DotNet;
+use App\Atlas\Languages\Javascript;
 
 class JavascriptToDotNet extends CodeConverterTool
 {

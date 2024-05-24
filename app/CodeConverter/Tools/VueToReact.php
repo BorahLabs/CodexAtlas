@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Frameworks\Vue;
 use App\Atlas\Frameworks\React;
+use App\Atlas\Frameworks\Vue;
 
 class VueToReact extends CodeConverterTool
 {

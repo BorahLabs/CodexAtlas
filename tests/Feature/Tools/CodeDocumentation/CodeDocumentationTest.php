@@ -74,7 +74,7 @@ test('cannot exceed limit of requests', function () {
 
     expect(SystemComponent::count())->toBe(0);
     $contents = 'print("Hello World")';
-    for ($i = 0; $i < 30; $i ++) {
+    for ($i = 0; $i < 30; $i++) {
         Livewire::test(CodeDocumentation::class, [
             'language' => (new Python())->name(),
         ])

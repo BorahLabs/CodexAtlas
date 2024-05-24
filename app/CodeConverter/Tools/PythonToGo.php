@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Python;
 use App\Atlas\Languages\Go;
+use App\Atlas\Languages\Python;
 
 class PythonToGo extends CodeConverterTool
 {

@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Kotlin;
 use App\Atlas\Languages\Java;
+use App\Atlas\Languages\Kotlin;
 
 class KotlinToJava extends CodeConverterTool
 {

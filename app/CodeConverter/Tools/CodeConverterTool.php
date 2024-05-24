@@ -22,7 +22,7 @@ abstract class CodeConverterTool
 
     public function name(): string
     {
-        return $this->from->name().' to '.$this->to->name() . ' Code Converter';
+        return $this->from->name().' to '.$this->to->name().' Code Converter';
     }
 
     public function url(bool $absolute = true): string
@@ -83,7 +83,6 @@ Output in '.$this->to->name().':';
 
         return $tool;
     }
-
 
     /**
      * Get all tools.

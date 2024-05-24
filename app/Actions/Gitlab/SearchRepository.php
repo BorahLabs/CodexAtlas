@@ -2,7 +2,6 @@
 
 namespace App\Actions\Gitlab;
 
-use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
 use App\Actions\Gitlab\Auth\GetAuthenticatedAccountGitlabClient;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Repository;

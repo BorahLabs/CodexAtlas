@@ -2,17 +2,14 @@
 
 namespace App\LLM\PromptRequests\OpenAI;
 
-use App\LLM\Contracts\PromptRequest;
 use App\LLM\Contracts\SimplePromptRequest;
-use App\Models\Project;
-use App\SourceCode\DTO\File;
 use Exception;
 
 class CodeFixerPromptRequest implements SimplePromptRequest
 {
     public function systemPrompt(array $data): string
     {
-        if(!data_get($data, 'code') || !data_get($data, 'codeError')){
+        if (! data_get($data, 'code') || ! data_get($data, 'codeError')) {
             throw new Exception('[Code Fixer] Missing parameters');
         }
 
@@ -30,7 +27,7 @@ class CodeFixerPromptRequest implements SimplePromptRequest
 
     public function userPrompt(array $data): string
     {
-        if(!data_get($data, 'code') || !data_get($data, 'codeError')){
+        if (! data_get($data, 'code') || ! data_get($data, 'codeError')) {
             throw new Exception('[Code Fixer] Missing parameters');
         }
 

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Website\Tools;
 
-use App\Atlas\Guesser;
-use App\Atlas\Languages\Contracts\Language;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -13,6 +11,4 @@ class CodeFixerToolController extends Controller
     {
         return view('tools.code-fixer');
     }
-
-    
 }

@@ -1,12 +1,9 @@
 <?php
 
-use App\Livewire\Atlas\AddRepository;
 use App\Models\Project;
 use App\Models\SourceCodeAccount;
 use App\Models\User;
 use Illuminate\Support\Facades\Queue;
-
-use function Pest\Laravel\actingAs;
 
 it('can create a github repository', function (User $user) {
     Queue::fake();
@@ -27,10 +24,10 @@ it('can create a github repository', function (User $user) {
     ];
 
     $this
-    ->actingAs($user)
-    ->postJson($platform->route('repositories.store', ['project' => $project]), $requestData)
-    ->assertStatus(302)
-    ->assertRedirect($platform->route('projects.show', ['project' => $project]));
+        ->actingAs($user)
+        ->postJson($platform->route('repositories.store', ['project' => $project]), $requestData)
+        ->assertStatus(302)
+        ->assertRedirect($platform->route('projects.show', ['project' => $project]));
 
 })->with([
     fn () => User::factory()->inFreeTrialMode()->create(),
@@ -59,10 +56,10 @@ it('can create a bitbucket repository', function (User $user) {
     ];
 
     $this
-    ->actingAs($user)
-    ->postJson($platform->route('repositories.store', ['project' => $project]), $requestData)
-    ->assertStatus(302)
-    ->assertRedirect($platform->route('projects.show', ['project' => $project]));
+        ->actingAs($user)
+        ->postJson($platform->route('repositories.store', ['project' => $project]), $requestData)
+        ->assertStatus(302)
+        ->assertRedirect($platform->route('projects.show', ['project' => $project]));
 
 })->with([
     fn () => User::factory()->inFreeTrialMode()->create(),

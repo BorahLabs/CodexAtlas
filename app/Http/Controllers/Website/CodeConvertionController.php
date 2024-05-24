@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Website;
 
 use App\CodeConverter\Tools\CodeConverterTool;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class CodeConvertionController extends Controller
 {
