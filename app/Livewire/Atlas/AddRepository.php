@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Atlas;
 
+use App\Actions\InternalNotifications\LogUserPerformedAction;
 use App\Enums\SourceCodeProvider;
 use App\Models\Project;
 use App\Models\SourceCodeAccount;
@@ -43,15 +44,31 @@ class AddRepository extends Component
     public function getRepositories()
     {
         $provider = $this->account->getProvider();
-        if ($provider instanceof BitbucketProvider) {
-            $this->bitbucketWorkspaces = $provider->searchWorkspaces($this->account, $this->search);
+        try {
 
+            if ($provider instanceof BitbucketProvider) {
+                $this->bitbucketWorkspaces = $provider->searchWorkspaces($this->account, $this->search);
+
+                $this->repositories = [];
+            } else {
+                $this->bitbucketWorkspaces = [];
+                $this->bitbucketRepositories = [];
+
+                $this->repositories = $provider->searchRepositories($this->account, $this->search);
+            }
+        } catch (\Exception $e) {
+            logger()->error($e);
             $this->repositories = [];
-        } else {
-            $this->bitbucketWorkspaces = [];
-            $this->bitbucketRepositories = [];
-
-            $this->repositories = $provider->searchRepositories($this->account, $this->search);
+            LogUserPerformedAction::dispatch(
+                \App\Enums\Platform::Codex,
+                \App\Enums\NotificationType::Error,
+                'Error searching repositories',
+                [
+                    'account' => $this->account->id,
+                    'search' => $this->search,
+                    'error' => $e->getMessage(),
+                ]
+            );
         }
     }
 
@@ -65,6 +82,7 @@ class AddRepository extends Component
     public function updatedSourceCodeAccount($value)
     {
         $this->account = SourceCodeAccount::query()->findOrFail($this->sourceCodeAccount);
+        $this->search = '';
 
         $this->getRepositories();
     }
