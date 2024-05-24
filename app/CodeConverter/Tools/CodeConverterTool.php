@@ -41,7 +41,7 @@ abstract class CodeConverterTool
             ->where('ip', $ipAddress)
             ->where('created_at', '>=', today())
             ->count();
-        throw_if($usage >= 50, new RateLimitExceeded('You have reached the maximum number of conversions (5) for today. Please, try again tomorrow.'));
+        throw_if($usage >= 5, new RateLimitExceeded('You have reached the maximum number of conversions (5) for today. Please, try again tomorrow.'));
 
         $code = substr($code, 0, 800);
         $systemPrompt = 'Act as if you were an experienced software developer skilled in multiple programming languages and frameworks. Return the response in Markdown format. Do not try to explain, just return the code.
