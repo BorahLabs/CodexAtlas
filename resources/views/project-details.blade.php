@@ -1,5 +1,5 @@
 <x-project-layout :project="$project">
-    <div x-data="{ showAddRepository: true }">
+    <div x-data="{ showAddRepository: {{ auth()->user()->currentTeam->sourceCodeAccounts->isEmpty() ? 'true' : 'false' }} }">
         <header class="flex items-center justify-between">
             <h1 class="text-white text-xl font-bold">{{ $project->name }}</h1>
             @can('create-repository')
