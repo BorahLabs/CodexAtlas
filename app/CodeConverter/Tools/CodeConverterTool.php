@@ -41,10 +41,10 @@ abstract class CodeConverterTool
             ->where('ip', $ipAddress)
             ->where('created_at', '>=', today())
             ->count();
-        throw_if($usage >= 5, new RateLimitExceeded('You have reached the maximum number of conversions (5) for today. Please, try again tomorrow.'));
+        throw_if($usage >= 50, new RateLimitExceeded('You have reached the maximum number of conversions (5) for today. Please, try again tomorrow.'));
 
         $code = substr($code, 0, 800);
-        $systemPrompt = 'Act as if you were an experienced software developer skilled in multiple programming languages and frameworks.
+        $systemPrompt = 'Act as if you were an experienced software developer skilled in multiple programming languages and frameworks. Return the response in Markdown format. Do not try to explain, just return the code.
 
 Convert the following piece of code from '.$this->from->name().' to '.$this->to->name().' to ensure functionality and efficiency are maintained.';
 
@@ -52,18 +52,13 @@ Convert the following piece of code from '.$this->from->name().' to '.$this->to-
 '.$code.'
 ```
 
-Output in '.$this->to->name().': ```';
+Output in '.$this->to->name().':';
 
         /**
          * @var Llm $llm
          */
         $llm = app(Llm::class);
         $result = $llm->completion($systemPrompt, $userPrompt);
-        if (substr_count($result->completion, '```') >= 2) {
-            $result = str($result->completion)->after('```')->beforeLast('```')->trim();
-        } else {
-            $result = str($result->completion)->beforeLast('```')->trim();
-        }
 
         CodeConvertion::query()->create([
             'from' => $this->from->name(),
@@ -71,7 +66,7 @@ Output in '.$this->to->name().': ```';
             'ip' => $ipAddress,
         ]);
 
-        return $result;
+        return $result->completion;
     }
 
     public static function from(string $from, string $to): static

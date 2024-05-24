@@ -14,7 +14,9 @@
     </div>
     @if ($result)
         <h2 class="font-bold text-lg mb-4">Result</h2>
-        <pre><code class="rounded-xl">{{ $result }}</code></pre>
+        <div class="prose prose-invert max-w-none w-full">
+            {!! Str::markdown($result) !!}
+        </div>
         <x-button theme="primary" class="mt-8" wire:click="$set('result', null)">Start again</x-button>
     @endif
 </div>

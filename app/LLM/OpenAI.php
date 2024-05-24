@@ -40,10 +40,8 @@ class OpenAI extends Llm implements HasApiKey
     public function completion(string $systemPrompt, string $userPrompt): CompletionResponse
     {
         $start = intval(microtime(true) * 1000);
-        // wrapping on a retry function to avoid the limit per minute error
-        $response = retry(3, fn () => $this->client()->chat()->create([
+        $data = [
             'model' => $this->modelName(),
-            'response_format' => ['type' => 'json_object'],
             'messages' => [
                 [
                     'role' => 'system',
@@ -54,8 +52,13 @@ class OpenAI extends Llm implements HasApiKey
                     'content' => $userPrompt,
                 ],
             ],
-            'stop' => ['-----', "\nEND"],
-        ]), 61500);
+        ];
+
+        if (str_contains($systemPrompt, 'json')) {
+            $data['response_format'] = ['type' => 'json_object'];
+        }
+        // wrapping on a retry function to avoid the limit per minute error
+        $response = $this->client()->chat()->create($data);
         $end = intval(microtime(true) * 1000);
 
         return CompletionResponse::make(
