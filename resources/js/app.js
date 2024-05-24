@@ -6,8 +6,6 @@ import { tsParticles } from "@tsparticles/engine";
 import '@tsparticles/preset-firefly';
 import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
 
-// Register any Alpine directives, components, or plugins here...
-
 Livewire.start()
 
 hljs.registerLanguage("blade", hljsBlade);

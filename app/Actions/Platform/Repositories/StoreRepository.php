@@ -83,7 +83,6 @@ class StoreRepository
                 ->each(fn (DTOBranch $branch) => $repository->branches()->create([
                     'name' => $branch->name,
                 ]));
-
         }
 
         return $repository;

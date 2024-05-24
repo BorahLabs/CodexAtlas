@@ -20,7 +20,6 @@ class SearchRepository
          */
         $api = $client->search();
 
-        return [];
         if ($query) {
             $q = $query.' in:name user:'.$account->name;
         } else {
