@@ -16,6 +16,7 @@ use App\Http\Controllers\Website\CodeConvertionController;
 use App\Http\Controllers\Website\GuideController;
 use App\Http\Controllers\Website\SitemapController;
 use App\Http\Controllers\Website\Tools\CodeDocumentationToolController;
+use App\Http\Controllers\Website\Tools\CodeFixerToolController;
 use App\Http\Middleware\ControlRequestsFromPlatform;
 use App\Http\Middleware\ForceNoIndex;
 use App\Http\Middleware\OnlyFromCodexAtlas;
@@ -39,6 +40,10 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
     Route::get('/tools/code-documentation-{language}', CodeDocumentationToolController::class)
         ->middleware('central-domain')
         ->name('tools.code-documentation');
+
+    Route::get('/tools/ai-code-fixer', CodeFixerToolController::class)
+        ->middleware('central-domain')
+        ->name('tools.code-fixer');
 
     Route::get('/{from}-to-{to}-code-converter', CodeConvertionController::class)
         ->middleware('central-domain')
