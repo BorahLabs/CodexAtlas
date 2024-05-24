@@ -1,8 +1,8 @@
 <x-web-layout>
-    @section('title', 'Free Code Fixer | CodexAtlas')
+    @section('title', 'Free AI Code Fixer | CodexAtlas')
     <section class="py-8">
         <div class="w-full sm:max-w-2xl mt-6 p-6 mx-auto shadow-md overflow-hidden sm:rounded-lg prose prose-invert">
-            <h1 class="text-4xl font-bold text-center">Free Code Fixer</h1>
+            <h1 class="text-4xl font-bold text-center">Free AI Code Fixer</h1>
             <p class="text-2xl text-center font-medium mt-2">
                 No email required. 100% free. Done in 30 seconds.
             </p>
