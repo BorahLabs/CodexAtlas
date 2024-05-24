@@ -4,7 +4,8 @@ use App\Livewire\Teams\OpenaiManager;
 use App\Models\User;
 use Livewire\Livewire;
 
-it('can see the OpenAI settings in the team page', function () {
+it('can see the OpenAI settings in the team page if payment mode is Spark', function () {
+    config(['codex.payment_mode' => 'spark', 'codex.pay_as_you_go' => true]);
     $user = User::factory()->inFreeTrialMode()->create();
     $platform = $user->currentTeam->currentPlatform();
     $this->actingAs($user)
@@ -12,7 +13,17 @@ it('can see the OpenAI settings in the team page', function () {
         ->assertSeeLivewire(OpenaiManager::class);
 });
 
+it('cannot see the OpenAI settings in the team page if payment mode is AWS', function () {
+    config(['codex.payment_mode' => 'aws', 'codex.pay_as_you_go' => true]);
+    $user = User::factory()->inFreeTrialMode()->create();
+    $platform = $user->currentTeam->currentPlatform();
+    $this->actingAs($user)
+        ->get($platform->route('teams.show', ['team' => $user->currentTeam]))
+        ->assertDontSeeLivewire(OpenaiManager::class);
+});
+
 it('cannot save an invalid or empty key', function () {
+    config(['codex.payment_mode' => 'spark', 'codex.pay_as_you_go' => true]);
     $user = User::factory()->inFreeTrialMode()->create();
     Livewire::actingAs($user)
         ->test(OpenaiManager::class)
@@ -24,6 +35,7 @@ it('cannot save an invalid or empty key', function () {
 });
 
 it('can save a valid key', function () {
+    config(['codex.payment_mode' => 'spark', 'codex.pay_as_you_go' => true]);
     $user = User::factory()->inFreeTrialMode()->create();
     Livewire::actingAs($user)
         ->test(OpenaiManager::class)
@@ -37,6 +49,7 @@ it('can save a valid key', function () {
 });
 
 it('cannot save if not editing', function () {
+    config(['codex.payment_mode' => 'spark', 'codex.pay_as_you_go' => true]);
     $user = User::factory()->inFreeTrialMode()->create();
     $user->currentTeam->update(['openai_key' => 'test']);
     Livewire::actingAs($user)

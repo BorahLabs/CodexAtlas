@@ -7,6 +7,10 @@
                 </a>
                 <div class="flex items-center justify-end">
                     <div class="hidden lg:block mr-10">
+                        <a class="inline-flex py-2 px-4 mr-4 items-center justify-center text-sm font-medium uppercase text-white hover:text-violet-500"
+                            href="{{ route('guide.index') }}">{{ __('Guide') }}</a>
+                        <a class="inline-flex py-2 px-4 mr-4 items-center justify-center text-sm font-medium uppercase text-white hover:text-violet-500"
+                            href="{{ route('enterprise') }}">{{ __('Enterprise') }}</a>
                         @guest
                             <a class="inline-flex py-2 px-4 mr-4 items-center justify-center text-sm font-medium uppercase text-white hover:text-violet-500"
                                 href="{{ route('login') }}">{{ __('Log in') }}</a>
@@ -16,7 +20,7 @@
                             @endif
                         @else
                             <a class="inline-flex h-11 py-2 px-4 items-center justify-center text-sm font-medium uppercase text-black hover:text-white bg-violet-500 hover:bg-violet-600 transition duration-200 rounded-full"
-                                href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a>
+                                href="{{ route('dashboard') }}">{{ __('My projects') }}</a>
                         @endguest
                     </div>
                 </div>

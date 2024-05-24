@@ -12,15 +12,46 @@ use App\Actions\Platform\ShowReadme;
 use App\Actions\Platform\ShowTechStack;
 use App\Actions\Platform\SourceCodeAccounts\StoreAccountPersonalAccessToken;
 use App\Actions\Platform\Webhook\HandleWebhook;
+use App\Http\Controllers\Website\CodeConvertionController;
+use App\Http\Controllers\Website\GuideController;
+use App\Http\Controllers\Website\SitemapController;
+use App\Http\Controllers\Website\Tools\CodeDocumentationToolController;
+use App\Http\Controllers\Website\Tools\CodeFixerToolController;
 use App\Http\Middleware\ControlRequestsFromPlatform;
+use App\Http\Middleware\ForceNoIndex;
 use App\Http\Middleware\OnlyFromCodexAtlas;
 use App\Http\Middleware\VerifyCsrfToken;
+use BorahLabs\AwsMarketplaceSaas\Facades\AwsMarketplaceSaas;
 use Illuminate\Support\Facades\Route;
+
+// codexatlas.app has now changed to codedocumentation.app
+Route::domain('codexatlas.app')->group(function () {
+    Route::get('{any?}', fn ($any = null) => redirect()->to('https://codedocumentation.app/'.$any, 301))->where(['any' => '.*']);
+});
 
 Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
     Route::view('/', 'welcome')
         ->middleware('central-domain')
         ->name('homepage');
+    Route::view('/enterprise-code-documentation', 'enterprise')
+        ->middleware('central-domain')
+        ->name('enterprise');
+
+    Route::get('/tools/code-documentation-{language}', CodeDocumentationToolController::class)
+        ->middleware('central-domain')
+        ->name('tools.code-documentation');
+
+    Route::get('/tools/ai-code-fixer', CodeFixerToolController::class)
+        ->middleware('central-domain')
+        ->name('tools.code-fixer');
+
+    Route::get('/{from}-to-{to}-code-converter', CodeConvertionController::class)
+        ->middleware('central-domain')
+        ->name('tools.code-converter')
+        ->where(['from' => '[a-z\-]+', 'to' => '[a-z\-]+']);
+
+    Route::get('/guide', [GuideController::class, 'index'])->name('guide.index');
+    Route::get('/guide/{folder}/{file}', [GuideController::class, 'show'])->name('guide.show');
 
     Route::middleware([
         'auth:sanctum',
@@ -48,7 +79,7 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
         ->withoutMiddleware(VerifyCsrfToken::class)
         ->name('webhook');
 
-    Route::middleware(ControlRequestsFromPlatform::class)->group(function () {
+    Route::middleware([ControlRequestsFromPlatform::class, ForceNoIndex::class])->group(function () {
         Route::get('/docs/{project}/{repository}/{branch}', ShowDocs::class)
             ->scopeBindings()
             ->name('docs.show');
@@ -87,4 +118,7 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
 
         return view('password-protection');
     })->name('password-protected')->middleware('throttle:5,1');
+
+    Route::get('sitemap.xml', SitemapController::class);
+    AwsMarketplaceSaas::registerRoutes();
 });

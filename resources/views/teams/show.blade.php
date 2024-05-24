@@ -9,7 +9,9 @@
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             @livewire('teams.update-team-name-form', ['team' => $team])
 
-            @livewire('teams.openai-manager', ['team' => $team])
+            @if (paymentIsWithSpark() && config('codex.pay_as_you_go'))
+                @livewire('teams.openai-manager', ['team' => $team])
+            @endif
 
             @livewire('teams.platform-manager', ['team' => $team])
 

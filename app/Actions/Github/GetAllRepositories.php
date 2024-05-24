@@ -17,12 +17,13 @@ class GetAllRepositories
     public function handle(SourceCodeAccount $account): array
     {
         $client = GetAuthenticatedAccountGithubClient::make()->handle($account);
-        /**
-         * @var \Github\Api\CurrentUser $api
-         */
-        $api = $client->api('me');
 
-        return collect($api->repositories())
+        /**
+         * @var \Github\Api\User $api
+         */
+        $api = $client->user();
+
+        return collect($api->repositories($account->name))
             ->map(fn (array $repo) => new Repository(
                 id: $repo['id'],
                 name: $repo['name'],

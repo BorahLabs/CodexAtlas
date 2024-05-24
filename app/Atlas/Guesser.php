@@ -8,7 +8,7 @@ use App\Exceptions\CouldNotDetectLanguage;
 use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;
 
-class Guesser
+final class Guesser
 {
     public static function make(): static
     {
@@ -23,6 +23,8 @@ class Guesser
                 return $framework;
             }
         }
+
+        return new Frameworks\GeneralFramework();
     }
 
     /**
@@ -31,12 +33,14 @@ class Guesser
     public static function supportedFrameworks(): array
     {
         return [
-            new Frameworks\Laravel(),
+            new Frameworks\Flutter(),
             new Frameworks\Spring(),
             new Frameworks\Django(),
-            new Frameworks\IonicAngular(),
+            new Frameworks\Laravel(),
+            new Frameworks\RubyOnRails(),
             new Frameworks\Next(),
             new Frameworks\Nuxt(),
+            new Frameworks\IonicAngular(),
             new Frameworks\ReactNative(),
             new Frameworks\Angular(),
             new Frameworks\Vue(),
@@ -83,5 +87,24 @@ class Guesser
             new Languages\Dart(),
             new Languages\Ruby(),
         ];
+    }
+
+    public static function fromName(string $name): Language|Framework
+    {
+        $languages = static::supportedLanguages();
+        foreach ($languages as $language) {
+            if ($language->name() === $name) {
+                return $language;
+            }
+        }
+
+        $frameworks = static::supportedFrameworks();
+        foreach ($frameworks as $framework) {
+            if ($framework->name() === $name) {
+                return $framework;
+            }
+        }
+
+        throw new \Exception("Could not find language or framework with name: {$name}");
     }
 }

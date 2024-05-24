@@ -37,7 +37,7 @@ class DumbLocalLlm extends Llm
 
     private function getCompletionResponse(string $systemPrompt)
     {
-        if($systemPrompt === PromptRequestType::TECH_STACK->value) {
+        if ($systemPrompt === PromptRequestType::TECH_STACK->value) {
             return '{"worked": "true"}';
         }
 

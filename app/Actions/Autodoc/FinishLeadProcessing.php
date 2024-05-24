@@ -2,6 +2,7 @@
 
 namespace App\Actions\Autodoc;
 
+use App\Actions\InternalNotifications\LogUserPerformedAction;
 use App\Enums\SystemComponentStatus;
 use App\Models\AutodocLead;
 use App\Notifications\Autodoc\DocumentationCompleted;
@@ -26,6 +27,9 @@ class FinishLeadProcessing
             ->notify(new DocumentationCompleted($lead));
         Notification::route('mail', $lead->email)
             ->notify(new FileRemoved($lead));
+        LogUserPerformedAction::dispatch(\App\Enums\Platform::AutomaticDocs, \App\Enums\NotificationType::Success, 'Lead finished processing', [
+            'lead' => $lead->id,
+        ]);
     }
 
     public function asCommand(Command $command)

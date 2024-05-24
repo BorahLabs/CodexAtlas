@@ -4,6 +4,7 @@ namespace App\Console\Commands\Maintenance;
 
 use App\Actions\Codex\Architecture\FilterFilesByFramework;
 use App\Models\Branch;
+use App\SourceCode\Contracts\SourceCodeProvider;
 use App\SourceCode\DTO\Branch as DTOBranch;
 use Exception;
 use Illuminate\Console\Command;
@@ -29,12 +30,12 @@ class UpdateFrameworkOnBranches extends Command
      */
     public function handle()
     {
-        Branch::query()->whereNull('framework_name')->each(function(Branch $branch) {
+        Branch::query()->whereNull('framework_name')->each(function (Branch $branch) {
             $this->info('Processing branch '.$branch->id);
             try {
                 $repository = $branch->repository;
                 $sourceCodeAccount = $repository->sourceCodeAccount;
-                if (!$sourceCodeAccount) {
+                if (! $sourceCodeAccount) {
                     return true;
                 }
                 /**
@@ -48,8 +49,9 @@ class UpdateFrameworkOnBranches extends Command
                     path: null,
                 );
             } catch (Exception $e) {
-                $this->warning('An error occurred while fetching files for branch '.$branch->id);
-                $this->warning($e->getMessage());
+                $this->warn('An error occurred while fetching files for branch '.$branch->id);
+                $this->warn($e->getMessage());
+
                 return true;
             }
 

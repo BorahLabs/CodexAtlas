@@ -2,7 +2,7 @@
 
 namespace App\Demo;
 
-class DemoPlatform
+final class DemoPlatform
 {
     public function __construct(
         public readonly string $name,

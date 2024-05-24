@@ -14,7 +14,7 @@ class Cobol implements Language
 
     public function imageUrl(): ?string
     {
-        return asset('logos/cobol.jpeg');
+        return asset('logos/cobol.png');
     }
 
     public function customContext(): ?string

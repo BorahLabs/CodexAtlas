@@ -71,7 +71,7 @@ class Autodoc extends Component
          */
         $llm = app(Llm::class);
         if ($llm instanceof OpenAI) {
-            $llm->withModel('gpt-4-turbo-preview');
+            $llm->withModel('gpt-4o');
         }
 
         $file = File::from(json_decode($this->lead->first_file, true));

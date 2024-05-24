@@ -2,6 +2,7 @@
 
 namespace App\Actions\Autodoc;
 
+use App\Actions\Codex\Architecture\SystemComponents\ConvertSystemComponentMarkdown;
 use App\Enums\SystemComponentStatus;
 use App\LLM\Contracts\Llm;
 use App\LLM\OpenAI;
@@ -17,17 +18,20 @@ class ProcessAutodocSystemComponent
 {
     use AsAction;
 
-    public function handle(SystemComponent $systemComponent, AutodocLead $lead)
+    public function handle(SystemComponent $systemComponent, ?AutodocLead $lead = null, string $model = 'gpt-4o')
     {
         if (empty(trim($systemComponent->file_contents))) {
             $systemComponent->updateQuietly([
                 'status' => SystemComponentStatus::Error,
             ]);
-            $this->checkIfShouldFinish($lead);
+            if ($lead) {
+                $this->checkIfShouldFinish($lead);
+            }
+
             abort(422, 'File contents are empty');
         }
 
-        $lead->update([
+        $lead?->update([
             'status' => SystemComponentStatus::Generating->value,
         ]);
         $systemComponent->updateQuietly([
@@ -40,7 +44,7 @@ class ProcessAutodocSystemComponent
              */
             $llm = app(Llm::class);
             if ($llm instanceof OpenAI) {
-                $llm->withModel('gpt-4-turbo-preview');
+                $llm->withModel($model);
             }
 
             $file = File::from([
@@ -52,8 +56,9 @@ class ProcessAutodocSystemComponent
             ]);
             $completion = retry(3, fn () => $llm->describeFile(new Project(['name' => '']), $file, PromptRequestType::DOCUMENT_FILE), 5000);
             $systemComponent->updateQuietly([
-                'markdown_docs' => $completion->completion,
+                'markdown_docs' => ConvertSystemComponentMarkdown::make()->handle(json_decode($completion->completion, true), $file->path),
                 'file_contents' => null,
+                'json_docs' => json_decode($completion->completion, true),
                 'status' => SystemComponentStatus::Generated,
             ]);
             ProcessingLogEntry::write($systemComponent->branch, $file->path, class_basename($llm), $llm->modelName(), $completion);
@@ -64,7 +69,9 @@ class ProcessAutodocSystemComponent
             ]);
         }
 
-        $this->checkIfShouldFinish($lead);
+        if ($lead) {
+            $this->checkIfShouldFinish($lead);
+        }
     }
 
     protected function checkIfShouldFinish(AutodocLead $lead)

@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Http;
 
 class CodexModal extends Llm
 {
-
     public function getPromptRequest(PromptRequestType $promptRequestType): PromptRequest
     {
         return match ($promptRequestType) {

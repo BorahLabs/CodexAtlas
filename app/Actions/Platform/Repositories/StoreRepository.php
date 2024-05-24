@@ -2,12 +2,14 @@
 
 namespace App\Actions\Platform\Repositories;
 
+use App\Actions\InternalNotifications\LogUserPerformedAction;
 use App\Models\Project;
 use App\Models\Repository;
 use App\SourceCode\Contracts\RegistersWebhook;
 use App\SourceCode\DTO\Branch as DTOBranch;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -34,6 +36,11 @@ class StoreRepository
         } catch (\Exception $e) {
             logger($e);
 
+            LogUserPerformedAction::dispatch(\App\Enums\Platform::Codex, \App\Enums\NotificationType::Warning, 'User tried to add repository '.$repo->fullName . ' and was not found', [
+                'project' => $project->id,
+                'project_name' => $project->name,
+            ]);
+
             return redirect()->back()->withErrors([
                 'name' => 'The repository '.$repo->fullName.' could not be found. Please, make sure it belongs to the selected account.',
             ]);
@@ -52,6 +59,10 @@ class StoreRepository
             try {
                 retry(3, fn () => $sourceCodeAccount->getProvider()->registerWebhook($repo), 1000);
             } catch (\Exception $e) {
+                LogUserPerformedAction::dispatch(\App\Enums\Platform::Codex, \App\Enums\NotificationType::Warning, 'Error registering webhook to '.$repo->fullName, [
+                    'repository' => $repository->id,
+                    'error' => $e->getMessage(),
+                ]);
                 logger('Could not register webhook for '.$repo->fullName, [
                     'message' => $e->getMessage(),
                 ]);
@@ -82,12 +93,24 @@ class StoreRepository
     {
         $validated = $request->validate([
             'source_code_account_id' => 'required|exists:source_code_accounts,id',
-            'name' => "required|string|max:255|regex:/([\w\-_]+)\/([\w\-_]+)/",
+            'name' => "required_without_all:bitbucket_workspace,bitbucket_repo|string|max:255|regex:/([\w\-_]+)\/([\w\-_]+)/",
+            'bitbucket_workspace' => "string|max:255|required_without:name",
+            'bitbucket_repo' => 'string|max:255|required_without:name'
         ]);
+
+        if(isset($validated['bitbucket_workspace']) && isset($validated['bitbucket_repo'])){
+            $validated['name'] = $validated['bitbucket_workspace'] . '/' . $validated['bitbucket_repo'];
+
+            Arr::forget($validated, ['bitbucket_workspace', 'bitbucket_repo']);
+        }
 
         Gate::authorize('create-repository');
 
         $repository = $this->handle($project, $validated['source_code_account_id'], $validated['name']);
+
+        LogUserPerformedAction::dispatch(\App\Enums\Platform::Codex, \App\Enums\NotificationType::Success, 'User added repository '.$validated['name'], [
+            'project' => $project->id,
+        ]);
 
         return redirect()->route('projects.show', ['project' => $project]);
     }

@@ -9,6 +9,45 @@
                     <x-application-logo class="h-20" :name="true" nameClass="text-4xl font-bold text-white" />
                 </a>
             </div>
+            <div class="mb-10" x-data="{ show: false }">
+                <p class="font-bold text-violet-50 mb-4 uppercase flex items-center justify-start"
+                    x-on:click="show = !show">
+                    <span>Free Code Documentation Tools</span>
+                    <x-codex.icons.chevron-down class="h-4 w-4 transition ml-4" x-bind:class="{ 'rotate-180': show }" />
+                </p>
+                <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm" x-cloak x-show="show">
+                    @foreach (\App\Atlas\Guesser::supportedLanguages() as $language)
+                        <li>
+                            <a href="{{ route('tools.code-documentation', ['language' => Str::slug($language->name())]) }}"
+                                class="text-violet-100 hover:underline tracking-tight">
+                                {{ $language->name() }} Code Documentation
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="mb-10" x-data="{ show: false }">
+                <p class="font-bold text-violet-50 mb-4 uppercase flex items-center justify-start"
+                    x-on:click="show = !show">
+                    <span>Free Code Conversion Tools</span>
+                    <x-codex.icons.chevron-down class="h-4 w-4 transition ml-4" x-bind:class="{ 'rotate-180': show }" />
+                </p>
+                <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm" x-cloak x-show="show">
+                    @foreach (\App\CodeConverter\Tools\CodeConverterTool::all() as $tool)
+                        <li>
+                            <a href="{{ $tool->url() }}" class="text-violet-100 hover:underline tracking-tight">
+                                {{ $tool->name() }}
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="mb-10">
+                <a href="{{ route('tools.code-fixer') }}"
+                    class="font-bold text-violet-50 mb-4 uppercase flex items-center justify-start">
+                    <span>Free AI Code Fixer</span>
+                </a>
+            </div>
             <div class="pt-10 border-t border-newGray-800">
                 <div class="md:flex items-center justify-between">
                     <div class="mb-6 md:mb-0">

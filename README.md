@@ -39,6 +39,9 @@ This project is well-tested using [Pest](https://pestphp.com/). You can run the 
 ### Test Coverage
 To check the test coverage, you will need to install Xdebug and run `./vendor/bin/pest --coverage`.
 
+### Static Analysis
+This project uses Larastan for static analysis. You can run the static analysis using `./vendor/bin/phpstan analyse`
+
 ### Type Coverage
 We aim to keep the type coverage of the project at 100%. To check the type coverage, run `./vendor/bin/pest --type-coverage`.
 

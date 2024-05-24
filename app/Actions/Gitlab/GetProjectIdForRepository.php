@@ -12,9 +12,6 @@ class GetProjectIdForRepository
 {
     use AsAction;
 
-    /**
-     * @return Branch[]
-     */
     public function handle(SourceCodeAccount $account, RepositoryName $repository): string|int
     {
         /**

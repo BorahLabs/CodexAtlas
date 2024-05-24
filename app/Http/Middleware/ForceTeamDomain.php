@@ -20,7 +20,11 @@ class ForceTeamDomain
         }
 
         $host = $request->host();
-        $platform = $request->user()->currentTeam->currentPlatform();
+        /**
+         * @var \App\Models\Team $team
+         */
+        $team = $request->user()->currentTeam;
+        $platform = $team->currentPlatform();
         if (mb_strtolower($host) !== mb_strtolower($platform->domain)) {
             return redirect()->to('https://'.mb_strtolower($platform->domain).$request->getRequestUri());
         }

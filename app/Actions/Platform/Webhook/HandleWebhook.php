@@ -2,6 +2,7 @@
 
 namespace App\Actions\Platform\Webhook;
 
+use App\Actions\InternalNotifications\LogUserPerformedAction;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\Contracts\HandlesWebhook;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class HandleWebhook
         $provider = $sourceCodeAccount->getProvider();
         if ($provider instanceof HandlesWebhook) {
             $provider->verifyIncomingWebhook($request);
-
+            LogUserPerformedAction::dispatch(\App\Enums\Platform::Codex, \App\Enums\NotificationType::Info, 'Processing webhook...');
             return $provider->handleIncomingWebhook($request->all(), $request);
         }
 

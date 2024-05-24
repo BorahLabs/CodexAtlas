@@ -95,15 +95,27 @@ class Team extends JetstreamTeam
 
     public function subscriptionType(): SubscriptionType
     {
-        if (str_ends_with($this->owner->email, '@codexatlas.app')) {
+        /**
+         * @var User $owner
+         */
+        $owner = $this->owner;
+        if (str_ends_with($owner->email, '@codexatlas.app')) {
             return SubscriptionType::Unlimited;
         }
 
-        if ($plan = $this->sparkPlan()) {
-            return $this->openai_key ? SubscriptionType::UnlimitedCompanyPlan : SubscriptionType::LimitedCompanyPlan;
+        if (paymentIsWithAws()) {
+            if ($owner->isSubscribedOnAws()) {
+                return SubscriptionType::PayAsYouGo;
+            }
+
+            return SubscriptionType::FreeTrial;
         }
 
-        if ($this->openai_key) {
+        if ($plan = $this->sparkPlan()) {
+            return $this->openai_key && config('codex.pay_as_you_go') ? SubscriptionType::UnlimitedCompanyPlan : SubscriptionType::LimitedCompanyPlan;
+        }
+
+        if ($this->openai_key && config('codex.pay_as_you_go')) {
             return SubscriptionType::PayAsYouGo;
         }
 

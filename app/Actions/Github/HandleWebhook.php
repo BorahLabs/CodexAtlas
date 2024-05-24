@@ -25,11 +25,16 @@ class HandleWebhook
             case 'push':
                 return $this->handlePush($account, $payload);
         }
+
+        return null;
     }
 
     private function handlePush(SourceCodeAccount $account, array $payload): void
     {
         $repositoryName = $account->provider->repositoryName(data_get($payload, 'repository.full_name'));
+        /**
+         * @var \App\Models\Repository $repository
+         */
         $repository = $account
             ->repositories()
             ->where('name', $repositoryName->name)
@@ -39,6 +44,9 @@ class HandleWebhook
             ->firstOrFail();
 
         $branchName = str_replace('refs/heads/', '', data_get($payload, 'ref'));
+        /**
+         * @var \App\Models\Branch|null $branch
+         */
         $branch = $repository->branches()->where('name', $branchName)->first();
         if (is_null($branch)) {
             // If we are not using that branch, we can ignore it

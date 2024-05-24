@@ -24,7 +24,7 @@ class CustomGuidePolicy
         $team = $customGuide->branch->repository->project->team;
         $platform = $team->currentPlatform();
 
-        return $platform->is_public || $user?->belongsToTeam($team) ?? false;
+        return $platform->is_public || ($user?->belongsToTeam($team) ?? false);
     }
 
     /**

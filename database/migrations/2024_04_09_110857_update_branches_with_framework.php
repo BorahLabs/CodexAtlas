@@ -4,8 +4,6 @@ use App\Actions\Codex\Architecture\FilterFilesByFramework;
 use App\Models\Branch;
 use App\SourceCode\DTO\Branch as DTOBranch;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -14,12 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Branch::query()->whereNull('framework_name')->each(function(Branch $branch) {
+        Branch::query()->whereNull('framework_name')->each(function (Branch $branch) {
 
             try {
                 $repository = $branch->repository;
                 $sourceCodeAccount = $repository->sourceCodeAccount;
-                if (!$sourceCodeAccount) {
+                if (! $sourceCodeAccount) {
                     return true;
                 }
                 /**

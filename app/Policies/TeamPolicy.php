@@ -33,6 +33,9 @@ class TeamPolicy
     public function create(User $user): bool
     {
         // A user can have a maximum of one team with a free plan
+        /**
+         * @var Team $team
+         */
         foreach ($user->ownedTeams as $team) {
             if ($team->subscriptionType() === SubscriptionType::FreeTrial) {
                 return false;

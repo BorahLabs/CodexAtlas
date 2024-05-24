@@ -17,7 +17,7 @@ class BranchDocument extends Model
     use HasUuids;
 
     protected $casts = [
-        'json_docs' => 'array'
+        'json_docs' => 'array',
     ];
 
     public function branch(): BelongsTo

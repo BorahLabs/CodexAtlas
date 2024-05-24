@@ -59,7 +59,7 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
-    'main_domain' => env('APP_DOMAIN', 'codexatlas.app'),
+    'main_domain' => env('APP_DOMAIN', 'codedocumentation.app'),
 
     'autodoc_domain' => env('AUTODOC_DOMAIN', 'automaticdocs.app'),
 
@@ -177,9 +177,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\SparkServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\VaporUiServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
+        App\Providers\AwsSaasProvider::class,
     ])->toArray(),
 
     /*

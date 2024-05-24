@@ -2,6 +2,7 @@
 
 namespace App\Actions\Platform\Projects;
 
+use App\Actions\InternalNotifications\LogUserPerformedAction;
 use App\Models\Project;
 use App\Models\Team;
 use Illuminate\Http\Request;
@@ -29,7 +30,15 @@ class StoreProject
 
         Gate::authorize('create-project');
 
-        $project = $this->handle($request->user()->currentTeam, $request->input('name'));
+        /**
+         * @var Team $team
+         */
+        $team = $request->user()->currentTeam;
+        $project = $this->handle($team, $request->input('name'));
+
+        LogUserPerformedAction::dispatch(\App\Enums\Platform::Codex, \App\Enums\NotificationType::Success, 'New project '.$project->name.' created', [
+            'project' => $project->id,
+        ]);
 
         return redirect()->route('projects.show', ['project' => $project]);
     }

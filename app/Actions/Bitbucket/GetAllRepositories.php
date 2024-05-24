@@ -41,8 +41,8 @@ class GetAllRepositories
         return collect($repos)
             ->map(fn (array $repo) => new Repository(
                 id: GetUuidFromJson::getUuid($repo['uuid']),
-                name: $repo['name'],
-                owner: $repo['owner']['username'],
+                name: isset($repo['owner']['username']) ? $repo['slug'] : $repo['full_name'],
+                owner: $repo['owner']['username'] ?? '',
                 workspace: $repo['workspace']['slug'],
                 description: $repo['description'] ?? null,
             ))

@@ -31,7 +31,7 @@ class GenerateTechStackDocumentation
 
         return $branch->branchDocuments()->updateOrCreate(
             ['path' => 'TechStackFile'],
-            ['name' => 'TechStackFile', 'content' => $markdownTechStackDocument , 'json_docs' => $dependencies]
+            ['name' => 'TechStackFile', 'content' => $markdownTechStackDocument, 'json_docs' => $dependencies]
         );
     }
 
@@ -49,9 +49,10 @@ class GenerateTechStackDocumentation
     private function generateMarkdownTechStackDocument(array $dependencies): string
     {
         $markdown = '';
-        foreach($dependencies as $key => $dependency) {
-            $markdown .= '# '. $key."\n\n".$dependency."\n\n";
+        foreach ($dependencies as $key => $dependency) {
+            $markdown .= '# '.$key."\n\n".$dependency."\n\n";
         }
+
         return $markdown;
     }
 }

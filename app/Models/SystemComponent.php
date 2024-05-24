@@ -23,7 +23,7 @@ class SystemComponent extends Model implements Embeddable
     protected $casts = [
         'status' => SystemComponentStatus::class,
         'file_contents' => 'encrypted',
-        'json_docs' => 'array'
+        'json_docs' => 'array',
     ];
 
     public function branch(): BelongsTo

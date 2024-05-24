@@ -33,6 +33,9 @@
                                     </a>
                                 </li>
                             @endforeach
+                            <li>
+                                <livewire:atlas.add-branch-to-repository :repository="$repository" />
+                            </li>
                         </ul>
                     @endif
                 </x-bordered-black-box>

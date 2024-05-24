@@ -33,6 +33,7 @@ class StoreAccountPersonalAccessToken
         ]);
 
         try {
+            // @phpstan-ignore-next-line
             $account = $provider->withCredentials($credentials)->account();
         } catch (\Bitbucket\Exception\RuntimeException $e) {
             throw new PersonalAccessTokenIsNotValidException();
@@ -55,8 +56,12 @@ class StoreAccountPersonalAccessToken
         ]);
 
         $provider = SourceCodeProvider::from($validated['provider']);
+        /**
+         * @var Team $team
+         */
+        $team = $request->user()->currentTeam;
         try {
-            $this->handle($request->user()->currentTeam, $provider, $validated['username'], $validated['pat']);
+            $this->handle($team, $provider, $validated['username'], $validated['pat']);
         } catch (PersonalAccessTokenIsNotValidException $e) {
             return redirect()->back()->withErrors([
                 'pat' => 'The provided personal access token is not valid.',

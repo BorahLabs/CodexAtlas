@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Team;
 use App\Models\User;
+use BorahLabs\AwsMarketplaceSaas\Models\AwsSubscription;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
@@ -68,11 +69,19 @@ class UserFactory extends Factory
 
     public function inPayAsYouGoMode(): static
     {
+        if (config('codex.payment_mode') === 'aws') {
+            return $this->withAwsSubscription()->withPersonalTeam();
+        }
+
         return $this->withPersonalTeam(fn (TeamFactory $factory) => $factory->inPayAsYouGoMode());
     }
 
     public function inFreeTrialMode(): static
     {
+        if (config('codex.payment_mode') === 'aws') {
+            return $this->withPersonalTeam();
+        }
+
         return $this->withPersonalTeam(fn (TeamFactory $factory) => $factory->inFreeTrialMode());
     }
 
@@ -84,5 +93,20 @@ class UserFactory extends Factory
     public function inUnlimitedCompanyPlanMode(): static
     {
         return $this->withPersonalTeam(fn (TeamFactory $factory) => $factory->inUnlimitedCompanyPlanMode());
+    }
+
+    public function withAwsSubscription(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            $customerIdentifier = Str::random(10);
+            AwsSubscription::updateOrCreate([
+                'aws_customer_id' => $customerIdentifier,
+            ], [
+                'expires_at' => null,
+            ]);
+            $user->update([
+                'aws_customer_id' => $customerIdentifier,
+            ]);
+        });
     }
 }

@@ -59,7 +59,7 @@
                     <div class="flex flex-col bg-white/5 p-8">
                         <dt class="text-sm font-semibold leading-6 text-gray-300">Documented files</dt>
                         <dd class="order-first text-3xl font-semibold tracking-tight text-white md:text-5xl">
-                            {{ number_format(Cache::remember('system-components-count', now()->addMinutes(5), fn() => \App\Models\SystemComponent::count()), 0) }}
+                            {{ number_format(Cache::remember('system-components-count-logs', now()->addMinutes(5), fn() => \App\Models\ProcessingLogEntry::count()), 0) }}
                         </dd>
                     </div>
                 </dl>
@@ -208,7 +208,11 @@
                 big your project is. Since the AI computation costs are high, we have divided the pricing in 3 sets.</p>
             <div class="isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                 @php
-                    $pricings = [['name' => 'Small', 'price' => 10, 'max_files' => 100], ['name' => 'Mid-sized', 'price' => 40, 'max_files' => 500], ['name' => 'Large', 'price' => 70, 'max_files' => 1000]];
+                    $pricings = [
+                        ['name' => 'Small', 'price' => 10, 'max_files' => 100],
+                        ['name' => 'Mid-sized', 'price' => 40, 'max_files' => 500],
+                        ['name' => 'Large', 'price' => 70, 'max_files' => 1000],
+                    ];
                 @endphp
                 @foreach ($pricings as $pricing)
                     <div class="rounded-3xl p-8 xl:p-10 ring-1 ring-white/10">

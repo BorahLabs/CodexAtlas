@@ -2,6 +2,7 @@
 
 namespace App\SourceCode;
 
+use App\Models\SourceCodeAccount;
 use App\SourceCode\Contracts\ReceivesZipFile;
 use App\SourceCode\Contracts\SourceCodeProvider;
 use App\SourceCode\DTO\Branch;
@@ -87,10 +88,6 @@ class S3ZipProvider extends SourceCodeProvider implements ReceivesZipFile
             throw new \Exception('Could not open zip file');
         }
 
-        if (Storage::disk('tmp')->exists($path)) {
-            Storage::disk('tmp')->deleteDirectory($path);
-        }
-
         $absolutePath = Storage::disk('tmp')->path($path);
         $zip->extractTo($absolutePath);
         $zip->close();
@@ -137,5 +134,10 @@ class S3ZipProvider extends SourceCodeProvider implements ReceivesZipFile
     public function url(RepositoryName $repository): string
     {
         throw new \Exception('This should not be displayed in the UI');
+    }
+
+    public function searchRepositories(SourceCodeAccount $account, string $query): array
+    {
+        return [];
     }
 }

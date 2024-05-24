@@ -31,11 +31,18 @@ class ProcessLead
 
         $project = Project::query()->where('id', config('autodoc.project_id'))->first();
         $account = $project->team->sourceCodeAccounts()->withoutGlobalScopes()->first();
+        /**
+         * @var \App\Models\Repository $repository
+         */
         $repository = $account->repositories()->createQuietly([
             'project_id' => $project->id,
             'name' => $baseName,
             'username' => 'Autodoc',
         ]);
+
+        /**
+         * @var \App\Models\Branch $branch
+         */
         $branch = $repository->branches()->createQuietly([
             'name' => 'main',
         ]);

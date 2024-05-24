@@ -13,7 +13,7 @@ class StripePlanProvider
 {
     public static function plans(string $type = 'user'): Collection
     {
-        return Cache::remember('spark-plans-'.$type, now()->addHour(), function () use ($type) {
+        return Cache::remember('spark-plans-'.$type.'-v2', now()->addHour(), function () use ($type) {
             $plans = Spark::plans($type);
 
             $prices = collect(Cashier::stripe()->prices->all(['limit' => 100])->autoPagingIterator());
@@ -35,6 +35,7 @@ class StripePlanProvider
                     $price = substr($price, 0, -2);
                 }
 
+                // @phpstan-ignore-next-line
                 $plan->price = $price;
 
                 $plan->currency = $stripePrice->currency;
