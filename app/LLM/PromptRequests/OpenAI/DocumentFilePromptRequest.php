@@ -35,17 +35,16 @@ class DocumentFilePromptRequest implements PromptRequest
         - methods value should be an array where each item should have key name and description. If you dont find any method you can return an empty array.
         - [KEY] Means the key of the json and the [VALUE] means the value that should be in this key.
         - Do not output the original file
-        - Dont add \n, Only the json is required
-        - Finish the documentation by writing "END" in a new line
-        - If there are no methods or no classes, please do not include the section in the output';
+        - If there are no methods or no classes, please do not include the section in the output
+        - Dont add \n, Only the json is required';
 
         if($project->has('concepts')){
             $prompt .=
-            '
-            Also, you have to consider this concepts when describing the file:
-            ';
+            "
+            Also, you have to consider this concepts when describing the file: \n
+            ";
             $project->concepts->each(function($item, $key) use (&$prompt){
-                $prompt .= '-' . $item->name . ': ' . $item->description;
+                $prompt .= "-" . $item->name . ": " . $item->description . "\n";
             });
         }
 
