@@ -48,6 +48,12 @@
                     <span>Fix my code with AI</span>
                 </a>
             </div>
+            <div class="mb-10">
+                <a href="{{ route('tools.readme-generator') }}"
+                    class="font-bold text-violet-50 mb-4 uppercase flex items-center justify-start">
+                    <span>Free README.md Generator</span>
+                </a>
+            </div>
             <div class="pt-10 border-t border-newGray-800">
                 <div class="md:flex items-center justify-between">
                     <div class="mb-6 md:mb-0">

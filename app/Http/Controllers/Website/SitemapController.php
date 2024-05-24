@@ -31,6 +31,7 @@ class SitemapController extends Controller
         }
 
         $sitemap->add(Url::create(route('tools.code-fixer', absolute: false))->setPriority(0.9)->setChangeFrequency('weekly'));
+        $sitemap->add(Url::create(route('tools.readme-generator', absolute: false))->setPriority(0.9)->setChangeFrequency('weekly'));
 
         foreach ((new GuideController)->folders() as $folder) {
             foreach ($folder['children'] as $file) {
