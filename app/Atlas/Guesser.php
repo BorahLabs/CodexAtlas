@@ -45,6 +45,10 @@ final class Guesser
             new Frameworks\Angular(),
             new Frameworks\Vue(),
             new Frameworks\React(),
+            new Frameworks\Flutter(),
+            new Frameworks\RubyOnRails(),
+            new Frameworks\Flask(),
+            new Frameworks\Symfony(),
             new Frameworks\GeneralFramework(),
         ];
     }
