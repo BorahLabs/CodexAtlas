@@ -52,25 +52,19 @@ class CodeFixer extends Component
 
         $codeFixings = $tool->todayIpCodeFixingRequests($this->ip);
 
-        if($codeFixings->count() >= 10){
-            $this->solution = null;
-
-            return true;
-        } else{
-            CodeFixing::create([
-                'tool_id' => $tool->id,
-                'ip' => $this->ip,
-                'code' => $this->code,
-                'code_error' => $this->codeError,
-                'response' => $this->solution,
-            ]);
-            return false;
-        }
+        return $codeFixings->count() >= 10;
     }
 
     public function sendCode()
     {
         $this->validate();
+
+        if ($this->userExceedsLimitsOfRequests()) {
+            $this->solution = "";
+            $this->addError('limit', 'You have exceeded the limit of requests. Please, try again tomorrow or sign up.');
+
+            return;
+        }
 
         $data = [
             'code' => $this->code,
@@ -89,14 +83,15 @@ class CodeFixer extends Component
 
         $this->solution = (string) json_decode($completion->completion, true)['response'];
 
-        if ($this->userExceedsLimitsOfRequests()) {
-            $this->addError('limit', 'You have exceeded the limit of requests. Please, try again tomorrow or sign up.');
-
-            return;
-        }
-
         $tool = Tool::codeFixer();
 
+        CodeFixing::create([
+            'tool_id' => $tool->id,
+            'ip' => $this->ip,
+            'code' => $this->code,
+            'code_error' => $this->codeError,
+            'response' => $this->solution,
+        ]);
         LogUserPerformedAction::dispatch(
             \App\Enums\Platform::Codex,
             \App\Enums\NotificationType::Success,
