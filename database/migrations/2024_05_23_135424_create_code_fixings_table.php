@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('code_fixings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('tool_id');
-            $table->foreign('tool_id')->references('id')->on('tools');
+            $table->foreignId('tool_id')->constrained();
             $table->mediumText('code');
             $table->mediumText('code_error');
             $table->mediumText('response');
-            $table->string('ip');
+            $table->string('ip')->index();
             $table->timestamps();
         });
     }

@@ -23,13 +23,11 @@ use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class CodeFixer extends Component
 {
-    use WithFileUploads;
+    public string $solution;
 
-    public $solution;
+    public string $code;
 
-    public $code;
-
-    public $codeError;
+    public string $codeError;
 
     #[Locked]
     public string $ip;
@@ -91,28 +89,24 @@ class CodeFixer extends Component
 
         $this->solution = (string) json_decode($completion->completion, true)['response'];
 
-        // if ($this->userExceedsLimitsOfRequests()) {
-        //     $this->addError('limit', 'You have exceeded the limit of requests. Please, try again tomorrow or sign up.');
+        if ($this->userExceedsLimitsOfRequests()) {
+            $this->addError('limit', 'You have exceeded the limit of requests. Please, try again tomorrow or sign up.');
 
-        //     return;
-        // }
+            return;
+        }
 
         $tool = Tool::codeFixer();
 
-        // LogUserPerformedAction::dispatch(
-        //     \App\Enums\Platform::Codex,
-        //     \App\Enums\NotificationType::Success,
-        //     'User used tool '. $tool->name,
-        //     [],
-        // );
-
-
+        LogUserPerformedAction::dispatch(
+            \App\Enums\Platform::Codex,
+            \App\Enums\NotificationType::Success,
+            'User used tool '. $tool->name,
+            [],
+        );
     }
 
     public function render()
     {
         return view('livewire.tools.code-fixer');
     }
-
-
 }
