@@ -69,8 +69,11 @@ Output in '.$this->to->name().':';
         return $result->completion;
     }
 
-    public static function from(string $from, string $to): static
+    public static function from(string $from, string $to): CodeConverterTool
     {
+        /**
+         * @var CodeConverterTool|null $tool
+         */
         $tool = collect(File::allFiles(app_path('CodeConverter/Tools')))
             ->map(fn (SplFileInfo $file) => 'App\\CodeConverter\\Tools\\'.$file->getBasename('.php'))
             ->filter(fn (string $class) => class_exists($class) && is_subclass_of($class, self::class))
@@ -79,7 +82,7 @@ Output in '.$this->to->name().':';
             ->values()
             ->first();
 
-        abort_unless($tool, 404, 'No tool found.');
+        abort_if(is_null($tool), 404, 'No tool found.');
 
         return $tool;
     }

@@ -8,7 +8,7 @@ class Repository implements Wireable
 {
     public readonly string $fullName;
 
-    public function __construct(
+    public final function __construct(
         public readonly string $id,
         public readonly string $name,
         public readonly string $owner,
@@ -43,8 +43,7 @@ class Repository implements Wireable
         $owner = $value['owner'];
         $description = $value['description'];
         $workspace = $value['workspace'];
-        $fullName = $value['fullName'];
 
-        return new static($id, $name, $owner, $description, $workspace, $fullName);
+        return new static($id, $name, $owner, $description, $workspace);
     }
 }

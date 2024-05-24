@@ -70,7 +70,7 @@ class CodeFixer extends Component
         $userPrompt = $prompt->userPrompt($data);
         $completion = $llm->completion($systemPrompt, $userPrompt);
 
-        $this->solution = (string) json_decode($completion->completion, true)['response'] ?? null;
+        $this->solution = json_decode($completion->completion, true)['response'] ?? null;
 
         $tool = Tool::codeFixer();
 

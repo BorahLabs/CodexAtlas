@@ -5,6 +5,7 @@ namespace App\Livewire\Atlas;
 use App\Enums\SourceCodeProvider;
 use App\Models\Project;
 use App\Models\SourceCodeAccount;
+use App\SourceCode\BitbucketProvider;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
@@ -41,17 +42,16 @@ class AddRepository extends Component
 
     public function getRepositories()
     {
-        if ($this->account) {
-            if ($this->account->provider == SourceCodeProvider::Bitbucket) {
-                $this->bitbucketWorkspaces = $this->account->getProvider()->searchWorkspaces($this->account, $this->search);
+        $provider = $this->account->getProvider();
+        if ($provider instanceof BitbucketProvider) {
+            $this->bitbucketWorkspaces = $provider->searchWorkspaces($this->account, $this->search);
 
-                $this->repositories = [];
-            } else {
-                $this->bitbucketWorkspaces = [];
-                $this->bitbucketRepositories = [];
+            $this->repositories = [];
+        } else {
+            $this->bitbucketWorkspaces = [];
+            $this->bitbucketRepositories = [];
 
-                $this->repositories = $this->account->getProvider()->searchRepositories($this->account, $this->search);
-            }
+            $this->repositories = $provider->searchRepositories($this->account, $this->search);
         }
     }
 
