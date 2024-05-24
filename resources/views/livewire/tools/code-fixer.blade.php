@@ -1,6 +1,6 @@
 <div class="w-full">
-    <form wire:submit="sendCode" class="w-full flex flex-col justify-center items-center"
-        wire:loading.remove>
+    <form wire:submit="sendCode" class="w-full flex flex-col justify-center items-center" wire:loading.remove
+        wire:target="sendCode">
         <div class="grid grid-cols-2 w-full gap-y-10 gap-x-4 items-center justify-center text-center">
             <div>
                 <h2 class="font-bold text-3xl text-primary-gradient text-center mt-4">
@@ -42,11 +42,11 @@
     </div>
 
     @if ($solution)
-        <div wire:loading.remove class="w-full mt-10">
+        <div wire:loading.remove wire:target="sendCode" class="w-full mt-10">
             <h2 class="font-bold text-4xl text-primary-gradient text-left mt-4 mb-2">
                 Result
             </h2>
-            <pre><code>{{ (string) $solution }}</code></pre>
+            <pre class="w-full overflow-auto"><code>{{ str($solution)->trim('`') }}</code></pre>
         </div>
     @endif
 </div>
