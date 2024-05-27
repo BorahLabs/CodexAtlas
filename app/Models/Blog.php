@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\Builder;
 
 class Blog extends Model
 {
@@ -13,8 +16,27 @@ class Blog extends Model
 
 
     protected $casts = [
-        'published_at' => 'datetime'
+        'published_at' => 'datetime',
     ];
+
+    public function imageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => Storage::url($this->image),
+        );
+    }
+
+     /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        if(!auth()->user() || (auth()->user() && !auth()->user()->emailIsFromCodex())){
+            static::addGlobalScope('actives', function (Builder $builder) {
+                $builder->where('is_active', true)->whereDate('published_at', '<=', now());
+            });
+        }
+    }
 
     /**
      * Get the options for generating the slug.
