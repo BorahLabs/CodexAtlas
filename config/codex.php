@@ -15,6 +15,7 @@ return [
     ],
     'forbidden_subdomains' => [
         'knowledge-base',
+        'readme-generator',
     ],
     'atlas' => [
         'allowed_extensions' => array_flip([

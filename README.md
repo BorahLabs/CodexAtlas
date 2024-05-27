@@ -27,6 +27,9 @@ Even though this is enough to get the project running, there are a few more thin
 ### Knowledge base
 Part of Codex relies on Borah's [Knowledge Base](https://github.com/BorahLabs/Knowledge-Base) package. Please, follow the instructions in the repository to get it up and running.
 
+## Readme Generator
+The README generator uses Borah's [CodexAtlas-README-Generator](https://github.com/BorahLabs/CodexAtlas-README-Generator). Please, follow the instructions in the repository to get it up and running.
+
 ## Running the project
 
 Once everything is installed and configured, you can run the project using `php artisan serve` or accessing `codexatlas.test` if you're using a local server. For the front-end assets, run `npm run dev`.

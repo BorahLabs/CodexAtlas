@@ -67,4 +67,10 @@ return [
             'describe_file_endpoint' => env('MODAL_CODEX_DESCRIBE_FILE_ENDPOINT'),
         ],
     ],
+
+    'readme_generator' => [
+        'endpoint' => [
+            'offline' => env('README_GENERATOR_OFFLINE_ENDPOINT', 'https://readme-generator.codexatlas.app/v1/offline'),
+        ],
+    ],
 ];

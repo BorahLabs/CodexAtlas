@@ -17,6 +17,7 @@ use App\Http\Controllers\Website\GuideController;
 use App\Http\Controllers\Website\SitemapController;
 use App\Http\Controllers\Website\Tools\CodeDocumentationToolController;
 use App\Http\Controllers\Website\Tools\CodeFixerToolController;
+use App\Http\Controllers\Website\Tools\ReadmeGeneratorToolController;
 use App\Http\Middleware\ControlRequestsFromPlatform;
 use App\Http\Middleware\ForceNoIndex;
 use App\Http\Middleware\OnlyFromCodexAtlas;
@@ -44,6 +45,10 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
     Route::get('/tools/fix-my-code-with-ai', CodeFixerToolController::class)
         ->middleware('central-domain')
         ->name('tools.code-fixer');
+
+    Route::get('/tools/readme-generator', ReadmeGeneratorToolController::class)
+        ->middleware('central-domain')
+        ->name('tools.readme-generator');
 
     Route::get('/{from}-to-{to}-code-converter', CodeConvertionController::class)
         ->middleware('central-domain')
