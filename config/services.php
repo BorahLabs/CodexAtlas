@@ -70,7 +70,7 @@ return [
 
     'readme_generator' => [
         'endpoint' => [
-            'offline' => env('README_GENERATOR_OFFLINE_ENDPOINT', 'http://127.0.0.1:8080/v1/offline'),
+            'offline' => env('README_GENERATOR_OFFLINE_ENDPOINT', 'https://readme-generator.codexatlas.app/v1/offline'),
         ],
     ],
 ];
