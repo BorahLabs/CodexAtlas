@@ -16,7 +16,7 @@ class SitemapController extends Controller
     {
         $sitemap = Sitemap::create();
         $sitemap->add(Url::create(route('homepage'))->setPriority(1)->setChangeFrequency('daily'));
-        $cacheKey = 'codex-sitemap-v3';
+        $cacheKey = 'codex-sitemap-v4';
         if (Cache::has($cacheKey)) {
             $sitemapContents = Cache::get($cacheKey);
 
