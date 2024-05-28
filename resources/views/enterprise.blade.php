@@ -451,7 +451,7 @@
                     </div>
                 </div>
                 <div class="text-center mt-12">
-                    <a class="group inline-flex h-14 px-7 items-center justify-center text-base font-medium text-black hover:text-white bg-violet-500 hover:bg-violet-600 transition duration-200 rounded-full"
+                    <a class="group inline-flex h-14 px-7 items-center justify-center text-base font-medium text-white hover:text-white bg-violet-500 hover:bg-violet-600 transition duration-200 rounded-full"
                         href="#cta">
                         <span class="mr-2">{{ __('GET IN TOUCH') }}</span>
                         <svg width="24" height="24" viewbox="0 0 24 24" fill="none"
