@@ -54,7 +54,7 @@
                 </div>
                 <div class="w-full lg:w-1/3 px-4">
                     <a class="group block max-w-md mx-auto lg:max-w-none bg-radial to-teal-800 from-teal-600 rounded-3xl overflow-hidden"
-                        href="#best-in-class-documentation">
+                        href="#benefits">
                         <div
                             class="relative h-148 bg-opacity-0 bg-teal-600 group-hover:bg-opacity-100 transition duration-500">
                             <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
@@ -63,8 +63,8 @@
                             </div>
                             <div class="relative flex flex-col p-10 h-full">
                                 <span class="block text-5xl text-white font-medium">03</span>
-                                <span class="block mt-auto text-4xl text-white">Best-in-class</span>
-                                <span class="block text-4xl text-white">documentation</span>
+                                <span class="block mt-auto text-4xl text-white">20% more</span>
+                                <span class="block text-4xl text-white">dev time</span>
                             </div>
                         </div>
                     </a>
@@ -304,164 +304,131 @@
         </div>
     </section>
 
-    <section class="relative py-12 md:py-24 bg-body overflow-hidden" id="best-in-class-documentation">
+    <section class="relative py-12 md:py-24 bg-body overflow-hidden" id="benefits">
         <div class="relative container mx-auto px-4">
             <div
                 class="absolute top-0 right-0 -mr-52 -mt-64 w-186 h-186 bg-gradient-to-t from-purple-600 via-darkBlue-900 rounded-full filter blur-4xl">
             </div>
-            <div class="relative mx-auto lg:mx-0 mb-32">
+            <div class="max-w-5xl mx-auto mb-16 text-center relative">
                 <h2
-                    class="font-heading text-4xl xs:text-5xl sm:text-6xl lg:text-7xl font-medium text-white tracking-tight mb-6">
-                    Best-in-class documentation
+                    class="font-heading text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-medium text-white tracking-tight mb-6">
+                    Reduce the time spent on documentation to zero
                 </h2>
-                <p class="max-w-4xl text-xl text-newGray-500 tracking-tight">
-                    We are constantly improving CodexAtlas and keeping it up-to-date with the latest versions of each
-                    framework and language. But we are also doing some other cool stuff that will be available soon.
+                <p class="text-xl text-newGray-400">
+                    CodexAtlas removes the manual work on documenting software projects by using the latest
+                    advancements in Artificial Intelligence.
                 </p>
             </div>
             <div class="relative max-w-md lg:max-w-none mx-auto">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div class="w-full">
                         <div
-                            class="group block h-auto xl:h-[20rem] p-8 border-2 border-white border-opacity-10 hover:border-opacity-100 rounded-3xl transition duration-200">
+                            class="group block h-full p-8 border-2 border-white border-opacity-10 hover:border-opacity-100 rounded-3xl transition duration-200">
                             <div class="flex h-full flex-col items-start">
-                                <div class="mt-auto max-w-xs">
-                                    <h3
-                                        class="text-3xl sm:text-4xl mb-2 font-medium text-white group-hover:text-sky-900">
-                                        On-premise code documentation
-                                    </h3>
-                                    <p class="text-violet-100 tracking-tight leading-5">
-                                        Your code is something really private. Everything runs on your own server and
-                                        only you can read it.
-                                    </p>
-                                </div>
+                                <h2 class="text-3xl sm:text-4xl mb-2 font-medium text-white group-hover:text-sky-900">
+                                    Real-time updates
+                                </h2>
+                                <p class="text-violet-100 tracking-tight leading-normal">
+                                    The documentation is always up-to-date with the code, so you don't have to worry
+                                    about it.
+                                </p>
                             </div>
                         </div>
                     </div>
                     <div class="w-full">
                         <div
-                            class="group block h-auto xl:h-[20rem] p-8 border-2 border-white border-opacity-10 hover:border-opacity-100 rounded-3xl transition duration-200">
+                            class="group block h-full p-8 border-2 border-white border-opacity-10 hover:border-opacity-100 rounded-3xl transition duration-200">
                             <div class="flex h-full flex-col items-start">
-                                <span
-                                    class="bg-violet-500 ml-auto px-4 py-2 text-sm text-white font-medium rounded-full">
-                                    Coming soon
-                                </span>
-                                <div class="mt-auto max-w-xs">
-                                    <h2
-                                        class="text-3xl sm:text-4xl mb-2 font-medium text-white group-hover:text-sky-900">
-                                        Self-host your docs
-                                    </h2>
-                                    <p class="text-violet-100 tracking-tight leading-5">
-                                        Synchronize your documentation to Confluence, GitHub Wiki, Gitlab Wiki and
-                                        Notion, or download it in Markdown format.
-                                    </p>
-                                </div>
+                                <h3 class="text-3xl sm:text-4xl mb-2 font-medium text-white group-hover:text-sky-900">
+                                    Bussiness knowledge
+                                </h3>
+                                <p class="text-violet-100 tracking-tight leading-normal">
+                                    You can extend the documentation with business domain knowledge that is not
+                                    present in the code.
+                                </p>
                             </div>
                         </div>
                     </div>
                     <div class="w-full">
                         <div
-                            class="group block h-auto xl:h-[20rem] p-8 border-2 border-white border-opacity-10 hover:border-opacity-100 rounded-3xl transition duration-200">
+                            class="group block h-full p-8 border-2 border-white border-opacity-10 hover:border-opacity-100 rounded-3xl transition duration-200">
                             <div class="flex h-full flex-col items-start">
-                                <span
-                                    class="bg-violet-500 ml-auto px-4 py-2 text-sm text-white font-medium rounded-full">
-                                    Coming soon
-                                </span>
-                                <div class="mt-auto max-w-xs">
-                                    <h3
-                                        class="text-3xl sm:text-4xl mb-2 font-medium text-white group-hover:text-sky-900">
-                                        Intelligent copilot
-                                    </h3>
-                                    <p class="text-violet-100 tracking-tight leading-5">
-                                        We want to reduce the time
-                                        between introducing a new person to a project and developing their first
-                                        feature. Having all the knowledge of your code will help us do it.
-                                    </p>
-                                </div>
+                                <h3 class="text-3xl sm:text-4xl mb-2 font-medium text-white group-hover:text-sky-900">
+                                    Automatic READMEs
+                                </h3>
+                                <p class="text-violet-100 tracking-tight leading-normal">
+                                    CodexAtlas can generate README files for your projects. You can try our <a
+                                        href="{{ route('tools.readme-generator') }}" class="underline">free README
+                                        generator</a> to get
+                                    a glance.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full">
+                        <div
+                            class="group block h-full p-8 border-2 border-white border-opacity-10 hover:border-opacity-100 rounded-3xl transition duration-200">
+                            <div class="flex h-full flex-col items-start">
+                                <h3 class="text-3xl sm:text-4xl mb-2 font-medium text-white group-hover:text-sky-900">
+                                    Use-case docs
+                                </h3>
+                                <p class="text-violet-100 tracking-tight leading-normal">
+                                    Most tools just create documentation for each file. CodexAtlas can detect use cases
+                                    from your code and will generate <strong>video tutorials</strong> on how they work.
+                                    (Feature in preview, reach out to support to enable it.)
+                                </p>
                             </div>
                         </div>
                     </div>
                     <div class="w-full">
                         <div
-                            class="group block h-auto xl:h-[20rem] p-8 border-2 border-white border-opacity-10 hover:border-opacity-100 rounded-3xl transition duration-200">
+                            class="group block h-full p-8 border-2 border-white border-opacity-10 hover:border-opacity-100 rounded-3xl transition duration-200">
                             <div class="flex h-full flex-col items-start">
-                                <span
-                                    class="bg-violet-500 ml-auto px-4 py-2 text-sm text-white font-medium rounded-full">
-                                    Coming soon
-                                </span>
-                                <div class="mt-auto max-w-xs">
-                                    <h3
-                                        class="text-3xl sm:text-4xl mb-2 font-medium text-white group-hover:text-sky-900">
-                                        Pull Request Assistant
-                                    </h3>
-                                    <p class="text-violet-100 tracking-tight leading-5">
-                                        An intelligent assistant directly in GitHub, Gitlab and Bitbucket. Every time
-                                        you review a PR, you can write <code
-                                            class="bg-black p-1 rounded text-violet-50">/codex
-                                            {instruction}</code> and Codex will
-                                        do the change for you, making revisions of Pull Requests up to 2 times faster.
-                                    </p>
-                                </div>
+                                <h3 class="text-3xl sm:text-4xl mb-2 font-medium text-white group-hover:text-sky-900">
+                                    Code conversion
+                                </h3>
+                                <p class="text-violet-100 tracking-tight leading-normal">
+                                    CodexAtlas can help you convert code from one language or framework to another. You
+                                    can try our <a
+                                        href="{{ route('tools.code-converter', ['from' => 'python', 'to' => 'javascript']) }}"
+                                        class="underline">free code conversion tool</a> to get
+                                    a glance.
+                                </p>
                             </div>
                         </div>
                     </div>
                     <div class="w-full">
                         <div
-                            class="group block h-auto xl:h-[20rem] p-8 border-2 border-white border-opacity-10 hover:border-opacity-100 rounded-3xl transition duration-200">
+                            class="group block h-full p-8 border-2 border-white border-opacity-10 hover:border-opacity-100 rounded-3xl transition duration-200">
                             <div class="flex h-full flex-col items-start">
-                                <span
-                                    class="bg-violet-500 ml-auto px-4 py-2 text-sm text-white font-medium rounded-full">
-                                    Coming soon
-                                </span>
-                                <div class="mt-auto max-w-xs">
-                                    <h3
-                                        class="text-3xl sm:text-4xl mb-2 font-medium text-white group-hover:text-sky-900">
-                                        Glossary
-                                    </h3>
-                                    <p class="text-violet-100 tracking-tight leading-5">
-                                        Help the LLM understand better your code with glossary, by adding custom words
-                                        and their meaning to your knowledge database. Codex will use them to generate
-                                        better documentation.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full">
-                        <div
-                            class="group block h-auto xl:h-[20rem] p-8 border-2 border-white border-opacity-10 hover:border-opacity-100 rounded-3xl transition duration-200">
-                            <div class="flex h-full flex-col items-start">
-                                <span
-                                    class="bg-violet-500 ml-auto px-4 py-2 text-sm text-white font-medium rounded-full">
-                                    Coming soon
-                                </span>
-                                <div class="mt-auto max-w-xs">
-                                    <h3
-                                        class="text-3xl sm:text-4xl mb-2 font-medium text-white group-hover:text-sky-900">
-                                        Video documentation
-                                    </h3>
-                                    <p class="text-violet-100 tracking-tight leading-5">
-                                        Codex will detect the business use cases from your code, and generate
-                                        <strong>video and audio</strong> documentation explaining how every feature
-                                        works.
-                                    </p>
-                                </div>
+                                <h3 class="text-3xl sm:text-4xl mb-2 font-medium text-white group-hover:text-sky-900">
+                                    On-premise plan
+                                </h3>
+                                <p class="text-violet-100 tracking-tight leading-5">
+                                    We understand that for some
+                                    organizations, code is something really private. Reach out to us for an
+                                    on-premise version so that your code will never leave your servers.
+                                    <strong>One-time payment. Pay once, use forever.</strong>
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="text-center mt-12">
-                    <a class="group inline-flex h-14 px-7 items-center justify-center text-base font-medium text-white hover:text-white bg-violet-500 hover:bg-violet-600 transition duration-200 rounded-full"
-                        href="#cta">
-                        <span class="mr-2">{{ __('GET IN TOUCH') }}</span>
-                        <svg width="24" height="24" viewbox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M17.9199 6.62C17.8185 6.37565 17.6243 6.18147 17.3799 6.08C17.2597 6.02876 17.1306 6.00158 16.9999 6H6.99994C6.73472 6 6.48037 6.10536 6.29283 6.29289C6.1053 6.48043 5.99994 6.73478 5.99994 7C5.99994 7.26522 6.1053 7.51957 6.29283 7.70711C6.48037 7.89464 6.73472 8 6.99994 8H14.5899L6.28994 16.29C6.19621 16.383 6.12182 16.4936 6.07105 16.6154C6.02028 16.7373 5.99414 16.868 5.99414 17C5.99414 17.132 6.02028 17.2627 6.07105 17.3846C6.12182 17.5064 6.19621 17.617 6.28994 17.71C6.3829 17.8037 6.4935 17.8781 6.61536 17.9289C6.73722 17.9797 6.86793 18.0058 6.99994 18.0058C7.13195 18.0058 7.26266 17.9797 7.38452 17.9289C7.50638 17.8781 7.61698 17.8037 7.70994 17.71L15.9999 9.41V17C15.9999 17.2652 16.1053 17.5196 16.2928 17.7071C16.4804 17.8946 16.7347 18 16.9999 18C17.2652 18 17.5195 17.8946 17.707 17.7071C17.8946 17.5196 17.9999 17.2652 17.9999 17V7C17.9984 6.86932 17.9712 6.74022 17.9199 6.62Z"
-                                fill="currentColor"></path>
-                        </svg>
-                    </a>
-                </div>
+                @if (Route::has('register'))
+                    <div class="text-center mt-12">
+                        <a class="group inline-flex h-14 px-7 items-center justify-center text-base font-medium text-white hover:text-white bg-violet-500 hover:bg-violet-600 transition duration-200 rounded-full"
+                            href="{{ route('register') }}">
+                            <span class="mr-2">{{ __('Try it for free') }}</span>
+                            <svg width="24" height="24" viewbox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M17.9199 6.62C17.8185 6.37565 17.6243 6.18147 17.3799 6.08C17.2597 6.02876 17.1306 6.00158 16.9999 6H6.99994C6.73472 6 6.48037 6.10536 6.29283 6.29289C6.1053 6.48043 5.99994 6.73478 5.99994 7C5.99994 7.26522 6.1053 7.51957 6.29283 7.70711C6.48037 7.89464 6.73472 8 6.99994 8H14.5899L6.28994 16.29C6.19621 16.383 6.12182 16.4936 6.07105 16.6154C6.02028 16.7373 5.99414 16.868 5.99414 17C5.99414 17.132 6.02028 17.2627 6.07105 17.3846C6.12182 17.5064 6.19621 17.617 6.28994 17.71C6.3829 17.8037 6.4935 17.8781 6.61536 17.9289C6.73722 17.9797 6.86793 18.0058 6.99994 18.0058C7.13195 18.0058 7.26266 17.9797 7.38452 17.9289C7.50638 17.8781 7.61698 17.8037 7.70994 17.71L15.9999 9.41V17C15.9999 17.2652 16.1053 17.5196 16.2928 17.7071C16.4804 17.8946 16.7347 18 16.9999 18C17.2652 18 17.5195 17.8946 17.707 17.7071C17.8946 17.5196 17.9999 17.2652 17.9999 17V7C17.9984 6.86932 17.9712 6.74022 17.9199 6.62Z"
+                                    fill="currentColor"></path>
+                            </svg>
+                        </a>
+                    </div>
+                @endif
             </div>
         </div>
     </section>
