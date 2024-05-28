@@ -1,7 +1,7 @@
-<div>
+<div class="px-4 sm:px-0">
     @if ($project->repositories->isNotEmpty())
         <h2 class="font-bold text-slate-300">{{ __('Repositories') }}</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+        <div class="flex flex-col max-w-xl w-full sm:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
             @foreach ($project->repositories as $repository)
                 <x-bordered-black-box :single="true">
                     <x-dynamic-component :component="$repository->sourceCodeAccount->getProvider()->circledIcon()" class="h-16 w-16 mx-auto" />

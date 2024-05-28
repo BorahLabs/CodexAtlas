@@ -1,7 +1,7 @@
 <div x-data="{
     sourceCodeAccount: $wire.entangle('sourceCodeAccount').live,
     shouldShowForm: true
-}" x-show="showAddRepository" class="w-full mt-12 mb-16" x-cloak
+}" x-show="showAddRepository" class="w-full px-4 sm:px-0 mt-12 mb-16" x-cloak
     x-on:source-code-add.window="shouldShowForm = false" x-on:source-code-cancel.window="shouldShowForm = true">
     <x-bordered-black-box :single="true">
         <x-codex.source-code-accounts :accounts="auth()->user()->currentTeam->sourceCodeAccounts" x-model="sourceCodeAccount" />
@@ -10,14 +10,14 @@
             @csrf
             <input type="hidden" name="source_code_account_id" x-model="sourceCodeAccount" />
             @if (auth()->user()->currentTeam->sourceCodeAccounts->isNotEmpty())
-                <div class="flex items-end mt-8">
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 items-end mt-8">
                     <div class="w-full">
                         <x-label for="name" style="lightweight" value="{{ __('Repository name') }}"
                             class="mb-2" />
                         {{-- @empty($this->accountRepositories) --}}
                         @if (true)
                             @if ($account->provider == App\Enums\SourceCodeProvider::Bitbucket)
-                                <div class="flex items-center space-x-2 w-full">
+                                <div class="flex flex-col space-y-2 sm:space-y-0 sm:flex-row items-center sm:space-x-2 w-full">
                                     <x-bordered-input id="bitbucket_workspace" list="bitbucket-account-workspace-list"
                                         type="text" wire:model.live.debounce.200ms="bitbucketWorkspace"
                                         class="block w-full" name="bitbucket_workspace" :autofocus="$project->repositories->isEmpty()"

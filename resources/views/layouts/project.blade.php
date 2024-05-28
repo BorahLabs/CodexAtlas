@@ -35,7 +35,7 @@
                                 </ul>
                             </nav>
                         </aside>
-                        <div class="min-w-[500px] flex-1">
+                        <div class="w-full flex-1">
                             {{ $slot }}
                         </div>
                     </div>
