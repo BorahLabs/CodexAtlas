@@ -8,10 +8,11 @@
         <div class="relative py-10">
             <div class="container mx-auto px-4">
                 <div class="text-center">
-                    <h1 class="font-heading text-6xl md:text-8xl xl:text-9xl font-semibold text-white tracking-tight">
-                        <span>Codex</span>
+                    <h1 class="font-heading text-5xl md:text-7xl xl:text-8xl font-semibold text-white tracking-tight">
+                        <span>Offline, private</span>
                         <span
-                            class="-ml-4 bg-clip-text text-transparent bg-gradient-to-br from-violet-900 via-blueGray-900 to-sky-900">B2B</span>
+                            class="bg-clip-text text-transparent bg-gradient-to-br from-violet-900 via-blueGray-900 to-sky-900">code
+                            documentation</span>
                     </h1>
                 </div>
             </div>
