@@ -6,12 +6,12 @@
         ->first();
 @endphp
 <div x-data="{ open: {{ $selectedSystemComponent ? 'true' : 'false' }} }">
-    <div class="bg-dark bg-opacity-95 z-40 text-4xl transition fixed top-0 left-0 w-full h-full overflow-auto md:relative md:w-full md:h-full" x-bind:class="{
+    <div class="bg-dark z-40 text-4xl transition fixed top-0 left-0 w-full h-full overflow-auto md:relative md:w-full md:h-full" x-bind:class="{
         'pointer-events-none opacity-0 scale-75': !show,
         'opacity-1 scale-100': show
-    }" x-trap.noscroll="show" x-bind:tabindex="show ? 0 : -1">
+    }" x-bind:tabindex="show ? 0 : -1">
         <div class="w-full p-4 h-full">
-            <ul role="list" class="space-y-9 mt-4" x-show="open">
+            <ul role="list" class="space-y-9 mt-4 pb-10" x-show="open">
                 @foreach ($sections as $section)
                     <li>
                         <h3 class="font-display lg:font-medium break-words text-white text-sm font-bold">
