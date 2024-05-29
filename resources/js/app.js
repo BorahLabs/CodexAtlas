@@ -7,6 +7,7 @@ import '@tsparticles/preset-firefly';
 import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
 
 Livewire.start()
+Alpine.plugin(focus)
 
 hljs.registerLanguage("blade", hljsBlade);
 hljs.initHighlightingOnLoad();

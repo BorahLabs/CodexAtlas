@@ -1,6 +1,6 @@
 <x-project-layout :project="$project">
-    <div x-data="{ showAddRepository: {{ auth()->user()->currentTeam->sourceCodeAccounts->isEmpty() ? 'true' : 'false' }} }">
-        <header class="flex items-center justify-between">
+    <div class="mt-4 sm:mt-0" x-data="{ showAddRepository: {{ auth()->user()->currentTeam->sourceCodeAccounts->isEmpty() ? 'true' : 'false' }} }">
+        <header class="flex items-center justify-between px-4">
             <h1 class="text-white text-xl font-bold">{{ $project->name }}</h1>
             @can('create-repository')
                 <button type="button"
@@ -19,7 +19,7 @@
                         </defs>
                     </svg>
 
-                    <span>Add repository</span>
+                    <span class="sm:block hidden">Add repository</span>
 
                     <svg class="transition" width="18" height="9" viewBox="0 0 18 9" fill="none"
                         xmlns="http://www.w3.org/2000/svg" x-bind:class="{ 'rotate-180': showAddRepository }">
