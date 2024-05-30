@@ -17,6 +17,9 @@ class CodeConverter extends Component
     #[Locked]
     public string $to;
 
+    #[Locked]
+    public bool $fromPlatform = false;
+
     #[Required]
     public ?string $code = null;
 
@@ -37,7 +40,7 @@ class CodeConverter extends Component
 
         try {
             $tool = CodeConverterTool::from($this->from, $this->to);
-            $result = $tool->convert(request()->ip(), $this->code);
+            $result = $tool->convert(request()->ip(), $this->code, $this->fromPlatform);
         } catch (RateLimitExceeded $e) {
             $this->addError('code', $e->getMessage());
 
@@ -51,6 +54,7 @@ class CodeConverter extends Component
             [
                 'from' => $this->from,
                 'to' => $this->to,
+                'user_id' => $this->fromPlatform ? auth()->id() : null,
             ],
         );
         $this->result = $result;

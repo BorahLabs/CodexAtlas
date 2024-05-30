@@ -3,6 +3,7 @@
 namespace App\Livewire\Tools;
 
 use App\Actions\Codex\Readme\GenerateOfflineReadme;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
@@ -10,6 +11,9 @@ use Livewire\Features\SupportFileUploads\WithFileUploads;
 class ReadmeGenerator extends Component
 {
     use WithFileUploads;
+
+    #[Locked]
+    public bool $isFromPlatform = false;
 
     public $zip = null;
 
@@ -34,6 +38,7 @@ class ReadmeGenerator extends Component
         ]);
 
         try {
+            // TODO: Online readme if it's from platform
             $readme = GenerateOfflineReadme::run($this->zip);
         } catch (\Exception $e) {
             $this->addError('zip', $e->getMessage());

@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div x-data="{ showOnboarding: {{ !session()->has('provider') && $errors->isEmpty() && $project->repositories->isEmpty() ? 'true' : 'false' }} }">
                 @if (auth()->user()->currentTeam->sourceCodeAccounts->isEmpty())
                     <x-codex.onboarding.steps :current="2" x-show="showOnboarding" x-model="showOnboarding" />
@@ -8,7 +8,7 @@
                     <x-codex.onboarding.steps :current="3" x-show="showOnboarding" x-model="showOnboarding" />
                 @endif
                 <div x-show="!showOnboarding" x-cloak>
-                    <div class="flex flex-wrap">
+                    <div class="flex flex-col gap-8 lg:flex-row">
                         <aside class="flex-shrink-0 mr-8">
                             <nav>
                                 <ul class="divide-y divide-[#504A8A]">
@@ -35,7 +35,7 @@
                                 </ul>
                             </nav>
                         </aside>
-                        <div class="min-w-[500px] flex-1">
+                        <div class="w-full lg:min-w-[500px] flex-1">
                             {{ $slot }}
                         </div>
                     </div>

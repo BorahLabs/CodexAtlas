@@ -28,6 +28,9 @@ class CodeDocumentation extends Component
     public string $ip;
 
     #[Locked]
+    public bool $fromPlatform = false;
+
+    #[Locked]
     public ?string $systemComponentId = null;
 
     public ?string $filePath;
@@ -99,6 +102,10 @@ class CodeDocumentation extends Component
 
     public function userExceedsLimitsOfRequests(): bool
     {
+        if ($this->fromPlatform) {
+            return false;
+        }
+
         return Cache::get('code-documentation:user-requests:'.$this->ip, 0) >= 30;
     }
 

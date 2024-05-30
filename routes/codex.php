@@ -11,6 +11,10 @@ use App\Actions\Platform\ShowDocs;
 use App\Actions\Platform\ShowReadme;
 use App\Actions\Platform\ShowTechStack;
 use App\Actions\Platform\SourceCodeAccounts\StoreAccountPersonalAccessToken;
+use App\Actions\Platform\Tools\ShowCodeConversion;
+use App\Actions\Platform\Tools\ShowDocumentFiles;
+use App\Actions\Platform\Tools\ShowFixMyCode;
+use App\Actions\Platform\Tools\ShowReadmeGenerator;
 use App\Actions\Platform\Webhook\HandleWebhook;
 use App\Http\Controllers\Website\CodeConvertionController;
 use App\Http\Controllers\Website\GuideController;
@@ -35,6 +39,7 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
     Route::middleware('central-domain')->group(function () {
         Route::view('/', 'welcome')
             ->name('homepage');
+
         Route::view('/enterprise-code-documentation', 'enterprise')
             ->name('enterprise');
 
@@ -68,6 +73,11 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
             Route::get('/projects/{project}', ShowProject::class)->name('projects.show');
 
             Route::post('/projects/{project}/repositories', StoreRepository::class)->name('repositories.store');
+
+            Route::get('/app-tools/code-conversion', ShowCodeConversion::class)->name('app.tools.code-conversion');
+            Route::get('/app-tools/document-files', ShowDocumentFiles::class)->name('app.tools.document-files');
+            Route::get('/app-tools/fix-my-code', ShowFixMyCode::class)->name('app.tools.fix-my-code');
+            Route::get('/app-tools/readme-generator', ShowReadmeGenerator::class)->name('app.tools.readme-generator');
         });
 
         Route::post('/accounts/pat', StoreAccountPersonalAccessToken::class)->name('source-code-accounts.pat.store');
