@@ -31,32 +31,30 @@ Route::domain('codexatlas.app')->group(function () {
 });
 
 Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
-    Route::view('/', 'welcome')
-        ->middleware('central-domain')
-        ->name('homepage');
-    Route::view('/enterprise-code-documentation', 'enterprise')
-        ->middleware('central-domain')
-        ->name('enterprise');
 
-    Route::get('/tools/code-documentation-{language}', CodeDocumentationToolController::class)
-        ->middleware('central-domain')
-        ->name('tools.code-documentation');
+    Route::middleware('central-domain')->group(function () {
+        Route::view('/', 'welcome')
+            ->name('homepage');
+        Route::view('/enterprise-code-documentation', 'enterprise')
+            ->name('enterprise');
 
-    Route::get('/tools/fix-my-code-with-ai', CodeFixerToolController::class)
-        ->middleware('central-domain')
-        ->name('tools.code-fixer');
+        Route::get('/tools/code-documentation-{language}', CodeDocumentationToolController::class)
+            ->name('tools.code-documentation');
 
-    Route::get('/tools/readme-generator', ReadmeGeneratorToolController::class)
-        ->middleware('central-domain')
-        ->name('tools.readme-generator');
+        Route::get('/tools/fix-my-code-with-ai', CodeFixerToolController::class)
+            ->name('tools.code-fixer');
 
-    Route::get('/{from}-to-{to}-code-converter', CodeConvertionController::class)
-        ->middleware('central-domain')
-        ->name('tools.code-converter')
-        ->where(['from' => '[a-z\-]+', 'to' => '[a-z\-]+']);
+        Route::get('/tools/readme-generator', ReadmeGeneratorToolController::class)
+            ->name('tools.readme-generator');
 
-    Route::get('/guide', [GuideController::class, 'index'])->name('guide.index');
-    Route::get('/guide/{folder}/{file}', [GuideController::class, 'show'])->name('guide.show');
+        Route::get('/{from}-to-{to}-code-converter', CodeConvertionController::class)
+            ->name('tools.code-converter')
+            ->where(['from' => '[a-z\-]+', 'to' => '[a-z\-]+']);
+
+        Route::get('/guide', [GuideController::class, 'index'])->name('guide.index');
+        Route::get('/guide/{folder}/{file}', [GuideController::class, 'show'])->name('guide.show');
+    });
+
 
     Route::middleware([
         'auth:sanctum',
