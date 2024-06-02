@@ -12,7 +12,7 @@ use Spatie\Sitemap\Tags\Url;
 
 class SitemapController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): Sitemap
     {
         $sitemap = Sitemap::create();
         $sitemap->add(Url::create(route('homepage'))->setPriority(1)->setChangeFrequency('daily'));

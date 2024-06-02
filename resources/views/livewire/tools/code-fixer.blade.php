@@ -37,12 +37,15 @@
         <x-filament::loading-indicator class="h-20 w-20" />
     </div>
 
-    @if ($solution)
+    @if ($codeFixing)
         <div wire:loading.remove wire:target="sendCode" class="w-full mt-10">
             <h2 class="font-bold text-4xl text-primary-gradient text-left mt-4 mb-2">
                 Result
             </h2>
-            {!! Str::markdown($solution) !!}
+            <div>
+                {!! Str::markdown($codeFixing->response ?? '') !!}
+            </div>
+            <livewire:tools.user-feedback wire:key="code-fixing-{{ $codeFixing->id }}" :model="$codeFixing" />
         </div>
     @endif
 </div>

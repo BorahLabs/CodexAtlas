@@ -31,9 +31,7 @@ class CodeFixerPromptRequest implements SimplePromptRequest
             throw new Exception('[Code Fixer] Missing parameters');
         }
 
-        return 'You are solving a code issue. These are the code and error contents respectively:
-            ```'.$data['code'].'
-            '.$data['codeError'].'
-            ```';
+        return "You are solving a code issue. These are the code and error contents respectively:\n\n"
+            ."```\n".$data['code']."\n```\n".$data['codeError'];
     }
 }

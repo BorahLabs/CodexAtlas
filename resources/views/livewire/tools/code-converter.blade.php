@@ -1,7 +1,7 @@
 <div class="w-full">
     <form wire:submit="convert" class="w-full flex flex-col justify-center items-center {{ $result ? 'hidden' : '' }}"
         wire:loading.remove>
-        <textarea wire:model="code" class="bg-slate-800 border border-slate-700 rounded-xl w-full resize-none"
+        <textarea wire:model="code" class="bg-slate-800 text-white border border-slate-700 rounded-xl w-full resize-none"
             placeholder="Your {{ $from }} code goes here" rows="15"></textarea>
         @error('code')
             <div class="text-red-500 w-full mt-1">{{ $message }}</div>
@@ -18,5 +18,6 @@
             {!! Str::markdown($result) !!}
         </div>
         <x-button theme="primary" class="mt-8" wire:click="$set('result', null)">Start again</x-button>
+        <livewire:tools.user-feedback :model="$codeConvertion" wire:key="code-convertion-{{ $codeConvertion->id }}" />
     @endif
 </div>

@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands\Internal;
 
+use App\Atlas\Frameworks\Contracts\Framework;
 use App\Atlas\Guesser;
+use App\Atlas\Languages\Contracts\Language;
 use Illuminate\Console\Command;
 
 use function Laravel\Prompts\multiselect;
@@ -26,7 +28,7 @@ class MakeCodeConverter extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $code = '<?php
 
@@ -48,15 +50,15 @@ class {from}To{to} extends CodeConverterTool
         $to = array_filter(array_map('trim', explode(',', $this->argument('to'))));
         if (empty($from)) {
             $from = multiselect('From: ', options: [
-                ...collect(Guesser::supportedFrameworks())->map(fn ($f) => $f->name())->toArray(),
-                ...collect(Guesser::supportedLanguages())->map(fn ($l) => $l->name())->toArray(),
+                ...collect(Guesser::supportedFrameworks())->map(fn (Framework $f) => $f->name())->toArray(),
+                ...collect(Guesser::supportedLanguages())->map(fn (Language $l) => $l->name())->toArray(),
             ]);
         }
 
         if (empty($to)) {
             $to = multiselect('To: ', options: [
-                ...collect(Guesser::supportedFrameworks())->map(fn ($f) => $f->name())->toArray(),
-                ...collect(Guesser::supportedLanguages())->map(fn ($l) => $l->name())->toArray(),
+                ...collect(Guesser::supportedFrameworks())->map(fn (Framework $f) => $f->name())->toArray(),
+                ...collect(Guesser::supportedLanguages())->map(fn (Language $l) => $l->name())->toArray(),
             ]);
         }
 

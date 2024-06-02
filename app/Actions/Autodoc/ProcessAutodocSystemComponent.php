@@ -18,7 +18,7 @@ class ProcessAutodocSystemComponent
 {
     use AsAction;
 
-    public function handle(SystemComponent $systemComponent, ?AutodocLead $lead = null, string $model = 'gpt-4o')
+    public function handle(SystemComponent $systemComponent, ?AutodocLead $lead = null, string $model = 'gpt-4o'): void
     {
         if (empty(trim($systemComponent->file_contents))) {
             $systemComponent->updateQuietly([
@@ -74,7 +74,7 @@ class ProcessAutodocSystemComponent
         }
     }
 
-    protected function checkIfShouldFinish(AutodocLead $lead)
+    protected function checkIfShouldFinish(AutodocLead $lead): void
     {
         $total = $lead->branch->systemComponents()->count();
         $processed = $lead->branch->systemComponents()

@@ -5,6 +5,7 @@ namespace App\Livewire\Tools;
 use App\Actions\InternalNotifications\LogUserPerformedAction;
 use App\CodeConverter\Tools\CodeConverterTool;
 use App\Exceptions\RateLimitExceeded;
+use App\Models\CodeConvertion;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Symfony\Contracts\Service\Attribute\Required;
@@ -17,27 +18,32 @@ class CodeConverter extends Component
     #[Locked]
     public string $to;
 
+    #[Locked]
+    public bool $fromPlatform = false;
+
     #[Required]
     public ?string $code = null;
 
     public ?string $result = null;
 
-    public function render()
+    public ?CodeConvertion $codeConvertion = null;
+
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('livewire.tools.code-converter');
     }
 
-    public function convert()
+    public function convert(): void
     {
         $this->resetErrorBag();
         $this->result = null;
         $this->validate([
-            'code' => 'required|string|max:800|min:10',
+            'code' => 'required|string|max:2000|min:10',
         ]);
 
         try {
             $tool = CodeConverterTool::from($this->from, $this->to);
-            $result = $tool->convert(request()->ip(), $this->code);
+            [$codeConvertion, $result] = $tool->convert(request()->ip(), $this->code, $this->fromPlatform);
         } catch (RateLimitExceeded $e) {
             $this->addError('code', $e->getMessage());
 
@@ -51,8 +57,12 @@ class CodeConverter extends Component
             [
                 'from' => $this->from,
                 'to' => $this->to,
+                'user_id' => $this->fromPlatform ? auth()->id() : null,
+                'convertion_id' => $codeConvertion->id,
             ],
         );
+
+        $this->codeConvertion = $codeConvertion;
         $this->result = $result;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\SystemComponentStatus;
+use App\Models\Traits\HasUserFeedback;
 use Borah\KnowledgeBase\Contracts\Embeddable;
 use Borah\KnowledgeBase\DTO\KnowledgeEmbeddingText;
 use Borah\KnowledgeBase\Traits\BelongsToKnowledgeBase;
@@ -17,6 +18,7 @@ class SystemComponent extends Model implements Embeddable
 {
     // use BelongsToKnowledgeBase;
     use HasFactory;
+    use HasUserFeedback;
     use HasUuids;
     use SoftDeletes;
 

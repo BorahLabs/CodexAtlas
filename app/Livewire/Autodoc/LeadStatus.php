@@ -6,12 +6,13 @@ use App\Actions\Platform\DownloadDocsAsMarkdown;
 use App\Enums\SystemComponentStatus;
 use App\Models\AutodocLead;
 use Livewire\Component;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class LeadStatus extends Component
 {
     public AutodocLead $autodocLead;
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $branch = $this->autodocLead->branch;
         $data = [
@@ -33,7 +34,7 @@ class LeadStatus extends Component
         return view('autodoc.livewire.lead-status', $data);
     }
 
-    public function downloadDocs()
+    public function downloadDocs(): BinaryFileResponse
     {
         $branch = $this->autodocLead->branch;
         $repository = $branch->repository;

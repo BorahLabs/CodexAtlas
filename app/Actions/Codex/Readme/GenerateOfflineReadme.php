@@ -10,7 +10,7 @@ class GenerateOfflineReadme
 {
     use AsAction;
 
-    public function handle(TemporaryUploadedFile $zip)
+    public function handle(TemporaryUploadedFile $zip): string
     {
         $response = Http::attach('zip_file', $zip->get(), $zip->getClientOriginalName(), [
             'Content-Type' => 'application/zip',

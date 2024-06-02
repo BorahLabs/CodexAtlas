@@ -68,6 +68,11 @@ return [
         ],
     ],
 
+    'lmstudio' => [
+        'url' => env('LMSTUDIO_URL', 'http://localhost:1234/v1'),
+        'completion_model' => env('LMSTUDIO_COMPLETION_MODEL', 'TheBloke/phi-2-GGUF'),
+    ],
+
     'readme_generator' => [
         'endpoint' => [
             'offline' => env('README_GENERATOR_OFFLINE_ENDPOINT', 'https://readme-generator.codexatlas.app/v1/offline'),

@@ -8,7 +8,7 @@ class Repository implements Wireable
 {
     public readonly string $fullName;
 
-    public final function __construct(
+    final public function __construct(
         public readonly string $id,
         public readonly string $name,
         public readonly string $owner,
@@ -24,7 +24,7 @@ class Repository implements Wireable
         $this->fullName = $owner.'/'.$name;
     }
 
-    public function toLivewire()
+    public function toLivewire(): array
     {
         return [
             'id' => $this->id,
@@ -36,7 +36,10 @@ class Repository implements Wireable
         ];
     }
 
-    public static function fromLivewire($value)
+    /**
+     * @var array
+     */
+    public static function fromLivewire($value): static
     {
         $id = $value['id'];
         $name = $value['name'];

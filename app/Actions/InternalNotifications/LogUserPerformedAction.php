@@ -16,7 +16,7 @@ class LogUserPerformedAction
         NotificationType $type,
         string $text,
         array $metadata = [],
-    ) {
+    ): void {
         if (app()->environment('testing')) {
             return;
         }
@@ -32,7 +32,7 @@ class LogUserPerformedAction
                 'content' => $type->icon().$text,
                 'embeds' => [
                     [
-                        'fields' => collect($metadata)->map(function ($value, $key) {
+                        'fields' => collect($metadata)->map(function (mixed $value, string $key) {
                             return [
                                 'name' => $key,
                                 'value' => $value,

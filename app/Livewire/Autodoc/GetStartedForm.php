@@ -18,7 +18,7 @@ class GetStartedForm extends Component implements HasForms
 
     public bool $captchaError = false;
 
-    public function mount()
+    public function mount(): void
     {
         $this->form->fill();
     }
@@ -59,7 +59,7 @@ class GetStartedForm extends Component implements HasForms
         $this->dispatch('autodoc:lead-registered', $lead->id);
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('autodoc.livewire.get-started-form');
     }

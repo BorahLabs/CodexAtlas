@@ -17,7 +17,7 @@ class FinishLeadProcessing
 
     public string $commandSignature = 'autodoc:finish-lead {lead}';
 
-    public function handle(AutodocLead $lead)
+    public function handle(AutodocLead $lead): void
     {
         $lead->update([
             'status' => SystemComponentStatus::Generated,
@@ -32,7 +32,7 @@ class FinishLeadProcessing
         ]);
     }
 
-    public function asCommand(Command $command)
+    public function asCommand(Command $command): void
     {
         $lead = AutodocLead::findOrFail($command->argument('lead'));
         $this->handle($lead);

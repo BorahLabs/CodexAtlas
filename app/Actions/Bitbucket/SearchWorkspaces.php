@@ -12,7 +12,7 @@ class SearchWorkspaces
 {
     use AsAction;
 
-    public function handle(SourceCodeAccount $account, string $query)
+    public function handle(SourceCodeAccount $account, string $query): array
     {
         try {
             $client = GetAuthenticatedAccountBitbucketClient::make()->handle($account);
