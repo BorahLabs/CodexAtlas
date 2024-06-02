@@ -4,6 +4,7 @@ namespace App\CodeConverter\Tools;
 
 use App\Atlas\Frameworks\Contracts\Framework;
 use App\Atlas\Languages\Contracts\Language;
+use App\Enums\SubscriptionType;
 use App\Exceptions\RateLimitExceeded;
 use App\LLM\Contracts\Llm;
 use App\Models\CodeConvertion;
@@ -42,7 +43,11 @@ abstract class CodeConverterTool
                 ->where('user_id', auth()->id())
                 ->where('created_at', '>=', today())
                 ->count();
-            throw_if($usage >= 100, new RateLimitExceeded('You have reached the maximum number of conversions (100) for today. Please, try again tomorrow.'));
+            /**
+             * @var SubscriptionType $subscriptionType
+             */
+            $subscriptionType = auth()->user()?->currentTeam?->subscriptionType() ?? SubscriptionType::FreeTrial;
+            throw_if($usage >= $subscriptionType->maxCodeConversions(), new RateLimitExceeded('You have reached the maximum number of conversions ('.$subscriptionType->maxCodeConversions().') for today. Please, try again tomorrow.'));
         } else {
             $usage = CodeConvertion::query()
                 ->where('ip', $ipAddress)

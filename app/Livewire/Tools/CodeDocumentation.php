@@ -6,6 +6,7 @@ use App\Actions\Autodoc\ProcessAutodocSystemComponent;
 use App\Actions\InternalNotifications\LogUserPerformedAction;
 use App\Atlas\Guesser;
 use App\Atlas\Languages\Contracts\Language;
+use App\Enums\SubscriptionType;
 use App\Enums\SystemComponentStatus;
 use App\Models\SystemComponent;
 use App\Models\Tool;
@@ -102,11 +103,15 @@ class CodeDocumentation extends Component
 
     public function userExceedsLimitsOfRequests(): bool
     {
-        if ($this->fromPlatform) {
+        /**
+         * @var SubscriptionType $subscriptionType
+         */
+        $subscriptionType = auth()->user()?->currentTeam?->subscriptionType() ?? SubscriptionType::FreeTrial;
+        if ($this->fromPlatform && !is_null($subscriptionType->maxSingleCodeDocumentations())) {
             return false;
         }
 
-        return Cache::get('code-documentation:user-requests:'.$this->ip, 0) >= 30;
+        return Cache::get('code-documentation:user-requests:'.$this->ip, 0) >= $subscriptionType->maxSingleCodeDocumentations();
     }
 
     public function render()
