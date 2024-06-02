@@ -7,9 +7,11 @@ use App\Atlas\Languages\Contracts\Language;
 use App\Enums\SubscriptionType;
 use App\Exceptions\RateLimitExceeded;
 use App\LLM\Contracts\Llm;
+use App\Models\CodeConverterContent;
 use App\Models\CodeConvertion;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use SplFileInfo;
 
 abstract class CodeConverterTool
@@ -84,6 +86,14 @@ Output in '.$this->to->name().':';
         ]);
 
         return [$convertion, $result->completion];
+    }
+
+    public function content(): ?CodeConverterContent
+    {
+        return CodeConverterContent::query()
+            ->where('from', Str::slug($this->from->name()))
+            ->where('to', Str::slug($this->to->name()))
+            ->first();
     }
 
     public static function from(string $from, string $to): CodeConverterTool

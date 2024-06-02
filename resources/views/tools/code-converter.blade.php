@@ -25,6 +25,14 @@
             <x-bordered-black-box class="text-white">
                 <livewire:tools.code-converter :from="$from" :to="$to" />
             </x-bordered-black-box>
+            @php
+                $content = $tool->content();
+            @endphp
+            @if ($content)
+                <div class="mt-12 prose prose-invert">
+                    {!! Str::markdown($content->markdown_content) !!}
+                </div>
+            @endif
             <div class="mt-12">
                 <h2 class="text-white font-bold text-xl">Other tools</h2>
                 @foreach (collect(\App\CodeConverter\Tools\CodeConverterTool::all())->map(fn($t) => $t->from->name())->unique() as $name)
