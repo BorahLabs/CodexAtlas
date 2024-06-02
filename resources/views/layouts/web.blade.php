@@ -35,6 +35,17 @@
 
     @production
         <script src="https://cdn.usefathom.com/script.js" data-site="FEPWQLXW" defer></script>
+        <script type="text/javascript">
+            window.$crisp = [];
+            window.CRISP_WEBSITE_ID = "3a93d028-9842-49b4-abb3-c518902f2909";
+            (function() {
+                d = document;
+                s = d.createElement("script");
+                s.src = "https://client.crisp.chat/l.js";
+                s.async = 1;
+                d.getElementsByTagName("head")[0].appendChild(s);
+            })();
+        </script>
     @endproduction
 </head>
 
