@@ -60,7 +60,6 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
         Route::get('/guide/{folder}/{file}', [GuideController::class, 'show'])->name('guide.show');
     });
 
-
     Route::middleware([
         'auth:sanctum',
         config('jetstream.auth_session'),

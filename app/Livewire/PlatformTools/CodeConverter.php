@@ -11,6 +11,7 @@ use Livewire\Component;
 class CodeConverter extends Component
 {
     public ?string $from = null;
+
     public ?string $to = null;
 
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory

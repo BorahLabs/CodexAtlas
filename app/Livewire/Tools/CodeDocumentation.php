@@ -107,7 +107,7 @@ class CodeDocumentation extends Component
          * @var SubscriptionType $subscriptionType
          */
         $subscriptionType = auth()->user()?->currentTeam?->subscriptionType() ?? SubscriptionType::FreeTrial;
-        if ($this->fromPlatform && !is_null($subscriptionType->maxSingleCodeDocumentations())) {
+        if ($this->fromPlatform && ! is_null($subscriptionType->maxSingleCodeDocumentations())) {
             return false;
         }
 

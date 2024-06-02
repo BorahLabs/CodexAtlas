@@ -3,7 +3,6 @@
 namespace App\Livewire\Atlas;
 
 use App\Actions\InternalNotifications\LogUserPerformedAction;
-use App\Enums\SourceCodeProvider;
 use App\Models\Project;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\BitbucketProvider;

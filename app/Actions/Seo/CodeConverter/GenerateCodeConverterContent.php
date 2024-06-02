@@ -23,7 +23,7 @@ class GenerateCodeConverterContent
             'from' => $from,
             'to' => $to,
         ])->exists();
-        if (!$overwrite && $exists) {
+        if (! $overwrite && $exists) {
             return;
         }
 
@@ -42,7 +42,7 @@ class GenerateCodeConverterContent
             ->when(fn (Stringable $str) => $str->contains('<markdown>'), fn (Stringable $str) => $str->after('<markdown>'))
             ->before('</markdown>')
             ->trim()
-            ->prepend('## How to convert from '.$data['from'] . ' to '.$data['to']."\n");
+            ->prepend('## How to convert from '.$data['from'].' to '.$data['to']."\n");
 
         CodeConverterContent::query()->updateOrCreate([
             'from' => $from,
@@ -58,13 +58,15 @@ class GenerateCodeConverterContent
         $to = $command->argument('to');
         $overwrite = $command->option('overwrite');
 
-        if ($from && !$to || !$from && $to) {
+        if ($from && ! $to || ! $from && $to) {
             $command->error('You have to provide both from and to');
+
             return Command::INVALID;
         }
 
         if ($from && $to) {
             static::dispatch($from, $to, $overwrite);
+
             return Command::SUCCESS;
         }
 

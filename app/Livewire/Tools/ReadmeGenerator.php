@@ -5,7 +5,6 @@ namespace App\Livewire\Tools;
 use App\Actions\Codex\Readme\GenerateOfflineReadme;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
-use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 

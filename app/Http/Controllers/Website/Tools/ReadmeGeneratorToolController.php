@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Website\Tools;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class ReadmeGeneratorToolController extends Controller
 {

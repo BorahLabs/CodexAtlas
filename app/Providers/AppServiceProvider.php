@@ -34,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
         if (app()->environment('testing')) {
             $this->app->bind(Llm::class, fn () => new DumbLocalLlm());
         } else {
-            $this->app->bind(Llm::class, fn () => match(config('codex.llm')) {
+            $this->app->bind(Llm::class, fn () => match (config('codex.llm')) {
                 'lmstudio' => new LMStudio(),
                 default => new OpenAI()
             });

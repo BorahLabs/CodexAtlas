@@ -18,9 +18,9 @@ class SystemComponent extends Model implements Embeddable
 {
     // use BelongsToKnowledgeBase;
     use HasFactory;
+    use HasUserFeedback;
     use HasUuids;
     use SoftDeletes;
-    use HasUserFeedback;
 
     protected $casts = [
         'status' => SystemComponentStatus::class,

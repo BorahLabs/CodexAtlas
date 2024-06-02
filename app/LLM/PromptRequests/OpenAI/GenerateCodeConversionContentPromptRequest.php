@@ -23,6 +23,6 @@ class GenerateCodeConversionContentPromptRequest implements SimplePromptRequest
 
     public function userPrompt(array $data): string
     {
-        return '<markdown>## How to convert from '.$data['from'] . ' to '.$data['to'];
+        return '<markdown>## How to convert from '.$data['from'].' to '.$data['to'];
     }
 }
