@@ -1,6 +1,6 @@
 <x-web-layout>
     @section('title', 'Code documentation automated with AI | CodexAtlas')
-    <div class="relative pt-24 lg:pt-44 pb-40">
+    <div class="relative pt-24 pb-40">
         <div class="relative z-10 container mx-auto px-4">
             <div class="flex flex-wrap items-center">
                 <div class="max-w-lg mx-auto lg:max-w-6xl text-center">
