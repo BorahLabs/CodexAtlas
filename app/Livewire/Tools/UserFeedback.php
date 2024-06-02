@@ -17,12 +17,12 @@ class UserFeedback extends Component
     #[Locked]
     public string $url;
 
-    public function mount()
+    public function mount(): void
     {
         $this->url = request()->url();
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('livewire.tools.user-feedback');
     }
@@ -33,7 +33,7 @@ class UserFeedback extends Component
         return $this->model->feedback;
     }
 
-    public function setHelpful(bool $isHelpful)
+    public function setHelpful(bool $isHelpful): void
     {
         $this->model->feedback()->updateOrCreate(
             [],

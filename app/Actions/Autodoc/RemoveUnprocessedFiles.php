@@ -14,7 +14,7 @@ class RemoveUnprocessedFiles
 
     public string $commandSignature = 'autodoc:remove-unprocessed-files';
 
-    public function handle()
+    public function handle(): void
     {
         AutodocLead::query()
             ->whereIn('status', ['pending', 'paying'])

@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 class CodeConvertionController extends Controller
 {
-    public function __invoke(string $from, string $to)
+    public function __invoke(string $from, string $to): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $tool = CodeConverterTool::from($from, $to);
 

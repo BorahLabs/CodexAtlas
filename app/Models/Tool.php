@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -34,9 +35,10 @@ class Tool extends Model
         return $this->hasMany(CodeFixing::class);
     }
 
-    public function todayIpCodeFixingRequests(string $ip)
+    public function todayIpCodeFixingRequests(string $ip): Builder
     {
-        return $this->codeFixings()
+        return $this
+            ->codeFixings()
             ->where('ip', $ip)
             ->where('created_at', '>=', now()->startOfDay())
             ->where('created_at', '<=', now()->endOfDay());

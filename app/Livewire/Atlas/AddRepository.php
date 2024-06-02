@@ -7,6 +7,7 @@ use App\Enums\SourceCodeProvider;
 use App\Models\Project;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\BitbucketProvider;
+use App\SourceCode\DTO\Repository;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
@@ -30,7 +31,7 @@ class AddRepository extends Component
 
     public string $bitbucketRepository = '';
 
-    public function mount()
+    public function mount(): void
     {
         $this->sourceCodeAccount = auth()->user()->currentTeam->sourceCodeAccounts->first()?->id ?? '';
 
@@ -41,7 +42,7 @@ class AddRepository extends Component
         }
     }
 
-    public function getRepositories()
+    public function getRepositories(): void
     {
         $provider = $this->account->getProvider();
         try {
@@ -72,14 +73,14 @@ class AddRepository extends Component
         }
     }
 
-    public function updatedBitbucketWorkspace($value)
+    public function updatedBitbucketWorkspace(mixed $value): void
     {
         $this->bitbucketRepository = '';
 
         $this->bitbucketRepositories = $this->account->getProvider()->searchRepositories($this->account, $value);
     }
 
-    public function updatedSourceCodeAccount($value)
+    public function updatedSourceCodeAccount(mixed $value): void
     {
         $this->account = SourceCodeAccount::query()->findOrFail($this->sourceCodeAccount);
         $this->search = '';
@@ -87,13 +88,13 @@ class AddRepository extends Component
         $this->getRepositories();
     }
 
-    public function updatedSearch($value)
+    public function updatedSearch(mixed $value): void
     {
         $this->getRepositories();
     }
 
     #[Computed()]
-    public function accountRepositories()
+    public function accountRepositories(): array
     {
         try {
             $validAccounts = auth()->user()->currentTeam->sourceCodeAccounts->pluck('id')->toArray();
@@ -107,7 +108,7 @@ class AddRepository extends Component
             $account = SourceCodeAccount::query()->findOrFail($this->sourceCodeAccount);
             $provider = $account->getProvider();
             $repositories = cache()->remember('repository-list:'.$account->id, now()->addMinutes(5), fn () => $provider->repositories());
-            usort($repositories, fn ($a, $b) => $a->fullName <=> $b->fullName);
+            usort($repositories, fn (Repository $a, Repository $b) => $a->fullName <=> $b->fullName);
 
             return $repositories;
         } catch (\Exception $e) {
@@ -115,7 +116,7 @@ class AddRepository extends Component
         }
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('livewire.atlas.add-repository');
     }

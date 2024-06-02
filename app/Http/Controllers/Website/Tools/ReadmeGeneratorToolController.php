@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class ReadmeGeneratorToolController extends Controller
 {
-    public function __invoke()
+    public function __invoke(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('tools.readme-generator');
     }

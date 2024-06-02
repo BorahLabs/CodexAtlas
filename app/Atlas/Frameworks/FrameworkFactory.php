@@ -10,7 +10,7 @@ class FrameworkFactory
     public static function get(string $frameworkName): ?Framework
     {
 
-        return collect(Guesser::supportedFrameworks())->first(function ($framework) use ($frameworkName) {
+        return collect(Guesser::supportedFrameworks())->first(function (Framework $framework) use ($frameworkName) {
             return $framework->name() === $frameworkName;
         });
     }

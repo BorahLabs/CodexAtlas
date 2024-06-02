@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class CodeFixerToolController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('tools.code-fixer');
     }

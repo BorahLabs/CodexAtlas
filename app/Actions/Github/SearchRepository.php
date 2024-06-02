@@ -11,7 +11,7 @@ class SearchRepository
 {
     use AsAction;
 
-    public function handle(SourceCodeAccount $account, string $query)
+    public function handle(SourceCodeAccount $account, string $query): array
     {
         $client = GetAuthenticatedAccountGithubClient::make()->handle($account);
 

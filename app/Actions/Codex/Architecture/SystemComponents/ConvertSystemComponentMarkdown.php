@@ -9,7 +9,7 @@ class ConvertSystemComponentMarkdown
 {
     use AsAction;
 
-    public function handle(?array $completion, $path): ?string
+    public function handle(?array $completion, string $path): ?string
     {
         if (! $completion) {
             return null;

@@ -28,12 +28,12 @@ class CodeConverter extends Component
 
     public ?CodeConvertion $codeConvertion = null;
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('livewire.tools.code-converter');
     }
 
-    public function convert()
+    public function convert(): void
     {
         $this->resetErrorBag();
         $this->result = null;

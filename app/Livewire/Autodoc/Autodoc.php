@@ -9,6 +9,7 @@ use App\Models\AutodocLead;
 use App\Models\Project;
 use App\SourceCode\DTO\File;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Laravel\Cashier\Cashier;
@@ -26,7 +27,7 @@ class Autodoc extends Component
 
     public ?AutodocLead $lead = null;
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('autodoc.livewire.autodoc');
     }
@@ -81,7 +82,7 @@ class Autodoc extends Component
         ]);
     }
 
-    public function pay()
+    public function pay(): RedirectResponse
     {
         $stripe = Cashier::stripe();
         $session = $stripe->checkout->sessions->create([

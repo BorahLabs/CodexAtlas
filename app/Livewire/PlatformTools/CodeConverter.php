@@ -3,6 +3,7 @@
 namespace App\Livewire\PlatformTools;
 
 use App\CodeConverter\Tools\CodeConverterTool;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
@@ -12,18 +13,18 @@ class CodeConverter extends Component
     public ?string $from = null;
     public ?string $to = null;
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('livewire.platform-tools.code-converter');
     }
 
-    public function updatedFrom()
+    public function updatedFrom(): void
     {
         $this->to = null;
     }
 
     #[Computed]
-    public function froms()
+    public function froms(): Collection
     {
         return collect(CodeConverterTool::all())
             ->mapWithKeys(fn (CodeConverterTool $tool) => [$tool->from->name() => $tool->from])
@@ -31,7 +32,7 @@ class CodeConverter extends Component
     }
 
     #[Computed]
-    public function tos()
+    public function tos(): Collection
     {
         if (is_null($this->from)) {
             return collect([]);

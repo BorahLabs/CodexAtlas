@@ -10,13 +10,13 @@ class CodeDocumentation extends Component
 {
     public ?string $language = null;
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('livewire.platform-tools.code-documentation');
     }
 
     #[Computed]
-    public function languages()
+    public function languages(): array
     {
         return Guesser::supportedLanguages();
     }

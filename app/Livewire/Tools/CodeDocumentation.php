@@ -40,12 +40,12 @@ class CodeDocumentation extends Component
 
     public ?TemporaryUploadedFile $file = null;
 
-    public function mount()
+    public function mount(): void
     {
         $this->ip = request()->ip();
     }
 
-    public function updatedFile()
+    public function updatedFile(): void
     {
         $this->resetErrorBag();
         if (is_null($this->file)) {
@@ -114,7 +114,7 @@ class CodeDocumentation extends Component
         return Cache::get('code-documentation:user-requests:'.$this->ip, 0) >= $subscriptionType->maxSingleCodeDocumentations();
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('livewire.tools.code-documentation', [
             'lang' => $this->language(),

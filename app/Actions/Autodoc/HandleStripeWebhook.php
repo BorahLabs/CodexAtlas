@@ -5,6 +5,7 @@ namespace App\Actions\Autodoc;
 use App\Actions\InternalNotifications\LogUserPerformedAction;
 use App\Models\AutodocLead;
 use App\Notifications\Autodoc\PurchaseCompleted;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Notification;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -12,7 +13,7 @@ class HandleStripeWebhook
 {
     use AsAction;
 
-    public function handle()
+    public function handle(): JsonResponse
     {
         $event = \Stripe\Webhook::constructEvent(request()->getContent(), request()->header('stripe-signature'), config('autodoc.stripe.webhook_secret'));
         if ($event->type === 'checkout.session.completed') {
@@ -33,7 +34,7 @@ class HandleStripeWebhook
         return response()->json(['success' => true]);
     }
 
-    public function asController()
+    public function asController(): JsonResponse
     {
         return $this->handle();
     }

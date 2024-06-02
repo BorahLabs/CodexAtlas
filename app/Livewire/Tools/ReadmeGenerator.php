@@ -7,6 +7,7 @@ use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ReadmeGenerator extends Component
 {
@@ -15,21 +16,21 @@ class ReadmeGenerator extends Component
     #[Locked]
     public bool $isFromPlatform = false;
 
-    public $zip = null;
+    public mixed $zip = null;
 
     public ?string $readme = null;
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('livewire.tools.readme-generator');
     }
 
-    public function updatedZip()
+    public function updatedZip(): void
     {
         $this->generate();
     }
 
-    public function generate()
+    public function generate(): void
     {
         $this->resetErrorBag();
         $this->readme = null;
@@ -49,7 +50,7 @@ class ReadmeGenerator extends Component
         $this->readme = $readme;
     }
 
-    public function download()
+    public function download(): StreamedResponse
     {
         return response()->streamDownload(function () {
             echo $this->readme;

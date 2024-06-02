@@ -21,7 +21,7 @@ class CodeFixer extends Component
 
     public ?CodeFixing $codeFixing = null;
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'code' => 'required|string|max:800',
@@ -29,7 +29,7 @@ class CodeFixer extends Component
         ];
     }
 
-    public function mount()
+    public function mount(): void
     {
         $this->ip = request()->ip();
         $this->codeFixing = CodeFixing::first();
@@ -44,7 +44,7 @@ class CodeFixer extends Component
         return $codeFixings->count() >= 5;
     }
 
-    public function sendCode()
+    public function sendCode(): void
     {
         $this->resetErrorBag();
         $this->validate();
@@ -94,7 +94,7 @@ class CodeFixer extends Component
         $this->dispatch('update-code');
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('livewire.tools.code-fixer');
     }

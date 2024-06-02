@@ -17,7 +17,7 @@ class GenerateCodeConverterContent
 
     public string $commandSignature = 'seo:generate-code-converter-content {from?} {to?} {--overwrite}';
 
-    public function handle(string $from, string $to, bool $overwrite = false)
+    public function handle(string $from, string $to, bool $overwrite = false): void
     {
         $exists = CodeConverterContent::where([
             'from' => $from,
@@ -52,7 +52,7 @@ class GenerateCodeConverterContent
         ]);
     }
 
-    public function asCommand(Command $command)
+    public function asCommand(Command $command): int
     {
         $from = $command->argument('from');
         $to = $command->argument('to');
@@ -65,10 +65,12 @@ class GenerateCodeConverterContent
 
         if ($from && $to) {
             static::dispatch($from, $to, $overwrite);
-            return;
+            return Command::SUCCESS;
         }
 
         collect(CodeConverterTool::all())
             ->each(fn (CodeConverterTool $tool) => static::dispatch(Str::slug($tool->from->name()), Str::slug($tool->to->name()), $overwrite));
+
+        return Command::SUCCESS;
     }
 }

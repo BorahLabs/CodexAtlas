@@ -32,19 +32,19 @@ class EnterpriseCalculator extends Component
     public bool $demoScheduled = false;
 
     #[Computed]
-    public function minDocumentationCost()
+    public function minDocumentationCost(): int|float
     {
         return max($this->numberOfDevs, 1) * max($this->devPricePerHour, 1) * 160 * 0.1 * 11;
     }
 
     #[Computed]
-    public function maxDocumentationCost()
+    public function maxDocumentationCost(): int|float
     {
         return max($this->numberOfDevs, 1) * max($this->devPricePerHour, 1) * 160 * 0.2 * 11;
     }
 
     #[Computed]
-    public function setupComputer()
+    public function setupComputer(): array
     {
         return match ($this->documentationReadiness) {
             2 => [
@@ -63,13 +63,13 @@ class EnterpriseCalculator extends Component
     }
 
     #[Computed]
-    public function expectedFileChangesPerDay()
+    public function expectedFileChangesPerDay(): int
     {
         return $this->numberOfProjects * $this->averageFileChangesPerDay * $this->numberOfDevs;
     }
 
     #[Computed]
-    public function price()
+    public function price(): int|float
     {
         $systemLoadFactor = match (true) {
             $this->expectedFileChangesPerDay > 2000 => 7,
@@ -91,7 +91,7 @@ class EnterpriseCalculator extends Component
         return max(8000, $this->setupComputer['price'] + 2000 * $systemLoadFactor * $documentationReadinessFactor);
     }
 
-    public function askForDemoCall()
+    public function askForDemoCall(): void
     {
         if ($this->demoScheduled) {
             return;
@@ -114,7 +114,7 @@ class EnterpriseCalculator extends Component
         $this->demoScheduled = true;
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('livewire.enterprise-calculator');
     }

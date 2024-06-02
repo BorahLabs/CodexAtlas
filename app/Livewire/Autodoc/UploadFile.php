@@ -6,10 +6,10 @@ use App\Actions\Autodoc\ExtractZip;
 use App\Actions\Autodoc\GetFiles;
 use App\Actions\Codex\Architecture\FilterFilesByFramework;
 use App\Models\AutodocLead;
-use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Forms;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -22,7 +22,7 @@ class UploadFile extends Component implements HasForms
 
     public AutodocLead $lead;
 
-    public function mount()
+    public function mount(): void
     {
         $this->form->fill();
     }
@@ -42,7 +42,7 @@ class UploadFile extends Component implements HasForms
             ->statePath('data');
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('autodoc.livewire.upload-file');
     }
