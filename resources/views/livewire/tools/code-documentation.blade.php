@@ -36,5 +36,9 @@
                     x-text="'Generating your documentation' + dots"></h2>
             @endif
         </div>
+
+        @if ($systemComponent->markdown_docs)
+            <livewire:tools.user-feedback wire:key="feedback-{{ $systemComponent->id }}" :model="$systemComponent" />
+        @endif
     @endif
 </div>

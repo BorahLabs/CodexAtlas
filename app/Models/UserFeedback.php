@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Traits\HasUserFeedback;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CodeConvertion extends Model
+class UserFeedback extends Model
 {
     use HasFactory;
-    use HasUserFeedback;
 }

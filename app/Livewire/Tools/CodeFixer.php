@@ -12,14 +12,14 @@ use Livewire\Component;
 
 class CodeFixer extends Component
 {
-    public string $solution;
-
     public string $code;
 
     public string $codeError;
 
     #[Locked]
     public string $ip;
+
+    public ?CodeFixing $codeFixing = null;
 
     public function rules()
     {
@@ -32,6 +32,7 @@ class CodeFixer extends Component
     public function mount()
     {
         $this->ip = request()->ip();
+        $this->codeFixing = CodeFixing::first();
     }
 
     private function userExceedsLimitsOfRequests(): bool
@@ -49,8 +50,8 @@ class CodeFixer extends Component
         $this->validate();
 
         if ($this->userExceedsLimitsOfRequests()) {
-            $this->solution = '';
-            $this->addError('limit', 'You have exceeded the limit of requests. Please, try again tomorrow or sign up.');
+            $this->codeFixing = null;
+            $this->addError('limit', 'You have exceeded the limit of requests. Please, try again tomorrow or sign up for a paid plan.');
 
             return;
         }
@@ -70,22 +71,24 @@ class CodeFixer extends Component
         $userPrompt = $prompt->userPrompt($data);
         $completion = $llm->completion($systemPrompt, $userPrompt);
 
-        $this->solution = json_decode($completion->completion, true)['response'] ?? null;
+        $solution = json_decode($completion->completion, true)['response'] ?? null;
 
         $tool = Tool::codeFixer();
 
-        CodeFixing::create([
+        $this->codeFixing = CodeFixing::create([
             'tool_id' => $tool->id,
             'ip' => $this->ip,
             'code' => $this->code,
             'code_error' => $this->codeError,
-            'response' => $this->solution,
+            'response' => $solution,
         ]);
         LogUserPerformedAction::dispatch(
             \App\Enums\Platform::Codex,
             \App\Enums\NotificationType::Success,
             'User used tool '.$tool->name,
-            [],
+            [
+                'id' => $this->codeFixing->id,
+            ],
         );
 
         $this->dispatch('update-code');

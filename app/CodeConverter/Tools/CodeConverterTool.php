@@ -36,7 +36,10 @@ abstract class CodeConverterTool
         return null;
     }
 
-    public function convert(string $ipAddress, string $code, bool $isRunFromPlatform = false): string
+    /**
+     * @return array[CodeConvertion, string]
+     */
+    public function convert(string $ipAddress, string $code, bool $isRunFromPlatform = false): array
     {
         if ($isRunFromPlatform) {
             $usage = CodeConvertion::query()
@@ -47,13 +50,13 @@ abstract class CodeConverterTool
              * @var SubscriptionType $subscriptionType
              */
             $subscriptionType = auth()->user()?->currentTeam?->subscriptionType() ?? SubscriptionType::FreeTrial;
-            throw_if($usage >= $subscriptionType->maxCodeConversions(), new RateLimitExceeded('You have reached the maximum number of conversions ('.$subscriptionType->maxCodeConversions().') for today. Please, try again tomorrow.'));
+            throw_if($usage >= $subscriptionType->maxCodeConversions(), new RateLimitExceeded('You have reached the maximum number of conversions ('.$subscriptionType->maxCodeConversions().') for today. Please, try again tomorrow or sign up for a paid plan.'));
         } else {
             $usage = CodeConvertion::query()
                 ->where('ip', $ipAddress)
                 ->where('created_at', '>=', today())
                 ->count();
-            throw_if($usage >= 5, new RateLimitExceeded('You have reached the maximum number of conversions (5) for today. Please, try again tomorrow.'));
+            throw_if($usage >= 5, new RateLimitExceeded('You have reached the maximum number of conversions (5) for today. Please, try again tomorrow or sign up for a paid plan.'));
         }
 
         $code = substr($code, 0, 800);
@@ -73,14 +76,14 @@ Output in '.$this->to->name().':';
         $llm = app(Llm::class);
         $result = $llm->completion($systemPrompt, $userPrompt);
 
-        CodeConvertion::query()->create([
+        $convertion = CodeConvertion::query()->create([
             'from' => $this->from->name(),
             'to' => $this->to->name(),
             'ip' => $ipAddress,
             'user_id' => auth()->id(),
         ]);
 
-        return $result->completion;
+        return [$convertion, $result->completion];
     }
 
     public static function from(string $from, string $to): CodeConverterTool

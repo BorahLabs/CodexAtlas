@@ -18,5 +18,6 @@
             {!! Str::markdown($result) !!}
         </div>
         <x-button theme="primary" class="mt-8" wire:click="$set('result', null)">Start again</x-button>
+        <livewire:tools.user-feedback :model="$codeConvertion" wire:key="code-convertion-{{ $codeConvertion->id }}" />
     @endif
 </div>
