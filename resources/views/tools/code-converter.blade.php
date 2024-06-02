@@ -25,28 +25,38 @@
             <x-bordered-black-box class="text-white">
                 <livewire:tools.code-converter :from="$from" :to="$to" />
             </x-bordered-black-box>
+            <div class="mt-12" x-data="{ open: false }" x-cloak>
+                <header
+                    class="flex justify-between items-center bg-white bg-opacity-20 rounded-xl w-full p-4 cursor-pointer"
+                    x-on:click="open = !open">
+                    <h2 class="text-white font-bold text-xl">Other tools</h2>
+                    <x-codex.icons.chevron-down class="w-6 h-6 text-white transition"
+                        x-bind:class="{
+                            'rotate-180': open,
+                        }" />
+                </header>
+                <div x-show="open" x-transition>
+                    @foreach (collect(\App\CodeConverter\Tools\CodeConverterTool::all())->map(fn($t) => $t->from->name())->unique() as $name)
+                        <h2 class="text-white font-bold mt-8">{{ $name }}</h2>
+                        <ul class="grid grid-cols-1 gap-4 md:grid-cols-2 mt-2">
+                            @foreach (collect(\App\CodeConverter\Tools\CodeConverterTool::all())->where(fn($t) => $t->from->name() === $name) as $t)
+                                <li>
+                                    <a href="{{ $t->url() }}"
+                                        class="block text-white text-sm font-medium bg-darkBlue-800 hover:bg-violet-700 px-4 py-2 rounded-md">{{ $t->name() }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endforeach
+                </div>
+            </div>
             @php
                 $content = $tool->content();
             @endphp
             @if ($content)
                 <div class="mt-12 prose prose-invert">
-                    {!! Str::markdown($content->markdown_content) !!}
+                    {!! Str::markdown($content->parsed_content) !!}
                 </div>
             @endif
-            <div class="mt-12">
-                <h2 class="text-white font-bold text-xl">Other tools</h2>
-                @foreach (collect(\App\CodeConverter\Tools\CodeConverterTool::all())->map(fn($t) => $t->from->name())->unique() as $name)
-                    <h2 class="text-white font-bold mt-8">{{ $name }}</h2>
-                    <ul class="grid grid-cols-1 gap-4 md:grid-cols-2 mt-2">
-                        @foreach (collect(\App\CodeConverter\Tools\CodeConverterTool::all())->where(fn($t) => $t->from->name() === $name) as $t)
-                            <li>
-                                <a href="{{ $t->url() }}"
-                                    class="block text-white text-sm font-medium bg-darkBlue-800 hover:bg-violet-700 px-4 py-2 rounded-md">{{ $t->name() }}</a>
-                            </li>
-                        @endforeach
-                    </ul>
-                @endforeach
-            </div>
         </div>
         <x-cta />
         <div class="w-full sm:max-w-4xl mt-6 p-6 mx-auto">
