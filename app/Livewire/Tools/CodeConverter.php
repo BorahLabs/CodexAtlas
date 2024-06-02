@@ -38,7 +38,7 @@ class CodeConverter extends Component
         $this->resetErrorBag();
         $this->result = null;
         $this->validate([
-            'code' => 'required|string|max:800|min:10',
+            'code' => 'required|string|max:2000|min:10',
         ]);
 
         try {

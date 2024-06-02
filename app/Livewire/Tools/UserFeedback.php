@@ -19,7 +19,12 @@ class UserFeedback extends Component
 
     public function mount(): void
     {
-        $this->url = request()->url();
+        if (request()->input('components.0.snapshot')) {
+            $snapshot = json_decode(request()->input('components.0.snapshot'), true);
+            $this->url = url($snapshot['memo']['path']);
+        } else {
+            $this->url = request()->url();
+        }
     }
 
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory

@@ -24,15 +24,14 @@ class CodeFixer extends Component
     public function rules(): array
     {
         return [
-            'code' => 'required|string|max:800',
-            'codeError' => 'required|string|max:400',
+            'code' => 'required|string|max:2000',
+            'codeError' => 'required|string|max:600',
         ];
     }
 
     public function mount(): void
     {
         $this->ip = request()->ip();
-        $this->codeFixing = CodeFixing::first();
     }
 
     private function userExceedsLimitsOfRequests(): bool

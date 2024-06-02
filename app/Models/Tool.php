@@ -35,7 +35,7 @@ class Tool extends Model
         return $this->hasMany(CodeFixing::class);
     }
 
-    public function todayIpCodeFixingRequests(string $ip): Builder
+    public function todayIpCodeFixingRequests(string $ip): HasMany
     {
         return $this
             ->codeFixings()

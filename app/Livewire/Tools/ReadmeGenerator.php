@@ -3,6 +3,7 @@
 namespace App\Livewire\Tools;
 
 use App\Actions\Codex\Readme\GenerateOfflineReadme;
+use App\Actions\InternalNotifications\LogUserPerformedAction;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
@@ -47,6 +48,12 @@ class ReadmeGenerator extends Component
         }
 
         $this->readme = $readme;
+
+        LogUserPerformedAction::dispatch(
+            \App\Enums\Platform::Codex,
+            \App\Enums\NotificationType::Success,
+            'User used README Generator',
+        );
     }
 
     public function download(): StreamedResponse

@@ -61,7 +61,7 @@ abstract class CodeConverterTool
             throw_if($usage >= 5, new RateLimitExceeded('You have reached the maximum number of conversions (5) for today. Please, try again tomorrow or sign up for a paid plan.'));
         }
 
-        $code = substr($code, 0, 800);
+        $code = substr($code, 0, 2000);
         $systemPrompt = 'Act as if you were an experienced software developer skilled in multiple programming languages and frameworks. Return the response in Markdown format. Do not try to explain, just return the code.
 
 Convert the following piece of code from '.$this->from->name().' to '.$this->to->name().' to ensure functionality and efficiency are maintained.';
