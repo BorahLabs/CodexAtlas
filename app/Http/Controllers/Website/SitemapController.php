@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Website;
 use App\Atlas\Guesser;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Spatie\Sitemap\Sitemap;
@@ -12,7 +13,7 @@ use Spatie\Sitemap\Tags\Url;
 
 class SitemapController extends Controller
 {
-    public function __invoke(Request $request): Sitemap
+    public function __invoke(Request $request): Sitemap|Response
     {
         $sitemap = Sitemap::create();
         $sitemap->add(Url::create(route('homepage'))->setPriority(1)->setChangeFrequency('daily'));
