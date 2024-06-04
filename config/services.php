@@ -78,4 +78,15 @@ return [
             'offline' => env('README_GENERATOR_OFFLINE_ENDPOINT', 'https://readme-generator.codexatlas.app/v1/offline'),
         ],
     ],
+
+    'convertkit' => [
+        'key' => env('CONVERTKIT_API_KEY'),
+        'secret' => env('CONVERTKIT_API_SECRET'),
+        'sequences' => [
+            'welcome' => env('CONVERTKIT_SEQUENCE_WELCOME', 1927528),
+        ],
+        'tags' => [
+            'onboarding' => env('CONVERTKIT_TAG_ONBOARDING', 5072030),
+        ],
+    ],
 ];

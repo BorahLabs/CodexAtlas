@@ -174,11 +174,11 @@
             <div class="max-w-5xl mx-auto mb-16 text-center relative">
                 <h2
                     class="font-heading text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-medium text-white tracking-tight mb-6">
-                    Reduce the time spent on documentation to zero
+                    Real-time, reliable and private
                 </h2>
                 <p class="text-xl text-newGray-400">
-                    CodexAtlas removes the manual work on documenting software projects by using the latest
-                    advancements in Artificial Intelligence.
+                    We've got it all covered. CodexAtlas is the best way to free your developers from writing
+                    documentation.
                 </p>
             </div>
             <div class="relative max-w-md lg:max-w-none mx-auto">
