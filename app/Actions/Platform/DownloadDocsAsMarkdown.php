@@ -4,7 +4,9 @@ namespace App\Actions\Platform;
 
 use App\Actions\InternalNotifications\LogUserPerformedAction;
 use App\Models\Branch;
+use App\Models\BranchDocument;
 use App\Models\CustomGuide;
+use App\Models\DocumentationDownload;
 use App\Models\Project;
 use App\Models\Repository;
 use App\Models\SystemComponent;
@@ -29,6 +31,10 @@ class DownloadDocsAsMarkdown
             if ($readme) {
                 $zip->addFromString('README.md', $readme->contents());
             }
+
+            $branch->branchDocuments()
+                ->where('name', '!=', 'README.md')
+                ->each(fn (BranchDocument $branchDocument) => $zip->addFromString(str($branchDocument->name)->finish('.md')->toString(), $branchDocument->content));
         }
 
         $branch
@@ -46,6 +52,13 @@ class DownloadDocsAsMarkdown
     public function asController(Project $project, Repository $repository, Branch $branch): BinaryFileResponse
     {
         $zipPath = $this->handle($project, $repository, $branch);
+
+        DocumentationDownload::query()->create([
+            'user_id' => request()->user()?->id,
+            'branch_id' => $branch->id,
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+        ]);
 
         LogUserPerformedAction::dispatch(\App\Enums\Platform::Codex, \App\Enums\NotificationType::Success, 'User downloaded docs', [
             'user' => request()->user()?->id ?? 'unknown',

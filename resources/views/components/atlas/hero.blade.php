@@ -28,11 +28,15 @@
                     </div>
 
                     <div class="flex justify-center mt-8">
-                        <a href="{{ route('docs.download', ['project' => $project, 'repository' => $repository, 'branch' => $branch]) }}"
-                            class="inline-flex items-center justify-center mt-3 text-sm text-slate-500 mx-auto px-6 py-2 rounded-lg space-x-2 hover:text-slate-400">
-                            <x-codex.icons.download class="h-4 w-4" />
-                            <span>Download {{ $branch->name }} branch as Markdown</span>
-                        </a>
+                        <form
+                            action="{{ route('docs.download', ['project' => $project, 'repository' => $repository, 'branch' => $branch]) }}"
+                            method="GET">
+                            <button type="submit"
+                                class="inline-flex items-center justify-center mt-3 text-sm text-slate-500 mx-auto px-6 py-2 rounded-lg space-x-2 hover:text-slate-400">
+                                <x-codex.icons.download class="h-4 w-4" />
+                                <span>Download {{ $branch->name }} branch as Markdown</span>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
