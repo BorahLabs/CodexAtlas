@@ -482,6 +482,10 @@
                         </div>
                     </div>
                 </div>
+                <a href="https://{{ config('app.autodoc_domain') }}" target="_blank"
+                    class="text-white block underline mt-12 text-center">
+                    Looking for a one-time documentation? Check AutomaticDocs
+                </a>
             </div>
         </section>
     @endif

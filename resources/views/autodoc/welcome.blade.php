@@ -317,7 +317,7 @@
                             </li>
                         </ul>
                         <div class="mt-10 flex">
-                            <a href="https://codedocumentation.app" target="_blank"
+                            <a href="https://{{ config('app.main_domain') }}" target="_blank"
                                 class="w-full fi-btn mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-white/10 text-white hover:bg-white/20 focus-visible:outline-white">
                                 Try for free
                             </a>
