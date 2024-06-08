@@ -58,6 +58,10 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
 
         Route::get('/guide', [GuideController::class, 'index'])->name('guide.index');
         Route::get('/guide/{folder}/{file}', [GuideController::class, 'show'])->name('guide.show');
+
+        Route::view('/book-a-demo', 'book-a-demo')
+            ->name('book-a-demo')
+            ->middleware(ForceNoIndex::class);
     });
 
     Route::middleware([
