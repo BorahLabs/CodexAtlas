@@ -8,7 +8,7 @@
         </div>
     </section>
 
-    <section class="bg-white py-24 sm:py-32">
+    <section class="bg-gray-50 py-24 sm:py-32">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="mx-auto grid max-w-2xl grid-cols-1 lg:mx-0 lg:max-w-none lg:grid-cols-2">
                 <div class="flex flex-col pb-10 sm:pb-16 lg:pb-0 lg:pr-8 xl:pr-20">
@@ -43,29 +43,6 @@
             </div>
         </div>
     </section>
-
-    <div class="bg-gray-900 py-24 sm:py-32">
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
-            <div class="mx-auto max-w-2xl lg:max-w-none">
-                <div class="text-center">
-                    <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                        The best way to automatically document your software
-                    </h2>
-                    <p class="mt-4 text-lg leading-8 text-gray-300">
-                        Automatic Docs has been running for a while now, and we have documented many projects worldwide.
-                    </p>
-                </div>
-                <dl class="mt-16 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center">
-                    <div class="flex flex-col bg-white/5 p-8">
-                        <dt class="text-sm font-semibold leading-6 text-gray-300">Documented files</dt>
-                        <dd class="order-first text-3xl font-semibold tracking-tight text-white md:text-5xl">
-                            {{ number_format(Cache::remember('system-components-count-logs', now()->addMinutes(5), fn() => \App\Models\ProcessingLogEntry::count()), 0) }}
-                        </dd>
-                    </div>
-                </dl>
-            </div>
-        </div>
-    </div>
 
     <div class="bg-white py-24 sm:py-32">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
@@ -155,7 +132,7 @@
 
     <div class="bg-white py-24 sm:py-32">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
-            <div class="grid grid-cols-1 items-center gap-x-8 gap-y-16 lg:grid-cols-2">
+            <div class="grid grid-cols-1 items-center gap-x-8 gap-y-16">
                 <div class="mx-auto w-full max-w-xl lg:mx-0">
                     <h2 class="text-3xl font-bold tracking-tight text-gray-900">
                         We support your framework
@@ -173,9 +150,8 @@
                     </div>
                 </div>
                 <div>
-
                     <div
-                        class="mx-auto grid w-full max-w-xl grid-cols-2 justify-center items-center gap-y-12 gap-x-6 sm:gap-y-14 md:grid-cols-3 lg:grid-cols-4 lg:mx-0 lg:max-w-none lg:pl-8">
+                        class="mx-auto grid w-full max-w-xl grid-cols-2 justify-center items-center gap-y-12 gap-x-6 sm:gap-y-14 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 lg:mx-0 lg:max-w-none lg:pl-8">
                         @foreach (\App\Atlas\Guesser::supportedFrameworks() as $framework)
                             @if ($imageUrl = $framework->imageUrl())
                                 <img class="max-h-10 w-full object-contain object-center" src="{{ $imageUrl }}"
@@ -199,36 +175,22 @@
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="mx-auto max-w-4xl text-center">
                 <h2 class="text-base font-semibold leading-7 text-indigo-400">Pricing</h2>
-                <p class="mt-2 text-4xl font-bold tracking-tight text-white sm:text-5xl">Documenting code has never
-                    been
-                    cheaper</p>
+                <p class="mt-2 text-4xl font-bold tracking-tight text-white sm:text-5xl">
+                    Documenting code has never been cheaper
+                </p>
             </div>
-            <p class="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-300">The price will be based on
-                how
-                big your project is. Since the AI computation costs are high, we have divided the pricing in 3 sets.</p>
-            <div class="isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-                @php
-                    $pricings = [
-                        ['name' => 'Small', 'price' => 10, 'max_files' => 100],
-                        ['name' => 'Mid-sized', 'price' => 40, 'max_files' => 500],
-                        ['name' => 'Large', 'price' => 70, 'max_files' => 1000],
-                    ];
-                @endphp
-                @foreach ($pricings as $pricing)
-                    <div class="rounded-3xl p-8 xl:p-10 ring-1 ring-white/10">
+            <p class="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-300">
+                Pay based on the size of your project. Pricing starts at 10€.</p>
+            <div class="isolate mx-auto mt-10 max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none">
+                <div class="rounded-3xl p-8 xl:p-10 ring-1 ring-white/10 lg:flex gap-12">
+                    <div class="flex-1">
                         <div class="flex items-center justify-between gap-x-4">
                             <h3 class="text-lg font-semibold leading-8 text-white">
-                                {{ $pricing['name'] }} projects</h3>
+                                Pay-per-use
+                            </h3>
                         </div>
-                        <p class="mt-6 flex items-baseline gap-x-1">
-                            <span class="text-4xl font-bold tracking-tight text-white">{{ $pricing['price'] }}
-                                &euro;</span>
-                        </p>
-                        <a href="#banner"
-                            class="fi-btn mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-white/10 text-white hover:bg-white/20 focus-visible:outline-white">
-                            Document my code
-                        </a>
-                        <ul role="list" class="mt-8 space-y-3 text-sm leading-6 text-gray-300 xl:mt-10">
+                        <ul role="list"
+                            class="mt-8 gap-3 grid grid-cols-1 lg:grid-cols-2 text-sm leading-6 text-gray-300 xl:mt-10">
                             <li class="flex gap-x-3">
                                 <svg class="h-6 w-5 flex-none text-white" viewBox="0 0 20 20" fill="currentColor"
                                     aria-hidden="true">
@@ -236,7 +198,7 @@
                                         d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
                                         clip-rule="evenodd" />
                                 </svg>
-                                Up to {{ $pricing['max_files'] }} files
+                                Unlimited files (you will be charged min. 50 files)
                             </li>
                             <li class="flex gap-x-3">
                                 <svg class="h-6 w-5 flex-none text-white" viewBox="0 0 20 20" fill="currentColor"
@@ -267,7 +229,18 @@
                             </li>
                         </ul>
                     </div>
-                @endforeach
+                    <div class="flex-shrink-0">
+                        <p class="mt-6 flex items-baseline gap-x-1">
+                            <span class="text-4xl font-bold tracking-tight text-white">
+                                0.20 &euro; / file
+                            </span>
+                        </p>
+                        <a href="#banner"
+                            class="fi-btn mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-white/10 text-white hover:bg-white/20 focus-visible:outline-white">
+                            Document my code
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -279,10 +252,13 @@
                     class="mx-auto flex max-w-2xl flex-col gap-16 bg-white/5 px-6 py-16 ring-1 ring-white/10 sm:rounded-3xl sm:p-8 lg:mx-0 lg:max-w-none lg:flex-row lg:items-center lg:py-20 xl:gap-x-20 xl:px-20">
                     <div class="w-full flex-auto">
                         <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                            Start documenting
+                            Keep your documentation updated
                         </h2>
-                        <p class="mt-6 text-lg leading-8 text-gray-300">Seriously. Once and for all, it's never been
-                            easier!</p>
+                        <p class="mt-6 text-lg leading-8 text-gray-300">
+                            Outdated documentation can lead to up to 20% more spent time on a project. Improve
+                            onboarding times, reduce technical debt and spend more time developing new features thanks
+                            to our automatic Code Documentation Tool.
+                        </p>
                         <ul role="list"
                             class="mt-10 grid grid-cols-1 gap-x-8 gap-y-3 text-base leading-7 text-white sm:grid-cols-2 md:grid-cols-3">
                             <li class="flex gap-x-3">
@@ -292,7 +268,7 @@
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
                                         clip-rule="evenodd" />
                                 </svg>
-                                Less technical debt
+                                32 hours saved per month
                             </li>
                             <li class="flex gap-x-3">
                                 <svg class="h-7 w-5 flex-none" viewBox="0 0 20 20" fill="currentColor"
@@ -310,7 +286,7 @@
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
                                         clip-rule="evenodd" />
                                 </svg>
-                                Lower costs
+                                20% less cost
                             </li>
                             <li class="flex gap-x-3">
                                 <svg class="h-7 w-5 flex-none" viewBox="0 0 20 20" fill="currentColor"
@@ -341,9 +317,9 @@
                             </li>
                         </ul>
                         <div class="mt-10 flex">
-                            <a href="#banner"
+                            <a href="https://codedocumentation.app" target="_blank"
                                 class="w-full fi-btn mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-white/10 text-white hover:bg-white/20 focus-visible:outline-white">
-                                Document your code now
+                                Try for free
                             </a>
                         </div>
                     </div>

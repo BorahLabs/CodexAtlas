@@ -14,7 +14,7 @@ class Flask extends FrameworkWithDependencyFiles
 
     public function imageUrl(): ?string
     {
-        return asset('logos/flask.svg');
+        return asset('logos/flask.png');
     }
 
     public function usesFramework(Folder $folder): bool
