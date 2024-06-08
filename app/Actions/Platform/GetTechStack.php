@@ -17,9 +17,9 @@ class GetTechStack
     public function handle(Repository $repository, Branch $branch): ?File
     {
 
-        $branchDocument = $branch->branchDocuments()->where('path', 'TechStackFile')->first();
+        $branchDocument = $branch->branchDocuments()->where('path', 'Tech Stack')->first();
 
-        if (! $branchDocument) {
+        if (! $branchDocument || empty($branchDocument->formatToFile()->contents())) {
             $branchDocument = GenerateTechStackDocumentation::run($repository, $branch);
         }
 

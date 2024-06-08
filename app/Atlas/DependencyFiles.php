@@ -13,6 +13,8 @@ class DependencyFiles
         'package.json',
         'requirements.txt',
         'Podfile',
+        'Gemfile',
+        'Cargo.toml',
     ];
 
     public static function getFolderDependencyFiles(Folder $folder): array

@@ -19,8 +19,9 @@ class GenerateTechStackPromptRequest implements PromptRequest
 
         Some rules:
 
-        - Only talk about the most important frameworks/libraries.
-        - Do not output the original file.';
+        - Only talk about the most important frameworks/libraries that are present in the provided files.
+        - Do not output the original file.
+        - Just return the JSON, nothing else';
     }
 
     public function userPrompt(Project $project, File $file): string

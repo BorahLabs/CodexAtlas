@@ -19,8 +19,8 @@ it('techStack generation not call when techstack exist', function () {
     [$project, $sourceCodeAccount, $repository, $branch] = createLaravelProject($user->currentTeam);
     GenerateTechStackDocumentation::run($repository, $branch);
     GenerateTechStackDocumentation::mock()->shouldReceive('handle')->andReturn(new BranchDocument([
-        'name' => 'TechStackFile',
-        'path' => 'TechStackFile',
+        'name' => 'Tech Stack',
+        'path' => 'Tech Stack',
         'content' => 'Faked tech stack document',
     ]));
     $techStack = GetTechStack::run($repository, $branch);

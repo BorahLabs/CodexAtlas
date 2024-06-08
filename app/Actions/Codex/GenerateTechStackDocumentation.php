@@ -20,18 +20,26 @@ class GenerateTechStackDocumentation
         $dependencyFiles = DependencyFiles::getDependencyFilesFromBranch($branch);
         $dependencyFile = $this->generateFileWithAllDependencies($dependencyFiles);
 
+        if (empty($dependencyFile->contents())) {
+            return $branch->branchDocuments()->updateOrCreate(
+                ['path' => 'Tech Stack'],
+                ['name' => 'Tech Stack', 'content' => '', 'json_docs' => []]
+            );
+        }
+
         /**
          * @var Llm
          */
         $llm = app(Llm::class);
 
         $completion = $llm->describeFile($repository->project, $dependencyFile, PromptRequestType::TECH_STACK);
-        $dependencies = json_decode($completion->completion, true);
+        $completion = str($completion->completion)->after('{')->before('}')->prepend('{')->append('}');
+        $dependencies = json_decode($completion, true) ?: [];
         $markdownTechStackDocument = $this->generateMarkdownTechStackDocument($dependencies);
 
         return $branch->branchDocuments()->updateOrCreate(
-            ['path' => 'TechStackFile'],
-            ['name' => 'TechStackFile', 'content' => $markdownTechStackDocument, 'json_docs' => $dependencies]
+            ['path' => 'Tech Stack'],
+            ['name' => 'Tech Stack', 'content' => $markdownTechStackDocument, 'json_docs' => $dependencies]
         );
     }
 
@@ -40,7 +48,7 @@ class GenerateTechStackDocumentation
         $content = '';
 
         foreach ($dependencyFiles as $dependencyFile) {
-            $content .= $dependencyFile->name.":\n".$dependencyFile->contents."\n\n";
+            $content .= $dependencyFile->name.":\n```".$dependencyFile->contents."```\n\n";
         }
 
         return new File(name: 'Dependency Files', contents: $content, path: '', downloadUrl: '', sha: '');
