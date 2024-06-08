@@ -60,7 +60,7 @@
                         class="text-sm leading-6 text-gray-600 hover:text-gray-900">Privacy policy</a>
                 </div>
             </nav>
-            <p class="mt-10 text-center text-xs leading-5 text-gray-500">&copy; {{ date('Y') }} Borah Agency. All
+            <p class="mt-10 text-center text-xs leading-5 text-gray-500">&copy; {{ date('Y') }} CodexAtlas, LLC. All
                 rights reserved.</p>
         </div>
     </footer>
