@@ -26,10 +26,21 @@ class EnterpriseCalculator extends Component
     #[Locked]
     public int $averageFileChangesPerDay = 15;
 
+    #[Rule(['required', 'string', 'max:50'])]
+    public string $companyFirstName = '';
+
+    #[Rule(['required', 'string', 'max:50'])]
+    public string $companyLastName = '';
+
     #[Rule(['required', 'email:rfc,dns'])]
     public string $companyEmail = '';
 
+    #[Rule(['nullable', 'string', 'max:500'])]
+    public string $companyMessage = '';
+
     public bool $demoScheduled = false;
+
+    public bool $simpleMode = false;
 
     #[Computed]
     public function minDocumentationCost(): int|float
@@ -104,7 +115,9 @@ class EnterpriseCalculator extends Component
             \App\Enums\NotificationType::DemoCall,
             '**DEMO CALL REQUEST** requested by '.$this->companyEmail.' @everyone',
             [
+                'Name' => $this->companyFirstName . ' ' . $this->companyLastName,
                 'Email' => $this->companyEmail,
+                'Message' => $this->companyMessage ?: 'Empty',
                 'Number of devs' => $this->numberOfDevs,
                 'Number of projects' => $this->numberOfProjects,
                 'Computer setup' => $this->setupComputer['name'],

@@ -582,10 +582,7 @@
                     Let's talk business
                 </h2>
             </div>
-            <div class="relative max-w-md lg:max-w-6xl mx-auto p-5 rounded-3xl overflow-hidden">
-                <div
-                    class="absolute top-0 left-0 w-full h-full backdrop-filter backdrop-blur-md bg-gray-500 bg-opacity-20 group-hover:bg-violet-400 group-hover:bg-opacity-100 transition duration-150">
-                </div>
+            <div class="relative max-w-xl lg:max-w-7xl mx-auto p-5 rounded-3xl overflow-hidden">
                 <livewire:enterprise-calculator />
             </div>
         </div>

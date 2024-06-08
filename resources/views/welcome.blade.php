@@ -393,6 +393,9 @@
                     </h2>
                 </div>
                 <div class="relative z-10 max-w-md lg:max-w-8xl mx-auto">
+                    <div class="mb-12">
+                        <livewire:enterprise-calculator :simpleMode="true" />
+                    </div>
                     <div class="flex flex-wrap -mx-4">
                         <x-homepage.pricing-card :imageUrl="asset('casper-assets/pricing/pricing-top-1.png')" price="Free" title="Free Trial"
                             description="Try out CodexAtlas without any
@@ -441,28 +444,28 @@
                         <div
                             class="absolute top-0 left-0 w-full h-full backdrop-filter backdrop-blur-md bg-newGray-500 bg-opacity-20 group-hover:bg-violet-400 group-hover:bg-opacity-100 transition duration-150">
                         </div>
-                        <div class="relative flex flex-wrap md:flex-nowrap -mx-4 items-center">
-                            <div class="w-full md:w-auto px-4 mb-8 md:mb-0">
-                                <div class="sm:flex items-center">
+                        <div class="relative flex flex-wrap lg:flex-nowrap -mx-4 items-center">
+                            <div class="w-full lg:w-auto px-4 mb-8 lg:mb-0">
+                                <div class="lg:flex items-center">
                                     <img src="{{ asset('casper-assets/pricing/robot.png') }}" alt="">
-                                    <div class=" mt-3 sm:mt-0 sm:ml-8">
+                                    <div class="mt-3 sm:mt-0 sm:ml-8">
                                         <h3 class="text-3xl font-medium text-white">Enterprise</h3>
                                         <p class="text-sm text-newGray-300 max-w-lg mt-2">
                                             We can help you setup an on-premise system and save more than 20.000€/year
                                             in documentation and onboarding costs.
                                         </p>
-                                        <ul class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                                        <ul class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
                                             <x-homepage.pricing-included text="On-premise system" />
                                             <x-homepage.pricing-included text="Custom integrations" />
                                             <x-homepage.pricing-included text="Custom SLA" />
                                             <x-homepage.pricing-included text="Dedicated support team" />
-                                            <x-homepage.pricing-included class="md:col-span-2"
+                                            <x-homepage.pricing-included class="lg:col-span-2"
                                                 text="Custom, on-premise AI model (no data shared with OpenAI)" />
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-full md:w-auto ml-auto flex-shrink-0 px-4">
+                            <div class="w-full lg:w-auto ml-auto flex-shrink-0 px-4">
                                 <div>
                                     <a class="group inline-flex w-auto h-14 px-7 items-center justify-center text-base font-medium text-black hover:text-violet-500 bg-violet-500 hover:bg-white transition duration-200 rounded-full"
                                         href="{{ route('enterprise') }}">
