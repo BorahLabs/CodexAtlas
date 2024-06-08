@@ -27,9 +27,11 @@
                                 fill="white" />
                         </svg>
                     </div>
-                    <p class="text-xs text-[#B4A5FF] font-normal mt-1">
-                        This number is just used to calculate how many code changes we can expect in a day of work.
-                    </p>
+                    @if (!$simpleMode)
+                        <p class="text-xs text-[#B4A5FF] font-normal mt-1">
+                            This number is just used to calculate how many code changes we can expect in a day of work.
+                        </p>
+                    @endif
 
                     <p class="mt-8">2. How much does a developer cost per hour?</p>
                     <div class="relative mt-2">
@@ -39,9 +41,11 @@
                             EUR
                         </span>
                     </div>
-                    <p class="text-xs text-[#B4A5FF] font-normal mt-1">
-                        This will be used to calculate the cost of the time spent writing documentation.
-                    </p>
+                    @if (!$simpleMode)
+                        <p class="text-xs text-[#B4A5FF] font-normal mt-1">
+                            This will be used to calculate the cost of the time spent writing documentation.
+                        </p>
+                    @endif
 
                     @if (!$simpleMode)
                         <p class="mt-8">3. How fast do you need the documentation updated?</p>
