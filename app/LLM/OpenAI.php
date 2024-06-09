@@ -54,7 +54,7 @@ class OpenAI extends Llm implements HasApiKey
             ],
         ];
 
-        if (str_contains($systemPrompt, 'json')) {
+        if (str_contains(mb_strtolower($systemPrompt), 'json')) {
             $data['response_format'] = ['type' => 'json_object'];
         }
         // wrapping on a retry function to avoid the limit per minute error
