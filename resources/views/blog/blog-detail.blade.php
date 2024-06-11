@@ -21,6 +21,9 @@
                 <div class="prose prose-invert">
                     {!! Str::markdown($blog->markdown_content) !!}
                 </div>
+                <div class="max-w-prose mt-8 text-white">
+                    <livewire:tools.user-feedback :model="$blog" />
+                </div>
             </section>
         </section>
 

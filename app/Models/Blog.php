@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasUserFeedback;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use Illuminate\Database\Eloquent\Builder;
 
 class Blog extends Model
 {
     use HasFactory, HasSlug;
+    use HasUserFeedback;
 
     protected $casts = [
         'published_at' => 'datetime',

@@ -6,7 +6,6 @@ use App\Filament\Resources\BlogResource\Pages;
 use App\Filament\Resources\BlogResource\RelationManagers;
 use App\Models\Blog;
 use Carbon\Carbon;
-use Filament\Forms;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
@@ -15,12 +14,13 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Forms;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
+use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -36,7 +36,7 @@ class BlogResource extends Resource
             ->schema([
                 TextInput::make('title')
                     ->required()
-                    ->columnSpan(fn ($context) => $context == 'create' ? 1 : 2),
+                    ->columnSpan(fn ($context) => $context == 'create' ? 1 : 'full'),
                 TextInput::make('slug')
                     ->disabled()
                     ->hiddenOn(['create']),
@@ -46,7 +46,8 @@ class BlogResource extends Resource
                 FileUpload::make('image')
                     ->image()
                     ->required()
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->disk('public'),
                 TextInput::make('image_alt')
                     ->required()
                     ->columnSpanFull(),
@@ -55,7 +56,8 @@ class BlogResource extends Resource
                     ->columnSpanFull(),
                 MarkdownEditor::make('markdown_content')
                     ->required()
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->fileAttachmentsDisk('public'),
                 Select::make('related_blogs')
                     ->multiple()
                     ->preload()
