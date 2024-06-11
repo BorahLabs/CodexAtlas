@@ -21,7 +21,6 @@ class BlogFactory extends Factory
             'image' => fake()->sentence(4,true),
             'seo_title' => fake()->sentence(4,true),
             'seo_description' => fake()->sentence(4,true),
-            'og_image' => fake()->sentence(4,true),
             'excerpt' => fake()->paragraphs(2, true),
             'markdown_content' => fake()->paragraphs(9, true),
         ];

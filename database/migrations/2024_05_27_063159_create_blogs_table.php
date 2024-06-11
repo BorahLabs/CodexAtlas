@@ -14,15 +14,16 @@ return new class extends Migration
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('image');
+            $table->string('image_alt');
             $table->mediumText('excerpt');
             $table->dateTime('published_at');
             $table->boolean('is_active');
             $table->longText('markdown_content');
             $table->string('seo_title');
-            $table->string('seo_description');
-            $table->string('og_image');
+            $table->string('seo_description', 512);
+            $table->json('related_blogs');
             $table->timestamps();
         });
     }

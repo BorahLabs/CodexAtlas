@@ -17,21 +17,12 @@ class BlogController extends Controller
 
     public function detail(Blog $blog)
     {
-        $abortShow = true;
-        if(auth()->user()){
-            if(auth()->user()->emailIsFromCodex()){
-                $abortShow = false;
-            } else{
-                $abortShow = ! $blog->is_visible;
-            }
-        } else{
-            $abortShow = ! $blog->is_visible;
+        if (! auth()->user()?->emailIsFromCodex()) {
+            abort_if(! $blog->is_visible, 404);
         }
 
-        abort_if($abortShow, 404);
-
         $otherBlogs = Blog::query()->where('id', '!=', $blog->id)->inRandomOrder()->get()->take(3);
-        
+
         return view('blog.blog-detail', [
             'blog' => $blog,
             'otherBlogs' => $otherBlogs,
