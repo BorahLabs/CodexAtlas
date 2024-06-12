@@ -39,7 +39,7 @@ class Repository implements Wireable
     /**
      * @var array
      */
-    public static function fromLivewire($value): static
+    public static function fromLivewire($value): static // @pest-ignore-type
     {
         $id = $value['id'];
         $name = $value['name'];

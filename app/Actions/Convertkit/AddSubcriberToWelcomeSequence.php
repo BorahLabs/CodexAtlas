@@ -12,7 +12,7 @@ class AddSubcriberToWelcomeSequence
 
     public string $commandSignature = 'convertkit:add-subscribers';
 
-    public function handle(User $user)
+    public function handle(User $user): void
     {
         if (! config('services.convertkit.key')) {
             return;
@@ -45,7 +45,7 @@ class AddSubcriberToWelcomeSequence
         }
     }
 
-    public function asCommand()
+    public function asCommand(): void
     {
         User::query()
             ->whereNotNull('email_verified_at')
