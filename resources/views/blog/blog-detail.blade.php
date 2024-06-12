@@ -30,7 +30,7 @@
                 <div class="w-full text-center mb-4 sm:mb-10">
                     <span class="text-2xl sm:text-4xl text-center text-secondary-gradient font-bold">{{ __('Other blogs') }}</span>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     @foreach ($otherBlogs as $otherBlog)
                         <x-codex.blog.blog-card :blog="$otherBlog" />
                     @endforeach
