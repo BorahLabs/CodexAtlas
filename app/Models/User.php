@@ -70,7 +70,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
         return $this->emailIsFromCodex();
     }
 
-    public function emailIsFromCodex()
+    public function emailIsFromCodex(): bool
     {
         return str_ends_with($this->email, config('codex.company_domain'));
     }

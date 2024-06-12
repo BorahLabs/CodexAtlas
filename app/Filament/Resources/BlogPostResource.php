@@ -36,7 +36,7 @@ class BlogPostResource extends Resource
             ->schema([
                 TextInput::make('title')
                     ->required()
-                    ->columnSpan(fn ($context) => $context == 'create' ? 1 : 'full'),
+                    ->columnSpan(fn (string $context) => $context == 'create' ? 1 : 'full'),
                 TextInput::make('slug')
                     ->disabled()
                     ->hiddenOn(['create']),
@@ -62,7 +62,7 @@ class BlogPostResource extends Resource
                     ->multiple()
                     ->preload()
                     ->columnSpanFull()
-                    ->options(function($context, $record){
+                    ->options(function(string $context, BlogPost|null $record){
                         $query = BlogPost::query();
                         return $context == 'edit' ? $query->where('id', '!=', $record->id)->get()->pluck('title', 'id') : $query->get()->pluck('title', 'id');
                     }),
@@ -85,15 +85,15 @@ class BlogPostResource extends Resource
                 TextColumn::make('published_at')
                     ->searchable()
                     ->sortable()
-                    ->formatStateUsing(fn($state) => Carbon::parse($state)->format('H:i d-m-Y'))
+                    ->formatStateUsing(fn(string $state) => Carbon::parse($state)->format('H:i d-m-Y'))
                     ->badge()
-                    ->color(fn($state) => $state <= now() ? 'success' : 'danger'),
+                    ->color(fn(string $state) => $state <= now() ? 'success' : 'danger'),
                 TextColumn::make('created_at')
                     ->label('Related blogs')
                     ->badge()
                     ->icon('heroicon-o-clipboard')
                     ->color('danger')
-                    ->formatStateUsing(fn($record) => count($record->related_blogs)),
+                    ->formatStateUsing(fn(BlogPost $record) => count($record->related_blogs)),
                 IconColumn::make('is_active')
                     ->boolean(),
 
@@ -118,7 +118,7 @@ class BlogPostResource extends Resource
                         return $query
                             ->when(
                                 $data['is_active'],
-                                function (Builder $query, $value): Builder {
+                                function (Builder $query, string $value): Builder {
                                     switch($value){
                                         case 'active':
                                             return $query->where('is_active', true);
@@ -131,7 +131,7 @@ class BlogPostResource extends Resource
                             )
                             ->when(
                                 $data['published'],
-                                function (Builder $query, $value): Builder {
+                                function (Builder $query, string $value): Builder {
 
                                     switch($value){
                                         case 'published':

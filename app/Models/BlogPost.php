@@ -35,14 +35,14 @@ class BlogPost extends Model
         );
     }
 
-    private function deleteRelated($actualBlog)
+    private function deleteRelated(BlogPost $actualBlog): void
     {
         $blogs = BlogPost::query()->whereJsonContains('related_blogs', (string) $actualBlog->id)->get();
 
-        $blogs->each(function ($blog) use ($actualBlog) {
+        $blogs->each(function (BlogPost $blog) use ($actualBlog) {
             $relateds = collect($blog->related_blogs);
 
-            $newRelateds = $relateds->reject(function ($value) use ($actualBlog) {
+            $newRelateds = $relateds->reject(function (string $value) use ($actualBlog) {
                 return $value == $actualBlog->id;
             })->values()->all();
 
@@ -84,12 +84,12 @@ class BlogPost extends Model
      *
      * @return string
      */
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }
 
-    public function getTailGraphUrl()
+    public function getTailGraphUrl(): string
     {
         $image = 'https://og.tailgraph.com/og
                     ?fontFamily=Roboto

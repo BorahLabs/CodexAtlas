@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
-    public function index()
+    public function index(): \Illuminate\Contracts\View\View
     {
         return view('blog.blog-list', [
             'blogs' => BlogPost::query()->get(),
         ]);
     }
 
-    public function detail(BlogPost $blog)
+    public function detail(BlogPost $blog): \Illuminate\Contracts\View\View
     {
         if (! auth()->user()?->emailIsFromCodex()) {
             abort_if(! $blog->is_visible, 404);
@@ -25,7 +25,7 @@ class BlogController extends Controller
 
         $otherBlogs = collect([]);
 
-        $blogIds->each(function($id) use (&$otherBlogs) {
+        $blogIds->each(function(string $id) use (&$otherBlogs) {
             $blog = BlogPost::query()->find($id);
 
             if($blog){
