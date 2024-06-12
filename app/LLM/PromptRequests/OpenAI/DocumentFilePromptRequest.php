@@ -40,11 +40,9 @@ class DocumentFilePromptRequest implements PromptRequest
 
         if($project->has('concepts')){
             $prompt .=
-            "
-            Also, you have to consider this concepts when describing the file: \n
-            ";
+            "\n Also, you have to consider this concepts when describing the file: \n";
             $project->concepts->each(function($item, $key) use (&$prompt){
-                $prompt .= "-" . $item->name . ": " . $item->description . "\n";
+                $prompt .= "-" . $item->name . ": " . $item->description . " \n";
             });
         }
 
