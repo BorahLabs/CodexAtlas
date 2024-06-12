@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('blogs', function (Blueprint $table) {
+        Schema::create('blog_posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->longText('markdown_content');
             $table->string('seo_title');
             $table->string('seo_description', 512);
-            $table->json('related_blogs');
+            $table->json('related_blogs')->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('blogs');
+        Schema::dropIfExists('blog_posts');
     }
 };

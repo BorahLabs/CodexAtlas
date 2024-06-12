@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Blog extends Model
+class BlogPost extends Model
 {
     use HasFactory, HasSlug;
     use HasUserFeedback;
@@ -37,7 +37,7 @@ class Blog extends Model
 
     private function deleteRelated($actualBlog)
     {
-        $blogs = Blog::query()->whereJsonContains('related_blogs', (string) $actualBlog->id)->get();
+        $blogs = BlogPost::query()->whereJsonContains('related_blogs', (string) $actualBlog->id)->get();
 
         $blogs->each(function ($blog) use ($actualBlog) {
             $relateds = collect($blog->related_blogs);
@@ -58,11 +58,8 @@ class Blog extends Model
     protected static function booted(): void
     {
 
-        static::deleting(function (Blog $blog) {
+        static::deleting(function (BlogPost $blog) {
             $blog->deleteRelated($blog);
-        });
-
-        static::saving(function (Blog $blog) {
         });
 
         if (!auth()->user()?->emailIsFromCodex()) {
@@ -97,14 +94,13 @@ class Blog extends Model
         $image = 'https://og.tailgraph.com/og
                     ?fontFamily=Roboto
                     &title=' . urlencode($this->title) . '
-                    &titleTailwind=text-gray-800%20font-bold%20text-6xl
+                    &titleTailwind=text-white%20font-bold%20text-6xl
                     &text=' . urlencode($this->excerpt) . '
-                    &textTailwind=text-gray-700%20text-2xl%20mt-4
-                    &logoUrl=' . urlencode($this->image_url) . '
+                    &textTailwind=text-white%20opacity-75%20text-2xl%20mt-4
                     &logoTailwind=h-64
-                    &bgTailwind=bg-dark
+                    &bgTailwind=bg-[#080C28]
                     &footer=' . config('app.url') . '
-                    &footerTailwind=text-teal-600';
+                    &footerTailwind=text-[#54B8E0]';
 
         return $image;
     }

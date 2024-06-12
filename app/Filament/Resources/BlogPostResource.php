@@ -2,9 +2,16 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\BlogResource\Pages;
-use App\Filament\Resources\BlogResource\RelationManagers;
-use App\Models\Blog;
+use App\Filament\Resources\BlogPostResource\Pages;
+use App\Filament\Resources\BlogPostResource\RelationManagers;
+use App\Models\BlogPost;
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Carbon\Carbon;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
@@ -13,20 +20,13 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
-use Filament\Forms;
-use Filament\Resources\Resource;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
-use Filament\Tables\Table;
-use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class BlogResource extends Resource
+class BlogPostResource extends Resource
 {
-    protected static ?string $model = Blog::class;
+    protected static ?string $model = BlogPost::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -63,7 +63,7 @@ class BlogResource extends Resource
                     ->preload()
                     ->columnSpanFull()
                     ->options(function($context, $record){
-                        $query = Blog::query();
+                        $query = BlogPost::query();
                         return $context == 'edit' ? $query->where('id', '!=', $record->id)->get()->pluck('title', 'id') : $query->get()->pluck('title', 'id');
                     }),
                 TextInput::make('seo_title')
@@ -166,9 +166,9 @@ class BlogResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListBlogs::route('/'),
-            'create' => Pages\CreateBlog::route('/create'),
-            'edit' => Pages\EditBlog::route('/{record}/edit'),
+            'index' => Pages\ListBlogPosts::route('/'),
+            'create' => Pages\CreateBlogPost::route('/create'),
+            'edit' => Pages\EditBlogPost::route('/{record}/edit'),
         ];
     }
 }

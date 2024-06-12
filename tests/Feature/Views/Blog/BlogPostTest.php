@@ -1,10 +1,11 @@
 <?php
 
 use App\Models\Blog;
+use App\Models\BlogPost;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-test('Empty blog shows the empty state', function () {
+test('Empty blog post shows the empty state', function () {
     $response = $this->get('/blog');
     $response->assertStatus(200);
 
@@ -12,15 +13,15 @@ test('Empty blog shows the empty state', function () {
     $response->assertSee($emptyImage, false);
 });
 
-test('Blog does not show no active posts and they are not accessible', function () {
-    $blogNoActive = Blog::factory()->active(false)->publishedAt(now())->create();
+test('Blog post does not show no active posts and they are not accessible', function () {
+    $blogNoActive = BlogPost::factory()->active(false)->publishedAt(now())->create();
 
     $this->get(route('blog.detail', $blogNoActive))
         ->assertStatus(404);
 });
 
 test('Blog does not show future posts and they are not accessible', function () {
-    $blogNoPublished = Blog::factory()->active(true)->publishedAt(now()->addDay())->create();
+    $blogNoPublished = BlogPost::factory()->active(true)->publishedAt(now()->addDay())->create();
 
     $this->get(route('blog.detail', $blogNoPublished))
         ->assertStatus(404);
@@ -31,13 +32,13 @@ test('Future / inactive blog posts are accessible if I an logged with an email f
 
     $this->actingAs($user);
 
-    $blogNoPublished = Blog::factory()->active(true)->publishedAt(now()->addDay())->create();
+    $blogNoPublished = BlogPost::factory()->active(true)->publishedAt(now()->addDay())->create();
 
     $this
         ->get(route('blog.detail', ['blog' => $blogNoPublished]))
         ->assertStatus(200);
 
-    $blogNoActive = Blog::factory()->active(false)->publishedAt(now())->create();
+    $blogNoActive = BlogPost::factory()->active(false)->publishedAt(now())->create();
 
     $this
         ->get(route('blog.detail', ['blog' => $blogNoActive]))
@@ -45,7 +46,7 @@ test('Future / inactive blog posts are accessible if I an logged with an email f
 });
 
 test('Blog post can be accessed if they are published, and they return a 200', function() {
-    $blog = Blog::factory()->active(true)->publishedAt(now())->create();
+    $blog = BlogPost::factory()->active(true)->publishedAt(now())->create();
 
     $this
         ->get(route('blog.detail', ['blog' => $blog]))

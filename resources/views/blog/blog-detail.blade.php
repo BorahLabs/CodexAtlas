@@ -1,6 +1,6 @@
 <x-web-layout>
-    @section('title', $blog->title)
-    @section('og_title', $blog->title)
+    @section('title', $blog->seo_title)
+    @section('og_title', $blog->seo_title)
     @section('metadescription', $blog->seo_description)
     {{-- Hacer la og image de tailgraph en el modelo --}}
     @section('og_image', $blog->getTailGraphUrl())
@@ -8,20 +8,18 @@
         <section class="max-w-4xl mx-auto">
             <h2 class="text-2xl sm:text-5xl font-bold text-left text-white mb-4 sm:mb-10">{{ $blog->title }}</h2>
 
-            <div class="text-white opacity-55">
-                <span>{{ __('Published') . ' - ' . $blog->published_at->format('H:i d/m/Y') }}</span>
-            </div>
-
             <section>
-                <div class="w-full h-54 sm:h-96 flex justify-center mx-auto my-10">
-                    <img class="w-full h-full object-fill object-center" src="{{ $blog->image_url }}"
-                        alt="{{ $blog->image_alt }}">
+                <div class="relative aspect-video rounded-xl overflow-hidden mx-auto my-10">
+                    <img src="{{ $blog->image_url }}" alt="{{ $blog->image_alt }}"
+                        class="absolute left-0 top-0 w-full h-full object-cover" />
+                    <span
+                        class="absolute top-4 right-4 bg-violet-500 text-white text-sm font-medium rounded-md px-2 py-1">{{ $blog->published_at->format('d-m-Y') }}</span>
                 </div>
 
                 <div class="prose prose-invert">
                     {!! Str::markdown($blog->markdown_content) !!}
                 </div>
-                <div class="max-w-prose mt-8 text-white">
+                <div class="mt-8 text-white w-full">
                     <livewire:tools.user-feedback :model="$blog" />
                 </div>
             </section>
@@ -30,7 +28,7 @@
         @if ($otherBlogs->count() > 0)
             <section class="max-w-7xl mx-auto mt-10 text-xl">
                 <div class="w-full text-center mb-4 sm:mb-10">
-                    <span class="text-2xl sm:text-4xl text-center text-primary-gradient">{{ __('Other blogs') }}</span>
+                    <span class="text-2xl sm:text-4xl text-center text-secondary-gradient font-bold">{{ __('Other blogs') }}</span>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4">
                     @foreach ($otherBlogs as $otherBlog)
