@@ -99,7 +99,7 @@ class Team extends JetstreamTeam
          * @var User $owner
          */
         $owner = $this->owner;
-        if (str_ends_with($owner->email, '@codexatlas.app')) {
+        if ($owner->emailIsFromCodex()) {
             return SubscriptionType::Unlimited;
         }
 

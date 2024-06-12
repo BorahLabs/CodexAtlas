@@ -12,12 +12,12 @@ enum NotificationType
 
     public function icon(): string
     {
-        return match($this) {
-            static::DemoCall => ':telephone_receiver:',
-            static::Success => ':white_check_mark:',
-            static::Error => ':x:',
-            static::Warning => ':warning:',
-            static::Info => ':information_source:',
+        return match ($this) {
+            self::DemoCall => ':telephone_receiver:',
+            self::Success => ':white_check_mark:',
+            self::Error => ':x:',
+            self::Warning => ':warning:',
+            self::Info => ':information_source:',
         };
     }
 }

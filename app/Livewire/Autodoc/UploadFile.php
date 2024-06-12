@@ -22,7 +22,7 @@ class UploadFile extends Component implements HasForms
 
     public AutodocLead $lead;
 
-    public function mount()
+    public function mount(): void
     {
         $this->form->fill();
     }
@@ -42,7 +42,7 @@ class UploadFile extends Component implements HasForms
             ->statePath('data');
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('autodoc.livewire.upload-file');
     }

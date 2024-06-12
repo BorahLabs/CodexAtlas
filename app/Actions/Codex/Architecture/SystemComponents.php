@@ -39,7 +39,7 @@ class SystemComponents
         );
 
         [$framework, $files] = FilterFilesByFramework::make()->handle($filesAndFolders, $repoName);
-        LogUserPerformedAction::dispatch(\App\Enums\Platform::Codex, \App\Enums\NotificationType::Info, 'Generating documentation for branch '.$branch->id . ' with framework '.$framework->name());
+        LogUserPerformedAction::dispatch(\App\Enums\Platform::Codex, \App\Enums\NotificationType::Info, 'Generating documentation for branch '.$branch->id.' with framework '.$framework->name());
         $branch->update(['framework_name' => $framework->name()]);
 
         if (! is_null($subscriptionType->maxFilesPerRepository())) {

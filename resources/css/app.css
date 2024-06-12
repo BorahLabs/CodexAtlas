@@ -33,6 +33,7 @@
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
 }
 
 .bg-input-gradient {
@@ -44,6 +45,15 @@
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+}
+
+.text-secondary-gradient {
+    background: linear-gradient(180deg, #FFFFFF -91.67%, #9A88F5 77.96%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
 }
 
 .title-gradient {

@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Go;
 use App\Atlas\Languages\DotNet;
+use App\Atlas\Languages\Go;
 
 class GoToDotNet extends CodeConverterTool
 {

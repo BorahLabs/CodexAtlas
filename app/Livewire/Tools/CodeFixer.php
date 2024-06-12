@@ -2,29 +2,16 @@
 
 namespace App\Livewire\Tools;
 
-use App\Actions\Autodoc\ProcessAutodocSystemComponent;
 use App\Actions\InternalNotifications\LogUserPerformedAction;
-use App\Atlas\Guesser;
-use App\Atlas\Languages\Contracts\Language;
-use App\Enums\SystemComponentStatus;
 use App\LLM\Contracts\Llm;
 use App\LLM\PromptRequests\OpenAI\CodeFixerPromptRequest;
 use App\Models\CodeFixing;
-use App\Models\SystemComponent;
 use App\Models\Tool;
-use App\SourceCode\DTO\File;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
-use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
-use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class CodeFixer extends Component
 {
-    public string $solution;
-
     public string $code;
 
     public string $codeError;
@@ -32,19 +19,20 @@ class CodeFixer extends Component
     #[Locked]
     public string $ip;
 
-    public function rules()
+    public ?CodeFixing $codeFixing = null;
+
+    public function rules(): array
     {
         return [
-            'code' => 'required',
-            'codeError' => 'required',
+            'code' => 'required|string|max:2000',
+            'codeError' => 'required|string|max:600',
         ];
     }
 
-    public function mount()
+    public function mount(): void
     {
         $this->ip = request()->ip();
     }
-
 
     private function userExceedsLimitsOfRequests(): bool
     {
@@ -52,25 +40,20 @@ class CodeFixer extends Component
 
         $codeFixings = $tool->todayIpCodeFixingRequests($this->ip);
 
-        if($codeFixings->count() >= 10){
-            $this->solution = null;
-
-            return true;
-        } else{
-            CodeFixing::create([
-                'tool_id' => $tool->id,
-                'ip' => $this->ip,
-                'code' => $this->code,
-                'code_error' => $this->codeError,
-                'response' => $this->solution,
-            ]);
-            return false;
-        }
+        return $codeFixings->count() >= 5;
     }
 
-    public function sendCode()
+    public function sendCode(): void
     {
+        $this->resetErrorBag();
         $this->validate();
+
+        if ($this->userExceedsLimitsOfRequests()) {
+            $this->codeFixing = null;
+            $this->addError('limit', 'You have exceeded the limit of requests. Please, try again tomorrow or sign up for a paid plan.');
+
+            return;
+        }
 
         $data = [
             'code' => $this->code,
@@ -87,25 +70,30 @@ class CodeFixer extends Component
         $userPrompt = $prompt->userPrompt($data);
         $completion = $llm->completion($systemPrompt, $userPrompt);
 
-        $this->solution = (string) json_decode($completion->completion, true)['response'];
-
-        if ($this->userExceedsLimitsOfRequests()) {
-            $this->addError('limit', 'You have exceeded the limit of requests. Please, try again tomorrow or sign up.');
-
-            return;
-        }
+        $solution = json_decode($completion->completion, true)['response'] ?? null;
 
         $tool = Tool::codeFixer();
 
+        $this->codeFixing = CodeFixing::create([
+            'tool_id' => $tool->id,
+            'ip' => $this->ip,
+            'code' => $this->code,
+            'code_error' => $this->codeError,
+            'response' => $solution,
+        ]);
         LogUserPerformedAction::dispatch(
             \App\Enums\Platform::Codex,
             \App\Enums\NotificationType::Success,
-            'User used tool '. $tool->name,
-            [],
+            'User used tool '.$tool->name,
+            [
+                'id' => $this->codeFixing->id,
+            ],
         );
+
+        $this->dispatch('update-code');
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('livewire.tools.code-fixer');
     }

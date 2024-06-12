@@ -4,7 +4,6 @@ namespace App\Actions\Gitlab;
 
 use App\Actions\Gitlab\Auth\GetAuthenticatedAccountGitlabClient;
 use App\Models\SourceCodeAccount;
-use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\RepositoryName;
 use Lorisleiva\Actions\Concerns\AsAction;
 

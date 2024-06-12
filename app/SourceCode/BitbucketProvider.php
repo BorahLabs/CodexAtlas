@@ -2,12 +2,11 @@
 
 namespace App\SourceCode;
 
-use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Actions\Bitbucket;
+use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
 use App\Decorators\Bitbucket\DecoratedRepository;
 use App\Exceptions\ExceededProviderRateLimit;
 use App\Models\SourceCodeAccount;
-use App\Models\Team;
 use App\SourceCode\Contracts\AccountInfoProvider;
 use App\SourceCode\Contracts\HandlesWebhook;
 use App\SourceCode\Contracts\RegistersWebhook;

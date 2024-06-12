@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\PHP;
 use App\Atlas\Frameworks\Laravel;
+use App\Atlas\Languages\PHP;
 
 class PHPToLaravel extends CodeConverterTool
 {

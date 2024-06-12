@@ -13,35 +13,49 @@ class EnterpriseCalculator extends Component
 {
     #[Required]
     public int|float|null $devPricePerHour = 20;
+
     #[Required]
-    public int|null $numberOfDevs = 4;
+    public ?int $numberOfDevs = 4;
+
     #[Required]
-    public int|null $numberOfProjects = 10;
+    public ?int $numberOfProjects = 10;
+
     #[Required]
     public int $documentationReadiness = 1;
 
     #[Locked]
     public int $averageFileChangesPerDay = 15;
 
+    #[Rule(['required', 'string', 'max:50'])]
+    public string $companyFirstName = '';
+
+    #[Rule(['required', 'string', 'max:50'])]
+    public string $companyLastName = '';
+
     #[Rule(['required', 'email:rfc,dns'])]
     public string $companyEmail = '';
 
+    #[Rule(['nullable', 'string', 'max:500'])]
+    public string $companyMessage = '';
+
     public bool $demoScheduled = false;
 
+    public bool $simpleMode = false;
+
     #[Computed]
-    public function minDocumentationCost()
+    public function minDocumentationCost(): int|float
     {
         return max($this->numberOfDevs, 1) * max($this->devPricePerHour, 1) * 160 * 0.1 * 11;
     }
 
     #[Computed]
-    public function maxDocumentationCost()
+    public function maxDocumentationCost(): int|float
     {
         return max($this->numberOfDevs, 1) * max($this->devPricePerHour, 1) * 160 * 0.2 * 11;
     }
 
     #[Computed]
-    public function setupComputer()
+    public function setupComputer(): array
     {
         return match ($this->documentationReadiness) {
             2 => [
@@ -60,15 +74,15 @@ class EnterpriseCalculator extends Component
     }
 
     #[Computed]
-    public function expectedFileChangesPerDay()
+    public function expectedFileChangesPerDay(): int
     {
         return $this->numberOfProjects * $this->averageFileChangesPerDay * $this->numberOfDevs;
     }
 
     #[Computed]
-    public function price()
+    public function price(): int|float
     {
-        $systemLoadFactor = match(true) {
+        $systemLoadFactor = match (true) {
             $this->expectedFileChangesPerDay > 2000 => 7,
             $this->expectedFileChangesPerDay > 1000 => 5.5,
             $this->expectedFileChangesPerDay > 500 => 4.3,
@@ -79,7 +93,7 @@ class EnterpriseCalculator extends Component
             default => 1.5,
         };
 
-        $documentationReadinessFactor = match($this->documentationReadiness) {
+        $documentationReadinessFactor = match ($this->documentationReadiness) {
             2 => 1.1,
             3 => 1.3,
             default => 1,
@@ -88,7 +102,7 @@ class EnterpriseCalculator extends Component
         return max(8000, $this->setupComputer['price'] + 2000 * $systemLoadFactor * $documentationReadinessFactor);
     }
 
-    public function askForDemoCall()
+    public function askForDemoCall(): void
     {
         if ($this->demoScheduled) {
             return;
@@ -99,9 +113,11 @@ class EnterpriseCalculator extends Component
         LogUserPerformedAction::dispatch(
             \App\Enums\Platform::Codex,
             \App\Enums\NotificationType::DemoCall,
-            '**DEMO CALL REQUEST** requested by ' . $this->companyEmail . ' @everyone',
+            '**DEMO CALL REQUEST** requested by '.$this->companyEmail.' @everyone',
             [
+                'Name' => $this->companyFirstName . ' ' . $this->companyLastName,
                 'Email' => $this->companyEmail,
+                'Message' => $this->companyMessage ?: 'Empty',
                 'Number of devs' => $this->numberOfDevs,
                 'Number of projects' => $this->numberOfProjects,
                 'Computer setup' => $this->setupComputer['name'],
@@ -111,7 +127,7 @@ class EnterpriseCalculator extends Component
         $this->demoScheduled = true;
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('livewire.enterprise-calculator');
     }

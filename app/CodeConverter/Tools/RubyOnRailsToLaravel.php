@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Frameworks\RubyOnRails;
 use App\Atlas\Frameworks\Laravel;
+use App\Atlas\Frameworks\RubyOnRails;
 
 class RubyOnRailsToLaravel extends CodeConverterTool
 {

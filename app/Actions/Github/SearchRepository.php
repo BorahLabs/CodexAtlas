@@ -11,7 +11,7 @@ class SearchRepository
 {
     use AsAction;
 
-    public function handle(SourceCodeAccount $account, string $query)
+    public function handle(SourceCodeAccount $account, string $query): array
     {
         $client = GetAuthenticatedAccountGithubClient::make()->handle($account);
 
@@ -20,11 +20,10 @@ class SearchRepository
          */
         $api = $client->search();
 
-        return  [];
         if ($query) {
-            $q = $query . ' in:name user:' . $account->name;
+            $q = $query.' in:name user:'.$account->name;
         } else {
-            $q = 'user:' . $account->name;
+            $q = 'user:'.$account->name;
         }
 
         return collect($api->repositories($q, 'full_name', 'asc')['items'])

@@ -66,7 +66,7 @@ class MarkdownFile implements Arrayable
         return $this->metadata[$key] ?? null;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id' => $this->id(),
@@ -103,7 +103,7 @@ class MarkdownFile implements Arrayable
 
     protected function parseContents(string $contents): string
     {
-        $contents = preg_replace_callback('/!\[(.*)\]\((.+)\)/', fn ($matches) => '!['.$matches[1].']('.asset($matches[2].')'), $contents);
+        $contents = preg_replace_callback('/!\[(.*)\]\((.+)\)/', fn (array $matches) => '!['.$matches[1].']('.asset($matches[2].')'), $contents);
 
         return $contents;
     }

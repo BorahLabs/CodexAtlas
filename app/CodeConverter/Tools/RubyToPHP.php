@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Ruby;
 use App\Atlas\Languages\PHP;
+use App\Atlas\Languages\Ruby;
 
 class RubyToPHP extends CodeConverterTool
 {

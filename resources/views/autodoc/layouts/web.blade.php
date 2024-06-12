@@ -31,10 +31,24 @@
             border-color: white transparent transparent transparent;
         }
     </style>
+    @livewireStyles
     @vite(['resources/css/app.css'])
 
     @production
         <script src="https://cdn.usefathom.com/script.js" data-site="GHXJXCLA" defer></script>
+
+        <script type="text/javascript">
+            window.$crisp = [];
+            window.CRISP_WEBSITE_ID = "3a93d028-9842-49b4-abb3-c518902f2909";
+            (function() {
+                d = document;
+                s = d.createElement("script");
+                s.src = "https://client.crisp.chat/l.js";
+                s.async = 1;
+                d.getElementsByTagName("head")[0].appendChild(s);
+            })
+            ();
+        </script>
     @endproduction
 </head>
 
@@ -60,38 +74,16 @@
                         class="text-sm leading-6 text-gray-600 hover:text-gray-900">Privacy policy</a>
                 </div>
             </nav>
-            <p class="mt-10 text-center text-xs leading-5 text-gray-500">&copy; {{ date('Y') }} Borah Agency. All
+            <p class="mt-10 text-center text-xs leading-5 text-gray-500">&copy; {{ date('Y') }} CodexAtlas, LLC. All
                 rights reserved.</p>
         </div>
     </footer>
 
 
     @livewire('notifications')
-    <script src="https://unpkg.com/alpinejs@3.13.3/dist/cdn.min.js" defer></script>
+    @livewireScriptConfig
     @filamentScripts
     @vite(['resources/js/app.js'])
-
-    @production
-        <!-- Smartsupp Live Chat script -->
-        <script type="text/javascript">
-            var _smartsupp = _smartsupp || {};
-            _smartsupp.key = '6cc669f28ae9ea9963a7784e657f1fe8f4488f16';
-            window.smartsupp || (function(d) {
-                var s, c, o = smartsupp = function() {
-                    o._.push(arguments)
-                };
-                o._ = [];
-                s = d.getElementsByTagName('script')[0];
-                c = d.createElement('script');
-                c.type = 'text/javascript';
-                c.charset = 'utf-8';
-                c.async = true;
-                c.src = 'https://www.smartsuppchat.com/loader.js?';
-                s.parentNode.insertBefore(c, s);
-            })(document);
-        </script>
-        <noscript> Powered by <a href=“https://www.smartsupp.com” target=“_blank”>Smartsupp</a></noscript>
-    @endproduction
 </body>
 
 </html>

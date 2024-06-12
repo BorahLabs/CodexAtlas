@@ -4,11 +4,11 @@ This privacy policy outlines how we collect, use, and protect your information w
 
 ## Information We Collect
 
-We may collect personal information, including but not limited to, your name, email address, and usage data. We also collect and store encrypted copies of your code and vector representations for platform functionality. These copies can be shared with external parties to be processed by their LLMs, but will not be used for any other purpose.
+We may collect personal information, including but not limited to, your name, email address, and usage data. We may also collect and store vector representations of your code for platform functionality. These copies can be shared with external parties to be processed by their LLMs, but will not be used for any other purpose.
 
 ## How We Use Your Information
 
-Your personal information is used to provide and improve our services. Encrypted code and vector representations are used to enhance the functionality of our platform and improve code documentation.
+Your personal information is used to provide and improve our services. Cector representations may be used to enhance the functionality of our platform and improve code documentation. Your code may be shared with third party processors (such as OpenAI) to generate the documentation, but it will never be stored in our servers.
 
 ## Data Security
 

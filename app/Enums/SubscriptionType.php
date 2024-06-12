@@ -26,7 +26,7 @@ enum SubscriptionType
         return match ($this) {
             self::FreeTrial => 1,
             self::PayAsYouGo => null,
-            self::LimitedCompanyPlan => 80,
+            self::LimitedCompanyPlan => null,
             self::UnlimitedCompanyPlan => null,
             self::Unlimited => null,
         };
@@ -37,7 +37,7 @@ enum SubscriptionType
         return match ($this) {
             self::FreeTrial => 1,
             self::PayAsYouGo => null,
-            self::LimitedCompanyPlan => null, // TODO: tbd
+            self::LimitedCompanyPlan => null,
             self::UnlimitedCompanyPlan => null,
             self::Unlimited => null,
         };
@@ -51,6 +51,26 @@ enum SubscriptionType
             self::LimitedCompanyPlan => null,
             self::UnlimitedCompanyPlan => null,
             self::Unlimited => null,
+        };
+    }
+
+    public function maxSingleCodeDocumentations(): ?int
+    {
+        return match ($this) {
+            self::LimitedCompanyPlan => null,
+            self::UnlimitedCompanyPlan => null,
+            self::Unlimited => null,
+            default => 30,
+        };
+    }
+
+    public function maxCodeConversions(): ?int
+    {
+        return match ($this) {
+            self::LimitedCompanyPlan => 100,
+            self::UnlimitedCompanyPlan => 100,
+            self::Unlimited => 100,
+            default => 5,
         };
     }
 }

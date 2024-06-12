@@ -20,7 +20,7 @@ class GetAllFiles
         $rawFiles = FacadesFile::files($path);
         $directories = FacadesFile::directories($path);
 
-        $isBlacklisted = fn ($path) => FileWhitelist::whitelisted($path);
+        $isBlacklisted = fn (string $path) => FileWhitelist::whitelisted($path);
 
         $files = [];
         foreach ($rawFiles as $file) {

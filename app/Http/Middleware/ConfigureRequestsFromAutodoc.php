@@ -21,6 +21,7 @@ class ConfigureRequestsFromAutodoc
 
         config([
             'app.name' => 'AutomaticDocs',
+            'session.domain' => config('app.autodoc_domain'),
             'cashier.key' => config('autodoc.stripe.key'),
             'cashier.secret' => config('autodoc.stripe.secret'),
             'cashier.webhook.secret' => config('autodoc.stripe.webhook_secret'),

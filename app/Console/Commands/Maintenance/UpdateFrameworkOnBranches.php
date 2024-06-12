@@ -28,7 +28,7 @@ class UpdateFrameworkOnBranches extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         Branch::query()->whereNull('framework_name')->each(function (Branch $branch) {
             $this->info('Processing branch '.$branch->id);

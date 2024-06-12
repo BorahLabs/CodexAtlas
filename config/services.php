@@ -67,4 +67,26 @@ return [
             'describe_file_endpoint' => env('MODAL_CODEX_DESCRIBE_FILE_ENDPOINT'),
         ],
     ],
+
+    'lmstudio' => [
+        'url' => env('LMSTUDIO_URL', 'http://localhost:1234/v1'),
+        'completion_model' => env('LMSTUDIO_COMPLETION_MODEL', 'TheBloke/phi-2-GGUF'),
+    ],
+
+    'readme_generator' => [
+        'endpoint' => [
+            'offline' => env('README_GENERATOR_OFFLINE_ENDPOINT', 'https://readme-generator.codexatlas.app/v1/offline'),
+        ],
+    ],
+
+    'convertkit' => [
+        'key' => env('CONVERTKIT_API_KEY'),
+        'secret' => env('CONVERTKIT_API_SECRET'),
+        'sequences' => [
+            'welcome' => env('CONVERTKIT_SEQUENCE_WELCOME', 1927528),
+        ],
+        'tags' => [
+            'onboarding' => env('CONVERTKIT_TAG_ONBOARDING', 5072030),
+        ],
+    ],
 ];

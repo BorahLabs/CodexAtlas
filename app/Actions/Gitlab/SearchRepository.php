@@ -2,7 +2,6 @@
 
 namespace App\Actions\Gitlab;
 
-use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
 use App\Actions\Gitlab\Auth\GetAuthenticatedAccountGitlabClient;
 use App\Models\SourceCodeAccount;
 use App\SourceCode\DTO\Repository;
@@ -12,7 +11,7 @@ class SearchRepository
 {
     use AsAction;
 
-    public function handle(SourceCodeAccount $account, string $query)
+    public function handle(SourceCodeAccount $account, string $query): array
     {
         /**
          * @var \GrahamCampbell\GitLab\GitLabManager $client

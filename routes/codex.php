@@ -12,12 +12,18 @@ use App\Actions\Platform\ShowDocs;
 use App\Actions\Platform\ShowReadme;
 use App\Actions\Platform\ShowTechStack;
 use App\Actions\Platform\SourceCodeAccounts\StoreAccountPersonalAccessToken;
+use App\Actions\Platform\Tools\ShowCodeConversion;
+use App\Actions\Platform\Tools\ShowDocumentFiles;
+use App\Actions\Platform\Tools\ShowFixMyCode;
+use App\Actions\Platform\Tools\ShowReadmeGenerator;
 use App\Actions\Platform\Webhook\HandleWebhook;
+use App\Http\Controllers\Website\BlogController;
 use App\Http\Controllers\Website\CodeConvertionController;
 use App\Http\Controllers\Website\GuideController;
 use App\Http\Controllers\Website\SitemapController;
 use App\Http\Controllers\Website\Tools\CodeDocumentationToolController;
 use App\Http\Controllers\Website\Tools\CodeFixerToolController;
+use App\Http\Controllers\Website\Tools\ReadmeGeneratorToolController;
 use App\Http\Middleware\ControlRequestsFromPlatform;
 use App\Http\Middleware\ForceNoIndex;
 use App\Http\Middleware\OnlyFromCodexAtlas;
@@ -31,28 +37,50 @@ Route::domain('codexatlas.app')->group(function () {
 });
 
 Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
-    Route::view('/', 'welcome')
-        ->middleware('central-domain')
-        ->name('homepage');
+
+    Route::middleware('central-domain')->group(function () {
+        Route::view('/', 'welcome')
+            ->name('homepage');
+
     Route::view('/enterprise-code-documentation', 'enterprise')
         ->middleware('central-domain')
         ->name('enterprise');
+
+    Route::get('/blog', [BlogController::class, 'index'])
+        ->middleware('central-domain')
+        ->name('blog.index');
+
+    Route::get('/blog/{blog}', [BlogController::class, 'detail'])
+        ->middleware('central-domain')
+        ->name('blog.detail');
 
     Route::get('/tools/code-documentation-{language}', CodeDocumentationToolController::class)
         ->middleware('central-domain')
         ->name('tools.code-documentation');
 
-    Route::get('/tools/ai-code-fixer', CodeFixerToolController::class)
-        ->middleware('central-domain')
-        ->name('tools.code-fixer');
+        Route::view('/enterprise-code-documentation', 'enterprise')
+            ->name('enterprise');
 
-    Route::get('/{from}-to-{to}-code-converter', CodeConvertionController::class)
-        ->middleware('central-domain')
-        ->name('tools.code-converter')
-        ->where(['from' => '[a-z\-]+', 'to' => '[a-z\-]+']);
+        Route::get('/tools/code-documentation-{language}', CodeDocumentationToolController::class)
+            ->name('tools.code-documentation');
 
-    Route::get('/guide', [GuideController::class, 'index'])->name('guide.index');
-    Route::get('/guide/{folder}/{file}', [GuideController::class, 'show'])->name('guide.show');
+        Route::get('/tools/fix-my-code-with-ai', CodeFixerToolController::class)
+            ->name('tools.code-fixer');
+
+        Route::get('/tools/readme-generator', ReadmeGeneratorToolController::class)
+            ->name('tools.readme-generator');
+
+        Route::get('/{from}-to-{to}-code-converter', CodeConvertionController::class)
+            ->name('tools.code-converter')
+            ->where(['from' => '[a-z\-]+', 'to' => '[a-z\-]+']);
+
+        Route::get('/guide', [GuideController::class, 'index'])->name('guide.index');
+        Route::get('/guide/{folder}/{file}', [GuideController::class, 'show'])->name('guide.show');
+
+        Route::view('/book-a-demo', 'book-a-demo')
+            ->name('book-a-demo')
+            ->middleware(ForceNoIndex::class);
+    });
 
     Route::middleware([
         'auth:sanctum',
@@ -68,6 +96,11 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
             Route::post('/projects/{project}/repositories', StoreRepository::class)->name('repositories.store');
 
             Route::get('/glossary/{project}', ShowGlossary::class)->name('glossary.show');
+            
+            Route::get('/app-tools/code-conversion', ShowCodeConversion::class)->name('app.tools.code-conversion');
+            Route::get('/app-tools/document-files', ShowDocumentFiles::class)->name('app.tools.document-files');
+            Route::get('/app-tools/fix-my-code', ShowFixMyCode::class)->name('app.tools.fix-my-code');
+            Route::get('/app-tools/readme-generator', ShowReadmeGenerator::class)->name('app.tools.readme-generator');
         });
 
         Route::post('/accounts/pat', StoreAccountPersonalAccessToken::class)->name('source-code-accounts.pat.store');

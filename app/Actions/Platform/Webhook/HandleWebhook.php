@@ -18,6 +18,7 @@ class HandleWebhook
         if ($provider instanceof HandlesWebhook) {
             $provider->verifyIncomingWebhook($request);
             LogUserPerformedAction::dispatch(\App\Enums\Platform::Codex, \App\Enums\NotificationType::Info, 'Processing webhook...');
+
             return $provider->handleIncomingWebhook($request->all(), $request);
         }
 

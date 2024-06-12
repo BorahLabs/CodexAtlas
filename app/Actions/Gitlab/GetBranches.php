@@ -22,7 +22,9 @@ class GetBranches
          */
         $client = GetAuthenticatedAccountGitlabClient::make()->handle($account);
         $projectId = GetProjectIdForRepository::make()->handle($account, $repository);
-        $branches = $client->repositories()->branches($projectId);
+        $branches = $client->repositories()->branches($projectId, [
+            'per_page' => 100,
+        ]);
 
         return collect($branches)
             ->map(fn (array $branch) => $branch['name'])

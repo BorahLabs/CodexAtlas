@@ -3,7 +3,6 @@
 namespace App\SourceCode\Contracts;
 
 use App\Models\SourceCodeAccount;
-use App\Models\Team;
 use App\SourceCode\DTO\Branch;
 use App\SourceCode\DTO\File;
 use App\SourceCode\DTO\Folder;

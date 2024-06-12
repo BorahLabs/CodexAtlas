@@ -16,7 +16,7 @@ class AddBranchToRepository extends Component
 
     public string $selectedBranch = '';
 
-    public function startAddingBranch()
+    public function startAddingBranch(): void
     {
         $branches = $this->getAvailableBranches();
         $existingBranches = $this->repository->branches->pluck('name')->toArray();
@@ -29,7 +29,7 @@ class AddBranchToRepository extends Component
         $this->isAddingBranch = true;
     }
 
-    public function addBranch()
+    public function addBranch(): void
     {
         if (blank($this->selectedBranch)) {
             return;
@@ -55,7 +55,7 @@ class AddBranchToRepository extends Component
         $this->redirect(route('projects.show', ['project' => $this->repository->project]));
     }
 
-    private function getAvailableBranches()
+    private function getAvailableBranches(): array
     {
         $repoName = $this->repository->nameDto();
         $account = $this->repository->sourceCodeAccount;
@@ -68,7 +68,7 @@ class AddBranchToRepository extends Component
         return $branches;
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('livewire.atlas.add-branch-to-repository');
     }

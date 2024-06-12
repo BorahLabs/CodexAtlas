@@ -10,7 +10,7 @@ class ShowStatus
 {
     use AsController;
 
-    public function asController(AutodocLead $autodocLead, Request $request)
+    public function asController(AutodocLead $autodocLead, Request $request): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('autodoc.status', [
             'autodocLead' => $autodocLead,

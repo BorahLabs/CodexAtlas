@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Ruby;
 use App\Atlas\Languages\Javascript;
+use App\Atlas\Languages\Ruby;
 
 class RubyToJavascript extends CodeConverterTool
 {

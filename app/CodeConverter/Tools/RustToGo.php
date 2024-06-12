@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Rust;
 use App\Atlas\Languages\Go;
+use App\Atlas\Languages\Rust;
 
 class RustToGo extends CodeConverterTool
 {

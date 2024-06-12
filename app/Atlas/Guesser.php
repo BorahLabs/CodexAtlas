@@ -12,7 +12,7 @@ final class Guesser
 {
     public static function make(): static
     {
-        return new static();
+        return new self();
     }
 
     public function guessFramework(Folder $folder): Framework
@@ -45,6 +45,10 @@ final class Guesser
             new Frameworks\Angular(),
             new Frameworks\Vue(),
             new Frameworks\React(),
+            new Frameworks\Flutter(),
+            new Frameworks\RubyOnRails(),
+            new Frameworks\Flask(),
+            new Frameworks\Symfony(),
             new Frameworks\GeneralFramework(),
         ];
     }

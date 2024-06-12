@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Frameworks\Nuxt;
 use App\Atlas\Frameworks\Next;
+use App\Atlas\Frameworks\Nuxt;
 
 class NuxtToNext extends CodeConverterTool
 {

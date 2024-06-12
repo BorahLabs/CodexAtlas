@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Java;
 use App\Atlas\Languages\Go;
+use App\Atlas\Languages\Java;
 
 class JavaToGo extends CodeConverterTool
 {

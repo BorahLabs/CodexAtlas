@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Node;
 use App\Atlas\Languages\Go;
+use App\Atlas\Languages\Node;
 
 class NodeToGo extends CodeConverterTool
 {

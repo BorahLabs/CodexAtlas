@@ -6,6 +6,7 @@ use App\Actions\Autodoc\ProcessAutodocSystemComponent;
 use App\Actions\InternalNotifications\LogUserPerformedAction;
 use App\Atlas\Guesser;
 use App\Atlas\Languages\Contracts\Language;
+use App\Enums\SubscriptionType;
 use App\Enums\SystemComponentStatus;
 use App\Models\SystemComponent;
 use App\Models\Tool;
@@ -28,6 +29,9 @@ class CodeDocumentation extends Component
     public string $ip;
 
     #[Locked]
+    public bool $fromPlatform = false;
+
+    #[Locked]
     public ?string $systemComponentId = null;
 
     public ?string $filePath;
@@ -36,12 +40,12 @@ class CodeDocumentation extends Component
 
     public ?TemporaryUploadedFile $file = null;
 
-    public function mount()
+    public function mount(): void
     {
         $this->ip = request()->ip();
     }
 
-    public function updatedFile()
+    public function updatedFile(): void
     {
         $this->resetErrorBag();
         if (is_null($this->file)) {
@@ -99,10 +103,18 @@ class CodeDocumentation extends Component
 
     public function userExceedsLimitsOfRequests(): bool
     {
-        return Cache::get('code-documentation:user-requests:'.$this->ip, 0) >= 30;
+        /**
+         * @var SubscriptionType $subscriptionType
+         */
+        $subscriptionType = auth()->user()?->currentTeam?->subscriptionType() ?? SubscriptionType::FreeTrial;
+        if ($this->fromPlatform && ! is_null($subscriptionType->maxSingleCodeDocumentations())) {
+            return false;
+        }
+
+        return Cache::get('code-documentation:user-requests:'.$this->ip, 0) >= $subscriptionType->maxSingleCodeDocumentations();
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('livewire.tools.code-documentation', [
             'lang' => $this->language(),

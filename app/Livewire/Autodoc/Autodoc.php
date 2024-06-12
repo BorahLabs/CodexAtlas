@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Autodoc;
 
+use App\Actions\Codex\Architecture\SystemComponents\ConvertSystemComponentMarkdown;
 use App\LLM\Contracts\Llm;
 use App\LLM\OpenAI;
 use App\LLM\PromptRequests\PromptRequestType;
@@ -9,6 +10,7 @@ use App\Models\AutodocLead;
 use App\Models\Project;
 use App\SourceCode\DTO\File;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Laravel\Cashier\Cashier;
@@ -26,7 +28,7 @@ class Autodoc extends Component
 
     public ?AutodocLead $lead = null;
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('autodoc.livewire.autodoc');
     }
@@ -44,12 +46,7 @@ class Autodoc extends Component
     #[Computed]
     public function priceInCents(): int
     {
-        return match (true) {
-            $this->lead->number_of_files <= 100 => 1000,
-            $this->lead->number_of_files <= 500 => 4000,
-            $this->lead->number_of_files <= 1000 => 7000,
-            default => 0,
-        };
+        return max(1000, $this->lead->number_of_files * 20);
     }
 
     #[Computed]
@@ -76,12 +73,13 @@ class Autodoc extends Component
 
         $file = File::from(json_decode($this->lead->first_file, true));
         $completion = $llm->describeFile(new Project(['name' => '']), $file, PromptRequestType::DOCUMENT_FILE);
+        $completion = ConvertSystemComponentMarkdown::make()->handle(json_decode($completion->completion, true), $file->path);
         $this->lead->update([
-            'first_file_completion' => '# '.$file->name."\n\n".$completion->completion,
+            'first_file_completion' => $completion,
         ]);
     }
 
-    public function pay()
+    public function pay(): RedirectResponse|\Livewire\Features\SupportRedirects\Redirector
     {
         $stripe = Cashier::stripe();
         $session = $stripe->checkout->sessions->create([

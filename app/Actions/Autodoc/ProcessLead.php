@@ -19,7 +19,7 @@ class ProcessLead
 
     public string $commandSignature = 'autodoc:process-lead {lead}';
 
-    public function handle(AutodocLead $lead)
+    public function handle(AutodocLead $lead): void
     {
         $s3 = Storage::disk('s3');
         $local = Storage::disk('tmp');
@@ -75,7 +75,7 @@ class ProcessLead
         $branch->systemComponents()->each(fn (SystemComponent $systemComponent) => ProcessAutodocSystemComponent::dispatch($systemComponent, $lead));
     }
 
-    public function asCommand(Command $command)
+    public function asCommand(Command $command): void
     {
         $lead = AutodocLead::findOrFail($command->argument('lead'));
         $this->handle($lead);

@@ -18,6 +18,19 @@
             <x-bordered-black-box class="text-white">
                 <livewire:tools.code-documentation :language="$language->name()" />
             </x-bordered-black-box>
+            <div class="mt-12">
+                <h2 class="text-white font-bold text-xl">Other tools</h2>
+                <ul class="grid grid-cols-1 gap-4 md:grid-cols-2 mt-2">
+                    @foreach (\App\Atlas\Guesser::supportedLanguages() as $language)
+                        <li>
+                            <a href="{{ route('tools.code-documentation', ['language' => Str::slug($language->name())]) }}"
+                                class="block text-white text-sm font-medium bg-darkBlue-800 hover:bg-violet-700 px-4 py-2 rounded-md">
+                                Free {{ $language->name() }} Code Documentation
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
         <x-cta />
         <div class="w-full sm:max-w-4xl mt-6 p-6 mx-auto">

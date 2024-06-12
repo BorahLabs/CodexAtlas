@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\PHP;
 use App\Atlas\Languages\Java;
+use App\Atlas\Languages\PHP;
 
 class PHPToJava extends CodeConverterTool
 {

@@ -3,7 +3,6 @@
 namespace App\Actions\Bitbucket;
 
 use App\Actions\Bitbucket\Auth\GetAuthenticatedAccountBitbucketClient;
-use App\Actions\Github\Auth\GetAuthenticatedAccountGithubClient;
 use App\Models\SourceCodeAccount;
 use App\Services\GetUuidFromJson;
 use App\SourceCode\DTO\Repository;
@@ -14,7 +13,7 @@ class SearchRepository
 {
     use AsAction;
 
-    public function handle(SourceCodeAccount $account, string $query)
+    public function handle(SourceCodeAccount $account, string $query): array
     {
         try {
             $client = GetAuthenticatedAccountBitbucketClient::make()->handle($account);

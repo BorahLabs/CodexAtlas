@@ -4,11 +4,10 @@ namespace App\Http\Controllers\Website;
 
 use App\CodeConverter\Tools\CodeConverterTool;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class CodeConvertionController extends Controller
 {
-    public function __invoke(string $from, string $to)
+    public function __invoke(string $from, string $to): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $tool = CodeConverterTool::from($from, $to);
 

@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Node;
 use App\Atlas\Frameworks\Spring;
+use App\Atlas\Languages\Node;
 
 class NodeToSpring extends CodeConverterTool
 {

@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Node;
 use App\Atlas\Languages\Kotlin;
+use App\Atlas\Languages\Node;
 
 class NodeToKotlin extends CodeConverterTool
 {

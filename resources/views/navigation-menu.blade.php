@@ -20,6 +20,12 @@
                         <x-nav-link href="{{ route('guide.index') }}" :active="request()->routeIs('guide.index')">
                             {{ __('Guide') }}
                         </x-nav-link>
+                        <x-nav-link href="{{ route('app.tools.code-conversion') }}" :active="request()->routeIs('app.tools.code-conversion') ||
+                            request()->routeIs('app.tools.document-files') ||
+                            request()->routeIs('app.tools.fix-my-code') ||
+                            request()->routeIs('app.tools.readme-generator')">
+                            {{ __('Tools') }}
+                        </x-nav-link>
                     </div>
                 @endauth
             </div>

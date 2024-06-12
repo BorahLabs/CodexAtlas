@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Frameworks\Spring;
 use App\Atlas\Frameworks\RubyOnRails;
+use App\Atlas\Frameworks\Spring;
 
 class SpringToRubyOnRails extends CodeConverterTool
 {

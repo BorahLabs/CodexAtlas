@@ -2,8 +2,8 @@
 
 namespace App\CodeConverter\Tools;
 
-use App\Atlas\Languages\Javascript;
 use App\Atlas\Frameworks\Flutter;
+use App\Atlas\Languages\Javascript;
 
 class JavascriptToFlutter extends CodeConverterTool
 {

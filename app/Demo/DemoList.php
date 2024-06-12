@@ -19,7 +19,7 @@ class DemoList
             ),
             DemoPlatform::make(
                 name: 'Laravel',
-                description: 'Laravel is a web application framework with expressive, elegant syntax. We’ve already laid the foundation — freeing you to create without sweating the small things.',
+                description: 'Laravel is a web application framework with expressive, elegant syntax.',
                 url: 'https://demo.codedocumentation.app/docs/9af3f8fe-dc27-4fb6-8c8f-3416ee4b8e23/9af3fd2f-166e-42e3-b6c2-2ba91bd9d868/9af3fd33-a804-4d6b-92bd-3469830e3f6f/readme',
                 imageUrl: 'images/laravel.png',
             ),
@@ -43,13 +43,13 @@ class DemoList
             ),
             DemoPlatform::make(
                 name: 'FilamentPHP Demo',
-                description: 'A collection of beautiful full-stack components to accelerate Laravel development. The perfect starting point for your next app.',
+                description: 'A collection of beautiful full-stack components to accelerate Laravel development.',
                 url: 'https://demo.codedocumentation.app/docs/9af3f8fe-dc27-4fb6-8c8f-3416ee4b8e23/9af3fd43-2561-4751-af2c-3873ff5a21e8/9af3fd47-64c1-4bc0-be4f-61b50688e020/readme',
                 imageUrl: 'images/filament.png',
             ),
             DemoPlatform::make(
                 name: 'Focalboard',
-                description: 'Open source project management for technical teams. Open source alternative to Trello, Asana, and Notion.',
+                description: 'Open source project management for technical teams.',
                 url: 'https://demo.codedocumentation.app/docs/9af3f8fe-dc27-4fb6-8c8f-3416ee4b8e23/9af3fd47-db68-4bf9-8c4b-aa80085e18a8/9af3fd4c-6c84-4f6a-b2cb-41444a7e244d/readme',
                 imageUrl: 'images/focalboard.png',
             ),

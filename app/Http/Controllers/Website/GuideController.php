@@ -4,24 +4,25 @@ namespace App\Http\Controllers\Website;
 
 use App\Guide\DTO\MarkdownFile;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Finder\SplFileInfo;
 
 class GuideController extends Controller
 {
-    public function index()
+    public function index(): RedirectResponse
     {
         $folders = $this->folders();
 
         return redirect($folders->first()['children']->first()->url());
     }
 
-    public function show(string $folder, string $file)
+    public function show(string $folder, string $file): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $folders = $this->folders();
         $folder = $folders
-            ->where(fn ($f) => $f['children']->first()?->folderId() === $folder)
+            ->where(fn (array $f) => $f['children']->first()?->folderId() === $folder)
             ->first();
         abort_if(is_null($folder), 404);
 
