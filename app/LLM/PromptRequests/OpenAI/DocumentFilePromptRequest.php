@@ -10,7 +10,8 @@ class DocumentFilePromptRequest implements PromptRequest
 {
     public function systemPrompt(Project $project, File $file): string
     {
-        return 'You are an expert in writing software documentation. Write a short description of the provided in JSON format with the following structure:
+
+        $prompt = 'You are an expert in writing software documentation. Write a short description of the provided in JSON format with the following structure:
 
             {
                 "tldr": "General overview of what the file does",
@@ -36,6 +37,17 @@ class DocumentFilePromptRequest implements PromptRequest
         - Do not output the original file
         - If there are no methods or no classes, please do not include the section in the output
         - Dont add \n, Only the json is required';
+
+        // TODO: (future) Search related concepts with embeddings
+        $project->load('concepts');
+        if($project->concepts->isNotEmpty()){
+            $prompt .= "\n\n Also, you may consider these concepts when describing the file:";
+            $project->concepts->take(30)->each(function($item, $key) use (&$prompt){
+                $prompt .= "\n- " . $item->name . ": " . str($item->description)->limit(255);
+            });
+        }
+
+        return $prompt;
     }
 
     public function userPrompt(Project $project, File $file): string

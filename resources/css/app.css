@@ -8,7 +8,7 @@
 
 #autodoc .fi-btn {
     background: -webkit-linear-gradient(45deg, #680aca, #ff897e);
-    background: linear-gradient(60deg,#f79533,#f37055,#ef4e7b,#a166ab,#5073b8,#1098ad,#07b39b,#6fba82);
+    background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
     -webkit-animation: animatedgradient 6s ease infinite alternate;
     animation: animatedgradient 6s ease infinite alternate;
     background-size: 300% 300%;
@@ -18,9 +18,11 @@
     0% {
         background-position: 0% 50%;
     }
+
     50% {
         background-position: 100% 50%;
     }
+
     100% {
         background-position: 0% 50%;
     }
@@ -32,6 +34,10 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-fill-color: transparent;
+}
+
+.bg-input-gradient {
+    background: linear-gradient(#FFFFFF 1%, #9A88F5 100%);
 }
 
 .text-white-gradient {
@@ -50,6 +56,17 @@
     text-fill-color: transparent;
 }
 
+.title-gradient {
+    background: linear-gradient(180deg, #FFF -91.67%, #9A88F5 77.96%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 #guide-content img {
     @apply rounded-xl border-white border-8 shadow-xl;
+}
+
+.button-hover-white {
+    @apply overflow-hidden transition-all  before:absolute before:right-0 before:top-0 before:h-full before:w-1/6 before:translate-x-12 before:rotate-6 before:bg-white before:opacity-10 before:duration-700 hover:before:-translate-x-[600%];
 }

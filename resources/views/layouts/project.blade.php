@@ -17,16 +17,15 @@
                                             icon="file" />
                                     </li>
                                     <li class="py-2">
+                                        <x-codex.projects.nav-link :to="route('glossary.show', ['project' => $project])" text="Glossary" icon="book" />
+                                    </li>
+                                    <li class="py-2">
                                         <x-codex.projects.nav-link to="route('projects.show', ['project' => $project])"
                                             text="Guides" :disabled="true" icon="list" />
                                     </li>
                                     <li class="py-2">
                                         <x-codex.projects.nav-link to="route('projects.show', ['project' => $project])"
                                             text="External Platforms" :disabled="true" icon="mosaic" />
-                                    </li>
-                                    <li class="py-2">
-                                        <x-codex.projects.nav-link to="route('projects.show', ['project' => $project])"
-                                            text="Glossary" :disabled="true" icon="book" />
                                     </li>
                                     <li class="py-2">
                                         <x-codex.projects.nav-link to="route('projects.show', ['project' => $project])"
