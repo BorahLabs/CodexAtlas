@@ -38,11 +38,13 @@ class DocumentFilePromptRequest implements PromptRequest
         - If there are no methods or no classes, please do not include the section in the output
         - Dont add \n, Only the json is required';
 
-        if($project->has('concepts')){
+        // TODO: (future) Search related concepts with embeddings
+        $project->load('concepts');
+        if($project->concepts->isNotEmpty()){
             $prompt .=
-            "\n Also, you have to consider this concepts when describing the file: \n";
-            $project->concepts->each(function($item, $key) use (&$prompt){
-                $prompt .= "-" . $item->name . ": " . $item->description . " \n";
+            "\n\n Also, you may consider these concepts when describing the file:";
+            $project->concepts->take(30)->each(function($item, $key) use (&$prompt){
+                $prompt .= "\n- " . $item->name . ": " . str($item->description)->limit(255);
             });
         }
 

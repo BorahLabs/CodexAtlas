@@ -34,7 +34,7 @@
                                 </defs>
                             </svg>
 
-                            <span class="uppercase hidden sm:block text-base">Add Keyword content</span>
+                            <span class="uppercase hidden sm:block text-base">Add Concept</span>
                             <span class="uppercase sm:hidden block text-base">Add</span>
                         </button>
                     </div>

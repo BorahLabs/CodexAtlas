@@ -7,7 +7,8 @@
             </button>
         </div>
         <div class="flex justify-center">
-            <h3 class="mb-10 title-gradient text-2xl font-bold text-white">Tell us about your project</h3>
+            <h3 class="mb-10 title-gradient text-2xl font-bold text-white">
+                {{ $concept ? 'Edit concept' : 'Create new concept' }}</h3>
         </div>
         <div class="flex flex-col justify-center items-center w-full z-20">
             <div class="flex flex-col justify-start mb-5 w-full">
@@ -15,8 +16,8 @@
                 <div class="p-[2px] mb-2 rounded-xl w-full bg-input-gradient z-20">
                     <div class="relative bg-dark rounded-xl">
                         <input wire:model="name" type="text"
-                            class="pr-7 py-2 pl-2 w-full bg-dark text-white rounded-xl"
-                            placeholder="Enter here your keyword" required>
+                            class="pr-7 py-2 pl-2 w-full bg-dark text-white rounded-xl" placeholder="Concept name"
+                            required>
                         <button type="button" wire:click="clearName" class="absolute top-3 right-2" tabindex="-1">
                             <x-icons.trash class="w-4 h-4" />
                         </button>
