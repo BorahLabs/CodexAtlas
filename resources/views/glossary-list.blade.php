@@ -3,7 +3,7 @@
         <div x-cloak x-show="showBlur" class="absolute top-0 left-0 w-screen h-screen z-10 bg-dark bg-opacity-80"></div>
         <div>
             <header class="flex items-center justify-between">
-                <h1 class="text-white title-gradient text-4xl font-bold">Tell us a little about your project</h1>
+                <h1 class="text-white title-gradient text-4xl font-bold">Tell us about your project</h1>
             </header>
 
             <div class="mt-10">
@@ -15,8 +15,7 @@
                 </p>
 
                 <div class="mt-16">
-                    <div class="flex justify-between items-center mb-16">
-                        <h2 class="text-white text-2xl">Repositories</h2>
+                    <div class="flex justify-end items-center mb-16">
 
                         <button type="button"
                             class="border border-violet-500 hover:bg-violet-400 hover:bg-opacity-20 px-4 py-2 rounded-lg text-white font-medium uppercase flex items-center justify-between space-x-2"
@@ -48,12 +47,12 @@
 
     <script>
         document.addEventListener('livewire:init', () => {
-           Livewire.on('openModal', (event) => {
+            Livewire.on('openModal', (event) => {
                 Livewire.dispatch('open')
-           });
-           Livewire.on('modalClosed', (event) => {
+            });
+            Livewire.on('modalClosed', (event) => {
                 Livewire.dispatch('close')
-           });
+            });
         });
     </script>
 </x-project-layout>
