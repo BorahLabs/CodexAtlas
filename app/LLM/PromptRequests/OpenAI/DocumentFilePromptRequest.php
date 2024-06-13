@@ -41,8 +41,7 @@ class DocumentFilePromptRequest implements PromptRequest
         // TODO: (future) Search related concepts with embeddings
         $project->load('concepts');
         if($project->concepts->isNotEmpty()){
-            $prompt .=
-            "\n\n Also, you may consider these concepts when describing the file:";
+            $prompt .= "\n\n Also, you may consider these concepts when describing the file:";
             $project->concepts->take(30)->each(function($item, $key) use (&$prompt){
                 $prompt .= "\n- " . $item->name . ": " . str($item->description)->limit(255);
             });
