@@ -16,6 +16,7 @@ use App\Actions\Platform\Tools\ShowDocumentFiles;
 use App\Actions\Platform\Tools\ShowFixMyCode;
 use App\Actions\Platform\Tools\ShowReadmeGenerator;
 use App\Actions\Platform\Webhook\HandleWebhook;
+use App\Http\Controllers\Website\BlogController;
 use App\Http\Controllers\Website\CodeConvertionController;
 use App\Http\Controllers\Website\GuideController;
 use App\Http\Controllers\Website\SitemapController;
@@ -39,6 +40,22 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
     Route::middleware('central-domain')->group(function () {
         Route::view('/', 'welcome')
             ->name('homepage');
+
+    Route::view('/enterprise-code-documentation', 'enterprise')
+        ->middleware('central-domain')
+        ->name('enterprise');
+
+    Route::get('/blog', [BlogController::class, 'index'])
+        ->middleware('central-domain')
+        ->name('blog.index');
+
+    Route::get('/blog/{blog}', [BlogController::class, 'detail'])
+        ->middleware('central-domain')
+        ->name('blog.detail');
+
+    Route::get('/tools/code-documentation-{language}', CodeDocumentationToolController::class)
+        ->middleware('central-domain')
+        ->name('tools.code-documentation');
 
         Route::view('/enterprise-code-documentation', 'enterprise')
             ->name('enterprise');

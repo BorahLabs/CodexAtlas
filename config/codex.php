@@ -68,4 +68,5 @@ return [
     'aws_marketplace_link' => env('AWS_MARKETPLACE_URL', '#'),
     'support_email' => env('SUPPORT_EMAIL', 'support@codexatlas.app'),
     'llm' => env('CODEX_LLM', 'openai'),
+    'company_domain' => env('COMPANY_DOMAIN', '@codexatlas.app'),
 ];
