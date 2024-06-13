@@ -24,7 +24,6 @@
     </div>
 
     @livewireScriptConfig
-    @livewireScripts
     @livewire('wire-elements-modal')
 </body>
 
