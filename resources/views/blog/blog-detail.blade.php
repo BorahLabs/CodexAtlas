@@ -6,7 +6,7 @@
     @section('og_image', $blog->getTailGraphUrl())
     <div class="px-4 sm:px-6 lg:px-8 py-12">
         <section class="max-w-4xl mx-auto">
-            <h2 class="text-2xl sm:text-5xl font-bold text-left text-white mb-4 sm:mb-10">{{ $blog->title }}</h2>
+            <h1 class="text-2xl sm:text-5xl font-bold text-left text-white mb-4 sm:mb-10">{{ $blog->title }}</h1>
 
             <section>
                 <div class="relative aspect-video rounded-xl overflow-hidden mx-auto my-10">
@@ -16,7 +16,7 @@
                         class="absolute top-4 right-4 bg-violet-500 text-white text-sm font-medium rounded-md px-2 py-1">{{ $blog->published_at->format('d-m-Y') }}</span>
                 </div>
 
-                <div class="prose prose-invert">
+                <div class="prose prose-invert max-w-none">
                     {!! Str::markdown($blog->markdown_content) !!}
                 </div>
                 <div class="mt-8 text-white w-full">
@@ -28,11 +28,12 @@
         @if ($otherBlogs->count() > 0)
             <section class="max-w-7xl mx-auto mt-10 text-xl">
                 <div class="w-full text-center mb-4 sm:mb-10">
-                    <span class="text-2xl sm:text-4xl text-center text-secondary-gradient font-bold">{{ __('Other blogs') }}</span>
+                    <h2 class="text-2xl sm:text-4xl text-center text-secondary-gradient font-bold">
+                        {{ __('Other blogs') }}</h2>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     @foreach ($otherBlogs as $otherBlog)
-                        <x-codex.blog.blog-card :blog="$otherBlog" />
+                        <x-codex.blog.blog-card tag="h3" :blog="$otherBlog" />
                     @endforeach
                 </div>
             </section>
