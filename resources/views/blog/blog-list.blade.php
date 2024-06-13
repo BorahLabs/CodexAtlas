@@ -10,7 +10,7 @@
                     <div class="w-full h-full flex justify-center">
                         <img class="w-96" src="{{ asset('casper-assets/http-code/planet-cropped.png') }}" alt="">
                     </div>
-                    <span class="text-3xl mt-4 text-center text-primary-gradient">Nothing to see yet!</span>
+                    <span class="text-3xl mt-8 text-center text-secondary-gradient">Nothing to see yet!</span>
                 </div>
             @endforelse
         </div>

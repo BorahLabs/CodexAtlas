@@ -96,11 +96,10 @@ class BlogPost extends Model
                     &title=' . urlencode($this->title) . '
                     &titleTailwind=text-white%20font-bold%20text-6xl
                     &text=' . urlencode($this->excerpt) . '
-                    &textTailwind=text-white%20opacity-75%20text-2xl%20mt-4
-                    &logoTailwind=h-64
+                    &textTailwind=text-white%20opacity-75%20text-2xl%20mt-4%20px-12
                     &bgTailwind=bg-[#080C28]
                     &footer=' . config('app.url') . '
-                    &footerTailwind=text-[#54B8E0]';
+                    &footerTailwind=text-violet-500';
 
         return $image;
     }
