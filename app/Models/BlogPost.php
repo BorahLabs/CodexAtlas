@@ -91,15 +91,17 @@ class BlogPost extends Model
 
     public function getTailGraphUrl(): string
     {
-        $image = 'https://og.tailgraph.com/og
-                    ?fontFamily=Roboto
-                    &title=' . urlencode($this->title) . '
-                    &titleTailwind=text-white%20font-bold%20text-6xl
-                    &text=' . urlencode($this->excerpt) . '
-                    &textTailwind=text-white%20opacity-75%20text-2xl%20mt-4%20px-12
-                    &bgTailwind=bg-[#080C28]
-                    &footer=' . config('app.url') . '
-                    &footerTailwind=text-violet-500';
+        $params = [
+            'fontFamily' => 'Roboto',
+            'title' => $this->title,
+            'titleTailwind' => 'text-white font-bold text-6xl',
+            'text' => $this->excerpt,
+            'textTailwind' => 'text-white opacity-75 text-2xl mt-4 px-12',
+            'bgTailwind' => 'bg-[#080C28]',
+            'footer' => config('app.url'),
+            'footerTailwind' => 'text-violet-500',
+        ];
+        $image = 'https://og.tailgraph.com/og?'.http_build_query($params);
 
         return $image;
     }
