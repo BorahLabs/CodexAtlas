@@ -1,6 +1,6 @@
 <x-project-layout :project="$project">
     <div x-data="{ showBlur: false }" @open.window="showBlur=true" @close.window="showBlur=false">
-        <div x-cloak x-show="showBlur" class="absolute top-0 left-0 w-screen h-screen z-10 bg-dark bg-opacity-80"></div>
+        <div x-cloak x-show="showBlur" class="fixed top-0 left-0 w-screen h-screen z-10 bg-dark bg-opacity-80"></div>
         <div>
             <header class="flex items-center justify-between">
                 <h1 class="text-white title-gradient text-4xl font-bold">Tell us about your project</h1>
@@ -19,7 +19,7 @@
 
                         <button type="button"
                             class="border border-violet-500 hover:bg-violet-400 hover:bg-opacity-20 px-4 py-2 rounded-lg text-white font-medium uppercase flex items-center justify-between space-x-2"
-                            x-on:click="Livewire.dispatch('openModal', { component: 'add-project-concept', arguments: { project: '{{ $project->id }}' }}); $showBlur = !showBlur">
+                            x-on:click="Livewire.dispatch('openModal', { component: 'add-project-concept', arguments: { project: '{{ $project->id }}' }}); showBlur = !showBlur">
                             <svg width="15" height="15" viewBox="0 0 23 23" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path

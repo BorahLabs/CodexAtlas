@@ -57,7 +57,8 @@
                 <button type="button" wire:click="saveAndCreateAnother"
                     class="bg-gradient-to-b from-[#6242ff59] to-transparent p-px rounded-xl w-full flex relative lg:w-auto">
                     <div class="bg-gradient-to-b from-[#6042ff] to-transparent p-px rounded-xl w-full flex">
-                        <div class="bg-black py-4 px-6 rounded-xl text-white w-full flex justify-center items-center">
+                        <div
+                            class="bg-black py-4 px-6 rounded-xl text-white w-full flex justify-center items-center lg:py-2">
                             <svg width="23" height="23" viewBox="0 0 23 23" fill="none"
                                 xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-4">
                                 <path
@@ -77,7 +78,7 @@
                 </button>
 
                 <button type="button" wire:click="save"
-                    class="bg-violet-500 py-4 px-6 text-sm sm:text-base text-center rounded-xl text-dark font-medium w-full lg:w-auto">
+                    class="bg-violet-500 py-4 px-6 text-sm sm:text-base text-center rounded-xl text-dark font-medium w-full lg:w-auto lg:py-2">
                     SAVE
                 </button>
             </div>
