@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Platform\Projects;
+namespace App\Actions\Platform\Glossary;
 
 use App\Models\Project;
 use Lorisleiva\Actions\Concerns\AsAction;
