@@ -23,15 +23,7 @@ class BlogController extends Controller
 
         $blogIds = collect($blog->related_blogs);
 
-        $otherBlogs = collect([]);
-
-        $blogIds->each(function(string $id) use (&$otherBlogs) {
-            $blog = BlogPost::query()->find($id);
-
-            if($blog){
-                $otherBlogs->push($blog);
-            }
-        });
+        $otherBlogs = BlogPost::query()->whereIn('id', $blogIds)->get();
 
         return view('blog.blog-detail', [
             'blog' => $blog,
