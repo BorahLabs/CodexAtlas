@@ -17,12 +17,6 @@ class SitemapController extends Controller
     {
         $sitemap = Sitemap::create();
         $sitemap->add(Url::create(route('homepage'))->setPriority(1)->setChangeFrequency('daily'));
-        $cacheKey = 'codex-sitemap-v4';
-        if (Cache::has($cacheKey)) {
-            $sitemapContents = Cache::get($cacheKey);
-
-            return response($sitemapContents)->header('Content-Type', 'text/xml');
-        }
 
         foreach (Guesser::supportedLanguages() as $language) {
             $sitemap->add(Url::create(route('tools.code-documentation', ['language' => Str::slug($language->name())]))->setPriority(0.9)->setChangeFrequency('weekly'));
@@ -44,8 +38,6 @@ class SitemapController extends Controller
                 $sitemap->add(Url::create($file->url())->setPriority(0.8)->setChangeFrequency('weekly'));
             }
         }
-
-        Cache::rememberForever($cacheKey, fn () => $sitemap->render());
 
         return $sitemap;
     }
