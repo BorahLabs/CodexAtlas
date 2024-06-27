@@ -180,7 +180,7 @@
                 </p>
             </div>
             <p class="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-300">
-                Pay based on the size of your project. Pricing starts at 10€.</p>
+                Pay based on the size of your project. Pricing starts at $10.</p>
             <div class="isolate mx-auto mt-10 max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none">
                 <div class="rounded-3xl p-8 xl:p-10 ring-1 ring-white/10 lg:flex gap-12">
                     <div class="flex-1">
@@ -232,7 +232,7 @@
                     <div class="flex-shrink-0">
                         <p class="mt-6 flex items-baseline gap-x-1">
                             <span class="text-4xl font-bold tracking-tight text-white">
-                                0.20 &euro; / file
+                                $0.20 / file
                             </span>
                         </p>
                         <a href="#banner"

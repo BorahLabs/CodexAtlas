@@ -8,7 +8,7 @@
             </x-slot>
 
             <x-slot name="description">
-                {{ __('Add your own OpenAI key to use CodexAtlas without limitations. We know it sounds scary, so as a reference we can say that documenting a project with 500 files costs ~1.50€. Also, your keys are securely stored and encrypted.') }}
+                {{ __('Add your own OpenAI key to use CodexAtlas without limitations. We know it sounds scary, so as a reference we can say that documenting a project with 500 files costs ~$5. Also, your keys are securely stored and encrypted.') }}
             </x-slot>
 
             <x-slot name="form">

@@ -106,7 +106,7 @@ return [
     */
 
     'invoice_data' => [
-        'vendor' => 'CodexAtlas',
+        'vendor' => 'CodexAtlas, LLC',
         'product' => 'CodexAtlas',
         'street' => 'San Diego de Alcalá, 8',
         'location' => 'Las Palmas, Spain',
@@ -145,12 +145,13 @@ return [
                     'yearly_id' => env('STRIPE_COMPANY_PLAN_YEARLY_ID'),
                     'features' => [
                         'Valid for one team',
-                        'Up to 80 repositories without your OpenAI API key',
-                        'Automatically sync your repositories',
-                        'Document every branch (available March 2024)',
-                        'Publish your documentation on Confluence, Notion, and more (available March 2024)',
-                        'PR Chatbot (available March 2024)',
-                        'AI Chatbot (available March 2024)',
+                        'Real-time documentation updates',
+                        'Unlimited repositories',
+                        'Unlimited branches',
+                        'Unlimited files per branch',
+                        'Unlimited custom knowledge',
+                        'Unlimited code conversions',
+                        'Automatic README files',
                         'Premium support 9-5 Mon-Fri CET',
                     ],
                 ],

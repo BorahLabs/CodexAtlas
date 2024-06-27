@@ -52,7 +52,7 @@ class Autodoc extends Component
     #[Computed]
     public function formattedPrice(): string
     {
-        return number_format($this->priceInCents / 100, 2).'€';
+        return '$'.number_format($this->priceInCents / 100, 2);
     }
 
     public function processFirstFile(): void

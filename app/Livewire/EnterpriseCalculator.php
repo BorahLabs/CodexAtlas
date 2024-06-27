@@ -121,7 +121,7 @@ class EnterpriseCalculator extends Component
                 'Number of devs' => $this->numberOfDevs,
                 'Number of projects' => $this->numberOfProjects,
                 'Computer setup' => $this->setupComputer['name'],
-                'Estimated price' => number_format($this->price, 0, ',', '.').'€',
+                'Estimated price' => '$'.number_format($this->price, 0, ',', '.'),
             ],
         );
         $this->demoScheduled = true;

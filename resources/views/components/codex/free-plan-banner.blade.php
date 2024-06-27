@@ -12,10 +12,7 @@
                                 <p class="max-w-md text-lg text-darkBlue-200 tracking-tight">With the free trial, you can
                                     create
                                     1 project with 1 repository, and document a maximum of 300 files. <a href="/billing"
-                                        class="underline">Upgrade to a premium plan</a> or <a
-                                        href="{{ route('teams.show', ['team' => auth()->user()->currentTeam]) }}#openai"
-                                        class="underline">introduce your
-                                        OpenAI Key</a> to document more.</p>
+                                        class="underline">Upgrade to a premium plan</a>.</p>
                             @else
                                 <p class="max-w-md text-lg text-darkBlue-200 tracking-tight">With the free trial, you
                                     can
@@ -52,8 +49,8 @@
                                 </div>
                             @else
                                 <a class="group inline-flex w-full sm:w-auto h-14 px-7 items-center justify-center text-base font-medium text-black hover:text-violet-800 bg-violet-500 hover:bg-white transition duration-200 rounded-full"
-                                    href="{{ config('codex.aws_marketplace_link') }}" target="_blank">
-                                    <span class="mr-2">Subscribe on AWS</span>
+                                    href="{{ route('spark.portal') }}" target="_blank">
+                                    <span class="mr-2">Subscribe</span>
                                     <svg width="24" height="24" viewbox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path

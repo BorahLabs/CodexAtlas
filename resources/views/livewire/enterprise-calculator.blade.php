@@ -81,15 +81,14 @@
                             <x-homepage.price-chart class="h-48 w-48 relative mx-auto xs:mx-0">
                                 <div>
                                     <span
-                                        class="block text-center font-bold text-white text-2xl">{{ number_format($this->maxDocumentationCost, 0, ',', '.') }}
-                                        &euro;</span>
+                                        class="block text-center font-bold text-white text-2xl">${{ number_format($this->maxDocumentationCost, 0, ',', '.') }}</span>
                                     <span class="text-[#B2A4FA] text-center block">every year</span>
                                 </div>
                             </x-homepage.price-chart>
                             <p
                                 class="text-sm text-gray-300 relative mt-8 px-4 w-48 mx-auto pb-8 xs:pb-0 text-center xs:w-auto xs:mt-0 xs:ml-8 xs:mr-0 xs:px-0 xs:text-left">
                                 <strong>Every year you pay
-                                    {{ number_format($this->maxDocumentationCost, 0, ',', '.') }}&euro;</strong>
+                                    ${{ number_format($this->maxDocumentationCost, 0, ',', '.') }}</strong>
                                 to your developers to document their code, understand it and on onboardings.
                                 <br>(~20% of their time)
                             </p>
@@ -106,8 +105,8 @@
                                     <x-homepage.price-circle class="h-48 w-48 relative mx-auto xs:mx-0">
                                         <div>
                                             <span
-                                                class="block text-center font-bold text-white text-2xl">{{ number_format($this->price, 0, ',', '.') }}
-                                                &euro;</span>
+                                                class="block text-center font-bold text-white text-2xl">${{ number_format($this->price, 0, ',', '.') }}
+                                            </span>
                                             <span class="text-[#B2A4FA] text-center block">one time</span>
                                         </div>
                                     </x-homepage.price-circle>
@@ -162,9 +161,9 @@
                     <div class="flex items-center justify-center">
                         <x-homepage.price-circle class="h-48 w-48 md:h-64 md:w-64 relative">
                             <div>
-                                <span
-                                    class="block text-center font-bold text-white text-2xl md:text-4xl">{{ number_format($this->price, 0, ',', '.') }}
-                                    &euro;</span>
+                                <span class="block text-center font-bold text-white text-2xl md:text-4xl">
+                                    ${{ number_format($this->price, 0, ',', '.') }}
+                                </span>
                                 <span class="text-[#B2A4FA] text-center block text-lg">one time</span>
                             </div>
                         </x-homepage.price-circle>

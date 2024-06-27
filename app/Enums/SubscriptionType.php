@@ -73,4 +73,13 @@ enum SubscriptionType
             default => 5,
         };
     }
+
+    public function canUseGlossary(): bool
+    {
+        return match ($this) {
+            self::Unlimited => true,
+            self::UnlimitedCompanyPlan => true,
+            default => false,
+        };
+    }
 }

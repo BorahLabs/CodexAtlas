@@ -451,7 +451,7 @@
                                     <div class="mt-3 sm:mt-0 sm:ml-8">
                                         <h3 class="text-3xl font-medium text-white">Enterprise</h3>
                                         <p class="text-sm text-newGray-300 max-w-lg mt-2">
-                                            We can help you setup an on-premise system and save more than 20.000€/year
+                                            We can help you setup an on-premise system and save more than $20.000/year
                                             in documentation and onboarding costs.
                                         </p>
                                         <ul class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
