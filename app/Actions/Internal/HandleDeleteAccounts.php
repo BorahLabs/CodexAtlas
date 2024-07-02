@@ -23,10 +23,14 @@ class HandleDeleteAccounts
 
     public function handle()
     {
-        $users = User::query()->withTrashed()->whereNotNull('deleted_at')->where('deleted_at', '<=', now()->subDays(30))->get();
-
-        $users->each(function (User $user) {
-            DeleteAccount::dispatch($user);
-        });
+        User::query()
+            ->withTrashed()
+            ->whereNotNull('deleted_at')
+            ->where('deleted_at', '<=', now()->subDays(30))
+            ->chunkById(100, function ($users) {
+                $users->each(function (User $user) {
+                    DeleteAccount::dispatch($user);
+                });
+            });
     }
 }

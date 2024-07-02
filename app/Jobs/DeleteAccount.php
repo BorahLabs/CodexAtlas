@@ -106,6 +106,7 @@ class DeleteAccount implements ShouldQueue
             } else {
                 $deleted = $query->delete();
             }
+            sleep(3);
         } while ($deleted > 0);
     }
 }
