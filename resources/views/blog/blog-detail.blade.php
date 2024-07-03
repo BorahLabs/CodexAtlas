@@ -11,8 +11,10 @@
 
             <div class="hidden lg:relative lg:block">
                 <div
-                    class="sticky top-[4.5rem] -ml-0.5 h-[calc(100vh-10rem)] w-64 overflow-y-auto overflow-x-hidden py-16 pl-0.5 pr-8 xl:w-72 xl:pr-16">
-                    <x-atlas.blog-navigation :sections="$sections" :blog="$blog" />
+                    class="sticky top-[4.5rem] -ml-0.5 h-[calc(100vh-10rem)] w-64 space-y-10 overflow-y-auto overflow-x-hidden py-16 pl-0.5 pr-8 xl:w-72 xl:pr-16">
+                    <x-atlas.blog.navigation :sections="$sections" :blog="$blog" />
+
+                    <x-atlas.blog.share :blog="$blog" />
                 </div>
             </div>
 
@@ -26,7 +28,14 @@
                         class="absolute top-4 right-4 bg-violet-500 text-white text-sm font-medium rounded-md px-2 py-1">{{ $blog->published_at->format('d-m-Y') }}</span>
                 </div>
 
-                <div class="prose prose-invert max-w-none" id="pageContent">
+               {{-- TODO: add blog mobile navigation here --}}
+               <div class="block lg:hidden space-y-8">
+                    <x-atlas.blog.navigation :sections="$sections" :blog="$blog" />
+
+                    <x-atlas.blog.share :blog="$blog" />
+               </div>
+
+                <div class="prose prose-invert max-w-none mt-8 sm:mt-0" id="pageContent">
                     {!! $blog->transformed_content->html() !!}
                 </div>
 
