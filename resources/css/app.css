@@ -56,6 +56,10 @@
     text-fill-color: transparent;
 }
 
+.border-secondary-gradient {
+    border-image: linear-gradient(180deg, #FFFFFF -91.67%, #9A88F5 77.96%) 1;
+}
+
 .title-gradient {
     background: linear-gradient(180deg, #FFF -91.67%, #9A88F5 77.96%);
     background-clip: text;
