@@ -1,15 +1,15 @@
 <div>
     @if (!empty($blog->transformed_content->toc()))
-        <div x-data="{ open: false }" x-cloak class="lg:hidden block">
+        <div x-data="{ open: false }" x-cloak class="lg:hidden block" x-on:click.outside="open = !open">
             <button @click="open = !open" class="font-display text-xl font-bold uppercase text-secondary-gradient">
                 <span>On this page</h2>
             </button>
-            <div x-transition x-show="open" class="text-white" x-on:click.outside="open = !open">
+            <div x-transition x-show="open" class="text-white" >
                 <ul role="list" class="mt-2 text-white bg-white rounded-lg" x-show="open" id="pageNav">
                     @foreach ($blog->transformed_content->toc() as $key => $tocItem)
                         <li class="flex">
                             <a onclick="changeActiveItem($tocItem->id)" @class([
-                                'font-display py-2 font-medium text-dark hover:scale-105 transition-all ',
+                                'font-display py-2 font-medium text-dark hover:scale-105 transition-all',
                                 'pl-6' => $tocItem->priority > 2,
                                 'pl-2' => $tocItem->priority <= 2,
                             ])

@@ -32,6 +32,7 @@
         "openai-php/laravel": "^0.8",
         "spatie/laravel-sitemap": "^7.2",
         "spatie/laravel-sluggable": "^3.6",
+        "spatie/schema-org": "^3.23",
         "wire-elements/modal": "^2.0"
     },
     "require-dev": {

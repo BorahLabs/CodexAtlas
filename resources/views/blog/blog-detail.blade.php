@@ -4,15 +4,13 @@
     @section('metadescription', $blog->seo_description)
     {{-- Hacer la og image de tailgraph en el modelo --}}
     @section('og_image', $blog->getTailGraphUrl())
-    <div class="px-4 sm:px-6 lg:px-8 py-12 max-w-[80rem] mx-auto">
+    <div class="px-4 sm:px-6 lg:px-8 py-0 sm:py-12 max-w-[80rem] mx-auto relative z-10">
         {{ Breadcrumbs::render('blogDetail', $blog) }}
         <article class="mx-auto w-full relative flex justify-center">
-
-
             <div class="hidden lg:relative lg:block">
                 <div
                     class="sticky top-[4.5rem] -ml-0.5 h-[calc(100vh-10rem)] w-64 space-y-10 overflow-y-auto overflow-x-hidden py-16 pl-0.5 pr-8 xl:w-72 xl:pr-16">
-                    <x-atlas.blog.navigation :sections="$sections" :blog="$blog" />
+                    <x-atlas.blog.navigation :blog="$blog" />
 
                     <x-atlas.blog.share :blog="$blog" />
                 </div>
@@ -28,9 +26,8 @@
                         class="absolute top-4 right-4 bg-violet-500 text-white text-sm font-medium rounded-md px-2 py-1">{{ $blog->published_at->format('d-m-Y') }}</span>
                 </div>
 
-               {{-- TODO: add blog mobile navigation here --}}
                <div class="block lg:hidden space-y-8">
-                    <x-atlas.blog.navigation :sections="$sections" :blog="$blog" />
+                    <x-atlas.blog.navigation :blog="$blog" />
 
                     <x-atlas.blog.share :blog="$blog" />
                </div>
@@ -63,16 +60,6 @@
         @endif
     </div>
     <script>
-        function toSlug(str) {
-            str = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-            str = str.replace(/[^a-zA-Z0-9\s]/g, '');
-
-            str = str.trim().replace(/\s+/g, '-');
-
-            return str.toLowerCase();
-        }
-
         function changeActiveItem(id) {
             var activeNavItem = document.querySelector('#pageNav .active');
             if (activeNavItem) {
@@ -120,4 +107,6 @@
             });
         });
     </script>
+
+    {!! $schema->toScript() !!}
 </x-web-layout>

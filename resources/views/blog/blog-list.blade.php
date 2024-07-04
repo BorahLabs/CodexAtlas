@@ -1,6 +1,8 @@
 <x-web-layout>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-12">
-        {{ Breadcrumbs::render('blog') }}
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-0 sm:py-12">
+        <div class="relative z-10">
+            {{ Breadcrumbs::render('blog') }}
+        </div>
 
         <h1 class="text-4xl font-bold text-center text-white mb-10">Blog</h1>
 
