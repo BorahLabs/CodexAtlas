@@ -34,6 +34,10 @@
                 </label>
             </div>
 
+            <div class="mt-4">
+                <x-codex.login-google />
+            </div>
+
             <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))
                     <a class="underline text-sm text-newGray-400 hover:text-newGray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 focus:ring-offset-newGray-800"

@@ -1,6 +1,7 @@
 <?php
 
 use App\Actions\Github\Auth\HandleGithubInstallation;
+use App\Actions\Google\HandleAuthCallback;
 use App\Actions\Platform\DownloadDocsAsMarkdown;
 use App\Actions\Platform\Glossary\ShowGlossary;
 use App\Actions\Platform\Projects\ShowNewProject;
@@ -30,6 +31,8 @@ use App\Http\Middleware\OnlyFromCodexAtlas;
 use App\Http\Middleware\VerifyCsrfToken;
 use BorahLabs\AwsMarketplaceSaas\Facades\AwsMarketplaceSaas;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
 
 // codexatlas.app has now changed to codedocumentation.app
 Route::domain('codexatlas.app')->group(function () {
@@ -157,4 +160,13 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
 
     Route::get('sitemap.xml', SitemapController::class);
     AwsMarketplaceSaas::registerRoutes();
+
+    Route::prefix('auth/google')->group(function () {
+        Route::get('redirect', function () {
+            return Socialite::driver('google')->redirect();
+        })->name('google.redirect');
+
+        Route::get('callback', HandleAuthCallback::class)->name('google.callback');
+
+    });
 });
