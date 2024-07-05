@@ -1,7 +1,7 @@
 <?php
 
 use App\Actions\Github\Auth\HandleGithubInstallation;
-use App\Actions\Google\HandleAuthCallback;
+use App\Actions\OAuth\HandleAuthCallback;
 use App\Actions\Platform\DownloadDocsAsMarkdown;
 use App\Actions\Platform\Glossary\ShowGlossary;
 use App\Actions\Platform\Projects\ShowNewProject;
@@ -161,12 +161,12 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
     Route::get('sitemap.xml', SitemapController::class);
     AwsMarketplaceSaas::registerRoutes();
 
-    Route::prefix('auth/google')->group(function () {
-        Route::get('redirect', function () {
-            return Socialite::driver('google')->redirect();
-        })->name('google.redirect');
+    Route::prefix('auth/{driver}')->group(function () {
+        Route::get('redirect', function (string $driver) {
+            return Socialite::driver($driver)->redirect();
+        })->name('oauth.redirect');
 
-        Route::get('callback', HandleAuthCallback::class)->name('google.callback');
+        Route::get('callback', HandleAuthCallback::class)->name('oauth.callback');
 
     });
 });

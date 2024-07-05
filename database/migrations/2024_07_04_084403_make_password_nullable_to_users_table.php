@@ -12,8 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('external_id')->nullable();
-            $table->string('external_auth')->nullable();
             $table->string('password')->nullable()->change();
         });
     }
@@ -23,10 +21,5 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('external_id');
-            $table->dropColumn('external_auth');
-            $table->string('password')->change();
-        });
     }
 };

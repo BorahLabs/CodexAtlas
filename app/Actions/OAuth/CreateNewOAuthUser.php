@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Google;
+namespace App\Actions\OAuth;
 
 use App\Actions\InternalNotifications\LogUserPerformedAction;
 use App\Models\Team;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class CreateNewGoogleUser
+class CreateNewOAuthUser
 {
     use AsAction;
 
@@ -32,16 +32,15 @@ class CreateNewGoogleUser
             return tap(User::create([
                 'name' => $input['name'],
                 'email' => $input['email'],
-                'external_id' => $input['external_id'],
-                'external_auth' => $input['external_auth'],
                 'email_verified_at' => now(),
-            ]), function (User $user) {
+            ]), function (User $user) use ($input) {
+                $this->createExternalAuth($user, $input);
                 $this->createTeam($user);
-                LogUserPerformedAction::dispatch(\App\Enums\Platform::Codex, \App\Enums\NotificationType::Info, 'New user', [
-                    'email' => $user->email,
-                    'name' => $user->name,
-                ]);
-                AwsMarketplaceSaas::afterUserRegistered($user);
+                // LogUserPerformedAction::dispatch(\App\Enums\Platform::Codex, \App\Enums\NotificationType::Info, 'New user', [
+                //     'email' => $user->email,
+                //     'name' => $user->name,
+                // ]);
+                // AwsMarketplaceSaas::afterUserRegistered($user);
             });
         });
     }
@@ -51,6 +50,23 @@ class CreateNewGoogleUser
      */
     protected function createTeam(User $user): void
     {
+        $user->ownedTeams()->save(Team::forceCreate([
+            'user_id' => $user->id,
+            'name' => explode(' ', $user->name, 2)[0]."'s Team",
+            'personal_team' => true,
+        ]));
+    }
+
+    /**
+     * Create an external auth account record the user.
+     */
+    protected function createExternalAuth(User $user, array $input): void
+    {
+        $user->externalAuthAccounts()->create([
+            'external_id' => $input['external_id'],
+            'external_auth' => $input['external_auth'],
+        ]);
+
         $user->ownedTeams()->save(Team::forceCreate([
             'user_id' => $user->id,
             'name' => explode(' ', $user->name, 2)[0]."'s Team",
