@@ -17,6 +17,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@alpinejs/collapse": "^3.14.1",
         "@alpinejs/focus": "^3.14.0",
         "@tsparticles/engine": "^3.3.0",
         "@tsparticles/preset-firefly": "^3.0.2",
