@@ -9,7 +9,7 @@
         <article class="mx-auto w-full relative flex justify-center">
             <div class="hidden lg:relative lg:block">
                 <div
-                    class="sticky top-[4.5rem] -ml-0.5 h-[calc(100vh-10rem)] w-64 space-y-10 overflow-y-auto overflow-x-hidden py-16 pl-0.5 pr-8 xl:w-72 xl:pr-16">
+                    class="sticky top-0 -ml-0.5 h-max w-64 space-y-10 overflow-y-auto overflow-x-hidden py-16 pl-0.5 pr-8 xl:w-72 xl:pr-16">
                     <x-atlas.blog.navigation :blog="$blog" />
 
                     <x-atlas.blog.share :blog="$blog" />
