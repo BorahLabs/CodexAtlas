@@ -76,15 +76,8 @@ class StoreRepository
              * @var \App\Enums\SubscriptionType $subscriptionType
              */
             $subscriptionType = $project->team->subscriptionType();
-
-            $collectedBranches = collect($branches)
-                ->filter(fn (DTOBranch $branch) => in_array($branch->name, $whitelist));
-
-            if ($collectedBranches->isEmpty() && isset($branches[0])) {
-                $collectedBranches = collect([$branches[0]]);
-            }
-
-            $collectedBranches
+            collect($branches)
+                ->filter(fn (DTOBranch $branch) => in_array($branch->name, $whitelist))
                 ->values()
                 ->when(! is_null($subscriptionType->maxBranchesPerRepository()), fn (Collection $branches) => $branches->take($subscriptionType->maxBranchesPerRepository()))
                 ->each(fn (DTOBranch $branch) => $repository->branches()->create([
