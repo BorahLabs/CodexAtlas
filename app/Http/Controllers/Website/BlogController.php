@@ -26,13 +26,6 @@ class BlogController extends Controller
 
         $otherBlogs = BlogPost::query()->whereIn('id', $blogIds)->get();
 
-        $schema = Schema::article()
-            ->headline('Example Article')
-            ->author(config('codex.blog_author'))
-            ->datePublished($blog->published_at)
-            ->mainEntityOfPage(Schema::webPage()
-                ->url(url()->current()));
-
         $schema = Schema::blogPosting()
             ->headline($blog->title)
             ->articleBody($blog->markdown_content)
