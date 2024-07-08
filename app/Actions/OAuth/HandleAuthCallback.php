@@ -14,7 +14,7 @@ class HandleAuthCallback
 
     public function handle(string $driver)
     {
-        $oauthUser = Socialite::driver($driver)->stateless()->user();
+        $oauthUser = Socialite::driver($driver)->user();
 
         $userData = [
             'name' => $oauthUser->name ?? $oauthUser->nickname,

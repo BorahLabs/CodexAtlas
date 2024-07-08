@@ -36,11 +36,11 @@ class CreateNewOAuthUser
             ]), function (User $user) use ($input) {
                 $this->createExternalAuth($user, $input);
                 $this->createTeam($user);
-                // LogUserPerformedAction::dispatch(\App\Enums\Platform::Codex, \App\Enums\NotificationType::Info, 'New user', [
-                //     'email' => $user->email,
-                //     'name' => $user->name,
-                // ]);
-                // AwsMarketplaceSaas::afterUserRegistered($user);
+                LogUserPerformedAction::dispatch(\App\Enums\Platform::Codex, \App\Enums\NotificationType::Info, 'New user', [
+                    'email' => $user->email,
+                    'name' => $user->name,
+                ]);
+                AwsMarketplaceSaas::afterUserRegistered($user);
             });
         });
     }
