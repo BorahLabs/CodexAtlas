@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\BlogPosts\TableOfContents;
 use App\Models\Traits\HasUserFeedback;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -104,5 +106,12 @@ class BlogPost extends Model
         $image = 'https://og.tailgraph.com/og?'.http_build_query($params);
 
         return $image;
+    }
+
+    public function transformedContent(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => new TableOfContents(Str::markdown($this->markdown_content))
+        );
     }
 }

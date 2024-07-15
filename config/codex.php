@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 return [
     'dev' => [
@@ -69,4 +69,5 @@ return [
     'support_email' => env('SUPPORT_EMAIL', 'support@codexatlas.app'),
     'llm' => env('CODEX_LLM', 'openai'),
     'company_domain' => env('COMPANY_DOMAIN', '@codexatlas.app'),
+    'blog_author' => env('BLOG_AUTHOR', 'CodexAtlas'),
 ];

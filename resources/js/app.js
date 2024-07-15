@@ -1,3 +1,4 @@
+
 import './bootstrap';
 import hljs from 'highlight.js';
 import hljsBlade from 'highlightjs-blade';
@@ -5,9 +6,11 @@ import 'highlight.js/styles/atom-one-dark.css';
 import { tsParticles } from "@tsparticles/engine";
 import '@tsparticles/preset-firefly';
 import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
+import { collapse } from '@alpinejs/collapse';
 
 Livewire.start()
 Alpine.plugin(focus)
+Alpine.plugin(collapse)
 
 hljs.registerLanguage("blade", hljsBlade);
 hljs.initHighlightingOnLoad();

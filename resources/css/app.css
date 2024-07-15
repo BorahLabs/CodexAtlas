@@ -36,6 +36,10 @@
     text-fill-color: transparent;
 }
 
+.bg-primary-gradient {
+    background: linear-gradient(179deg, #6042FF 31.93%, rgba(255, 255, 255, 0.50) 122.37%);
+}
+
 .bg-input-gradient {
     background: linear-gradient(#FFFFFF 1%, #9A88F5 100%);
 }
@@ -54,6 +58,14 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-fill-color: transparent;
+}
+
+.border-secondary-gradient {
+    border-image: linear-gradient(180deg, #FFFFFF -91.67%, #9A88F5 77.96%) 1;
+}
+
+.bg-secondary-gradient {
+    background: linear-gradient(180deg, #FFFFFF -91.67%, #9A88F5 77.96%);
 }
 
 .title-gradient {
