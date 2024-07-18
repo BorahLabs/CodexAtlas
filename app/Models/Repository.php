@@ -32,6 +32,11 @@ class Repository extends Model
         return $this->hasMany(Branch::class);
     }
 
+    public function pages(): HasMany
+    {
+        return $this->hasMany(RepositoryPage::class);
+    }
+
     public function fullName(): Attribute
     {
         return Attribute::make(

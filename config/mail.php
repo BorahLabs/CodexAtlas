@@ -111,6 +111,13 @@ return [
         ],
     ],
 
+    'digital_onboarding' => [
+        'from' => [
+            'address' => env('DIGITAL_ONBOARDING_MAIL_FROM_ADDRESS', env('MAIL_FROM_ADDRESS')),
+            'name' => env('DIGITAL_ONBOARDING_MAIL_FROM_NAME', env('MAIL_FROM_NAME')),
+        ],
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Markdown Mail Settings

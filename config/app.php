@@ -63,6 +63,8 @@ return [
 
     'autodoc_domain' => env('AUTODOC_DOMAIN', 'automaticdocs.app'),
 
+    'digital_onboarding' => env('DIGITAL_ONBOARDING_DOMAIN', 'digitalonboarding.app'),
+
     'fake_domain' => env('FAKED_APP_DOMAIN'),
 
     'indexable' => env('APP_INDEXABLE', false),
@@ -177,6 +179,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\SparkServiceProvider::class,
         App\Providers\Filament\AdminPanelProvider::class,
+        App\Providers\Filament\OnboardingPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,

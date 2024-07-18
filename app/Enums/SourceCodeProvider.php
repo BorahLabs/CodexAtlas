@@ -8,8 +8,10 @@ use App\SourceCode\DTO\RepositoryName;
 use App\SourceCode\GitHubProvider;
 use App\SourceCode\GitLabProvider;
 use App\SourceCode\LocalFolderProvider;
+use Filament\Support\Contracts\HasIcon;
+use Filament\Support\Contracts\HasLabel;
 
-enum SourceCodeProvider: string
+enum SourceCodeProvider: string implements HasLabel, HasIcon
 {
     case GitHub = 'github';
     case GitLab = 'gitlab';
@@ -46,5 +48,25 @@ enum SourceCodeProvider: string
     public function canHaveWorkspace(): bool
     {
         return $this === self::Bitbucket;
+    }
+
+    public function getLabel(): string
+    {
+        return match ($this) {
+            self::GitHub => 'Github',
+            self::GitLab => 'Gitlab',
+            self::Bitbucket => 'Bitbucket',
+            self::LocalFolder => 'Local Folder',
+        };
+    }
+
+    public function getIcon(): string
+    {
+        return match ($this) {
+            self::GitHub => 'icon-github',
+            self::GitLab => 'icon-gitlab',
+            self::Bitbucket => 'icon-bitbucket',
+            self::LocalFolder => 'heroicon-o-clipboard',
+        };
     }
 }
