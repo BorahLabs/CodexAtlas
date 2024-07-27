@@ -63,7 +63,7 @@ return [
 
     'autodoc_domain' => env('AUTODOC_DOMAIN', 'automaticdocs.app'),
 
-    'digital_onboarding' => env('DIGITAL_ONBOARDING_DOMAIN', 'digitalonboarding.app'),
+    'digital_onboarding_domain' => env('DIGITAL_ONBOARDING_DOMAIN', 'digitalonboarding.app'),
 
     'fake_domain' => env('FAKED_APP_DOMAIN'),
 

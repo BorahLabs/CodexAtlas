@@ -1,11 +1,10 @@
 <?php
 
-use App\Actions\Autodoc\HandleStripeWebhook;
-use App\Actions\Autodoc\ShowStatus;
 use App\Http\Middleware\ConfigureRequestsFromOnboarding;
 use Illuminate\Support\Facades\Route;
 
-Route::domain(config('app.digital_onboarding'))
+Route::domain(config('app.digital_onboarding_domain'))
     ->middleware(ConfigureRequestsFromOnboarding::class)
     ->group(function () {
+        //
     });

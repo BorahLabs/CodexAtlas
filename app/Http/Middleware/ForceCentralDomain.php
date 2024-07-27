@@ -16,6 +16,10 @@ class ForceCentralDomain
     public function handle(Request $request, Closure $next): Response
     {
         $host = $request->host();
+        if ($host === config('app.autodoc_domain') || $host === config('app.digital_onboarding_domain')) {
+            abort(404);
+        }
+
         if ($host !== config('app.main_domain')) {
             return redirect()->to('https://'.config('app.main_domain').$request->getRequestUri());
         }

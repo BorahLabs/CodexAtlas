@@ -15,13 +15,13 @@ class ConfigureRequestsFromOnboarding
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->host() !== config('app.autodoc_domain')) {
+        if ($request->host() !== config('app.digital_onboarding_domain')) {
             return $next($request);
         }
 
         config([
             'app.name' => 'Digital Onboarding',
-            'session.domain' => config('app.digital_onboarding'),
+            'session.domain' => config('app.digital_onboarding_domain'),
             'mail.from.address' => config('mail.autodoc.from.address'),
             'mail.from.name' => config('mail.autodoc.from.name'),
         ]);

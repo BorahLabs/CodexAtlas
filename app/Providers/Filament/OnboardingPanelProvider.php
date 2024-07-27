@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Http\Middleware\ConfigureRequestsFromOnboarding;
 use App\Models\Team;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -25,7 +26,8 @@ class OnboardingPanelProvider extends PanelProvider
     {
         return $panel
             ->id('onboarding')
-            ->path('onboarding')
+            ->path('/')
+            ->domain(config('app.digital_onboarding_domain'))
             ->login()
             ->colors([
                 'primary' => Color::Amber,
@@ -50,10 +52,10 @@ class OnboardingPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                ConfigureRequestsFromOnboarding::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ])
-            ;
+            ]);
     }
 }
