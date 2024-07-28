@@ -38,6 +38,7 @@ class OnboardingPanelProvider extends PanelProvider
             ->pages([
                 Pages\Dashboard::class,
             ])
+            ->topNavigation()
             ->discoverWidgets(in: app_path('Filament/Onboarding/Widgets'), for: 'App\\Filament\\Onboarding\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
