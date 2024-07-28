@@ -5,13 +5,13 @@ namespace App\Filament\Onboarding\Resources;
 use App\Filament\Onboarding\Resources\SourceCodeAccountResource\Pages;
 use App\Filament\Onboarding\Resources\SourceCodeAccountResource\RelationManagers;
 use App\Models\SourceCodeAccount;
-use Filament\Forms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -43,7 +43,7 @@ class SourceCodeAccountResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                //
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -63,8 +63,6 @@ class SourceCodeAccountResource extends Resource
     {
         return [
             'index' => Pages\ListSourceCodeAccounts::route('/'),
-            'create' => Pages\CreateSourceCodeAccount::route('/create'),
-            'edit' => Pages\EditSourceCodeAccount::route('/{record}/edit'),
         ];
     }
 }

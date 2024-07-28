@@ -29,6 +29,7 @@ class OnboardingPanelProvider extends PanelProvider
             ->path('/')
             ->domain(config('app.digital_onboarding_domain'))
             ->login()
+            ->darkMode(isForced: true)
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -43,6 +44,7 @@ class OnboardingPanelProvider extends PanelProvider
                 Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
+                ConfigureRequestsFromOnboarding::class,
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
@@ -52,7 +54,6 @@ class OnboardingPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                ConfigureRequestsFromOnboarding::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
