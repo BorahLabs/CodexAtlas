@@ -19,7 +19,7 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements MustVerifyEmail, FilamentUser
+class User extends Authenticatable implements MustVerifyEmail, FilamentUser, HasTenants
 {
     use HasApiTokens;
     use HasAwsSubscription;
@@ -89,4 +89,14 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
     // {
     //     return $this->teams()->whereKey($tenant)->exists();
     // }
+
+    public function getTenants(Panel $panel): Collection
+    {
+        return $this->all_teams ?? new Collection();
+    }
+
+    public function canAccessTenant(Model $tenant): bool
+    {
+        return $this->allTeams()->whereKey($tenant)->exists();
+    }
 }

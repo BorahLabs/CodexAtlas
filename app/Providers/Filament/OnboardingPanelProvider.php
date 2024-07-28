@@ -7,6 +7,7 @@ use App\Models\Team;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -24,6 +25,7 @@ class OnboardingPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+        $teams = auth()->user()?->allTeams ?? collect();
         return $panel
             ->id('onboarding')
             ->path('/')
@@ -59,5 +61,7 @@ class OnboardingPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
+            // ->tenant(Team::class)
+            // ->tenantDomain('{tenant:id}.'.config('app.digital_onboarding_domain'));
     }
 }
