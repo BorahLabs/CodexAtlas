@@ -34,18 +34,31 @@
                 </label>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-newGray-400 hover:text-newGray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 focus:ring-offset-newGray-800"
-                        href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-button class="ms-4">
+            <div class="flex items-center justify-center mt-2">
+                <x-button class="flex justify-center w-2/5 text-center">
                     {{ __('Log in') }}
                 </x-button>
             </div>
         </form>
+
+        <div class="flex items-center mt-2">
+            <div class="h-px bg-newGray-500 w-full"></div>
+            <span class="mx-2 text-center">o</span>
+            <div class="h-px bg-newGray-500 w-full"></div>
+        </div>
+
+        <div class="mt-4 flex space-x-2">
+            <x-codex.login-google />
+            <x-codex.login-github />
+        </div>
+
+        @if (Route::has('password.request'))
+            <div class="w-full flex justify-center mt-8">
+                <a class="underline text-sm text-newGray-400 hover:text-newGray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 focus:ring-offset-newGray-800"
+                    href="{{ route('password.request') }}">
+                    {{ __('Forgot your password?') }}
+                </a>
+            </div>
+        @endif
     </x-authentication-card>
 </x-guest-layout>

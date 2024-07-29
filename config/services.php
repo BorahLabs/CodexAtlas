@@ -49,6 +49,12 @@ return [
         'redirect' => env('BITBUCKET_REDIRECT_URI'),
     ],
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URI'),
+    ],
+
     'openai' => [
         'key' => env('OPENAI_API_KEY'),
         'completion_model' => env('OPENAI_COMPLETION_MODEL', 'gpt-4o'),
