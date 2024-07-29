@@ -12,6 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
+        $schedule->command('codex:delete-soft-users')->daily();
         $schedule->command('autodoc:remove-unprocessed-files')->everyThirtyMinutes();
         $schedule->command('aws-saas:report-metering-records')->hourly();
     }
