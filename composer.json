@@ -24,6 +24,7 @@
         "laravel/socialite": "^5.15",
         "laravel/spark-stripe": "^5.0",
         "laravel/tinker": "^2.8",
+        "laravel/vapor-cli": "^1.65",
         "laravel/vapor-core": "^2.33",
         "league/flysystem-aws-s3-v3": "^3.0",
         "livewire/livewire": "^3.4",
