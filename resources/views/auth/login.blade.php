@@ -41,7 +41,7 @@
             </div>
         </form>
 
-        <div class="flex items-center mt-2">
+        {{-- <div class="flex items-center mt-2">
             <div class="h-px bg-newGray-500 w-full"></div>
             <span class="mx-2 text-center">o</span>
             <div class="h-px bg-newGray-500 w-full"></div>
@@ -50,7 +50,7 @@
         <div class="mt-4 flex space-x-2">
             <x-codex.login-google />
             <x-codex.login-github />
-        </div>
+        </div> --}}
 
         @if (Route::has('password.request'))
             <div class="w-full flex justify-center mt-8">
