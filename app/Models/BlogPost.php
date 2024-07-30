@@ -24,7 +24,7 @@ class BlogPost extends Model
     public function imageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => Storage::url($this->image),
+            get: fn () => Storage::temporaryUrl($this->image),
         );
     }
 
