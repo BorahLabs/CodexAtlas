@@ -31,6 +31,8 @@ class Team extends JetstreamTeam
         'personal_team' => 'boolean',
         'trial_ends_at' => 'datetime',
         'openai_key' => 'encrypted',
+        'has_access_to_onboarding' => 'boolean',
+        'has_configured_onboarding' => 'boolean',
     ];
 
     /**

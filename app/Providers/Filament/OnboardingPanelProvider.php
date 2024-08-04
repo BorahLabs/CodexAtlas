@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Http\Middleware\ConfigureRequestsFromOnboarding;
+use App\Http\Middleware\Onboarding\ShouldDisplayWelcomePage;
 use App\Models\Team;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -57,10 +58,12 @@ class OnboardingPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                ShouldDisplayWelcomePage::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->viteTheme('resources/css/filament/onboarding/theme.css');
             // ->tenant(Team::class)
             // ->tenantDomain('{tenant:id}.'.config('app.digital_onboarding_domain'));
     }

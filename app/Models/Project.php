@@ -15,6 +15,17 @@ class Project extends Model
     use HasUuids;
     use SoftDeletes;
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function (Project $project) {
+            if (is_null($project->team_id)) {
+                $project->team_id = auth()->user()->currentTeam->id;
+            }
+        });
+    }
+
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);

@@ -73,6 +73,10 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
 
     public function canAccessPanel(Panel $panel): bool
     {
+        if ($panel->getId() === 'onboarding') {
+            return $this->currentTeam->has_access_to_onboarding;
+        }
+
         return $this->emailIsFromCodex();
     }
 
