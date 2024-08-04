@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -80,16 +81,6 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
         return str_ends_with($this->email, config('codex.company_domain'));
     }
 
-    // public function getTenants(Panel $panel): Collection
-    // {
-    //     return $this->teams;
-    // }
-
-    // public function canAccessTenant(Model $tenant): bool
-    // {
-    //     return $this->teams()->whereKey($tenant)->exists();
-    // }
-
     public function getTenants(Panel $panel): Collection
     {
         return $this->all_teams ?? new Collection();
@@ -98,5 +89,10 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
     public function canAccessTenant(Model $tenant): bool
     {
         return $this->allTeams()->whereKey($tenant)->exists();
+    }
+
+    public function externalAuthAccounts(): HasMany
+    {
+        return $this->hasMany(ExternalAuthAccount::class);
     }
 }

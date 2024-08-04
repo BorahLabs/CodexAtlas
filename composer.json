@@ -21,17 +21,18 @@
         "laravel/framework": "^11.0",
         "laravel/jetstream": "^5.0",
         "laravel/sanctum": "^4.0",
-        "laravel/socialite": "^5.10",
+        "laravel/socialite": "^5.15",
         "laravel/spark-stripe": "^5.0",
         "laravel/tinker": "^2.8",
+        "laravel/vapor-cli": "^1.65",
         "laravel/vapor-core": "^2.33",
         "league/flysystem-aws-s3-v3": "^3.0",
         "livewire/livewire": "^3.4",
         "lorisleiva/laravel-actions": "^2.8",
         "openai-php/laravel": "^0.8",
         "spatie/laravel-sitemap": "^7.2",
-        "wire-elements/modal": "^2.0",
-        "spatie/laravel-sluggable": "^3.6"
+        "spatie/laravel-sluggable": "^3.6",
+        "wire-elements/modal": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",

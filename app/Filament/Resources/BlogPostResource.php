@@ -5,13 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BlogPostResource\Pages;
 use App\Filament\Resources\BlogPostResource\RelationManagers;
 use App\Models\BlogPost;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Carbon\Carbon;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
@@ -20,9 +13,16 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Form;
+use Filament\Forms;
+use Filament\Resources\Resource;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Table;
+use Filament\Tables;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class BlogPostResource extends Resource
 {
@@ -46,8 +46,7 @@ class BlogPostResource extends Resource
                 FileUpload::make('image')
                     ->image()
                     ->required()
-                    ->columnSpanFull()
-                    ->disk('public'),
+                    ->columnSpanFull(),
                 TextInput::make('image_alt')
                     ->required()
                     ->columnSpanFull(),
@@ -56,8 +55,7 @@ class BlogPostResource extends Resource
                     ->columnSpanFull(),
                 MarkdownEditor::make('markdown_content')
                     ->required()
-                    ->columnSpanFull()
-                    ->fileAttachmentsDisk('public'),
+                    ->columnSpanFull(),
                 Select::make('related_blogs')
                     ->multiple()
                     ->preload()
