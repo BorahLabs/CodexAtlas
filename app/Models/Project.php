@@ -40,4 +40,9 @@ class Project extends Model
     {
         return $this->hasMany(ProjectConcept::class);
     }
+
+    public function relevantLinks(): HasMany
+    {
+        return $this->hasMany(ProjectRelevantLink::class);
+    }
 }
