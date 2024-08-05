@@ -15,6 +15,10 @@ class ShouldDisplayWelcomePage
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (! $request->user()) {
+            return $next($request);
+        }
+
         if (! $request->user()->currentTeam->has_configured_onboarding && !$request->routeIs('filament.onboarding.pages.welcome')) {
             return redirect()->route('filament.onboarding.pages.welcome');
         }
