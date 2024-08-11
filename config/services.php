@@ -61,6 +61,11 @@ return [
         'embeddings_model' => env('OPENAI_EMBEDDINGS_MODEL', 'text-embedding-ada-002'),
     ],
 
+    'claude' => [
+        'key' => env('CLAUDE_API_KEY'),
+        'completion_model' => env('CLAUDE_COMPLETION_MODEL', 'claude-3-5-sonnet-20240620'),
+    ],
+
     'cloudflare' => [
         'turnstile' => [
             'site_key' => env('TURNSTILE_SITE_KEY'),

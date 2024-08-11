@@ -8,10 +8,12 @@ return new class extends Migration
 {
     public function up(): void
     {
-        User::query()
+        if (! app()->environment('testing')) {
+            User::query()
             ->whereNotNull('email_verified_at')
             ->each(function (User $user) {
                 AddSubcriberToWelcomeSequence::dispatch($user);
             });
+        }
     }
 };

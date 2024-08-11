@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\LLM\Claude;
 use App\LLM\Contracts\Llm;
 use App\LLM\DumbLocalLlm;
 use App\LLM\LMStudio;
@@ -36,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
         } else {
             $this->app->bind(Llm::class, fn () => match (config('codex.llm')) {
                 'lmstudio' => new LMStudio(),
+                'claude' => new Claude(),
                 default => new OpenAI()
             });
         }

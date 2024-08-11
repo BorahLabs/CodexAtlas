@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5b13e97a34351ef5bb589e0b094d2382",
+    "content-hash": "d459ebbd19d9fe30607a317b9ae2fd96",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -817,6 +817,51 @@
                 }
             ],
             "time": "2023-12-11T17:09:12+00:00"
+        },
+        {
+            "name": "claude-php/claude-3-api",
+            "version": "0.1.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/claude-php/claude-3-api.git",
+                "reference": "48c0caef9c664e08e2a6aa6f00219c9c52049e92"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/claude-php/claude-3-api/zipball/48c0caef9c664e08e2a6aa6f00219c9c52049e92",
+                "reference": "48c0caef9c664e08e2a6aa6f00219c9c52049e92",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^7.8",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Claude\\Claude3Api\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dale Hurley",
+                    "email": "dale@createmy.com.au"
+                }
+            ],
+            "description": "A PHP package for the Claude 3.5 Sonnet API",
+            "support": {
+                "issues": "https://github.com/claude-php/claude-3-api/issues",
+                "source": "https://github.com/claude-php/claude-3-api/tree/v0.1.9"
+            },
+            "time": "2024-07-18T03:08:17+00:00"
         },
         {
             "name": "clue/stream-filter",
