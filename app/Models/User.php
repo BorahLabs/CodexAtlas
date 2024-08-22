@@ -92,7 +92,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
 
     public function canAccessTenant(Model $tenant): bool
     {
-        return $this->allTeams()->whereKey($tenant)->exists();
+        return $this->allTeams()->where('id', $tenant->id)->first()->exists();
     }
 
     public function externalAuthAccounts(): HasMany

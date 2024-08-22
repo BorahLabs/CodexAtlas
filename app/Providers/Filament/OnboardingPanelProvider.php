@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Onboarding\Widgets\TeamStatsOverview;
 use App\Http\Middleware\ConfigureRequestsFromOnboarding;
 use App\Http\Middleware\Onboarding\ShouldDisplayWelcomePage;
 use App\Models\Team;
@@ -34,7 +35,7 @@ class OnboardingPanelProvider extends PanelProvider
             ->login()
             ->darkMode(isForced: true)
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Violet,
             ])
             ->discoverResources(in: app_path('Filament/Onboarding/Resources'), for: 'App\\Filament\\Onboarding\\Resources')
             ->discoverPages(in: app_path('Filament/Onboarding/Pages'), for: 'App\\Filament\\Onboarding\\Pages')
@@ -44,8 +45,7 @@ class OnboardingPanelProvider extends PanelProvider
             ->topNavigation()
             ->discoverWidgets(in: app_path('Filament/Onboarding/Widgets'), for: 'App\\Filament\\Onboarding\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                TeamStatsOverview::class,
             ])
             ->middleware([
                 ConfigureRequestsFromOnboarding::class,
@@ -63,8 +63,8 @@ class OnboardingPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->viteTheme('resources/css/filament/onboarding/theme.css');
-            // ->tenant(Team::class)
-            // ->tenantDomain('{tenant:id}.'.config('app.digital_onboarding_domain'));
+            ->viteTheme('resources/css/filament/onboarding/theme.css')
+            ->tenant(Team::class)
+            ->tenantDomain('{tenant:id}.'.config('app.digital_onboarding_domain'));
     }
 }

@@ -18,6 +18,26 @@ enum SourceCodeProvider: string implements HasLabel, HasIcon
     case Bitbucket = 'bitbucket';
     case LocalFolder = 'local';
 
+    public function isGithub(): bool
+    {
+        return $this == self::GitHub;
+    }
+
+    public function isGitlab(): bool
+    {
+        return $this == self::GitLab;
+    }
+
+    public function isBitbucket(): bool
+    {
+        return $this == self::Bitbucket;
+    }
+
+    public function isLocalFolder(): bool
+    {
+        return $this == self::LocalFolder;
+    }
+
     public function provider(): ContractsSourceCodeProvider
     {
         return match ($this) {

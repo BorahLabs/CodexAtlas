@@ -10,8 +10,11 @@ use App\Models\Repository;
 use App\Models\SourceCodeAccount;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -38,16 +41,16 @@ class RepositoryResource extends Resource
                     ->live(),
 
                 Select::make('source_code_account_id')
-                     // TODO: after multitenancy implemented add the scope here
+                    // TODO: after multitenancy implemented add the scope here
                     ->relationship('sourceCodeAccount', 'name', function (Builder $query, Get $get) {
                         $project = null;
-                        if($get('project_id')){
+                        if ($get('project_id')) {
                             $project = Project::query()->find($get('project_id'));
                         }
 
                         return $query->when($project, fn($query) => $query->where('team_id', $project->team_id));
                     })
-                    ->getOptionLabelFromRecordUsing(fn (SourceCodeAccount $record) => "{$record->provider->getLabel()} - {$record->name} ")
+                    ->getOptionLabelFromRecordUsing(fn(SourceCodeAccount $record) => "{$record->provider->getLabel()} - {$record->name} ")
                     ->searchable(['name', 'provider'])
                     ->preload()
                     ->label('Account')
@@ -65,69 +68,90 @@ class RepositoryResource extends Resource
                         // Github - Gitlab
                         Select::make('name')
                             ->placeholder('Account/Repository')
-                            ->hidden(function (Get $get) {
-                                $sourceCodeAccount = SourceCodeAccount::query()->find($get('source_code_account_id'));
+                            // ->hidden(function (Get $get) {
+                            //     $sourceCodeAccount = SourceCodeAccount::query()->find($get('source_code_account_id'));
 
-                                return $sourceCodeAccount?->provider == SourceCodeProvider::Bitbucket;
-                            })
+                            //     return $sourceCodeAccount?->provider == SourceCodeProvider::Bitbucket;
+                            // })
                             ->options(function (Get $get) {
                                 $sourceCodeAccount = SourceCodeAccount::query()->find($get('source_code_account_id'));
 
-                                if(!$sourceCodeAccount){
+                                if (!$sourceCodeAccount) {
                                     return [];
                                 }
 
-                                $repositories = collect($sourceCodeAccount->getProvider()->searchRepositories($sourceCodeAccount, ''))
+                                $repositories = collect($sourceCodeAccount->getProvider()->repositories())
                                     ->pluck('fullName', 'fullName')->toArray();
 
                                 return $repositories;
                             })->required(),
                         // Bitbucket
-                        Grid::make('bitbucket')
-                            ->columns(2)
-                            ->hidden(function (Get $get) {
-                                $sourceCodeAccount = SourceCodeAccount::query()->find($get('source_code_account_id'));
+                        // Grid::make('bitbucket')
+                        //     ->columns(2)
+                        //     ->hidden(function (Get $get) {
+                        //         $sourceCodeAccount = SourceCodeAccount::query()->find($get('source_code_account_id'));
 
-                                return $sourceCodeAccount?->provider != SourceCodeProvider::Bitbucket;
-                            })
+                        //         return $sourceCodeAccount?->provider != SourceCodeProvider::Bitbucket;
+                        //     })
+                        //     ->schema([
+                        //         Select::make('workspace')
+                        //             ->label('Workspace')
+                        //             ->options(function (Get $get) {
+                        //                 $sourceCodeAccount = SourceCodeAccount::query()->find($get('source_code_account_id'));
+
+                        //                 if(!$sourceCodeAccount){
+                        //                     return [];
+                        //                 }
+
+                        //                 $workspaces = collect($sourceCodeAccount->getProvider()->searchWorkspaces($sourceCodeAccount, ''))
+                        //                     ->mapWithKeys(function ($item) {
+                        //                         return [$item => $item];
+                        //                     })->toArray();
+
+                        //                 return $workspaces;
+                        //             })
+                        //             ->afterStateUpdated(fn (Set $set) => $set('name', null))
+                        //             ->live()
+                        //             ->required(),
+                        //         Select::make('name')
+                        //             ->label('Repository name')
+                        //             ->options(function (Get $get) {
+                        //                 if (!$get('workspace')) {
+                        //                     return [];
+                        //                 }
+
+                        //                 $sourceCodeAccount = SourceCodeAccount::query()->find($get('source_code_account_id'));
+
+                        //                 if(!$sourceCodeAccount){
+                        //                     return [];
+                        //                 }
+
+                        //                 $repositories = collect($sourceCodeAccount->getProvider()->searchRepositories($sourceCodeAccount, $get('workspace')))
+                        //                     ->pluck('fullName', 'fullName')->toArray();
+
+                        //                 return $repositories;
+                        //             })->required(),
+                        //     ]),
+
+                        Section::make('Instructions')
+                            ->icon('heroicon-o-list-bullet')
+                            ->collapsible()
                             ->schema([
-                                Select::make('workspace')
-                                    ->label('Workspace')
-                                    ->options(function (Get $get) {
-                                        $sourceCodeAccount = SourceCodeAccount::query()->find($get('source_code_account_id'));
-
-                                        if(!$sourceCodeAccount){
-                                            return [];
-                                        }
-
-                                        $workspaces = collect($sourceCodeAccount->getProvider()->searchWorkspaces($sourceCodeAccount, ''))
-                                            ->mapWithKeys(function ($item) {
-                                                return [$item => $item];
-                                            })->toArray();
-
-                                        return $workspaces;
-                                    })
-                                    ->afterStateUpdated(fn (Set $set) => $set('name', null))
-                                    ->live()
-                                    ->required(),
-                                Select::make('name')
-                                    ->label('Repository name')
-                                    ->options(function (Get $get) {
-                                        if (!$get('workspace')) {
-                                            return [];
-                                        }
-
-                                        $sourceCodeAccount = SourceCodeAccount::query()->find($get('source_code_account_id'));
-
-                                        if(!$sourceCodeAccount){
-                                            return [];
-                                        }
-
-                                        $repositories = collect($sourceCodeAccount->getProvider()->searchRepositories($sourceCodeAccount, $get('workspace')))
-                                            ->pluck('fullName', 'fullName')->toArray();
-
-                                        return $repositories;
-                                    })->required(),
+                                Repeater::make('instructions')
+                                    ->label('Instructions')
+                                    ->relationship('repositoryInstructions')
+                                    ->grid(2)
+                                    ->schema([
+                                        TextInput::make('title')
+                                            ->label('Title')
+                                            ->required(),
+                                        TextInput::make('description')
+                                            ->label('Description')
+                                            ->required(),
+                                        TagsInput::make('links'),
+                                    ])
+                                    ->collapsible()
+                                    ->itemLabel(fn(array $state): ?string => $state['title'] ?? null),
                             ]),
                     ]),
             ]);
@@ -143,6 +167,8 @@ class RepositoryResource extends Resource
                 TextColumn::make('project.name')
                     ->sortable()
                     ->searchable()
+                    ->badge(),
+                TextColumn::make('sourceCodeAccount.provider')
                     ->badge(),
             ])
             ->filters([

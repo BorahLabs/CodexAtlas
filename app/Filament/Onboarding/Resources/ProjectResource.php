@@ -3,13 +3,23 @@
 namespace App\Filament\Onboarding\Resources;
 
 use App\Actions\Onboarding\GenerateProjectDescriptionFromUrl;
+use App\Enums\SoRequirementType;
 use App\Filament\Onboarding\Resources\ProjectResource\Pages;
 use App\Filament\Onboarding\Resources\ProjectResource\RelationManagers;
 use App\Models\Project;
+use App\Models\SourceCodeAccount;
+use App\SourceCode\DTO\Repository;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Forms;
+use Filament\Forms\Components\Builder as ComponentsBuilder;
+use Filament\Forms\Components\Builder\Block;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
@@ -96,7 +106,7 @@ class ProjectResource extends Resource
                         ->hintActions([
                             Forms\Components\Actions\Action::make('generate')
                                 ->label('Generate from URL')
-                                ->disabled(fn (Get $get) => ! filter_var($get('public_url'), FILTER_VALIDATE_URL))
+                                ->disabled(fn(Get $get) => ! filter_var($get('public_url'), FILTER_VALIDATE_URL))
                                 ->action(function (Get $get, Set $set) {
                                     try {
                                         $description = GenerateProjectDescriptionFromUrl::run($get('public_url'));
@@ -125,6 +135,35 @@ class ProjectResource extends Resource
         ];
     }
 
+    private static function getDevOsRequirementBlocks(): array
+    {
+        $devSoRequirementBlocks = [];
+
+        collect(SoRequirementType::cases())->each(function ($so) use (&$devSoRequirementBlocks) {
+            $block =
+                Block::make($so->getLabel())
+                ->schema([
+                    Repeater::make('requirements')
+                        ->grid(2)
+                        ->schema([
+                            TextInput::make('title')
+                                ->label('Title')
+                                ->required(),
+                            TextInput::make('description')
+                                ->label('Description')
+                                ->required(),
+                            TagsInput::make('links'),
+                        ]),
+                ])
+                ->icon($so->getIcon())
+                ->columns(1);
+
+            array_push($devSoRequirementBlocks, $block);
+        });
+
+        return $devSoRequirementBlocks;
+    }
+
     private static function getEditForm(): array
     {
         return [
@@ -151,8 +190,8 @@ class ProjectResource extends Resource
                                     ->label(false)
                                     ->addActionLabel('Add term'),
                             ])
-                            ->icon(fn (Get $get) => $get('concepts') ? 'heroicon-o-check-circle' : 'heroicon-o-clock')
-                            ->iconColor(fn (Get $get) => $get('concepts') ? 'success' : 'gray')
+                            ->icon(fn(Get $get) => $get('concepts') ? 'heroicon-o-check-circle' : 'heroicon-o-clock')
+                            ->iconColor(fn(Get $get) => $get('concepts') ? 'success' : 'gray')
                             ->collapsible(true)
                             ->collapsed(true),
                         Forms\Components\Section::make('Relevant links')
@@ -181,16 +220,132 @@ class ProjectResource extends Resource
                                     ->addActionLabel('Add link')
                                     ->columns(3),
                             ])
-                            ->icon(fn (Get $get) => $get('relevant_links') ? 'heroicon-o-check-circle' : 'heroicon-o-clock')
-                            ->iconColor(fn (Get $get) => $get('relevant_links') ? 'success' : 'gray')
+                            ->icon(fn(Get $get) => $get('relevant_links') ? 'heroicon-o-check-circle' : 'heroicon-o-clock')
+                            ->iconColor(fn(Get $get) => $get('relevant_links') ? 'success' : 'gray')
                             ->collapsible(true)
                             ->collapsed(true),
                     ]),
-                    Forms\Components\Wizard\Step::make('Dev environment')
-                        ->schema([
+                Forms\Components\Wizard\Step::make('Dev environment')
+                    ->schema([
+                        ComponentsBuilder::make('os_requirements')
+                            ->label('OS Requirements')
+                            ->addActionLabel('Add OS')
+                            ->blocks(self::getDevOsRequirementBlocks()),
+                    ]),
+                Forms\Components\Wizard\Step::make('Repository environment')
+                    ->schema([
+                        Repeater::make('repositories')
+                            ->relationship()
+                            ->schema([
+                                Section::make('Repo information')
+                                    ->collapsible()
+                                    ->icon('heroicon-o-information-circle')
+                                    ->schema([
+                                        Select::make('source_code_account_id')
+                                            ->relationship('sourceCodeAccount', 'name')
+                                            ->preload()
+                                            ->required()
+                                            ->getOptionLabelFromRecordUsing(fn(SourceCodeAccount $record) => "{$record->provider->getLabel()} - {$record->name}")
+                                            ->live(),
 
-                        ])
+                                        // TODO: modify data before saving to change this to match database columns
+
+                                        // TODO: dont document repo when added
+                                        Select::make('repository_name')
+                                            ->required()
+                                            ->options(function (Get $get) {
+                                                if ($get('source_code_account_id') == null) {
+                                                    return [];
+                                                }
+
+                                                $account = SourceCodeAccount::query()->find($get('source_code_account_id'));
+
+                                                $provider = $account->getProvider();
+                                                $repositories = cache()->remember('repository-list:' . $account->id, now()->addMinutes(5), fn() => $provider->repositories());
+                                                usort($repositories, fn(Repository $a, Repository $b) => $a->fullName <=> $b->fullName);
+
+                                                $repos = [];
+
+                                                collect($repositories)->each(function ($item) use (&$repos) {
+                                                    $repos[$item->fullName] = $item->fullName;
+                                                });
+
+                                                return $repos;
+                                            }),
+                                    ]),
+
+                                Section::make('Instructions')
+                                    ->icon('heroicon-o-list-bullet')
+                                    ->collapsible()
+                                    ->schema([
+                                        Repeater::make('instructions')
+                                            ->label('Instructions')
+                                            ->relationship('repositoryInstructions')
+                                            ->grid(2)
+                                            ->schema([
+                                                TextInput::make('title')
+                                                    ->label('Title')
+                                                    ->required(),
+                                                TextInput::make('description')
+                                                    ->label('Description')
+                                                    ->required(),
+                                                TagsInput::make('links'),
+                                            ])
+                                            ->collapsible()
+                                            ->itemLabel(fn(array $state): ?string => $state['title'] ?? null),
+                                    ]),
+
+                            ])
+                            ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
+                                $data = self::modifyRepositoryDataBeforeSaving($data);
+
+                                if(!$data){
+                                    $this->halt();
+                                }
+
+                                return $data;
+                            })
+                            ->mutateRelationshipDataBeforeSaveUsing(function (array $data): array {
+                                $data = self::modifyRepositoryDataBeforeSaving($data);
+
+                                if(!$data){
+                                    $this->halt();
+                                }
+
+                                return $data;
+                            })
+                            ->columns(2),
+                    ]),
             ]),
         ];
+    }
+
+    private static function modifyRepositoryDataBeforeSaving(array $data): array
+    {
+        $account = SourceCodeAccount::query()->find($data['source_code_account_id']);
+
+        if ($account->provider->isBitbucket()) {
+            $repo = collect($account->provider->repositories())->where('fullName', $data['repository_name'])->first();
+
+            if (!$repo) {
+                Notification::make()
+                    ->danger()
+                    ->title('Error while finding Bitbucket repository data')
+                    ->send();
+                return null;
+            }
+
+            $data['username'] = $repo->owner;
+            $data['name'] = $repo->name;
+            $data['workspace'] = $repo->workspace;
+        } else {
+            $parts = explode('/', $data['repository_name']);
+
+            $data['username'] = $parts[0];
+            $data['name'] = $parts[1];
+        }
+        unset($data['repository_name']);
+
+        return $data;
     }
 }

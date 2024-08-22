@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Repository extends Model
@@ -27,6 +28,18 @@ class Repository extends Model
         return $this->belongsTo(Project::class);
     }
 
+    public function team(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            Team::class,
+            Project::class,
+            'id',
+            'id',
+            'project_id',
+            'team_id'
+        );
+    }
+
     public function branches(): HasMany
     {
         return $this->hasMany(Branch::class);
@@ -37,10 +50,15 @@ class Repository extends Model
         return $this->hasMany(RepositoryPage::class);
     }
 
+    public function repositoryInstructions(): HasMany
+    {
+        return $this->hasMany(RepositoryInstruction::class);
+    }
+
     public function fullName(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->username.'/'.$this->name,
+            get: fn() => $this->username . '/' . $this->name,
         );
     }
 

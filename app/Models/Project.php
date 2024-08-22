@@ -15,6 +15,10 @@ class Project extends Model
     use HasUuids;
     use SoftDeletes;
 
+    protected $casts = [
+        'os_requirements' => 'array',
+    ];
+
     protected static function boot()
     {
         parent::boot();
