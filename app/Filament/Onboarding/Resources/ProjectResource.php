@@ -152,7 +152,8 @@ class ProjectResource extends Resource
                             TextInput::make('description')
                                 ->label('Description')
                                 ->required(),
-                            TagsInput::make('links'),
+                            Repeater::make('links')
+                                ->simple(TextInput::make('url')->url()),
                         ]),
                 ])
                 ->icon($so->getIcon())
@@ -236,6 +237,8 @@ class ProjectResource extends Resource
                     ->schema([
                         Repeater::make('repositories')
                             ->relationship()
+                            ->itemLabel(fn(array $state): ?string => $state['repository_name'] ?? null)
+                            ->collapsible()
                             ->schema([
                                 Section::make('Repo information')
                                     ->collapsible()
@@ -248,9 +251,6 @@ class ProjectResource extends Resource
                                             ->getOptionLabelFromRecordUsing(fn(SourceCodeAccount $record) => "{$record->provider->getLabel()} - {$record->name}")
                                             ->live(),
 
-                                        // TODO: modify data before saving to change this to match database columns
-
-                                        // TODO: dont document repo when added
                                         Select::make('repository_name')
                                             ->required()
                                             ->options(function (Get $get) {
@@ -289,13 +289,19 @@ class ProjectResource extends Resource
                                                 TextInput::make('description')
                                                     ->label('Description')
                                                     ->required(),
-                                                TagsInput::make('links'),
+                                                Repeater::make('links')
+                                                    ->simple(TextInput::make('url')->url()),
                                             ])
                                             ->collapsible()
                                             ->itemLabel(fn(array $state): ?string => $state['title'] ?? null),
                                     ]),
 
                             ])
+                            ->mutateRelationshipDataBeforeFillUsing(function (array $data): array{
+                                $data['repository_name'] = $data['username'] . '/' . $data['name'];
+
+                                return $data;
+                            })
                             ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
                                 $data = self::modifyRepositoryDataBeforeSaving($data);
 
