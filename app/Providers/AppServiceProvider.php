@@ -7,6 +7,7 @@ use App\LLM\Contracts\Llm;
 use App\LLM\DumbLocalLlm;
 use App\LLM\LMStudio;
 use App\LLM\OpenAI;
+use Filament\Support\Facades\FilamentColor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -46,5 +47,10 @@ class AppServiceProvider extends ServiceProvider
             return Route::post('/livewire/update', $handle)
                 ->middleware('web', \App\Http\Middleware\ConfigureRequestsFromAutodoc::class);
         });
+
+        FilamentColor::register([
+            'primary' => '#5E5299',
+            'success' => '#AFC742',
+        ]);
     }
 }

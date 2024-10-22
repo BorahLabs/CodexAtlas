@@ -24,6 +24,7 @@ class GitHubProvider extends SourceCodeProvider implements DownloadsZipFile, Han
 
     public function repositories(): array
     {
+        if (config('app.flight_mode')) return [];
         try {
             return Github\GetAllRepositories::make()->handle($this->credentials());
         } catch (ApiLimitExceedException $e) {

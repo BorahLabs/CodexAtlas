@@ -69,6 +69,7 @@ return [
 
     'indexable' => env('APP_INDEXABLE', false),
 
+    'flight_mode' => env('FLIGHT_MODE', false),
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

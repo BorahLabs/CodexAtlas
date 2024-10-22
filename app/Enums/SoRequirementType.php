@@ -28,4 +28,21 @@ enum SoRequirementType: string implements HasIcon, HasLabel
             self::LINUX => 'Linux',
         };
     }
+
+    public static function fromUserAgent(string $userAgent): ?SoRequirementType
+    {
+        if (str_contains($userAgent, 'Windows NT')) {
+            return self::WINDOWS;
+        }
+
+        if (str_contains($userAgent, 'Mac OS')) {
+            return self::MAC;
+        }
+
+        if (str_contains($userAgent, 'Linux')) {
+            return self::LINUX;
+        }
+
+        return null;
+    }
 }

@@ -15,6 +15,7 @@ use Filament\Forms\Set;
 use Filament\Forms;
 use Filament\Forms\Components\Builder as ComponentsBuilder;
 use Filament\Forms\Components\Builder\Block;
+use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -59,6 +60,8 @@ class ProjectResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->url(fn (Project $record) => route('digitalonboarding.onboarding', ['project' => $record])),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -286,13 +289,15 @@ class ProjectResource extends Resource
                                                 TextInput::make('title')
                                                     ->label('Title')
                                                     ->required(),
-                                                TextInput::make('description')
+                                                MarkdownEditor::make('description')
                                                     ->label('Description')
                                                     ->required(),
                                                 Repeater::make('links')
-                                                    ->simple(TextInput::make('url')->url()),
+                                                    ->simple(TextInput::make('url')->url())
+                                                    ->default([]),
                                             ])
                                             ->collapsible()
+                                            ->reorderable()
                                             ->itemLabel(fn(array $state): ?string => $state['title'] ?? null),
                                     ]),
 

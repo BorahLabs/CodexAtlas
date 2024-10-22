@@ -9,6 +9,7 @@ use App\LLM\DTO\CompletionResponse;
 use App\LLM\PromptRequests\OpenAI\DocumentFilePromptRequest;
 use App\LLM\PromptRequests\OpenAI\GenerateTechStackPromptRequest;
 use App\LLM\PromptRequests\PromptRequestType;
+use Closure;
 use OpenAI\Client;
 
 class OpenAI extends Llm implements HasApiKey
@@ -67,6 +68,36 @@ class OpenAI extends Llm implements HasApiKey
             inputTokens: $response->usage->promptTokens,
             outputTokens: $response->usage->completionTokens,
             totalTokens: $response->usage->totalTokens,
+        );
+    }
+
+    public function chat(array $messages, Closure $callback = null): CompletionResponse
+    {
+        $start = intval(microtime(true) * 1000);
+        $data = [
+            'model' => $this->modelName(),
+            'messages' => $messages,
+        ];
+
+        // wrapping on a retry function to avoid the limit per minute error
+        $response = $this->client()->chat()->createStreamed($data);
+        $content = null;
+
+        foreach ($response as $chunk) {
+            if ($chunk->choices[0]->delta->content) {
+                $content .= $chunk->choices[0]->delta->content;
+                $callback($content);
+            }
+        }
+
+        $end = intval(microtime(true) * 1000);
+
+        return CompletionResponse::make(
+            completion: $content,
+            processingTimeMilliseconds: $end - $start,
+            inputTokens: 0,
+            outputTokens: 0,
+            totalTokens: 0,
         );
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\SoRequirementType;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -48,5 +49,11 @@ class Project extends Model
     public function relevantLinks(): HasMany
     {
         return $this->hasMany(ProjectRelevantLink::class);
+    }
+
+    public function requirementsFor(SoRequirementType $type)
+    {
+        $item = collect($this->os_requirements)->where('type', $type->getLabel())->first();
+        return $item['data']['requirements'] ?? null;
     }
 }

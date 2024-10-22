@@ -63,8 +63,8 @@ class OnboardingPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->viteTheme('resources/css/filament/onboarding/theme.css')
-            ->tenant(Team::class)
-            ->tenantDomain('{tenant:id}.'.config('app.digital_onboarding_domain'));
+            ->viteTheme('resources/css/filament/onboarding/theme.css');
+            // ->tenant(Team::class)
+            // ->tenantDomain('{tenant:id}.'.config('app.digital_onboarding_domain'));
     }
 }
