@@ -73,6 +73,10 @@
                     <a href="{{ route('autodoc.privacy') }}"
                         class="text-sm leading-6 text-gray-600 hover:text-gray-900">Privacy policy</a>
                 </div>
+                <div class="pb-6">
+                    <a href="https://borah.digital/" target="_blank"
+                        class="text-sm leading-6 text-gray-600 hover:text-gray-900">MVP Agency</a>
+                </div>
             </nav>
             <p class="mt-10 text-center text-xs leading-5 text-gray-500">&copy; {{ date('Y') }} CodexAtlas, LLC. All
                 rights reserved.</p>
