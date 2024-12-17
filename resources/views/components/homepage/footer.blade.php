@@ -60,11 +60,17 @@
                         <span class="text-newGray-600 tracking-tight">© CodexAtlas, LLC. All rights
                             reserved</span>
                     </div>
-                    <div><a class="inline-block mr-10 text-white hover:underline tracking-tight"
-                            href="{{ route('terms.show') }}">Terms &amp; Conditions</a><a
-                            class="inline-block text-white hover:underline tracking-tight"
-                            href="{{ route('policy.show') }}">Privacy
-                            Policy</a></div>
+                    <div>
+                        <a class="inline-block mr-10 text-white hover:underline tracking-tight" href="https://borah.digital/" target="_blank">
+                            AI-specialized agency
+                        </a>
+                        <a class="inline-block mr-10 text-white hover:underline tracking-tight" href="{{ route('terms.show') }}">
+                            Terms &amp; Conditions
+                        </a>
+                        <a class="inline-block text-white hover:underline tracking-tight" href="{{ route('policy.show') }}">
+                            Privacy Policy
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
