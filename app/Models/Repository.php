@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Repository extends Model
@@ -32,6 +33,11 @@ class Repository extends Model
         return $this->hasMany(Branch::class);
     }
 
+    public function payments(): MorphMany
+    {
+        return $this->morphMany(Payment::class, 'billable');
+    }
+
     public function fullName(): Attribute
     {
         return Attribute::make(
@@ -51,5 +57,10 @@ class Repository extends Model
             name: $this->name,
             workspace: $this->workspace,
         );
+    }
+
+    public function paid(): bool
+    {
+        return $this->payments()->exists();
     }
 }

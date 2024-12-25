@@ -113,15 +113,17 @@ class Team extends JetstreamTeam
             return SubscriptionType::FreeTrial;
         }
 
-        if ($plan = $this->sparkPlan()) {
-            return $this->openai_key && config('codex.pay_as_you_go') ? SubscriptionType::UnlimitedCompanyPlan : SubscriptionType::LimitedCompanyPlan;
-        }
+        return SubscriptionType::SinglePayment;
 
-        if ($this->openai_key && config('codex.pay_as_you_go')) {
-            return SubscriptionType::PayAsYouGo;
-        }
+        // if ($plan = $this->sparkPlan()) {
+        //     return $this->openai_key && config('codex.pay_as_you_go') ? SubscriptionType::UnlimitedCompanyPlan : SubscriptionType::LimitedCompanyPlan;
+        // }
 
-        return SubscriptionType::FreeTrial;
+        // if ($this->openai_key && config('codex.pay_as_you_go')) {
+        //     return SubscriptionType::PayAsYouGo;
+        // }
+
+        // return SubscriptionType::FreeTrial;
     }
 
     public function purge(): void

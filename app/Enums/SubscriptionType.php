@@ -5,6 +5,7 @@ namespace App\Enums;
 enum SubscriptionType
 {
     case FreeTrial;
+    case SinglePayment;
     case PayAsYouGo;
     case LimitedCompanyPlan;
     case UnlimitedCompanyPlan;
@@ -14,6 +15,7 @@ enum SubscriptionType
     {
         return match ($this) {
             self::FreeTrial => 1,
+            self::SinglePayment => null,
             self::PayAsYouGo => null,
             self::LimitedCompanyPlan => null,
             self::UnlimitedCompanyPlan => null,
@@ -25,6 +27,7 @@ enum SubscriptionType
     {
         return match ($this) {
             self::FreeTrial => 1,
+            self::SinglePayment => null,
             self::PayAsYouGo => null,
             self::LimitedCompanyPlan => null,
             self::UnlimitedCompanyPlan => null,
@@ -36,6 +39,7 @@ enum SubscriptionType
     {
         return match ($this) {
             self::FreeTrial => 1,
+            self::SinglePayment => null,
             self::PayAsYouGo => null,
             self::LimitedCompanyPlan => null,
             self::UnlimitedCompanyPlan => null,
@@ -47,6 +51,7 @@ enum SubscriptionType
     {
         return match ($this) {
             self::FreeTrial => 300,
+            self::SinglePayment => null,
             self::PayAsYouGo => null,
             self::LimitedCompanyPlan => null,
             self::UnlimitedCompanyPlan => null,
@@ -60,6 +65,7 @@ enum SubscriptionType
             self::LimitedCompanyPlan => null,
             self::UnlimitedCompanyPlan => null,
             self::Unlimited => null,
+            self::SinglePayment => null,
             default => 30,
         };
     }
@@ -67,6 +73,7 @@ enum SubscriptionType
     public function maxCodeConversions(): ?int
     {
         return match ($this) {
+            self::SinglePayment => null,
             self::LimitedCompanyPlan => 100,
             self::UnlimitedCompanyPlan => 100,
             self::Unlimited => 100,
@@ -77,6 +84,7 @@ enum SubscriptionType
     public function canUseGlossary(): bool
     {
         return match ($this) {
+            self::SinglePayment => true,
             self::Unlimited => true,
             self::UnlimitedCompanyPlan => true,
             default => false,

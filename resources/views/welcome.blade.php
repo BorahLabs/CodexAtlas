@@ -84,10 +84,10 @@
                             class="h-16 w-auto flex-shrink-0 brightness-0 invert" />
                         <img src="https://borah.digital/logo.png" alt="Borah Digital Labs"
                             class="h-12 w-auto flex-shrink-0 brightness-0 invert" />
-                        <img src="https://rlc-solutions.com/wp-content/uploads/2022/12/blanco-logo.png"
+                        {{-- <img src="https://rlc-solutions.com/wp-content/uploads/2022/12/blanco-logo.png"
                             alt="RLC Solutions" class="h-10 w-auto flex-shrink-0 brightness-0 invert" />
                         <img src="https://citricamente.com/wp-content/uploads/2020/09/logo_Citricamente_B.png"
-                            alt="Cítricamente" class="h-12 w-auto flex-shrink-0 brightness-0 invert" />
+                            alt="Cítricamente" class="h-12 w-auto flex-shrink-0 brightness-0 invert" /> --}}
                     </div>
                 </div>
             </div>
@@ -389,7 +389,7 @@
                 <div class="relative z-10 max-w-2xl mx-auto mb-14 text-center">
                     <h2
                         class="font-heading text-4xl xs:text-5xl sm:text-6xl xl:text-7xl font-medium text-white tracking-tight mb-4">
-                        Choose your plan
+                        Pay once per repo, document forever
                     </h2>
                 </div>
                 <div class="relative z-10 max-w-md lg:max-w-8xl mx-auto">
@@ -397,48 +397,19 @@
                         <livewire:enterprise-calculator :simpleMode="true" />
                     </div>
                     <div class="flex flex-wrap -mx-4">
-                        <x-homepage.pricing-card :imageUrl="asset('casper-assets/pricing/pricing-top-1.png')" price="Free" title="Free Trial"
-                            description="Try out CodexAtlas without any
-                    compromise and without your credit card. For free."
-                            :included="[
-                                'Real-time documentation updates',
-                                'Up to 1 repository',
-                                'Up to 1 branch per repository',
-                                'Up to ' .
-                                \App\Enums\SubscriptionType::FreeTrial->maxFilesPerRepository() .
-                                ' files per branch',
-                            ]" :notIncluded="['No custom knowledge', 'Limited code conversions', 'README file generation']" cta="Start for free" :ctaUrl="Route::has('register') ? route('register') : '#'" />
-                        @if (config('codex.pay_as_you_go'))
-                            <x-homepage.pricing-card :imageUrl="asset('casper-assets/pricing/pricing-top-2.png')" price="Pay as you go"
-                                title="Your own OpenAI Key" description="Use CodexAtlas with your own OpenAI API Key."
-                                :included="[
-                                    'Real-time documentation updates',
-                                    'Unlimited repositories',
-                                    'Unlimited branches',
-                                    'Unlimited files per branch',
-                                ]" :notIncluded="[
-                                    'No custom knowledge',
-                                    'Limited code conversions',
-                                    'README file generation',
-                                ]" cta="Start for free" :ctaUrl="Route::has('register') ? route('register') : '#'" />
-                        @endif
                         @php
-                            $monthlyPlan = \App\Cashier\StripePlanProvider::plans()->firstWhere(
-                                'id',
-                                config('spark.billables.user.plans.0.monthly_id'),
-                            );
+                            $monthlyPlan = \App\Cashier\StripePlanProvider::price(config('spark.billables.user.price'));
                         @endphp
-                        <x-homepage.pricing-card :imageUrl="asset('casper-assets/pricing/pricing-top-3.png')" price="Company" :title="$monthlyPlan?->price . ' / month'"
-                            description="Best for companies that want to integrate CodexAtlas with their workflow."
+                        <x-homepage.pricing-card :imageUrl="asset('casper-assets/pricing/pricing-top-3.png')" price="Lifetime plan" :title="$monthlyPlan?->price . ' per repository'"
+                            description="Best for small and medium-sized companies that want to integrate CodexAtlas with their workflow."
                             :included="[
                                 'Real-time documentation updates',
-                                'Unlimited repositories',
                                 'Unlimited branches',
                                 'Unlimited files per branch',
                                 'Unlimited custom knowledge',
                                 'Unlimited code conversions',
                                 'Automatic README files',
-                            ]" :notIncluded="[]" cta="Subscribe" :ctaUrl="route('spark.portal')" />
+                            ]" :notIncluded="[]" cta="Get started" :ctaUrl="route('login')" />
                     </div>
                     <div class="relative mx-auto mb-8 p-10 rounded-3xl overflow-hidden mt-12 lg:mt-24">
                         <div

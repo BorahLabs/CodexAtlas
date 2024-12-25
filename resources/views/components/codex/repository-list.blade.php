@@ -11,7 +11,14 @@
                             {{ $repository->full_name }}
                         </a>
                     </h2>
-                    @if ($repository->branches->isNotEmpty())
+                    @if (!$repository->paid())
+                        <x-button theme="primary" class="w-full justify-center mt-4" href="{{ route('repositories.payment', $repository) }}">
+                            Make payment ({{ \App\Cashier\StripePlanProvider::price(config('spark.billables.user.price'))->price }})
+                        </x-button>
+                        <p class="text-center text-sm text-newGray-500 mt-2">
+                            {{ __('You can pay for this repository once and use it forever. We will automatically add some branches for you.') }}
+                        </p>
+                    @else
                         <p class="flex items-baseline justify-center text-center space-x-2 uppercase mt-5 text-sm">
                             <span>
                                 {{ $repository->branches->count() }}

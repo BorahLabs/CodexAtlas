@@ -57,8 +57,8 @@ return [
 
     'openai' => [
         'key' => env('OPENAI_API_KEY'),
-        'completion_model' => env('OPENAI_COMPLETION_MODEL', 'gpt-4o'),
-        'embeddings_model' => env('OPENAI_EMBEDDINGS_MODEL', 'text-embedding-ada-002'),
+        'completion_model' => env('OPENAI_COMPLETION_MODEL', 'gpt-4o-mini'),
+        'embeddings_model' => env('OPENAI_EMBEDDINGS_MODEL', 'text-embedding-3-small'),
     ],
 
     'cloudflare' => [

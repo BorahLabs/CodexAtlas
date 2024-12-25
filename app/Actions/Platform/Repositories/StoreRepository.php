@@ -6,11 +6,9 @@ use App\Actions\InternalNotifications\LogUserPerformedAction;
 use App\Models\Project;
 use App\Models\Repository;
 use App\SourceCode\Contracts\RegistersWebhook;
-use App\SourceCode\DTO\Branch as DTOBranch;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -67,29 +65,6 @@ class StoreRepository
                     'message' => $e->getMessage(),
                 ]);
             }
-        }
-
-        if ($repository->branches->isEmpty()) {
-            $branches = $sourceCodeAccount->getProvider()->branches($repo);
-            $whitelist = ['main', 'master', 'production', 'prod', 'release', 'dev', 'develop', 'staging'];
-            /**
-             * @var \App\Enums\SubscriptionType $subscriptionType
-             */
-            $subscriptionType = $project->team->subscriptionType();
-
-            $collectedBranches = collect($branches)
-                ->filter(fn (DTOBranch $branch) => in_array($branch->name, $whitelist));
-
-            if ($collectedBranches->isEmpty() && isset($branches[0])) {
-                $collectedBranches = collect([$branches[0]]);
-            }
-
-            $collectedBranches
-                ->values()
-                ->when(! is_null($subscriptionType->maxBranchesPerRepository()), fn (Collection $branches) => $branches->take($subscriptionType->maxBranchesPerRepository()))
-                ->each(fn (DTOBranch $branch) => $repository->branches()->create([
-                    'name' => $branch->name,
-                ]));
         }
 
         return $repository;

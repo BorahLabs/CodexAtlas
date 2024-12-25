@@ -15,6 +15,9 @@ class SparkPaymentModeGuard
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // test of single payment
+        abort(404);
+
         abort_unless(paymentIsWithSpark(), 404, 'Not found');
 
         return $next($request);

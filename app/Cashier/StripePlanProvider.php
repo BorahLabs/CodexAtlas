@@ -11,6 +11,28 @@ use Spark\Spark;
 
 class StripePlanProvider
 {
+    public static function price(string $priceId): \Stripe\Price
+    {
+        $price = Cashier::stripe()->prices->retrieve($priceId);
+        $price->rawPrice = $price->unit_amount;
+
+        $amount = Cashier::formatAmount($price->unit_amount, $price->currency);
+
+        if (Str::endsWith($amount, '.00')) {
+            $amount = substr($amount, 0, -3);
+        }
+
+        if (Str::endsWith($amount, '.0')) {
+            $amount = substr($amount, 0, -2);
+        }
+
+        $price->price = $amount;
+
+        $price->currency = $price->currency;
+
+        return $price;
+    }
+
     public static function plans(string $type = 'user'): Collection
     {
         return Cache::remember('spark-plans-'.$type.'-v3', now()->addHour(), function () use ($type) {

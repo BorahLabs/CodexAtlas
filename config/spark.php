@@ -137,6 +137,8 @@ return [
 
             'default_interval' => 'monthly',
 
+            'price' => env('STRIPE_UNLIMITED_ID'),
+
             'plans' => [
                 [
                     'name' => 'Company Plan',

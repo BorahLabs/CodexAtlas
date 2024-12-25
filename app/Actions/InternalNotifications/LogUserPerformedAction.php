@@ -17,7 +17,7 @@ class LogUserPerformedAction
         string $text,
         array $metadata = [],
     ): void {
-        if (app()->environment('testing')) {
+        if (app()->environment('testing', 'local')) {
             return;
         }
 

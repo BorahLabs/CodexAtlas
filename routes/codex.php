@@ -4,10 +4,12 @@ use App\Actions\Github\Auth\HandleGithubInstallation;
 use App\Actions\OAuth\HandleAuthCallback;
 use App\Actions\Platform\DownloadDocsAsMarkdown;
 use App\Actions\Platform\Glossary\ShowGlossary;
+use App\Actions\Platform\HandleStripeWebhook;
 use App\Actions\Platform\Projects\ShowNewProject;
 use App\Actions\Platform\Projects\ShowProject;
 use App\Actions\Platform\Projects\ShowProjectList;
 use App\Actions\Platform\Projects\StoreProject;
+use App\Actions\Platform\RedirectToRepositoryPayment;
 use App\Actions\Platform\Repositories\StoreRepository;
 use App\Actions\Platform\ShowDocs;
 use App\Actions\Platform\ShowReadme;
@@ -111,12 +113,18 @@ Route::middleware(OnlyFromCodexAtlas::class)->group(function () {
             Route::get('redirect', fn () => redirect()->to('https://github.com/apps/codexatlas/installations/select_target'))->name('github.redirect');
             Route::get('installation', HandleGithubInstallation::class)->name('github.installation')->middleware('throttle:3,1');
         });
+
+        Route::get('/repositories/{repository}/payment', RedirectToRepositoryPayment::class)->name('repositories.payment');
     });
 
     // Webhook providers (no auth)
     Route::post('webhook/{sourceCodeAccount}', HandleWebhook::class)
         ->withoutMiddleware(VerifyCsrfToken::class)
         ->name('webhook');
+
+    Route::post('stripe/one-time-webhook', HandleStripeWebhook::class)
+        ->withoutMiddleware(VerifyCsrfToken::class)
+        ->name('stripe.one-time-webhook');
 
     Route::middleware([ControlRequestsFromPlatform::class, ForceNoIndex::class])->group(function () {
         Route::get('/docs/{project}/{repository}/{branch}', ShowDocs::class)

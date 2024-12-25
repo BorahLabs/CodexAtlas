@@ -1,8 +1,7 @@
 @props(['imageUrl', 'price', 'title', 'description', 'included' => [], 'notIncluded' => [], 'cta', 'ctaUrl'])
 
-<div class="w-full {{ config('codex.pay_as_you_go') ? 'lg:w-1/3' : 'lg:w-1/2' }} px-4 mb-8 lg:mb-0">
+<div class="w-full px-4 mb-8 lg:mb-0">
     <div class="rounded-3xl overflow-hidden">
-        <img class="block w-full h-44 object-cover" src="{{ $imageUrl }}" alt="">
         <div class="relative p-10">
             <div
                 class="absolute top-0 left-0 w-full h-full backdrop-filter backdrop-blur-md bg-newGray-500 bg-opacity-20 group-hover:bg-violet-400 group-hover:bg-opacity-100 transition duration-150">
@@ -10,11 +9,11 @@
             <div class="relative">
                 <span class="block mb-10 text-4xl font-semibold text-white">{{ $price }}</span>
                 <span class="block mb-2 text-2xl font-medium text-white">{!! $title !!}</span>
-                <p class="max-w-xs text-sm text-newGray-300 mb-8">{{ $description }}</p>
+                <p class="text-sm text-newGray-300 mb-8">{{ $description }}</p>
                 <div>
                     <span class="block mb-4 text-lg font-medium text-white tracking-tight">What's
                         included:</span>
-                    <ul class="mb-8 space-y-4">
+                    <ul class="mb-8 gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                         @foreach ($included as $item)
                             <x-homepage.pricing-included :text="$item" />
                         @endforeach

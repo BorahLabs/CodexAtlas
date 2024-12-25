@@ -41,7 +41,7 @@
                                     <p>
                                         After your account is connected, you can start adding your repositories. To do
                                         so, select the account you want to use to retrieve it and then write the full
-                                        name of the repository. Once we verify the access, we will automatically add the
+                                        name of the repository. Once we verify the access, you can proceed with the payment and we will automatically add the
                                         following branches if they exist:
                                     </p>
                                     <ul class="flex flex-wrap gap-2 my-4">
