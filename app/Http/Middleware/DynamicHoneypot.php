@@ -19,12 +19,12 @@ class DynamicHoneypot
     public function handle(Request $request, Closure $next)
     {
         if (!$request->isMethod('POST')) {
-            Route::getCurrentRoute()->withoutMiddleware(ProtectAgainstSpam::class);
+            Route::getCurrentRoute()?->withoutMiddleware(ProtectAgainstSpam::class);
             return $next($request);
         }
 
         if (!$request->is('register')) {
-            Route::getCurrentRoute()->withoutMiddleware(ProtectAgainstSpam::class);
+            Route::getCurrentRoute()?->withoutMiddleware(ProtectAgainstSpam::class);
             return $next($request);
         }
 
