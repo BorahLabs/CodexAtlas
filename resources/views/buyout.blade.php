@@ -18,7 +18,7 @@
                         We are selling CodexAtlas to a company that will continue to invest in it.<br><strong class="text-white">Current price: {{  '$'.number_format(\App\Services\BuyoutService::getPrice(), 0, ',', '.') }}</strong>
                     </p>
                     <p class="text-2xl text-newGray-400 mb-8">
-                        Starting on the 1st of May, 2025; we will start with a 40% offer by setting the price at 60.000$. After a month, it will raise to 100.000$, and then the price will decrease by 500$ every day, until it reaches 20.000$. First come, first served.
+                        Starting on the 21st of May, 2025; we will start with a 30% offer by setting the price at 30.000$. After a month, it will raise to 50.000$, and then the price will decrease by 500$ every day, until it reaches 20.000$. First come, first served.
                     </p>
                     <div
                         class="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
@@ -106,7 +106,7 @@
                             It's also integrated with GitHub, Gitlab and Bitbucket, and it's capable of getting the code from the repositories and generating the documentation automatically.
                         </p>
                         <p class="text-xl text-newGray-200">
-                            The payment system currently is handled by Stripe, although there's some .env variables that you can use to set it up in AWS, but some work would be needed here (especially in AWS to setup everything).
+                            The payment system currently is handled by Stripe, although there's some .env variables that you can use to set it up in AWS Marketplace, but some work would be needed here (especially in AWS to setup everything).
                         </p>
                     </div>
                 </div>
