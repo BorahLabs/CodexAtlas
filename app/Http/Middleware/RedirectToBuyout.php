@@ -31,7 +31,17 @@ class RedirectToBuyout
 
         if ($request->get('skip_buyout') === 'true') {
             session()->put('skip_buyout', true);
-            return redirect(session()->get('redirect_to') ?: request()->redirect_to ?: route('homepage'));
+            session()->save(); // Ensure session is saved before redirect
+
+            // Clear the redirect_to from session to avoid loops
+            $redirectTo = session()->pull('redirect_to') ?: route('homepage');
+
+            // Ensure we redirect to a relative URL, not absolute
+            if (filter_var($redirectTo, FILTER_VALIDATE_URL)) {
+                $redirectTo = parse_url($redirectTo, PHP_URL_PATH) ?: '/';
+            }
+
+            return redirect($redirectTo);
         }
 
         if ($request->is('buyout-success')) {
