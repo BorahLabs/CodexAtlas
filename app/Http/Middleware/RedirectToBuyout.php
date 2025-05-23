@@ -20,6 +20,10 @@ class RedirectToBuyout
             return $next($request);
         }
 
+        if (session()->get('skip_buyout')) {
+            return $next($request);
+        }
+
         if ($request->get('purchase') === 'success') {
             cache(['sold_codex' => true]);
             return redirect()->route('buyout-success');
